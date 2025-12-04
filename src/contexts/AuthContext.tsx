@@ -58,15 +58,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setProfile(profileData as Profile);
     }
 
-    // Fetch role
+    // Fetch role - prioritize admin role if user has multiple roles
     const { data: roleData } = await supabase
       .from('user_roles')
       .select('role')
-      .eq('user_id', userId)
-      .single();
+      .eq('user_id', userId);
 
-    if (roleData) {
-      setRole(roleData.role);
+    if (roleData && roleData.length > 0) {
+      // Prioritize roles: admin > school > parent > student
+      const rolePriority: AppRole[] = ['admin', 'school', 'parent', 'student'];
+      const userRoles = roleData.map(r => r.role);
+      const prioritizedRole = rolePriority.find(r => userRoles.includes(r)) || userRoles[0];
+      setRole(prioritizedRole);
     }
 
     // Fetch progress
