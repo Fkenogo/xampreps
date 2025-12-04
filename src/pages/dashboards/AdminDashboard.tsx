@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import StatCard from '@/components/dashboard/StatCard';
+import ExamEditDialog from '@/components/admin/ExamEditDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -17,6 +19,8 @@ import {
   TrendingUp,
   FileText,
   Eye,
+  Edit,
+  Play,
 } from 'lucide-react';
 import {
   Table,
@@ -32,9 +36,16 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/components/ui/tabs';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import type { Database } from '@/integrations/supabase/types';
 
 type AppRole = Database['public']['Enums']['app_role'];
+type Exam = Database['public']['Tables']['exams']['Row'];
 
 interface UserData {
   id: string;
@@ -55,10 +66,11 @@ interface ExamData {
 }
 
 export default function AdminDashboard() {
+  const navigate = useNavigate();
   const { profile } = useAuth();
   const [previewRole, setPreviewRole] = useState<AppRole | null>(null);
   const [users, setUsers] = useState<UserData[]>([]);
-  const [exams, setExams] = useState<ExamData[]>([]);
+  const [exams, setExams] = useState<Exam[]>([]);
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalExams: 0,
@@ -67,6 +79,8 @@ export default function AdminDashboard() {
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [selectedExam, setSelectedExam] = useState<Exam | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,18 +112,11 @@ export default function AdminDashboard() {
       const { data: examsData } = await supabase
         .from('exams')
         .select('*')
+        .order('year', { ascending: false })
         .limit(100);
 
       if (examsData) {
-        setExams(examsData.map(e => ({
-          id: e.id,
-          title: e.title,
-          subject: e.subject,
-          level: e.level,
-          year: e.year,
-          isFree: e.is_free,
-          questionCount: e.question_count,
-        })));
+        setExams(examsData);
       }
 
       // Fetch stats
@@ -142,6 +149,29 @@ export default function AdminDashboard() {
 
     fetchData();
   }, []);
+
+  const fetchExams = async () => {
+    const { data: examsData } = await supabase
+      .from('exams')
+      .select('*')
+      .order('year', { ascending: false })
+      .limit(100);
+    if (examsData) setExams(examsData);
+  };
+
+  const handleEditExam = (exam: Exam) => {
+    setSelectedExam(exam);
+    setEditDialogOpen(true);
+  };
+
+  const handleCreateExam = () => {
+    setSelectedExam(null);
+    setEditDialogOpen(true);
+  };
+
+  const handlePreviewExam = (examId: string, mode: 'practice' | 'simulation') => {
+    navigate(`/exam/${examId}?mode=${mode}`);
+  };
 
   const filteredUsers = users.filter(u =>
     u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -310,7 +340,7 @@ export default function AdminDashboard() {
               <div className="p-6 border-b border-border">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <h3 className="font-semibold text-foreground">All Exams ({exams.length})</h3>
-                  <Button className="gap-2">
+                  <Button className="gap-2" onClick={handleCreateExam}>
                     <Plus className="w-4 h-4" />
                     Create Exam
                   </Button>
@@ -326,7 +356,7 @@ export default function AdminDashboard() {
                   <BookOpen className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                   <h4 className="font-semibold text-foreground mb-2">No exams yet</h4>
                   <p className="text-muted-foreground text-sm mb-4">Create your first exam to get started</p>
-                  <Button className="gap-2">
+                  <Button className="gap-2" onClick={handleCreateExam}>
                     <Plus className="w-4 h-4" />
                     Create Exam
                   </Button>
@@ -341,7 +371,7 @@ export default function AdminDashboard() {
                       <TableHead>Year</TableHead>
                       <TableHead className="text-center">Questions</TableHead>
                       <TableHead>Access</TableHead>
-                      <TableHead></TableHead>
+                      <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -357,16 +387,34 @@ export default function AdminDashboard() {
                           </span>
                         </TableCell>
                         <TableCell>{exam.year}</TableCell>
-                        <TableCell className="text-center">{exam.questionCount}</TableCell>
+                        <TableCell className="text-center">{exam.question_count}</TableCell>
                         <TableCell>
                           <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                            exam.isFree ? 'bg-emerald-500/10 text-emerald-600' : 'bg-amber-500/10 text-amber-600'
+                            exam.is_free ? 'bg-emerald-500/10 text-emerald-600' : 'bg-amber-500/10 text-amber-600'
                           }`}>
-                            {exam.isFree ? 'Free' : 'Premium'}
+                            {exam.is_free ? 'Free' : 'Premium'}
                           </span>
                         </TableCell>
-                        <TableCell>
-                          <Button variant="ghost" size="sm">Edit</Button>
+                        <TableCell className="text-right">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="sm">Actions</Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem onClick={() => handleEditExam(exam)}>
+                                <Edit className="w-4 h-4 mr-2" />
+                                Edit Exam
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => handlePreviewExam(exam.id, 'practice')}>
+                                <Eye className="w-4 h-4 mr-2" />
+                                Preview (Practice)
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => handlePreviewExam(exam.id, 'simulation')}>
+                                <Play className="w-4 h-4 mr-2" />
+                                Preview (Simulation)
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -398,6 +446,14 @@ export default function AdminDashboard() {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Exam Edit Dialog */}
+        <ExamEditDialog
+          exam={selectedExam}
+          open={editDialogOpen}
+          onOpenChange={setEditDialogOpen}
+          onSaved={fetchExams}
+        />
       </div>
     </DashboardLayout>
   );
