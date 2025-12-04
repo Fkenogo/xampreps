@@ -1,0 +1,433 @@
+import { useState, useEffect, useMemo } from 'react';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import Card from '@/components/common/Card';
+import { 
+  ChevronLeft, 
+  ChevronRight, 
+  CheckCircle, 
+  XCircle, 
+  Clock, 
+  Sparkles,
+  ArrowLeft,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import type { Database } from '@/integrations/supabase/types';
+
+type Exam = Database['public']['Tables']['exams']['Row'];
+type Question = Database['public']['Tables']['questions']['Row'];
+type QuestionPart = Database['public']['Tables']['question_parts']['Row'];
+
+interface QuestionWithParts extends Question {
+  parts: QuestionPart[];
+}
+
+export default function ExamTakingPage() {
+  const { examId } = useParams<{ examId: string }>();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { profile, role } = useAuth();
+  
+  const mode = searchParams.get('mode') as 'practice' | 'simulation' || 'practice';
+  
+  const [exam, setExam] = useState<Exam | null>(null);
+  const [questions, setQuestions] = useState<QuestionWithParts[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [results, setResults] = useState<Record<string, boolean>>({});
+  const [showResults, setShowResults] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(0);
+
+  useEffect(() => {
+    const fetchExam = async () => {
+      if (!examId) return;
+
+      // Fetch exam
+      const { data: examData, error: examError } = await supabase
+        .from('exams')
+        .select('*')
+        .eq('id', examId)
+        .maybeSingle();
+
+      if (examError || !examData) {
+        console.error('Error fetching exam:', examError);
+        navigate('/exams');
+        return;
+      }
+
+      setExam(examData);
+      setTimeLeft(examData.time_limit * 60);
+
+      // Fetch questions with parts
+      const { data: questionsData } = await supabase
+        .from('questions')
+        .select('*')
+        .eq('exam_id', examId)
+        .order('question_number');
+
+      if (questionsData) {
+        // Fetch parts for all questions
+        const questionIds = questionsData.map(q => q.id);
+        const { data: partsData } = await supabase
+          .from('question_parts')
+          .select('*')
+          .in('question_id', questionIds)
+          .order('order_index');
+
+        const questionsWithParts: QuestionWithParts[] = questionsData.map(q => ({
+          ...q,
+          parts: (partsData || []).filter(p => p.question_id === q.id),
+        }));
+
+        setQuestions(questionsWithParts);
+      }
+
+      setLoading(false);
+    };
+
+    fetchExam();
+  }, [examId, navigate]);
+
+  // Timer for simulation mode
+  useEffect(() => {
+    if (mode === 'simulation' && !showResults && timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft(prev => {
+          if (prev <= 1) {
+            handleSubmitExam();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [mode, showResults, timeLeft]);
+
+  const currentQuestion = questions[currentQuestionIndex];
+  const totalParts = useMemo(() => 
+    questions.reduce((acc, q) => acc + q.parts.length, 0), 
+    [questions]
+  );
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const handleAnswerChange = (partId: string, value: string) => {
+    setAnswers(prev => ({ ...prev, [partId]: value }));
+  };
+
+  const checkAnswer = (part: QuestionPart, userAnswer: string): boolean => {
+    const normalizedUser = userAnswer.toLowerCase().trim();
+    const normalizedCorrect = part.answer.toLowerCase().trim();
+    
+    if (part.answer_type === 'numeric') {
+      const userNum = parseFloat(normalizedUser);
+      const correctNum = parseFloat(normalizedCorrect);
+      return Math.abs(userNum - correctNum) < 0.1;
+    }
+    
+    return normalizedUser.includes(normalizedCorrect) || normalizedCorrect.includes(normalizedUser);
+  };
+
+  const handleCheckPracticeAnswer = (part: QuestionPart) => {
+    const userAnswer = answers[part.id] || '';
+    const isCorrect = checkAnswer(part, userAnswer);
+    setResults(prev => ({ ...prev, [part.id]: isCorrect }));
+  };
+
+  const handleSubmitExam = async () => {
+    const newResults: Record<string, boolean> = {};
+    questions.forEach(question => {
+      question.parts.forEach(part => {
+        const userAnswer = answers[part.id] || '';
+        newResults[part.id] = checkAnswer(part, userAnswer);
+      });
+    });
+    setResults(newResults);
+    setShowResults(true);
+
+    // Save attempt if user is logged in
+    if (profile && exam) {
+      const score = Object.values(newResults).filter(Boolean).length;
+      await supabase.from('exam_attempts').insert({
+        user_id: profile.id,
+        exam_id: exam.id,
+        mode,
+        score,
+        total_questions: totalParts,
+        time_taken: exam.time_limit * 60 - timeLeft,
+      });
+    }
+  };
+
+  const calculateScore = () => {
+    const correct = Object.values(results).filter(Boolean).length;
+    return { score: correct, total: totalParts };
+  };
+
+  const handleExit = () => {
+    if (showResults) {
+      navigate(role === 'admin' ? '/dashboard/admin' : '/exams');
+    } else {
+      if (window.confirm('Are you sure you want to exit? Your progress will be lost.')) {
+        navigate(role === 'admin' ? '/dashboard/admin' : '/exams');
+      }
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      </div>
+    );
+  }
+
+  if (!exam || questions.length === 0) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-xl font-bold mb-2">Exam not found</h2>
+          <p className="text-muted-foreground mb-4">This exam may not have any questions yet.</p>
+          <Button onClick={() => navigate(-1)}>Go Back</Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (showResults) {
+    const { score, total } = calculateScore();
+    const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
+    
+    return (
+      <div className="min-h-screen bg-background py-8 px-4">
+        <div className="container mx-auto max-w-2xl">
+          <Card className="text-center p-8">
+            <div className={cn(
+              'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center',
+              percentage >= 70 ? 'bg-emerald-100' : percentage >= 50 ? 'bg-amber-100' : 'bg-red-100'
+            )}>
+              <span className={cn(
+                'text-3xl font-bold',
+                percentage >= 70 ? 'text-emerald-600' : percentage >= 50 ? 'text-amber-600' : 'text-red-600'
+              )}>
+                {percentage}%
+              </span>
+            </div>
+            
+            <h1 className="text-2xl font-bold mb-2">Exam Complete!</h1>
+            <p className="text-muted-foreground mb-6">
+              You scored {score} out of {total} questions correctly.
+            </p>
+            
+            <Button onClick={handleExit}>
+              Back to {role === 'admin' ? 'Dashboard' : 'Exams'}
+            </Button>
+          </Card>
+
+          {/* Review Section */}
+          <div className="mt-8 space-y-6">
+            <h2 className="text-xl font-bold">Review Your Answers</h2>
+            {questions.map((question, qIndex) => (
+              <Card key={question.id} className="p-6">
+                <h3 className="font-bold mb-4">Question {qIndex + 1}</h3>
+                <p className="text-muted-foreground mb-4 whitespace-pre-line">{question.text}</p>
+                
+                {question.parts.map(part => (
+                  <div key={part.id} className="border-t border-border pt-4 mt-4">
+                    <div className="flex items-start gap-3">
+                      {results[part.id] ? (
+                        <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
+                      ) : (
+                        <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-1" />
+                      )}
+                      <div className="flex-1">
+                        <p className="font-medium">{part.text}</p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Your answer: {answers[part.id] || '(No answer)'}
+                        </p>
+                        <p className="text-sm text-emerald-600 mt-1">
+                          Correct answer: {part.answer}
+                        </p>
+                        {part.explanation && (
+                          <p className="text-sm text-secondary mt-2 bg-secondary/10 p-3 rounded-lg">
+                            {part.explanation}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="bg-card shadow-sm border-b border-border sticky top-0 z-10">
+        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" size="icon" onClick={handleExit}>
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+            <div>
+              <h1 className="font-bold text-foreground">{exam.title}</h1>
+              <p className="text-sm text-muted-foreground">
+                {mode === 'practice' ? 'Practice Mode' : 'Exam Simulation'}
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            {mode === 'simulation' && (
+              <div className={cn(
+                'flex items-center gap-2 px-3 py-1 rounded-full',
+                timeLeft < 300 ? 'bg-red-100 text-red-600' : 'bg-muted text-foreground'
+              )}>
+                <Clock className="w-5 h-5" />
+                <span className="font-mono font-bold">{formatTime(timeLeft)}</span>
+              </div>
+            )}
+            
+            {mode === 'simulation' && (
+              <Button onClick={handleSubmitExam}>
+                Submit Exam
+              </Button>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Question Navigation */}
+      <div className="bg-card border-b border-border">
+        <div className="container mx-auto px-6 py-3">
+          <div className="flex items-center gap-2 overflow-x-auto">
+            {questions.map((q, index) => (
+              <button
+                key={q.id}
+                onClick={() => setCurrentQuestionIndex(index)}
+                className={cn(
+                  'px-4 py-2 rounded-lg font-medium transition-colors',
+                  index === currentQuestionIndex
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                )}
+              >
+                Q{index + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Question Content */}
+      <main className="container mx-auto px-6 py-8 max-w-4xl">
+        <Card className="p-6">
+          <div className="mb-6">
+            <span className="text-sm text-primary font-medium">
+              Question {currentQuestionIndex + 1} of {questions.length}
+            </span>
+            <h2 className="text-xl font-bold mt-2 whitespace-pre-line">{currentQuestion?.text}</h2>
+          </div>
+
+          <div className="space-y-6">
+            {currentQuestion?.parts.map((part, partIndex) => (
+              <div key={part.id} className="border-t border-border pt-6">
+                <div className="flex items-start gap-4">
+                  <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    {String.fromCharCode(97 + partIndex)}
+                  </span>
+                  <div className="flex-1">
+                    <p className="font-medium mb-2">{part.text}</p>
+                    <p className="text-sm text-muted-foreground mb-3">[{part.marks} marks]</p>
+                    
+                    <Textarea
+                      value={answers[part.id] || ''}
+                      onChange={(e) => handleAnswerChange(part.id, e.target.value)}
+                      placeholder="Enter your answer..."
+                      className="min-h-[100px] resize-y"
+                    />
+
+                    {mode === 'practice' && (
+                      <div className="mt-3 flex items-center gap-3">
+                        <Button
+                          variant="secondary"
+                          onClick={() => handleCheckPracticeAnswer(part)}
+                        >
+                          Check Answer
+                        </Button>
+                        
+                        {results[part.id] !== undefined && (
+                          <div className={cn(
+                            'flex items-center gap-2',
+                            results[part.id] ? 'text-emerald-600' : 'text-red-600'
+                          )}>
+                            {results[part.id] ? (
+                              <>
+                                <CheckCircle className="w-5 h-5" />
+                                <span>Correct!</span>
+                              </>
+                            ) : (
+                              <>
+                                <XCircle className="w-5 h-5" />
+                                <span>Incorrect. Answer: {part.answer}</span>
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {mode === 'practice' && results[part.id] !== undefined && part.explanation && (
+                      <div className="mt-3 p-4 bg-secondary/10 rounded-lg">
+                        <div className="flex items-center gap-2 text-secondary font-medium mb-2">
+                          <Sparkles className="w-5 h-5" />
+                          Explanation
+                        </div>
+                        <p className="text-sm text-muted-foreground">{part.explanation}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        {/* Navigation */}
+        <div className="flex justify-between mt-6">
+          <Button
+            variant="ghost"
+            onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
+            disabled={currentQuestionIndex === 0}
+          >
+            <ChevronLeft className="w-5 h-5 mr-2" />
+            Previous
+          </Button>
+          
+          <Button
+            variant="ghost"
+            onClick={() => setCurrentQuestionIndex(prev => Math.min(questions.length - 1, prev + 1))}
+            disabled={currentQuestionIndex === questions.length - 1}
+          >
+            Next
+            <ChevronRight className="w-5 h-5 ml-2" />
+          </Button>
+        </div>
+      </main>
+    </div>
+  );
+}
