@@ -8,6 +8,7 @@ import StreakCalendar from '@/components/dashboard/StreakCalendar';
 import AchievementBadge from '@/components/dashboard/AchievementBadge';
 import QuickActionCard from '@/components/dashboard/QuickActionCard';
 import SubjectCard from '@/components/dashboard/SubjectCard';
+import StudyAssistant from '@/components/chat/StudyAssistant';
 import { 
   Zap, 
   Trophy, 
@@ -235,6 +236,9 @@ export default function StudentDashboard() {
               : "🚀 Every expert was once a beginner. Keep practicing!"}
           </p>
         </div>
+
+        {/* AI Study Assistant */}
+        <StudyAssistant />
       </div>
     </DashboardLayout>
   );

@@ -26,7 +26,11 @@ import type { Database } from '@/integrations/supabase/types';
 
 type Exam = Database['public']['Tables']['exams']['Row'];
 
-export default function ExamsPage() {
+interface ExamsPageProps {
+  type?: 'Past Paper' | 'Practice Paper';
+}
+
+export default function ExamsPage({ type }: ExamsPageProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const { profile } = useAuth();
@@ -43,6 +47,10 @@ export default function ExamsPage() {
         .from('exams')
         .select('*')
         .order('year', { ascending: false });
+
+      if (type) {
+        query = query.eq('type', type);
+      }
 
       if (levelFilter && levelFilter !== 'all') {
         query = query.eq('level', levelFilter as 'PLE' | 'UCE' | 'UACE');
@@ -68,7 +76,7 @@ export default function ExamsPage() {
     };
 
     fetchExams();
-  }, [subjectFilter, levelFilter, searchQuery]);
+  }, [subjectFilter, levelFilter, searchQuery, type]);
 
   const subjects = ['Mathematics', 'English', 'Science', 'Social Studies'];
   const levels = ['PLE', 'UCE', 'UACE'];
@@ -87,9 +95,11 @@ export default function ExamsPage() {
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Exams 📚</h1>
+          <h1 className="text-3xl font-bold text-foreground">
+            {type === 'Past Paper' ? 'Past Papers 📜' : type === 'Practice Paper' ? 'Practice Papers ✍️' : 'All Exams 📚'}
+          </h1>
           <p className="text-muted-foreground mt-1">
-            Browse and take practice exams
+            {type ? `Browse ${type.toLowerCase()}s` : 'Browse and take practice exams'}
           </p>
         </div>
 
