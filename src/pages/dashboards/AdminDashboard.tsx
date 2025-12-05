@@ -5,6 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import StatCard from '@/components/dashboard/StatCard';
 import ExamEditDialog from '@/components/admin/ExamEditDialog';
+import QuestionEditor from '@/components/admin/QuestionEditor';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -21,6 +22,7 @@ import {
   Eye,
   Edit,
   Play,
+  ListOrdered,
 } from 'lucide-react';
 import {
   Table,
@@ -81,6 +83,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedExam, setSelectedExam] = useState<Exam | null>(null);
+  const [editingQuestionsExam, setEditingQuestionsExam] = useState<Exam | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -173,6 +176,10 @@ export default function AdminDashboard() {
     navigate(`/exam/${examId}?mode=${mode}`);
   };
 
+  const handleEditQuestions = (exam: Exam) => {
+    setEditingQuestionsExam(exam);
+  };
+
   const filteredUsers = users.filter(u =>
     u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     u.email.toLowerCase().includes(searchQuery.toLowerCase())
@@ -186,6 +193,24 @@ export default function AdminDashboard() {
       default: return 'bg-emerald-500/10 text-emerald-600';
     }
   };
+
+  // If editing questions, show the question editor
+  if (editingQuestionsExam) {
+    return (
+      <DashboardLayout previewRole={previewRole} onPreviewRoleChange={setPreviewRole}>
+        <div className="max-w-7xl mx-auto">
+          <QuestionEditor
+            examId={editingQuestionsExam.id}
+            examTitle={editingQuestionsExam.title}
+            onBack={() => {
+              setEditingQuestionsExam(null);
+              fetchExams();
+            }}
+          />
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout previewRole={previewRole} onPreviewRoleChange={setPreviewRole}>
@@ -403,7 +428,11 @@ export default function AdminDashboard() {
                             <DropdownMenuContent align="end">
                               <DropdownMenuItem onClick={() => handleEditExam(exam)}>
                                 <Edit className="w-4 h-4 mr-2" />
-                                Edit Exam
+                                Edit Details
+                              </DropdownMenuItem>
+                              <DropdownMenuItem onClick={() => handleEditQuestions(exam)}>
+                                <ListOrdered className="w-4 h-4 mr-2" />
+                                Edit Questions
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => handlePreviewExam(exam.id, 'practice')}>
                                 <Eye className="w-4 h-4 mr-2" />
