@@ -21,6 +21,8 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { ChevronLeft, ChevronRight, Save, Plus, Trash2, Loader2 } from 'lucide-react';
 import type { Database } from '@/integrations/supabase/types';
+import BulkQuestionImport from './BulkQuestionImport';
+import ImageUpload from './ImageUpload';
 
 type Question = Database['public']['Tables']['questions']['Row'];
 type QuestionPart = Database['public']['Tables']['question_parts']['Row'];
@@ -341,6 +343,7 @@ export default function QuestionEditor({ examId, examTitle, onBack }: QuestionEd
           </div>
         </div>
         <div className="flex items-center gap-2">
+          <BulkQuestionImport examId={examId} onImportComplete={fetchQuestions} />
           <Button variant="outline" onClick={addQuestion}>
             <Plus className="h-4 w-4 mr-2" />
             Add Question
@@ -420,25 +423,23 @@ export default function QuestionEditor({ examId, examTitle, onBack }: QuestionEd
             </div>
 
             {/* Question Number */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Question Number</Label>
-                <Input
-                  type="number"
-                  value={currentQuestion.question_number}
-                  onChange={(e) => updateQuestion('question_number', parseInt(e.target.value))}
-                  min={1}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Image URL (optional)</Label>
-                <Input
-                  value={currentQuestion.image_url || ''}
-                  onChange={(e) => updateQuestion('image_url', e.target.value || null)}
-                  placeholder="https://..."
-                />
-              </div>
+            <div className="space-y-2">
+              <Label>Question Number</Label>
+              <Input
+                type="number"
+                value={currentQuestion.question_number}
+                onChange={(e) => updateQuestion('question_number', parseInt(e.target.value))}
+                min={1}
+                className="max-w-[120px]"
+              />
             </div>
+
+            {/* Image Upload */}
+            <ImageUpload
+              currentImageUrl={currentQuestion.image_url}
+              onImageChange={(url) => updateQuestion('image_url', url)}
+              questionId={currentQuestion.id}
+            />
 
             {/* Question Parts */}
             <div className="space-y-4">

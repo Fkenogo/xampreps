@@ -23,6 +23,8 @@ import {
   Edit,
   Play,
   ListOrdered,
+  Copy,
+  Loader2,
 } from 'lucide-react';
 import {
   Table,
@@ -84,6 +86,7 @@ export default function AdminDashboard() {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedExam, setSelectedExam] = useState<Exam | null>(null);
   const [editingQuestionsExam, setEditingQuestionsExam] = useState<Exam | null>(null);
+  const [duplicating, setDuplicating] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -178,6 +181,99 @@ export default function AdminDashboard() {
 
   const handleEditQuestions = (exam: Exam) => {
     setEditingQuestionsExam(exam);
+  };
+
+  const handleDuplicateExam = async (exam: Exam) => {
+    setDuplicating(exam.id);
+    try {
+      // Create new exam with copied details
+      const { data: newExam, error: examError } = await supabase
+        .from('exams')
+        .insert({
+          title: `${exam.title} (Copy)`,
+          subject: exam.subject,
+          level: exam.level,
+          year: exam.year,
+          type: exam.type,
+          difficulty: exam.difficulty,
+          time_limit: exam.time_limit,
+          is_free: exam.is_free,
+          description: exam.description,
+          topic: exam.topic,
+          question_count: 0,
+        })
+        .select()
+        .single();
+
+      if (examError) throw examError;
+
+      // Fetch original questions
+      const { data: questions, error: questionsError } = await supabase
+        .from('questions')
+        .select('*')
+        .eq('exam_id', exam.id)
+        .order('question_number');
+
+      if (questionsError) throw questionsError;
+
+      // Duplicate questions and their parts
+      for (const question of questions || []) {
+        const { data: newQuestion, error: newQuestionError } = await supabase
+          .from('questions')
+          .insert({
+            exam_id: newExam.id,
+            question_number: question.question_number,
+            text: question.text,
+            image_url: question.image_url,
+            table_data: question.table_data,
+          })
+          .select()
+          .single();
+
+        if (newQuestionError) throw newQuestionError;
+
+        // Fetch and duplicate parts
+        const { data: parts, error: partsError } = await supabase
+          .from('question_parts')
+          .select('*')
+          .eq('question_id', question.id)
+          .order('order_index');
+
+        if (partsError) throw partsError;
+
+        for (const part of parts || []) {
+          const { error: partError } = await supabase
+            .from('question_parts')
+            .insert({
+              question_id: newQuestion.id,
+              text: part.text,
+              answer: part.answer,
+              explanation: part.explanation,
+              marks: part.marks,
+              order_index: part.order_index,
+              answer_type: part.answer_type,
+            });
+
+          if (partError) throw partError;
+        }
+      }
+
+      // Update question count
+      await supabase
+        .from('exams')
+        .update({ question_count: questions?.length || 0 })
+        .eq('id', newExam.id);
+
+      await fetchExams();
+      
+      // Auto-open the new exam for editing
+      setSelectedExam(newExam);
+      setEditDialogOpen(true);
+    } catch (error: any) {
+      console.error('Error duplicating exam:', error);
+    } finally {
+      setDuplicating(null);
+    }
   };
 
   const filteredUsers = users.filter(u =>
@@ -441,6 +537,17 @@ export default function AdminDashboard() {
                               <DropdownMenuItem onClick={() => handlePreviewExam(exam.id, 'simulation')}>
                                 <Play className="w-4 h-4 mr-2" />
                                 Preview (Simulation)
+                              </DropdownMenuItem>
+                              <DropdownMenuItem 
+                                onClick={() => handleDuplicateExam(exam)}
+                                disabled={duplicating === exam.id}
+                              >
+                                {duplicating === exam.id ? (
+                                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                ) : (
+                                  <Copy className="w-4 h-4 mr-2" />
+                                )}
+                                Duplicate Exam
                               </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
