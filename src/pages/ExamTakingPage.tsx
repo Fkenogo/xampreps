@@ -124,17 +124,143 @@ export default function ExamTakingPage() {
     setAnswers(prev => ({ ...prev, [partId]: value }));
   };
 
-  const checkAnswer = (part: QuestionPart, userAnswer: string): boolean => {
-    const normalizedUser = userAnswer.toLowerCase().trim();
-    const normalizedCorrect = part.answer.toLowerCase().trim();
+  // Helper to normalize text for comparison
+  const normalizeText = (text: string): string => {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[,\s]+/g, ' ')           // Normalize whitespace and commas
+      .replace(/sh\.?\s*/gi, '')         // Remove currency prefixes
+      .replace(/°|degrees?/gi, '')       // Normalize degrees
+      .replace(/p\.?\s*m\.?/gi, 'pm')    // Normalize PM
+      .replace(/a\.?\s*m\.?/gi, 'am')    // Normalize AM
+      .replace(/\s+/g, ' ')              // Collapse multiple spaces
+      .replace(/['"]/g, '')              // Remove quotes
+      .replace(/\./g, '')                // Remove periods (for abbreviations)
+      .trim();
+  };
+
+  // Extract numeric value from text
+  const extractNumber = (text: string): number | null => {
+    const cleaned = text.replace(/[,\s]/g, '').replace(/sh\.?/gi, '');
+    const match = cleaned.match(/-?\d+\.?\d*/);
+    return match ? parseFloat(match[0]) : null;
+  };
+
+  // Check if two fractions are equivalent
+  const checkFractionEquivalence = (user: string, correct: string): boolean => {
+    // Handle mixed numbers like "2 1/3" or "2⅓"
+    const parseFraction = (str: string): number | null => {
+      str = str.replace(/⅓/g, '1/3').replace(/⅔/g, '2/3').replace(/½/g, '1/2').replace(/¼/g, '1/4').replace(/¾/g, '3/4');
+      
+      // Mixed number: "2 1/3"
+      const mixedMatch = str.match(/(\d+)\s+(\d+)\/(\d+)/);
+      if (mixedMatch) {
+        const whole = parseInt(mixedMatch[1]);
+        const num = parseInt(mixedMatch[2]);
+        const den = parseInt(mixedMatch[3]);
+        return whole + num / den;
+      }
+      
+      // Simple fraction: "7/3"
+      const fractionMatch = str.match(/(\d+)\/(\d+)/);
+      if (fractionMatch) {
+        return parseInt(fractionMatch[1]) / parseInt(fractionMatch[2]);
+      }
+      
+      // Decimal
+      const num = parseFloat(str);
+      return isNaN(num) ? null : num;
+    };
+
+    const userVal = parseFraction(user);
+    const correctVal = parseFraction(correct);
     
+    if (userVal !== null && correctVal !== null) {
+      return Math.abs(userVal - correctVal) < 0.01;
+    }
+    return false;
+  };
+
+  // Check time equivalence
+  const checkTimeEquivalence = (user: string, correct: string): boolean => {
+    const parseTime = (str: string): { hours: number; minutes: number; isPm: boolean } | null => {
+      str = str.toLowerCase().replace(/\s/g, '');
+      const isPm = str.includes('pm') || str.includes('p.m');
+      const isAm = str.includes('am') || str.includes('a.m');
+      
+      const timeMatch = str.match(/(\d{1,2}):(\d{2})/);
+      if (timeMatch) {
+        let hours = parseInt(timeMatch[1]);
+        const minutes = parseInt(timeMatch[2]);
+        return { hours, minutes, isPm };
+      }
+      return null;
+    };
+
+    const userTime = parseTime(user);
+    const correctTime = parseTime(correct);
+    
+    if (userTime && correctTime) {
+      return userTime.hours === correctTime.hours && 
+             userTime.minutes === correctTime.minutes &&
+             userTime.isPm === correctTime.isPm;
+    }
+    return false;
+  };
+
+  const checkAnswer = (part: QuestionPart, userAnswer: string): boolean => {
+    if (!userAnswer.trim()) return false;
+    
+    const normalizedUser = normalizeText(userAnswer);
+    const normalizedCorrect = normalizeText(part.answer);
+    
+    // Exact match after normalization
+    if (normalizedUser === normalizedCorrect) return true;
+    
+    // Handle numeric answers
     if (part.answer_type === 'numeric') {
-      const userNum = parseFloat(normalizedUser);
-      const correctNum = parseFloat(normalizedCorrect);
-      return Math.abs(userNum - correctNum) < 0.1;
+      const userNum = extractNumber(userAnswer);
+      const correctNum = extractNumber(part.answer);
+      if (userNum !== null && correctNum !== null) {
+        return Math.abs(userNum - correctNum) < 0.01;
+      }
     }
     
-    return normalizedUser.includes(normalizedCorrect) || normalizedCorrect.includes(normalizedUser);
+    // Check fraction equivalence (for answers like "7/3" or "2⅓")
+    if (userAnswer.includes('/') || part.answer.includes('/') || 
+        /[⅓⅔½¼¾]/.test(userAnswer) || /[⅓⅔½¼¾]/.test(part.answer)) {
+      if (checkFractionEquivalence(userAnswer, part.answer)) return true;
+    }
+    
+    // Check time equivalence
+    if (userAnswer.includes(':') && part.answer.includes(':')) {
+      if (checkTimeEquivalence(userAnswer, part.answer)) return true;
+    }
+    
+    // Check if numeric value matches even in text answers
+    const userNum = extractNumber(userAnswer);
+    const correctNum = extractNumber(part.answer);
+    if (userNum !== null && correctNum !== null && Math.abs(userNum - correctNum) < 0.01) {
+      return true;
+    }
+    
+    // Fuzzy matching: check containment for longer answers
+    if (normalizedCorrect.length > 3) {
+      if (normalizedUser.includes(normalizedCorrect) || normalizedCorrect.includes(normalizedUser)) {
+        return true;
+      }
+    }
+    
+    // Check if key parts match (for answers like "3x - 35")
+    const userParts = normalizedUser.split(/[\s+\-=]+/).filter(Boolean);
+    const correctParts = normalizedCorrect.split(/[\s+\-=]+/).filter(Boolean);
+    if (correctParts.length > 0 && userParts.length === correctParts.length) {
+      const allMatch = correctParts.every((cp, i) => cp === userParts[i]);
+      if (allMatch) return true;
+    }
+    
+    return false;
   };
 
   const handleCheckPracticeAnswer = (part: QuestionPart) => {
@@ -240,6 +366,15 @@ export default function ExamTakingPage() {
               <Card key={question.id} className="p-6">
                 <h3 className="font-bold mb-4">Question {qIndex + 1}</h3>
                 <p className="text-muted-foreground mb-4 whitespace-pre-line">{question.text}</p>
+                {question.image_url && (
+                  <div className="mb-4">
+                    <img 
+                      src={question.image_url} 
+                      alt={`Question ${qIndex + 1} diagram`}
+                      className="max-w-full h-auto rounded-lg border border-border"
+                    />
+                  </div>
+                )}
                 
                 {question.parts.map(part => (
                   <div key={part.id} className="border-t border-border pt-4 mt-4">
@@ -258,9 +393,9 @@ export default function ExamTakingPage() {
                           Correct answer: {part.answer}
                         </p>
                         {part.explanation && (
-                          <p className="text-sm text-secondary mt-2 bg-secondary/10 p-3 rounded-lg">
+                          <div className="text-sm text-secondary mt-2 bg-secondary/10 p-3 rounded-lg whitespace-pre-line">
                             {part.explanation}
-                          </p>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -341,6 +476,15 @@ export default function ExamTakingPage() {
               Question {currentQuestionIndex + 1} of {questions.length}
             </span>
             <h2 className="text-xl font-bold mt-2 whitespace-pre-line">{currentQuestion?.text}</h2>
+            {currentQuestion?.image_url && (
+              <div className="mt-4">
+                <img 
+                  src={currentQuestion.image_url} 
+                  alt={`Question ${currentQuestionIndex + 1} diagram`}
+                  className="max-w-full h-auto rounded-lg border border-border"
+                />
+              </div>
+            )}
           </div>
 
           <div className="space-y-6">
@@ -397,7 +541,7 @@ export default function ExamTakingPage() {
                           <Sparkles className="w-5 h-5" />
                           Explanation
                         </div>
-                        <p className="text-sm text-muted-foreground">{part.explanation}</p>
+                        <div className="text-sm text-muted-foreground whitespace-pre-line">{part.explanation}</div>
                       </div>
                     )}
                   </div>
