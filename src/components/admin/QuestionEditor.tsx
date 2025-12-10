@@ -23,6 +23,7 @@ import { ChevronLeft, ChevronRight, Save, Plus, Trash2, Loader2 } from 'lucide-r
 import type { Database } from '@/integrations/supabase/types';
 import BulkQuestionImport from './BulkQuestionImport';
 import ImageUpload from './ImageUpload';
+import BatchImageUpload from './BatchImageUpload';
 
 type Question = Database['public']['Tables']['questions']['Row'];
 type QuestionPart = Database['public']['Tables']['question_parts']['Row'];
@@ -344,6 +345,7 @@ export default function QuestionEditor({ examId, examTitle, onBack }: QuestionEd
         </div>
         <div className="flex items-center gap-2">
           <BulkQuestionImport examId={examId} onImportComplete={fetchQuestions} />
+          <BatchImageUpload examId={examId} questionCount={questions.length} onUploadComplete={fetchQuestions} />
           <Button variant="outline" onClick={addQuestion}>
             <Plus className="h-4 w-4 mr-2" />
             Add Question
