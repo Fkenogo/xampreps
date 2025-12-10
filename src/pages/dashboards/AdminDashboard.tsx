@@ -69,6 +69,11 @@ interface ExamData {
   questionCount: number;
 }
 
+// Import role-specific dashboard content components
+import StudentDashboardContent from './StudentDashboardContent';
+import ParentDashboardContent from './ParentDashboardContent';
+import SchoolDashboardContent from './SchoolDashboardContent';
+
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const { profile } = useAuth();
@@ -304,6 +309,31 @@ export default function AdminDashboard() {
             }}
           />
         </div>
+      </DashboardLayout>
+    );
+  }
+
+  // Render different dashboard content based on preview role
+  if (previewRole === 'student') {
+    return (
+      <DashboardLayout previewRole={previewRole} onPreviewRoleChange={setPreviewRole}>
+        <StudentDashboardContent />
+      </DashboardLayout>
+    );
+  }
+
+  if (previewRole === 'parent') {
+    return (
+      <DashboardLayout previewRole={previewRole} onPreviewRoleChange={setPreviewRole}>
+        <ParentDashboardContent />
+      </DashboardLayout>
+    );
+  }
+
+  if (previewRole === 'school') {
+    return (
+      <DashboardLayout previewRole={previewRole} onPreviewRoleChange={setPreviewRole}>
+        <SchoolDashboardContent />
       </DashboardLayout>
     );
   }
