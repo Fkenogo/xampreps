@@ -8,6 +8,10 @@ import StreakCalendar from '@/components/dashboard/StreakCalendar';
 import AchievementBadge from '@/components/dashboard/AchievementBadge';
 import QuickActionCard from '@/components/dashboard/QuickActionCard';
 import SubjectCard from '@/components/dashboard/SubjectCard';
+import QuickExamFinder from '@/components/dashboard/QuickExamFinder';
+import WeeklyProgressChart from '@/components/dashboard/WeeklyProgressChart';
+import RecentActivity from '@/components/dashboard/RecentActivity';
+import PersonalizedInsights from '@/components/dashboard/PersonalizedInsights';
 import StudyAssistant from '@/components/chat/StudyAssistant';
 import { 
   Zap, 
@@ -16,12 +20,19 @@ import {
   Target, 
   TrendingUp,
   Clock,
-  Star,
   Flame,
+  Sparkles,
 } from 'lucide-react';
 import type { Database } from '@/integrations/supabase/types';
+import { cn } from '@/lib/utils';
 
 type Achievement = Database['public']['Tables']['achievements']['Row'];
+
+interface SubjectProgress {
+  subject: string;
+  progress: number;
+  examCount: number;
+}
 
 export default function StudentDashboard() {
   const { profile, progress } = useAuth();
@@ -32,6 +43,8 @@ export default function StudentDashboard() {
     averageScore: 0,
     bestSubject: 'Mathematics',
   });
+  const [subjectProgress, setSubjectProgress] = useState<SubjectProgress[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,19 +67,65 @@ export default function StudentDashboard() {
         setUserAchievementIds(userAchievements.map(ua => ua.achievement_id));
       }
 
-      // Fetch exam stats
+      // Fetch exam stats with subject data
       const { data: attempts } = await supabase
         .from('exam_attempts')
-        .select('score, total_questions');
+        .select('score, total_questions, exams(subject)');
       
       if (attempts && attempts.length > 0) {
         const avgScore = attempts.reduce((acc, a) => acc + (a.score / a.total_questions) * 100, 0) / attempts.length;
+        
+        // Calculate subject progress
+        const subjectData: Record<string, { correct: number; total: number; count: number }> = {};
+        attempts.forEach((a) => {
+          const subject = (a.exams as any)?.subject || 'Unknown';
+          if (!subjectData[subject]) {
+            subjectData[subject] = { correct: 0, total: 0, count: 0 };
+          }
+          subjectData[subject].correct += a.score;
+          subjectData[subject].total += a.total_questions;
+          subjectData[subject].count += 1;
+        });
+
+        // Find best subject
+        let bestSubject = 'Mathematics';
+        let bestScore = 0;
+        Object.entries(subjectData).forEach(([subject, data]) => {
+          const score = (data.correct / data.total) * 100;
+          if (score > bestScore) {
+            bestScore = score;
+            bestSubject = subject;
+          }
+        });
+
         setExamStats({
           totalAttempts: attempts.length,
           averageScore: Math.round(avgScore),
-          bestSubject: 'Mathematics',
+          bestSubject,
         });
+
+        // Set subject progress
+        const subjects = ['Mathematics', 'Science', 'English', 'Social Studies'];
+        const progressData = subjects.map(subject => {
+          const data = subjectData[subject];
+          return {
+            subject,
+            progress: data ? Math.round((data.correct / data.total) * 100) : 0,
+            examCount: data?.count || 0,
+          };
+        });
+        setSubjectProgress(progressData);
+      } else {
+        // Default subjects with 0 progress
+        setSubjectProgress([
+          { subject: 'Mathematics', progress: 0, examCount: 0 },
+          { subject: 'Science', progress: 0, examCount: 0 },
+          { subject: 'English', progress: 0, examCount: 0 },
+          { subject: 'Social Studies', progress: 0, examCount: 0 },
+        ]);
       }
+
+      setLoading(false);
     };
 
     fetchData();
@@ -78,33 +137,26 @@ export default function StudentDashboard() {
   const dailyGoal = 50;
   const dailyProgress = Math.min((xp % 100) / dailyGoal * 100, 100);
 
-  // Subject progress (mock data for now)
-  const subjects = [
-    { subject: 'Mathematics', progress: 75, examCount: 12 },
-    { subject: 'Science', progress: 60, examCount: 10 },
-    { subject: 'English', progress: 85, examCount: 15 },
-    { subject: 'Social Studies', progress: 45, examCount: 8 },
-  ];
-
   return (
     <DashboardLayout>
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* Welcome Header */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        {/* Welcome Header with Animation */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 opacity-0 animate-fade-in">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">
-              Hey {profile?.name?.split(' ')[0] || 'Champion'}! 👋
+            <h1 className="text-3xl font-bold text-foreground flex items-center gap-2">
+              Hey {profile?.name?.split(' ')[0] || 'Champion'}! 
+              <span className="animate-bounce-soft inline-block">👋</span>
             </h1>
             <p className="text-muted-foreground mt-1">
               {streak > 0 
-                ? `You're on fire! ${streak} day streak 🔥`
+                ? <span className="flex items-center gap-1">You're on fire! {streak} day streak <Flame className="w-4 h-4 text-orange-500 animate-pulse-glow" /></span>
                 : "Ready to crush some exams today?"}
             </p>
           </div>
           
           {/* Daily Goal Progress */}
-          <div className="flex items-center gap-4 bg-card rounded-2xl border border-border p-4">
-            <ProgressRing progress={dailyProgress} size={80} strokeWidth={6}>
+          <div className="flex items-center gap-4 bg-card rounded-2xl border border-border p-4 animate-scale-in animation-delay-200">
+            <ProgressRing progress={dailyProgress} size={80} strokeWidth={6} showGlow>
               <div className="text-center">
                 <span className="text-lg font-bold text-foreground">{Math.round(dailyProgress)}%</span>
               </div>
@@ -112,18 +164,24 @@ export default function StudentDashboard() {
             <div>
               <p className="text-sm text-muted-foreground">Daily Goal</p>
               <p className="font-semibold text-foreground">{Math.round(xp % dailyGoal)}/{dailyGoal} XP</p>
+              {dailyProgress >= 100 && (
+                <span className="text-xs text-emerald-500 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" /> Completed!
+                </span>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Stats Row */}
+        {/* Stats Row with Staggered Animation */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard
             title="Total XP"
-            value={xp.toLocaleString()}
+            value={xp}
             subtitle={`Level ${level}`}
             icon={Zap}
             gradient="from-violet-500 to-purple-600"
+            delay={100}
           />
           <StatCard
             title="Day Streak"
@@ -131,6 +189,7 @@ export default function StudentDashboard() {
             subtitle={streak > 0 ? "Keep it up!" : "Start today"}
             icon={Flame}
             gradient="from-orange-500 to-red-500"
+            delay={200}
           />
           <StatCard
             title="Exams Taken"
@@ -138,6 +197,7 @@ export default function StudentDashboard() {
             subtitle={`Avg: ${examStats.averageScore}%`}
             icon={BookOpen}
             gradient="from-blue-500 to-cyan-500"
+            delay={300}
           />
           <StatCard
             title="Achievements"
@@ -145,11 +205,12 @@ export default function StudentDashboard() {
             subtitle={`of ${achievements.length}`}
             icon={Trophy}
             gradient="from-amber-500 to-yellow-500"
+            delay={400}
           />
         </div>
 
-        {/* Quick Actions */}
-        <div>
+        {/* Quick Actions with Hover Effects */}
+        <div className="opacity-0 animate-slide-up animation-delay-300">
           <h2 className="text-xl font-bold text-foreground mb-4">Quick Actions</h2>
           <div className="grid md:grid-cols-3 gap-4">
             <QuickActionCard
@@ -176,34 +237,47 @@ export default function StudentDashboard() {
           </div>
         </div>
 
-        {/* Two Column Layout */}
+        {/* Quick Exam Finder */}
+        <QuickExamFinder showRecommendations maxResults={4} />
+
+        {/* Main Content Grid */}
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Left Column - Subjects */}
+          {/* Left Column - Subjects & Progress */}
           <div className="lg:col-span-2 space-y-6">
+            {/* Subject Progress */}
             <div>
               <h2 className="text-xl font-bold text-foreground mb-4">Your Subjects</h2>
               <div className="grid sm:grid-cols-2 gap-4">
-                {subjects.map((subject) => (
+                {subjectProgress.map((subject, index) => (
                   <SubjectCard
                     key={subject.subject}
                     subject={subject.subject}
                     progress={subject.progress}
                     examCount={subject.examCount}
                     level={profile?.level || 'PLE'}
+                    delay={index * 100}
                   />
                 ))}
               </div>
             </div>
+
+            {/* Weekly Progress & Insights */}
+            <div className="grid md:grid-cols-2 gap-4">
+              <WeeklyProgressChart />
+              <PersonalizedInsights />
+            </div>
           </div>
 
-          {/* Right Column - Streak & Achievements */}
+          {/* Right Column - Activity & Achievements */}
           <div className="space-y-6">
             <StreakCalendar 
               streak={streak} 
               lastExamDate={progress?.last_exam_date || undefined} 
             />
             
-            <div className="bg-card rounded-2xl border border-border p-6">
+            <RecentActivity limit={5} />
+            
+            <div className="bg-card rounded-2xl border border-border p-6 opacity-0 animate-fade-in animation-delay-500">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-foreground">Recent Achievements</h3>
                 <a href="/achievements" className="text-sm text-primary hover:underline">
@@ -211,23 +285,32 @@ export default function StudentDashboard() {
                 </a>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                {achievements.slice(0, 4).map((achievement) => (
-                  <AchievementBadge
+                {achievements.slice(0, 4).map((achievement, index) => (
+                  <div
                     key={achievement.id}
-                    name={achievement.name}
-                    description={achievement.description}
-                    icon={achievement.icon || 'trophy'}
-                    earned={userAchievementIds.includes(achievement.id)}
-                    xpReward={achievement.xp_reward}
-                  />
+                    className="opacity-0 animate-scale-in"
+                    style={{ animationDelay: `${600 + index * 100}ms` }}
+                  >
+                    <AchievementBadge
+                      name={achievement.name}
+                      description={achievement.description}
+                      icon={achievement.icon || 'trophy'}
+                      earned={userAchievementIds.includes(achievement.id)}
+                      xpReward={achievement.xp_reward}
+                    />
+                  </div>
                 ))}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Motivational Footer */}
-        <div className="bg-gradient-to-r from-primary/10 via-violet-500/10 to-purple-500/10 rounded-2xl p-6 text-center">
+        {/* Motivational Footer with Animation */}
+        <div className={cn(
+          "bg-gradient-to-r from-primary/10 via-violet-500/10 to-purple-500/10 rounded-2xl p-6 text-center",
+          "opacity-0 animate-slide-up animation-delay-600",
+          "hover:from-primary/15 hover:via-violet-500/15 hover:to-purple-500/15 transition-colors"
+        )}>
           <p className="text-lg font-medium text-foreground">
             {examStats.averageScore >= 80 
               ? "🌟 You're doing amazing! Keep up the excellent work!"
