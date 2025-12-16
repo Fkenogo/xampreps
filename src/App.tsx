@@ -14,6 +14,10 @@ import SchoolDashboard from "./pages/dashboards/SchoolDashboard";
 import AdminDashboard from "./pages/dashboards/AdminDashboard";
 import ExamsPage from "./pages/ExamsPage";
 import ExamTakingPage from "./pages/ExamTakingPage";
+import ExamResultsPage from "./pages/ExamResultsPage";
+import SettingsPage from "./pages/SettingsPage";
+import HistoryPage from "./pages/HistoryPage";
+import AchievementsPage from "./pages/AchievementsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -73,6 +77,31 @@ const App = () => (
             <Route path="/exam/:examId" element={
               <ProtectedRoute>
                 <ExamTakingPage />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/exam/:examId/results/:attemptId" element={
+              <ProtectedRoute>
+                <ExamResultsPage />
+              </ProtectedRoute>
+            } />
+
+            {/* User Pages */}
+            <Route path="/settings" element={
+              <ProtectedRoute>
+                <SettingsPage />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/history" element={
+              <ProtectedRoute>
+                <HistoryPage />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/achievements" element={
+              <ProtectedRoute>
+                <AchievementsPage />
               </ProtectedRoute>
             } />
             

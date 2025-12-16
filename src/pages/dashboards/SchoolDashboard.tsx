@@ -3,6 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import StatCard from '@/components/dashboard/StatCard';
+import AddStudentDialog from '@/components/modals/AddStudentDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -40,6 +41,7 @@ export default function SchoolDashboard() {
   const [students, setStudents] = useState<StudentData[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
+  const [showAddDialog, setShowAddDialog] = useState(false);
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -121,12 +123,18 @@ export default function SchoolDashboard() {
               <Download className="w-4 h-4" />
               Export Report
             </Button>
-            <Button className="gap-2">
+            <Button className="gap-2" onClick={() => setShowAddDialog(true)}>
               <UserPlus className="w-4 h-4" />
               Add Student
             </Button>
           </div>
         </div>
+
+        <AddStudentDialog
+          open={showAddDialog}
+          onOpenChange={setShowAddDialog}
+          onSuccess={() => window.location.reload()}
+        />
 
         {/* Stats Overview */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -266,7 +274,7 @@ export default function SchoolDashboard() {
               <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
               <h4 className="font-semibold text-foreground mb-2">No students yet</h4>
               <p className="text-muted-foreground text-sm mb-4">Add students to start tracking their progress</p>
-              <Button className="gap-2">
+              <Button className="gap-2" onClick={() => setShowAddDialog(true)}>
                 <UserPlus className="w-4 h-4" />
                 Add Student
               </Button>

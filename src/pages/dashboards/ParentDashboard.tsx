@@ -3,6 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import StatCard from '@/components/dashboard/StatCard';
+import LinkChildDialog from '@/components/modals/LinkChildDialog';
 import { Button } from '@/components/ui/button';
 import { 
   Users, 
@@ -30,6 +31,7 @@ export default function ParentDashboard() {
   const { profile, user } = useAuth();
   const [linkedStudents, setLinkedStudents] = useState<LinkedStudent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showLinkDialog, setShowLinkDialog] = useState(false);
 
   useEffect(() => {
     const fetchLinkedStudents = async () => {
@@ -94,11 +96,17 @@ export default function ParentDashboard() {
             </p>
           </div>
           
-          <Button className="gap-2">
+          <Button className="gap-2" onClick={() => setShowLinkDialog(true)}>
             <UserPlus className="w-4 h-4" />
             Link a Child
           </Button>
         </div>
+
+        <LinkChildDialog 
+          open={showLinkDialog} 
+          onOpenChange={setShowLinkDialog}
+          onSuccess={() => window.location.reload()}
+        />
 
         {/* Stats Overview */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -146,7 +154,7 @@ export default function ParentDashboard() {
               <p className="text-muted-foreground mb-6">
                 Link your child's account to monitor their progress
               </p>
-              <Button className="gap-2">
+              <Button className="gap-2" onClick={() => setShowLinkDialog(true)}>
                 <UserPlus className="w-4 h-4" />
                 Link a Child
               </Button>

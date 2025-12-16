@@ -2,9 +2,11 @@ import { useState, useEffect, useMemo } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { updateUserProgress } from '@/hooks/useXPAndStreak';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import Card from '@/components/common/Card';
+import { toast } from 'sonner';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -13,6 +15,7 @@ import {
   Clock, 
   Sparkles,
   ArrowLeft,
+  Trophy,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Database } from '@/integrations/supabase/types';
@@ -283,6 +286,8 @@ export default function ExamTakingPage() {
     // Save attempt if user is logged in
     if (profile && exam) {
       const score = Object.values(newResults).filter(Boolean).length;
+      const scorePercentage = totalParts > 0 ? (score / totalParts) * 100 : 0;
+      
       await supabase.from('exam_attempts').insert({
         user_id: profile.id,
         exam_id: exam.id,
@@ -291,6 +296,23 @@ export default function ExamTakingPage() {
         total_questions: totalParts,
         time_taken: exam.time_limit * 60 - timeLeft,
       });
+
+      // Update XP and streak
+      const { xpEarned, newStreak, streakUpdated } = await updateUserProgress({
+        userId: profile.id,
+        scorePercentage,
+        totalQuestions: totalParts,
+      });
+
+      if (xpEarned > 0) {
+        toast.success(`+${xpEarned} XP earned!`, {
+          icon: <Trophy className="w-4 h-4 text-amber-500" />,
+        });
+      }
+
+      if (streakUpdated && newStreak && newStreak > 1) {
+        toast.success(`🔥 ${newStreak} day streak!`);
+      }
     }
   };
 
