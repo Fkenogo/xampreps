@@ -1,0 +1,195 @@
+import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
+import { UserPlus, Mail, Search, Loader2 } from 'lucide-react';
+
+interface LinkChildDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSuccess?: () => void;
+}
+
+export default function LinkChildDialog({ open, onOpenChange, onSuccess }: LinkChildDialogProps) {
+  const { user } = useAuth();
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [searchResult, setSearchResult] = useState<{ id: string; name: string; email: string } | null>(null);
+  const [notFound, setNotFound] = useState(false);
+
+  const handleSearch = async () => {
+    if (!email.trim()) {
+      toast.error('Please enter an email address');
+      return;
+    }
+
+    setLoading(true);
+    setSearchResult(null);
+    setNotFound(false);
+
+    // Search for student by email
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('id, name, email')
+      .eq('email', email.toLowerCase().trim())
+      .maybeSingle();
+
+    if (!profile) {
+      setNotFound(true);
+      setLoading(false);
+      return;
+    }
+
+    // Check if they're a student
+    const { data: role } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', profile.id)
+      .maybeSingle();
+
+    if (role?.role !== 'student') {
+      toast.error('This account is not a student account');
+      setLoading(false);
+      return;
+    }
+
+    // Check if already linked
+    const { data: existingLink } = await supabase
+      .from('linked_accounts')
+      .select('id')
+      .eq('parent_or_school_id', user?.id)
+      .eq('student_id', profile.id)
+      .maybeSingle();
+
+    if (existingLink) {
+      toast.error('This student is already linked to your account');
+      setLoading(false);
+      return;
+    }
+
+    // Check for pending request
+    const { data: pendingRequest } = await supabase
+      .from('link_requests')
+      .select('id')
+      .eq('requester_id', user?.id)
+      .eq('target_id', profile.id)
+      .eq('status', 'pending')
+      .maybeSingle();
+
+    if (pendingRequest) {
+      toast.error('You already have a pending request for this student');
+      setLoading(false);
+      return;
+    }
+
+    setSearchResult(profile);
+    setLoading(false);
+  };
+
+  const handleSendRequest = async () => {
+    if (!searchResult || !user?.id) return;
+
+    setLoading(true);
+
+    const { error } = await supabase
+      .from('link_requests')
+      .insert({
+        requester_id: user.id,
+        target_id: searchResult.id,
+        status: 'pending',
+      });
+
+    if (error) {
+      toast.error('Failed to send link request');
+      console.error(error);
+    } else {
+      toast.success('Link request sent! The student will need to accept it.');
+      onOpenChange(false);
+      onSuccess?.();
+      setEmail('');
+      setSearchResult(null);
+    }
+    setLoading(false);
+  };
+
+  const handleClose = () => {
+    setEmail('');
+    setSearchResult(null);
+    setNotFound(false);
+    onOpenChange(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={handleClose}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <UserPlus className="w-5 h-5" />
+            Link a Child
+          </DialogTitle>
+          <DialogDescription>
+            Enter your child's email to send them a link request
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="space-y-4 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="child-email" className="flex items-center gap-2">
+              <Mail className="w-4 h-4" />
+              Child's Email
+            </Label>
+            <div className="flex gap-2">
+              <Input
+                id="child-email"
+                type="email"
+                placeholder="child@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+              />
+              <Button onClick={handleSearch} disabled={loading} variant="secondary">
+                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+              </Button>
+            </div>
+          </div>
+
+          {notFound && (
+            <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
+              <p className="text-sm text-red-500">
+                No student account found with this email. Make sure they have signed up as a student.
+              </p>
+            </div>
+          )}
+
+          {searchResult && (
+            <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-medium">
+                  {searchResult.name.charAt(0)}
+                </div>
+                <div>
+                  <p className="font-medium text-foreground">{searchResult.name}</p>
+                  <p className="text-sm text-muted-foreground">{searchResult.email}</p>
+                </div>
+              </div>
+              <Button onClick={handleSendRequest} disabled={loading} className="w-full">
+                {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                Send Link Request
+              </Button>
+            </div>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
