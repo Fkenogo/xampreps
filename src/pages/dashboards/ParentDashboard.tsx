@@ -14,8 +14,10 @@ import {
   Eye,
   BookOpen,
   Trophy,
+  Calendar,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { format, subDays, startOfWeek, endOfWeek, isWithinInterval } from 'date-fns';
 
 interface LinkedStudent {
   id: string;
@@ -24,7 +26,9 @@ interface LinkedStudent {
   level?: string;
   xp: number;
   streak: number;
-  recentScore?: number;
+  avgScore: number;
+  studyMinutesThisWeek: number;
+  recentActivity: { date: string; score: number; examTitle: string }[];
 }
 
 export default function ParentDashboard() {
@@ -56,9 +60,40 @@ export default function ParentDashboard() {
           .select('*')
           .in('user_id', studentIds);
 
+        // Fetch exam attempts for study time and scores
+        const weekStart = startOfWeek(new Date(), { weekStartsOn: 1 });
+        const weekEnd = endOfWeek(new Date(), { weekStartsOn: 1 });
+        
+        const { data: attempts } = await supabase
+          .from('exam_attempts')
+          .select('*, exams(title)')
+          .in('user_id', studentIds)
+          .order('completed_at', { ascending: false });
+
         if (profiles) {
           const students: LinkedStudent[] = profiles.map(p => {
             const studentProgress = progress?.find(pr => pr.user_id === p.id);
+            const studentAttempts = attempts?.filter(a => a.user_id === p.id) || [];
+            
+            // Calculate average score
+            const avgScore = studentAttempts.length > 0
+              ? Math.round(studentAttempts.reduce((acc, a) => acc + (a.score / a.total_questions) * 100, 0) / studentAttempts.length)
+              : 0;
+            
+            // Calculate study time this week (based on time_taken from attempts)
+            const weeklyAttempts = studentAttempts.filter(a => {
+              const attemptDate = new Date(a.completed_at);
+              return isWithinInterval(attemptDate, { start: weekStart, end: weekEnd });
+            });
+            const studyMinutesThisWeek = weeklyAttempts.reduce((acc, a) => acc + (a.time_taken || 0), 0) / 60;
+            
+            // Recent activity (last 5 attempts)
+            const recentActivity = studentAttempts.slice(0, 5).map(a => ({
+              date: a.completed_at,
+              score: Math.round((a.score / a.total_questions) * 100),
+              examTitle: (a.exams as any)?.title || 'Unknown Exam',
+            }));
+
             return {
               id: p.id,
               name: p.name,
@@ -66,6 +101,9 @@ export default function ParentDashboard() {
               level: p.level || undefined,
               xp: studentProgress?.xp || 0,
               streak: studentProgress?.streak || 0,
+              avgScore,
+              studyMinutesThisWeek,
+              recentActivity,
             };
           });
           setLinkedStudents(students);
@@ -81,6 +119,13 @@ export default function ParentDashboard() {
   const avgStreak = linkedStudents.length > 0 
     ? Math.round(linkedStudents.reduce((acc, s) => acc + s.streak, 0) / linkedStudents.length)
     : 0;
+  const totalStudyHours = Math.round(linkedStudents.reduce((acc, s) => acc + s.studyMinutesThisWeek, 0) / 60 * 10) / 10;
+  
+  // Collect all recent activity across children
+  const allRecentActivity = linkedStudents
+    .flatMap(s => s.recentActivity.map(a => ({ ...a, studentName: s.name })))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 5);
 
   return (
     <DashboardLayout>
@@ -130,7 +175,7 @@ export default function ParentDashboard() {
           />
           <StatCard
             title="Study Hours"
-            value="12h"
+            value={`${totalStudyHours}h`}
             subtitle="This week"
             icon={Clock}
             gradient="from-violet-500 to-purple-600"
@@ -191,7 +236,12 @@ export default function ParentDashboard() {
                       <p className="text-xs text-muted-foreground">Streak</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-2xl font-bold text-foreground">--</p>
+                      <p className={cn(
+                        'text-2xl font-bold',
+                        student.avgScore >= 70 ? 'text-emerald-500' : student.avgScore >= 50 ? 'text-amber-500' : 'text-foreground'
+                      )}>
+                        {student.avgScore > 0 ? `${student.avgScore}%` : '--'}
+                      </p>
                       <p className="text-xs text-muted-foreground">Avg Score</p>
                     </div>
                   </div>
@@ -212,24 +262,62 @@ export default function ParentDashboard() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Activity Timeline */}
           <div className="bg-card rounded-2xl border border-border p-6">
-            <h3 className="font-semibold text-foreground mb-4">Recent Activity</h3>
-            <div className="space-y-4">
-              {linkedStudents.length > 0 ? (
-                <p className="text-muted-foreground text-sm">Activity tracking coming soon...</p>
+            <div className="flex items-center gap-2 mb-4">
+              <Calendar className="w-5 h-5 text-muted-foreground" />
+              <h3 className="font-semibold text-foreground">Recent Activity</h3>
+            </div>
+            <div className="space-y-3">
+              {allRecentActivity.length > 0 ? (
+                allRecentActivity.map((activity, idx) => (
+                  <div key={idx} className="flex items-center justify-between py-2 border-b border-border last:border-0">
+                    <div>
+                      <p className="text-sm font-medium text-foreground">{activity.studentName}</p>
+                      <p className="text-xs text-muted-foreground">{activity.examTitle}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className={cn(
+                        'text-sm font-bold',
+                        activity.score >= 70 ? 'text-emerald-500' : activity.score >= 50 ? 'text-amber-500' : 'text-red-500'
+                      )}>
+                        {activity.score}%
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {format(new Date(activity.date), 'MMM d')}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : linkedStudents.length > 0 ? (
+                <p className="text-muted-foreground text-sm">No recent activity yet</p>
               ) : (
                 <p className="text-muted-foreground text-sm">Link a child to see their activity</p>
               )}
             </div>
           </div>
 
-          {/* Weak Areas */}
+          {/* Study Summary */}
           <div className="bg-card rounded-2xl border border-border p-6">
-            <h3 className="font-semibold text-foreground mb-4">Areas Needing Attention</h3>
+            <h3 className="font-semibold text-foreground mb-4">Weekly Summary</h3>
             <div className="space-y-4">
               {linkedStudents.length > 0 ? (
-                <p className="text-muted-foreground text-sm">Analysis coming soon...</p>
+                linkedStudents.map(student => (
+                  <div key={student.id} className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white text-sm font-medium">
+                        {student.name.charAt(0)}
+                      </div>
+                      <span className="text-sm font-medium text-foreground">{student.name}</span>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-bold text-foreground">
+                        {Math.round(student.studyMinutesThisWeek)} min
+                      </p>
+                      <p className="text-xs text-muted-foreground">this week</p>
+                    </div>
+                  </div>
+                ))
               ) : (
-                <p className="text-muted-foreground text-sm">Link a child to see areas needing attention</p>
+                <p className="text-muted-foreground text-sm">Link a child to see their summary</p>
               )}
             </div>
           </div>
