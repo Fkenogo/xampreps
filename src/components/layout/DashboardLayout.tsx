@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
+import NotificationBell from '@/components/notifications/NotificationBell';
 import {
   Home,
   BookOpen,
@@ -10,7 +11,6 @@ import {
   LogOut,
   Menu,
   X,
-  Bell,
   User,
   ChevronDown,
   Sparkles,
@@ -271,10 +271,7 @@ export default function DashboardLayout({ children, previewRole, onPreviewRoleCh
           {/* Right Side Actions */}
           <div className="flex items-center gap-3">
             {/* Notifications */}
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />
-            </Button>
+            <NotificationBell />
 
             {/* User Menu */}
             <DropdownMenu>

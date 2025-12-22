@@ -3,6 +3,7 @@ import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { updateUserProgress } from '@/hooks/useXPAndStreak';
+import { fireConfetti, fireStars } from '@/hooks/useConfetti';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import Card from '@/components/common/Card';
@@ -304,6 +305,14 @@ export default function ExamTakingPage() {
         totalQuestions: totalParts,
       });
 
+      // Fire celebration effects
+      if (scorePercentage >= 80) {
+        fireConfetti();
+        fireStars();
+      } else if (scorePercentage >= 60) {
+        fireConfetti();
+      }
+
       if (xpEarned > 0) {
         toast.success(`+${xpEarned} XP earned!`, {
           icon: <Trophy className="w-4 h-4 text-amber-500" />,
@@ -313,6 +322,17 @@ export default function ExamTakingPage() {
       if (streakUpdated && newStreak && newStreak > 1) {
         toast.success(`🔥 ${newStreak} day streak!`);
       }
+
+      // Check for new achievements (fire and forget)
+      supabase.functions.invoke('check-achievements', {
+        body: { userId: profile.id },
+      }).then(({ data }) => {
+        if (data?.newAchievements?.length > 0) {
+          data.newAchievements.forEach((achievement: string) => {
+            toast.success(`🏆 Achievement Unlocked: ${achievement}!`);
+          });
+        }
+      }).catch(console.error);
     }
   };
 
