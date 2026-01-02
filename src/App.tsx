@@ -19,6 +19,8 @@ import ExamResultsPage from "./pages/ExamResultsPage";
 import SettingsPage from "./pages/SettingsPage";
 import HistoryPage from "./pages/HistoryPage";
 import AchievementsPage from "./pages/AchievementsPage";
+import PaymentSuccessPage from "./pages/PaymentSuccessPage";
+import PricingPage from "./pages/PricingPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +39,17 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/past-papers" element={<ExamsPage type="Past Paper" />} />
             <Route path="/practice-papers" element={<ExamsPage type="Practice Paper" />} />
+            <Route path="/pricing" element={
+              <PricingPage 
+                onNavigateToAuth={() => window.location.href = '/auth'} 
+                onNavigate={(page) => {
+                  if (page === 'landing') window.location.href = '/';
+                  else if (page === 'past-papers') window.location.href = '/past-papers';
+                  else if (page === 'practice-papers') window.location.href = '/practice-papers';
+                  else if (page === 'pricing') window.location.href = '/pricing';
+                }} 
+              />
+            } />
             
             {/* Protected Routes */}
             <Route path="/dashboard" element={
@@ -104,6 +117,12 @@ const App = () => (
             <Route path="/achievements" element={
               <ProtectedRoute>
                 <AchievementsPage />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/payment/success" element={
+              <ProtectedRoute>
+                <PaymentSuccessPage />
               </ProtectedRoute>
             } />
             
