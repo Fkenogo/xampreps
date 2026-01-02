@@ -668,6 +668,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      has_standard: { Args: { _user_id: string }; Returns: boolean }
       is_linked_to: {
         Args: { _parent_or_school_id: string; _student_id: string }
         Returns: boolean
