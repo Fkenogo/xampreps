@@ -335,7 +335,7 @@ export default function DashboardLayout({ children, previewRole, onPreviewRoleCh
           <div className="flex-1" />
           
           {/* Renewal Reminder */}
-          {displayRole === 'student' && subscription?.daysRemaining !== null && subscription.daysRemaining <= 7 && subscription.daysRemaining > 0 && (
+          {displayRole === 'student' && subscription && subscription.daysRemaining !== null && subscription.daysRemaining <= 7 && subscription.daysRemaining > 0 && (
             <RenewalReminder daysRemaining={subscription.daysRemaining} onRenew={() => navigate('/pricing')} />
           )}
 
