@@ -2,22 +2,35 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Search, Filter, ArrowRight, Clock, Star, TrendingUp } from 'lucide-react';
+import { Search, ArrowRight, Clock, TrendingUp, BookOpen, Star } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { Database } from '@/integrations/supabase/types';
 
 type Exam = Database['public']['Tables']['exams']['Row'];
 
 const subjects = ['Mathematics', 'Science', 'English', 'Social Studies'];
-const levels = ['PLE', 'UCE', 'UACE'] as const;
 
 interface QuickExamFinderProps {
   maxResults?: number;
   showRecommendations?: boolean;
   className?: string;
 }
+
+const subjectColors: Record<string, string> = {
+  Mathematics: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
+  English: 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300',
+  Science: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300',
+  'Social Studies': 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
+};
+
+const difficultyColors: Record<string, string> = {
+  Easy: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30',
+  Medium: 'bg-amber-100 text-amber-600 dark:bg-amber-900/30',
+  Hard: 'bg-rose-100 text-rose-600 dark:bg-rose-900/30',
+};
 
 export default function QuickExamFinder({
   maxResults = 4,
@@ -36,7 +49,6 @@ export default function QuickExamFinder({
     const fetchExams = async () => {
       setLoading(true);
       
-      // Fetch exams
       let query = supabase.from('exams').select('*');
       
       if (selectedSubject) {
@@ -47,10 +59,9 @@ export default function QuickExamFinder({
         query = query.eq('level', profile.level);
       }
 
-      const { data: examsData } = await query.limit(20);
+      const { data: examsData } = await query.order('year', { ascending: false }).limit(20);
       
       if (examsData) {
-        // Filter by search
         const filtered = examsData.filter(exam => 
           exam.title.toLowerCase().includes(search.toLowerCase()) ||
           exam.subject.toLowerCase().includes(search.toLowerCase())
@@ -58,14 +69,13 @@ export default function QuickExamFinder({
         setExams(filtered.slice(0, maxResults));
       }
 
-      // Fetch most recent exam attempt
       if (showRecommendations) {
         const { data: recentAttempt } = await supabase
           .from('exam_attempts')
           .select('exam_id, exams(*)')
           .order('completed_at', { ascending: false })
           .limit(1)
-          .single();
+          .maybeSingle();
         
         if (recentAttempt?.exams) {
           setRecentExam(recentAttempt.exams as unknown as Exam);
@@ -135,7 +145,7 @@ export default function QuickExamFinder({
             <p className="font-medium text-foreground group-hover:text-primary transition-colors">
               {recentExam.title}
             </p>
-            <p className="text-xs text-muted-foreground">{recentExam.subject}</p>
+            <p className="text-xs text-muted-foreground">{recentExam.subject} • {recentExam.year}</p>
           </button>
         </div>
       )}
@@ -159,34 +169,51 @@ export default function QuickExamFinder({
               onClick={() => handleExamClick(exam.id, 'practice')}
               className={cn(
                 'w-full p-3 rounded-xl border border-border bg-background/50',
-                'hover:border-primary/50 hover:bg-primary/5 transition-all group',
-                'opacity-0 animate-slide-up'
+                'hover:border-primary/50 hover:bg-primary/5 transition-all group text-left',
+                'animate-fade-in'
               )}
-              style={{ animationDelay: `${index * 100}ms` }}
+              style={{ animationDelay: `${index * 75}ms` }}
             >
               <div className="flex items-center justify-between">
-                <div className="text-left">
-                  <p className="font-medium text-foreground group-hover:text-primary transition-colors">
-                    {exam.title}
-                  </p>
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <p className="font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                      {exam.title}
+                    </p>
+                    <Badge 
+                      variant="secondary" 
+                      className={cn('text-[10px] shrink-0', difficultyColors[exam.difficulty])}
+                    >
+                      {exam.difficulty}
+                    </Badge>
+                    {exam.is_free && (
+                      <Badge variant="secondary" className="text-[10px] bg-emerald-100 text-emerald-700 shrink-0">
+                        Free
+                      </Badge>
+                    )}
+                    {!exam.is_free && (
+                      <Badge variant="secondary" className="text-[10px] bg-amber-100 text-amber-700 shrink-0">
+                        <Star className="w-2.5 h-2.5 mr-0.5" />
+                        Premium
+                      </Badge>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <span className={cn('px-1.5 py-0.5 rounded text-[10px]', subjectColors[exam.subject])}>
+                      {exam.subject}
+                    </span>
+                    <span>{exam.year}</span>
                     <span className="flex items-center gap-1">
                       <Clock className="w-3 h-3" />
                       {exam.time_limit}min
                     </span>
-                    <span>•</span>
-                    <span>{exam.question_count} questions</span>
-                    {exam.is_free && (
-                      <>
-                        <span>•</span>
-                        <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
-                          FREE
-                        </Badge>
-                      </>
-                    )}
+                    <span className="flex items-center gap-1">
+                      <BookOpen className="w-3 h-3" />
+                      {exam.question_count} Q's
+                    </span>
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0 ml-2" />
               </div>
             </button>
           ))
@@ -194,13 +221,14 @@ export default function QuickExamFinder({
       </div>
 
       {/* View All Link */}
-      <button
+      <Button
+        variant="ghost"
         onClick={() => navigate('/exams')}
-        className="w-full mt-4 text-sm text-primary hover:underline flex items-center justify-center gap-1"
+        className="w-full mt-4 text-sm text-primary hover:text-primary"
       >
         View all exams
-        <ArrowRight className="w-4 h-4" />
-      </button>
+        <ArrowRight className="w-4 h-4 ml-1" />
+      </Button>
     </div>
   );
 }

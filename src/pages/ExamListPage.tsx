@@ -1,7 +1,13 @@
 import React, { useState, useMemo } from 'react';
 import PublicLayout from '../components/layout/PublicLayout';
-import { DocumentTextIcon, ClockIcon } from '../components/icons';
+import ExamFilters from '../components/exam-library/ExamFilters';
+import ExamListItem from '../components/exam-library/ExamListItem';
+import ExamCard from '../components/exam-library/ExamCard';
+import { DocumentTextIcon } from '../components/icons';
 import { Exam, EducationLevel, PublicPage } from '../types';
+import { Grid3X3, List } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface ExamListPageProps {
   pageType: 'Past Paper' | 'Practice Paper';
@@ -10,37 +16,20 @@ interface ExamListPageProps {
   onNavigate: (page: PublicPage) => void;
 }
 
-const subjectColors: { [key: string]: string } = {
-  Mathematics: 'bg-blue-100 text-blue-800',
-  English: 'bg-red-100 text-red-800',
-  Science: 'bg-green-100 text-green-800',
-  SST: 'bg-yellow-100 text-yellow-800',
-  Physics: 'bg-indigo-100 text-indigo-800',
-  Chemistry: 'bg-purple-100 text-purple-800',
-  Biology: 'bg-pink-100 text-pink-800',
-};
-
-const difficultyColors: { [key: string]: string } = {
-  Easy: 'bg-green-100 text-green-800',
-  Medium: 'bg-yellow-100 text-yellow-800',
-  Hard: 'bg-red-100 text-red-800',
-};
-
 const ExamListPage: React.FC<ExamListPageProps> = ({ pageType, allExams, onNavigateToAuth, onNavigate }) => {
-  const [selectedLevel, setSelectedLevel] = useState<EducationLevel | 'All'>('All');
+  const [selectedLevel, setSelectedLevel] = useState<string>('All');
   const [selectedSubject, setSelectedSubject] = useState<string>('All');
   const [selectedYear, setSelectedYear] = useState<string>('All');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>('All');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
 
   const papersForType = useMemo(() => allExams.filter(e => e.type === pageType), [allExams, pageType]);
 
   const { availableSubjects, availableYears } = useMemo(() => {
     const papers = selectedLevel === 'All' ? papersForType : papersForType.filter(p => p.level === selectedLevel);
-    const subjects = ['All', ...new Set(papers.map(p => p.subject))];
-    const years = ['All', ...new Set(papers.map(p => p.year.toString()))].sort((a, b) => {
-      if (a === 'All') return -1;
-      if (b === 'All') return 1;
-      return parseInt(b) - parseInt(a);
-    });
+    const subjects = [...new Set(papers.map(p => p.subject))].sort();
+    const years = [...new Set(papers.map(p => p.year.toString()))].sort((a, b) => parseInt(b) - parseInt(a));
     return { availableSubjects: subjects, availableYears: years };
   }, [papersForType, selectedLevel]);
 
@@ -49,124 +38,130 @@ const ExamListPage: React.FC<ExamListPageProps> = ({ pageType, allExams, onNavig
       if (selectedLevel !== 'All' && paper.level !== selectedLevel) return false;
       if (selectedSubject !== 'All' && paper.subject !== selectedSubject) return false;
       if (selectedYear !== 'All' && paper.year.toString() !== selectedYear) return false;
+      if (selectedDifficulty !== 'All' && paper.difficulty !== selectedDifficulty) return false;
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        if (!paper.title.toLowerCase().includes(query) && 
+            !paper.subject.toLowerCase().includes(query) &&
+            !paper.year.toString().includes(query)) {
+          return false;
+        }
+      }
       return true;
     });
-  }, [papersForType, selectedLevel, selectedSubject, selectedYear]);
+  }, [papersForType, selectedLevel, selectedSubject, selectedYear, selectedDifficulty, searchQuery]);
+
+  const handleLevelChange = (level: string) => {
+    setSelectedLevel(level);
+    setSelectedSubject('All');
+    setSelectedYear('All');
+  };
+
+  const handleStartExam = (examId: string, mode: 'practice' | 'simulation') => {
+    onNavigateToAuth();
+  };
+
+  // Convert Exam type to match component props
+  const examToComponentProps = (paper: Exam) => ({
+    id: paper.id,
+    title: paper.title,
+    subject: paper.subject,
+    year: paper.year,
+    level: paper.level,
+    difficulty: paper.difficulty,
+    time_limit: paper.timeLimit,
+    question_count: paper.questionCount,
+    avg_score: paper.avgScore,
+    is_free: paper.isFree,
+    description: paper.description,
+  });
 
   return (
     <PublicLayout onNavigateToAuth={onNavigateToAuth} onNavigate={onNavigate}>
-      <main className="py-12 px-6">
-        <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">
+      <main className="py-8 sm:py-12 px-4 sm:px-6">
+        <div className="container mx-auto max-w-6xl">
+          {/* Header */}
+          <div className="text-center mb-8 sm:mb-10">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-3 text-foreground">
               {pageType === 'Past Paper' ? 'Past Papers' : 'Practice Papers'}
             </h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               {pageType === 'Past Paper' 
-                ? 'Access official past examination papers from PLE, UCE, and UACE exams.'
+                ? 'Browse our collection of past papers to sharpen your skills.'
                 : 'Practice with our curated question sets designed to help you master key topics.'}
             </p>
           </div>
 
           {/* Filters */}
-          <div className="bg-card rounded-xl p-6 shadow-sm mb-8">
-            <div className="grid md:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-2">Level</label>
-                <select 
-                  value={selectedLevel} 
-                  onChange={(e) => {
-                    setSelectedLevel(e.target.value as EducationLevel | 'All');
-                    setSelectedSubject('All');
-                    setSelectedYear('All');
-                  }}
-                  className="input-style"
-                >
-                  <option value="All">All Levels</option>
-                  <option value="PLE">PLE</option>
-                  <option value="UCE">UCE</option>
-                  <option value="UACE">UACE</option>
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-2">Subject</label>
-                <select 
-                  value={selectedSubject} 
-                  onChange={(e) => setSelectedSubject(e.target.value)}
-                  className="input-style"
-                >
-                  {availableSubjects.map(subject => (
-                    <option key={subject} value={subject}>{subject === 'All' ? 'All Subjects' : subject}</option>
-                  ))}
-                </select>
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-2">Year</label>
-                <select 
-                  value={selectedYear} 
-                  onChange={(e) => setSelectedYear(e.target.value)}
-                  className="input-style"
-                >
-                  {availableYears.map(year => (
-                    <option key={year} value={year}>{year === 'All' ? 'All Years' : year}</option>
-                  ))}
-                </select>
-              </div>
+          <div className="mb-6">
+            <ExamFilters
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              selectedLevel={selectedLevel}
+              onLevelChange={handleLevelChange}
+              selectedSubject={selectedSubject}
+              onSubjectChange={setSelectedSubject}
+              selectedYear={selectedYear}
+              onYearChange={setSelectedYear}
+              selectedDifficulty={selectedDifficulty}
+              onDifficultyChange={setSelectedDifficulty}
+              availableSubjects={availableSubjects}
+              availableYears={availableYears}
+            />
+          </div>
+
+          {/* Results Header */}
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-muted-foreground">
+              Showing {filteredPapers.length} {filteredPapers.length === 1 ? 'paper' : 'papers'}
+            </p>
+            <div className="flex items-center gap-1 border border-border rounded-lg p-1">
+              <Button
+                variant={viewMode === 'list' ? 'secondary' : 'ghost'}
+                size="icon"
+                className="h-8 w-8"
+                onClick={() => setViewMode('list')}
+              >
+                <List className="h-4 w-4" />
+              </Button>
+              <Button
+                variant={viewMode === 'grid' ? 'secondary' : 'ghost'}
+                size="icon"
+                className="h-8 w-8"
+                onClick={() => setViewMode('grid')}
+              >
+                <Grid3X3 className="h-4 w-4" />
+              </Button>
             </div>
           </div>
 
           {/* Results */}
-          <div className="mb-4 text-muted-foreground">
-            Showing {filteredPapers.length} {filteredPapers.length === 1 ? 'paper' : 'papers'}
-          </div>
-
           {filteredPapers.length === 0 ? (
-            <div className="text-center py-12 bg-card rounded-xl">
+            <div className="text-center py-16 bg-card rounded-2xl border border-border">
               <DocumentTextIcon className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">No papers found</h3>
+              <h3 className="text-xl font-semibold mb-2 text-foreground">No papers found</h3>
               <p className="text-muted-foreground">Try adjusting your filters to see more results.</p>
             </div>
+          ) : viewMode === 'list' ? (
+            <div className="space-y-3">
+              {filteredPapers.map((paper, index) => (
+                <ExamListItem
+                  key={paper.id}
+                  exam={examToComponentProps(paper)}
+                  onStart={handleStartExam}
+                  index={index}
+                />
+              ))}
+            </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredPapers.map(paper => (
-                <div key={paper.id} className="bg-card rounded-xl shadow-sm p-6 card-hover">
-                  <div className="flex justify-between items-start mb-3">
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${subjectColors[paper.subject] || 'bg-gray-100 text-gray-800'}`}>
-                      {paper.subject}
-                    </span>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${difficultyColors[paper.difficulty]}`}>
-                      {paper.difficulty}
-                    </span>
-                  </div>
-                  
-                  <h3 className="font-bold text-lg mb-2">{paper.title}</h3>
-                  
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                    <span className="flex items-center gap-1">
-                      <ClockIcon className="w-4 h-4" />
-                      {paper.timeLimit} min
-                    </span>
-                    <span>{paper.questionCount} questions</span>
-                  </div>
-                  
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs px-2 py-1 bg-muted rounded">{paper.level}</span>
-                    <span className="text-xs text-muted-foreground">{paper.year}</span>
-                  </div>
-                  
-                  <button
-                    onClick={onNavigateToAuth}
-                    className={`w-full py-2 rounded-lg font-semibold transition-all ${
-                      paper.isFree
-                        ? 'gradient-primary text-primary-foreground hover:opacity-90'
-                        : 'border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground'
-                    }`}
-                  >
-                    {paper.isFree ? 'Start Free' : 'Premium'}
-                  </button>
-                </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredPapers.map((paper, index) => (
+                <ExamCard
+                  key={paper.id}
+                  exam={examToComponentProps(paper)}
+                  onStart={handleStartExam}
+                  index={index}
+                />
               ))}
             </div>
           )}
