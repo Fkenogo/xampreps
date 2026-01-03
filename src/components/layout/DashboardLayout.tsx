@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import NotificationBell from '@/components/notifications/NotificationBell';
+import RenewalReminder from '@/components/payment/RenewalReminder';
 import {
   Home,
   BookOpen,
@@ -19,6 +21,7 @@ import {
   FileText,
   Shield,
   Eye,
+  Crown,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -72,15 +75,52 @@ const roleNavItems: Record<AppRole, NavItem[]> = {
   ],
 };
 
+interface SubscriptionInfo {
+  plan: string;
+  expiresAt: string | null;
+  daysRemaining: number | null;
+}
+
 export default function DashboardLayout({ children, previewRole, onPreviewRoleChange }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { profile, role, progress, signOut } = useAuth();
+  const [subscription, setSubscription] = useState<SubscriptionInfo | null>(null);
+  const { profile, role, progress, signOut, user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
   const displayRole = previewRole || role || 'student';
   const navItems = roleNavItems[displayRole];
   const isPreviewMode = previewRole !== null && previewRole !== undefined;
+
+  // Fetch subscription status
+  useEffect(() => {
+    const fetchSubscription = async () => {
+      if (!user?.id) return;
+      
+      const { data } = await supabase
+        .from('subscriptions')
+        .select('plan, expires_at')
+        .eq('user_id', user.id)
+        .single();
+      
+      if (data) {
+        let daysRemaining: number | null = null;
+        if (data.expires_at) {
+          const expiryDate = new Date(data.expires_at);
+          const today = new Date();
+          daysRemaining = Math.ceil((expiryDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+        }
+        
+        setSubscription({
+          plan: data.plan,
+          expiresAt: data.expires_at,
+          daysRemaining,
+        });
+      }
+    };
+
+    fetchSubscription();
+  }, [user?.id]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -258,15 +298,46 @@ export default function DashboardLayout({ children, previewRole, onPreviewRoleCh
             {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </Button>
 
-          {/* Streak Display (for students) */}
-          {displayRole === 'student' && progress?.streak && progress.streak > 0 && (
-            <div className="hidden sm:flex items-center gap-2 bg-gradient-to-r from-orange-500/10 to-red-500/10 px-4 py-2 rounded-full">
-              <span className="text-2xl">🔥</span>
-              <span className="font-bold text-orange-600">{progress.streak} day streak!</span>
+          {/* Subscription Status & Streak (for students) */}
+          {displayRole === 'student' && (
+            <div className="hidden sm:flex items-center gap-3">
+              {/* Subscription Badge */}
+              {subscription && (
+                <Link 
+                  to="/pricing"
+                  className={cn(
+                    "flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-colors",
+                    subscription.plan === 'Free' 
+                      ? "bg-muted text-muted-foreground hover:bg-muted/80"
+                      : "bg-gradient-to-r from-amber-500/10 to-yellow-500/10 text-amber-600 hover:from-amber-500/20 hover:to-yellow-500/20"
+                  )}
+                >
+                  {subscription.plan !== 'Free' && <Crown className="w-4 h-4" />}
+                  <span>{subscription.plan}</span>
+                  {subscription.daysRemaining !== null && subscription.daysRemaining <= 30 && subscription.daysRemaining > 0 && (
+                    <span className="text-xs opacity-75">
+                      • {subscription.daysRemaining}d left
+                    </span>
+                  )}
+                </Link>
+              )}
+              
+              {/* Streak Display */}
+              {progress?.streak && progress.streak > 0 && (
+                <div className="flex items-center gap-2 bg-gradient-to-r from-orange-500/10 to-red-500/10 px-4 py-2 rounded-full">
+                  <span className="text-2xl">🔥</span>
+                  <span className="font-bold text-orange-600">{progress.streak} day streak!</span>
+                </div>
+              )}
             </div>
           )}
 
           <div className="flex-1" />
+          
+          {/* Renewal Reminder */}
+          {displayRole === 'student' && subscription?.daysRemaining !== null && subscription.daysRemaining <= 7 && subscription.daysRemaining > 0 && (
+            <RenewalReminder daysRemaining={subscription.daysRemaining} onRenew={() => navigate('/pricing')} />
+          )}
 
           {/* Right Side Actions */}
           <div className="flex items-center gap-3">
