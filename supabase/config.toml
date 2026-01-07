@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.check-achievements]
 verify_jwt = false
+
+[functions.ai-explanations]
+verify_jwt = false

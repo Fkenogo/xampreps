@@ -1,12 +1,14 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { updateUserProgress } from '@/hooks/useXPAndStreak';
+import { useAIExplanation } from '@/hooks/useAIExplanation';
 import { fireConfetti, fireStars } from '@/hooks/useConfetti';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import Card from '@/components/common/Card';
+import MarkdownRenderer from '@/components/common/MarkdownRenderer';
 import { toast } from 'sonner';
 import { 
   ChevronLeft, 
@@ -17,6 +19,9 @@ import {
   Sparkles,
   ArrowLeft,
   Trophy,
+  Loader2,
+  Lightbulb,
+  Zap,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Database } from '@/integrations/supabase/types';
@@ -29,13 +34,15 @@ interface QuestionWithParts extends Question {
   parts: QuestionPart[];
 }
 
+type ExamMode = 'practice' | 'quiz' | 'simulation';
+
 export default function ExamTakingPage() {
   const { examId } = useParams<{ examId: string }>();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { profile, role } = useAuth();
   
-  const mode = searchParams.get('mode') as 'practice' | 'simulation' || 'practice';
+  const mode = (searchParams.get('mode') as ExamMode) || 'practice';
   
   const [exam, setExam] = useState<Exam | null>(null);
   const [questions, setQuestions] = useState<QuestionWithParts[]>([]);
@@ -45,12 +52,25 @@ export default function ExamTakingPage() {
   const [results, setResults] = useState<Record<string, boolean>>({});
   const [showResults, setShowResults] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
+  
+  // Quiz mode specific state
+  const [quizPartIndex, setQuizPartIndex] = useState(0);
+  const [quizFeedbackVisible, setQuizFeedbackVisible] = useState(false);
+  const [quizAutoAdvanceTimer, setQuizAutoAdvanceTimer] = useState<NodeJS.Timeout | null>(null);
+  
+  // AI explanations state
+  const [aiExplanations, setAiExplanations] = useState<Record<string, string>>({});
+  const [loadingAI, setLoadingAI] = useState<Record<string, boolean>>({});
+
+  const { getExplanation, getFeedback } = useAIExplanation({
+    studentLevel: exam?.level || 'PLE',
+    subject: exam?.subject,
+  });
 
   useEffect(() => {
     const fetchExam = async () => {
       if (!examId) return;
 
-      // Fetch exam
       const { data: examData, error: examError } = await supabase
         .from('exams')
         .select('*')
@@ -66,7 +86,6 @@ export default function ExamTakingPage() {
       setExam(examData);
       setTimeLeft(examData.time_limit * 60);
 
-      // Fetch questions with parts
       const { data: questionsData } = await supabase
         .from('questions')
         .select('*')
@@ -74,7 +93,6 @@ export default function ExamTakingPage() {
         .order('question_number');
 
       if (questionsData) {
-        // Fetch parts for all questions
         const questionIds = questionsData.map(q => q.id);
         const { data: partsData } = await supabase
           .from('question_parts')
@@ -112,11 +130,31 @@ export default function ExamTakingPage() {
     }
   }, [mode, showResults, timeLeft]);
 
+  // Clean up quiz auto-advance timer
+  useEffect(() => {
+    return () => {
+      if (quizAutoAdvanceTimer) {
+        clearTimeout(quizAutoAdvanceTimer);
+      }
+    };
+  }, [quizAutoAdvanceTimer]);
+
   const currentQuestion = questions[currentQuestionIndex];
   const totalParts = useMemo(() => 
     questions.reduce((acc, q) => acc + q.parts.length, 0), 
     [questions]
   );
+
+  // For quiz mode: flatten all parts across questions
+  const allParts = useMemo(() => {
+    const parts: { question: QuestionWithParts; part: QuestionPart; questionIndex: number }[] = [];
+    questions.forEach((q, qIdx) => {
+      q.parts.forEach(p => parts.push({ question: q, part: p, questionIndex: qIdx }));
+    });
+    return parts;
+  }, [questions]);
+
+  const currentQuizItem = allParts[quizPartIndex];
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -133,31 +171,27 @@ export default function ExamTakingPage() {
     return text
       .toLowerCase()
       .trim()
-      .replace(/[,\s]+/g, ' ')           // Normalize whitespace and commas
-      .replace(/sh\.?\s*/gi, '')         // Remove currency prefixes
-      .replace(/°|degrees?/gi, '')       // Normalize degrees
-      .replace(/p\.?\s*m\.?/gi, 'pm')    // Normalize PM
-      .replace(/a\.?\s*m\.?/gi, 'am')    // Normalize AM
-      .replace(/\s+/g, ' ')              // Collapse multiple spaces
-      .replace(/['"]/g, '')              // Remove quotes
-      .replace(/\./g, '')                // Remove periods (for abbreviations)
+      .replace(/[,\s]+/g, ' ')
+      .replace(/sh\.?\s*/gi, '')
+      .replace(/°|degrees?/gi, '')
+      .replace(/p\.?\s*m\.?/gi, 'pm')
+      .replace(/a\.?\s*m\.?/gi, 'am')
+      .replace(/\s+/g, ' ')
+      .replace(/['"]/g, '')
+      .replace(/\./g, '')
       .trim();
   };
 
-  // Extract numeric value from text
   const extractNumber = (text: string): number | null => {
     const cleaned = text.replace(/[,\s]/g, '').replace(/sh\.?/gi, '');
     const match = cleaned.match(/-?\d+\.?\d*/);
     return match ? parseFloat(match[0]) : null;
   };
 
-  // Check if two fractions are equivalent
   const checkFractionEquivalence = (user: string, correct: string): boolean => {
-    // Handle mixed numbers like "2 1/3" or "2⅓"
     const parseFraction = (str: string): number | null => {
       str = str.replace(/⅓/g, '1/3').replace(/⅔/g, '2/3').replace(/½/g, '1/2').replace(/¼/g, '1/4').replace(/¾/g, '3/4');
       
-      // Mixed number: "2 1/3"
       const mixedMatch = str.match(/(\d+)\s+(\d+)\/(\d+)/);
       if (mixedMatch) {
         const whole = parseInt(mixedMatch[1]);
@@ -166,13 +200,11 @@ export default function ExamTakingPage() {
         return whole + num / den;
       }
       
-      // Simple fraction: "7/3"
       const fractionMatch = str.match(/(\d+)\/(\d+)/);
       if (fractionMatch) {
         return parseInt(fractionMatch[1]) / parseInt(fractionMatch[2]);
       }
       
-      // Decimal
       const num = parseFloat(str);
       return isNaN(num) ? null : num;
     };
@@ -186,16 +218,14 @@ export default function ExamTakingPage() {
     return false;
   };
 
-  // Check time equivalence
   const checkTimeEquivalence = (user: string, correct: string): boolean => {
     const parseTime = (str: string): { hours: number; minutes: number; isPm: boolean } | null => {
       str = str.toLowerCase().replace(/\s/g, '');
       const isPm = str.includes('pm') || str.includes('p.m');
-      const isAm = str.includes('am') || str.includes('a.m');
       
       const timeMatch = str.match(/(\d{1,2}):(\d{2})/);
       if (timeMatch) {
-        let hours = parseInt(timeMatch[1]);
+        const hours = parseInt(timeMatch[1]);
         const minutes = parseInt(timeMatch[2]);
         return { hours, minutes, isPm };
       }
@@ -219,10 +249,8 @@ export default function ExamTakingPage() {
     const normalizedUser = normalizeText(userAnswer);
     const normalizedCorrect = normalizeText(part.answer);
     
-    // Exact match after normalization
     if (normalizedUser === normalizedCorrect) return true;
     
-    // Handle numeric answers
     if (part.answer_type === 'numeric') {
       const userNum = extractNumber(userAnswer);
       const correctNum = extractNumber(part.answer);
@@ -231,32 +259,27 @@ export default function ExamTakingPage() {
       }
     }
     
-    // Check fraction equivalence (for answers like "7/3" or "2⅓")
     if (userAnswer.includes('/') || part.answer.includes('/') || 
         /[⅓⅔½¼¾]/.test(userAnswer) || /[⅓⅔½¼¾]/.test(part.answer)) {
       if (checkFractionEquivalence(userAnswer, part.answer)) return true;
     }
     
-    // Check time equivalence
     if (userAnswer.includes(':') && part.answer.includes(':')) {
       if (checkTimeEquivalence(userAnswer, part.answer)) return true;
     }
     
-    // Check if numeric value matches even in text answers
     const userNum = extractNumber(userAnswer);
     const correctNum = extractNumber(part.answer);
     if (userNum !== null && correctNum !== null && Math.abs(userNum - correctNum) < 0.01) {
       return true;
     }
     
-    // Fuzzy matching: check containment for longer answers
     if (normalizedCorrect.length > 3) {
       if (normalizedUser.includes(normalizedCorrect) || normalizedCorrect.includes(normalizedUser)) {
         return true;
       }
     }
     
-    // Check if key parts match (for answers like "3x - 35")
     const userParts = normalizedUser.split(/[\s+\-=]+/).filter(Boolean);
     const correctParts = normalizedCorrect.split(/[\s+\-=]+/).filter(Boolean);
     if (correctParts.length > 0 && userParts.length === correctParts.length) {
@@ -273,6 +296,60 @@ export default function ExamTakingPage() {
     setResults(prev => ({ ...prev, [part.id]: isCorrect }));
   };
 
+  // Quiz mode: check and advance
+  const handleQuizSubmit = useCallback(() => {
+    if (!currentQuizItem) return;
+    
+    const { part } = currentQuizItem;
+    const userAnswer = answers[part.id] || '';
+    const isCorrect = checkAnswer(part, userAnswer);
+    setResults(prev => ({ ...prev, [part.id]: isCorrect }));
+    setQuizFeedbackVisible(true);
+    
+    // Auto-advance after showing feedback
+    const timer = setTimeout(() => {
+      setQuizFeedbackVisible(false);
+      if (quizPartIndex < allParts.length - 1) {
+        setQuizPartIndex(prev => prev + 1);
+        // Update current question index if needed
+        const nextItem = allParts[quizPartIndex + 1];
+        if (nextItem && nextItem.questionIndex !== currentQuestionIndex) {
+          setCurrentQuestionIndex(nextItem.questionIndex);
+        }
+      } else {
+        // Quiz complete
+        handleSubmitExam();
+      }
+    }, 2500);
+    
+    setQuizAutoAdvanceTimer(timer);
+  }, [currentQuizItem, answers, quizPartIndex, allParts, currentQuestionIndex]);
+
+  // Get AI explanation for a part
+  const handleGetAIExplanation = async (part: QuestionPart, questionText: string, isIncorrect: boolean) => {
+    const key = `${part.id}_${isIncorrect ? 'feedback' : 'explain'}`;
+    
+    if (aiExplanations[key]) return; // Already have it
+    
+    setLoadingAI(prev => ({ ...prev, [key]: true }));
+    
+    try {
+      let result: string | null;
+      if (isIncorrect) {
+        const userAnswer = answers[part.id] || '';
+        result = await getFeedback(questionText + '\n' + part.text, userAnswer, part.answer, part.marks);
+      } else {
+        result = await getExplanation(questionText + '\n' + part.text, part.answer, part.marks);
+      }
+      
+      if (result) {
+        setAiExplanations(prev => ({ ...prev, [key]: result }));
+      }
+    } finally {
+      setLoadingAI(prev => ({ ...prev, [key]: false }));
+    }
+  };
+
   const handleSubmitExam = async () => {
     const newResults: Record<string, boolean> = {};
     questions.forEach(question => {
@@ -284,28 +361,28 @@ export default function ExamTakingPage() {
     setResults(newResults);
     setShowResults(true);
 
-    // Save attempt if user is logged in
     if (profile && exam) {
       const score = Object.values(newResults).filter(Boolean).length;
       const scorePercentage = totalParts > 0 ? (score / totalParts) * 100 : 0;
       
+      // Map quiz mode to practice for database (quiz is a UI variant of practice)
+      const dbMode = mode === 'quiz' ? 'practice' : mode;
+      
       await supabase.from('exam_attempts').insert({
         user_id: profile.id,
         exam_id: exam.id,
-        mode,
+        mode: dbMode,
         score,
         total_questions: totalParts,
         time_taken: exam.time_limit * 60 - timeLeft,
       });
 
-      // Update XP and streak
       const { xpEarned, newStreak, streakUpdated } = await updateUserProgress({
         userId: profile.id,
         scorePercentage,
         totalQuestions: totalParts,
       });
 
-      // Fire celebration effects
       if (scorePercentage >= 80) {
         fireConfetti();
         fireStars();
@@ -323,7 +400,6 @@ export default function ExamTakingPage() {
         toast.success(`🔥 ${newStreak} day streak!`);
       }
 
-      // Check for new achievements (fire and forget)
       supabase.functions.invoke('check-achievements', {
         body: { userId: profile.id },
       }).then(({ data }) => {
@@ -371,6 +447,7 @@ export default function ExamTakingPage() {
     );
   }
 
+  // Results View
   if (showResults) {
     const { score, total } = calculateScore();
     const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
@@ -381,7 +458,7 @@ export default function ExamTakingPage() {
           <Card className="text-center p-8">
             <div className={cn(
               'w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center',
-              percentage >= 70 ? 'bg-emerald-100' : percentage >= 50 ? 'bg-amber-100' : 'bg-red-100'
+              percentage >= 70 ? 'bg-emerald-100 dark:bg-emerald-900/30' : percentage >= 50 ? 'bg-amber-100 dark:bg-amber-900/30' : 'bg-red-100 dark:bg-red-900/30'
             )}>
               <span className={cn(
                 'text-3xl font-bold',
@@ -391,7 +468,9 @@ export default function ExamTakingPage() {
               </span>
             </div>
             
-            <h1 className="text-2xl font-bold mb-2">Exam Complete!</h1>
+            <h1 className="text-2xl font-bold mb-2">
+              {mode === 'quiz' ? 'Quiz Complete!' : 'Exam Complete!'}
+            </h1>
             <p className="text-muted-foreground mb-6">
               You scored {score} out of {total} questions correctly.
             </p>
@@ -418,31 +497,95 @@ export default function ExamTakingPage() {
                   </div>
                 )}
                 
-                {question.parts.map(part => (
-                  <div key={part.id} className="border-t border-border pt-4 mt-4">
-                    <div className="flex items-start gap-3">
-                      {results[part.id] ? (
-                        <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
-                      ) : (
-                        <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-1" />
-                      )}
-                      <div className="flex-1">
-                        <p className="font-medium">{part.text}</p>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Your answer: {answers[part.id] || '(No answer)'}
-                        </p>
-                        <p className="text-sm text-emerald-600 mt-1">
-                          Correct answer: {part.answer}
-                        </p>
-                        {part.explanation && (
-                          <div className="text-sm text-secondary mt-2 bg-secondary/10 p-3 rounded-lg whitespace-pre-line">
-                            {part.explanation}
-                          </div>
+                {question.parts.map(part => {
+                  const isCorrect = results[part.id];
+                  const feedbackKey = `${part.id}_feedback`;
+                  const explainKey = `${part.id}_explain`;
+                  
+                  return (
+                    <div key={part.id} className="border-t border-border pt-4 mt-4">
+                      <div className="flex items-start gap-3">
+                        {isCorrect ? (
+                          <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-1" />
+                        ) : (
+                          <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-1" />
                         )}
+                        <div className="flex-1">
+                          <p className="font-medium">{part.text}</p>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            Your answer: {answers[part.id] || '(No answer)'}
+                          </p>
+                          <p className="text-sm text-emerald-600 mt-1">
+                            Correct answer: {part.answer}
+                          </p>
+                          
+                          {/* Static explanation if exists */}
+                          {part.explanation && (
+                            <div className="text-sm text-secondary mt-2 bg-secondary/10 p-3 rounded-lg whitespace-pre-line">
+                              {part.explanation}
+                            </div>
+                          )}
+                          
+                          {/* AI Help Button */}
+                          {!isCorrect && !aiExplanations[feedbackKey] && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="mt-3"
+                              onClick={() => handleGetAIExplanation(part, question.text, true)}
+                              disabled={loadingAI[feedbackKey]}
+                            >
+                              {loadingAI[feedbackKey] ? (
+                                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              ) : (
+                                <Lightbulb className="w-4 h-4 mr-2" />
+                              )}
+                              Why was I wrong?
+                            </Button>
+                          )}
+                          
+                          {isCorrect && !part.explanation && !aiExplanations[explainKey] && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="mt-3"
+                              onClick={() => handleGetAIExplanation(part, question.text, false)}
+                              disabled={loadingAI[explainKey]}
+                            >
+                              {loadingAI[explainKey] ? (
+                                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              ) : (
+                                <Sparkles className="w-4 h-4 mr-2" />
+                              )}
+                              Show explanation
+                            </Button>
+                          )}
+                          
+                          {/* AI Explanation Display */}
+                          {aiExplanations[feedbackKey] && (
+                            <div className="mt-3 p-4 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-200 dark:border-amber-800">
+                              <div className="flex items-center gap-2 text-amber-600 font-medium mb-2">
+                                <Lightbulb className="w-5 h-5" />
+                                AI Feedback
+                              </div>
+                              <MarkdownRenderer content={aiExplanations[feedbackKey]} className="text-sm" />
+                            </div>
+                          )}
+                          
+                          {aiExplanations[explainKey] && (
+                            <div className="mt-3 p-4 bg-secondary/10 rounded-lg">
+                              <div className="flex items-center gap-2 text-secondary font-medium mb-2">
+                                <Sparkles className="w-5 h-5" />
+                                AI Explanation
+                              </div>
+                              <MarkdownRenderer content={aiExplanations[explainKey]} className="text-sm" />
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </Card>
             ))}
           </div>
@@ -451,6 +594,120 @@ export default function ExamTakingPage() {
     );
   }
 
+  // Quiz Mode View
+  if (mode === 'quiz' && currentQuizItem) {
+    const { question, part, questionIndex } = currentQuizItem;
+    const isAnswered = results[part.id] !== undefined;
+    const isCorrect = results[part.id];
+    
+    return (
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <header className="bg-card shadow-sm border-b border-border sticky top-0 z-10">
+          <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div className="flex items-center gap-4">
+              <Button variant="ghost" size="icon" onClick={handleExit}>
+                <ArrowLeft className="w-5 h-5" />
+              </Button>
+              <div>
+                <h1 className="font-bold text-foreground">{exam.title}</h1>
+                <p className="text-sm text-muted-foreground flex items-center gap-1">
+                  <Zap className="w-4 h-4 text-amber-500" />
+                  Quiz Mode
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-muted-foreground">
+                {quizPartIndex + 1} of {allParts.length}
+              </span>
+              <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-primary transition-all duration-300"
+                  style={{ width: `${((quizPartIndex + 1) / allParts.length) * 100}%` }}
+                />
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* Quiz Content */}
+        <main className="container mx-auto px-6 py-8 max-w-2xl">
+          <Card className="p-6">
+            <div className="mb-6">
+              <span className="text-sm text-primary font-medium">
+                Question {questionIndex + 1}
+              </span>
+              <h2 className="text-xl font-bold mt-2 whitespace-pre-line">{question.text}</h2>
+              {question.image_url && (
+                <div className="mt-4">
+                  <img 
+                    src={question.image_url} 
+                    alt="Question diagram"
+                    className="max-w-full h-auto rounded-lg border border-border"
+                  />
+                </div>
+              )}
+            </div>
+
+            <div className="border-t border-border pt-6">
+              <p className="font-medium mb-2">{part.text}</p>
+              <p className="text-sm text-muted-foreground mb-3">[{part.marks} marks]</p>
+              
+              <Textarea
+                value={answers[part.id] || ''}
+                onChange={(e) => handleAnswerChange(part.id, e.target.value)}
+                placeholder="Enter your answer..."
+                className="min-h-[100px] resize-y"
+                disabled={isAnswered}
+              />
+
+              {/* Feedback overlay */}
+              {quizFeedbackVisible && isAnswered && (
+                <div className={cn(
+                  'mt-4 p-4 rounded-lg flex items-center gap-3',
+                  isCorrect 
+                    ? 'bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800' 
+                    : 'bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800'
+                )}>
+                  {isCorrect ? (
+                    <>
+                      <CheckCircle className="w-6 h-6 text-emerald-500" />
+                      <div>
+                        <p className="font-medium text-emerald-700 dark:text-emerald-400">Correct! 🎉</p>
+                        <p className="text-sm text-emerald-600 dark:text-emerald-500">Moving to next question...</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <XCircle className="w-6 h-6 text-red-500" />
+                      <div>
+                        <p className="font-medium text-red-700 dark:text-red-400">Not quite right</p>
+                        <p className="text-sm text-red-600 dark:text-red-500">Correct answer: {part.answer}</p>
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+
+              {!isAnswered && (
+                <Button 
+                  className="mt-4 w-full"
+                  onClick={handleQuizSubmit}
+                  disabled={!answers[part.id]?.trim()}
+                >
+                  Submit Answer
+                </Button>
+              )}
+            </div>
+          </Card>
+        </main>
+      </div>
+    );
+  }
+
+  // Practice/Simulation Mode View
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -472,7 +729,7 @@ export default function ExamTakingPage() {
             {mode === 'simulation' && (
               <div className={cn(
                 'flex items-center gap-2 px-3 py-1 rounded-full',
-                timeLeft < 300 ? 'bg-red-100 text-red-600' : 'bg-muted text-foreground'
+                timeLeft < 300 ? 'bg-red-100 dark:bg-red-900/30 text-red-600' : 'bg-muted text-foreground'
               )}>
                 <Clock className="w-5 h-5" />
                 <span className="font-mono font-bold">{formatTime(timeLeft)}</span>
@@ -530,66 +787,98 @@ export default function ExamTakingPage() {
           </div>
 
           <div className="space-y-6">
-            {currentQuestion?.parts.map((part, partIndex) => (
-              <div key={part.id} className="border-t border-border pt-6">
-                <div className="flex items-start gap-4">
-                  <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
-                    {String.fromCharCode(97 + partIndex)}
-                  </span>
-                  <div className="flex-1">
-                    <p className="font-medium mb-2">{part.text}</p>
-                    <p className="text-sm text-muted-foreground mb-3">[{part.marks} marks]</p>
-                    
-                    <Textarea
-                      value={answers[part.id] || ''}
-                      onChange={(e) => handleAnswerChange(part.id, e.target.value)}
-                      placeholder="Enter your answer..."
-                      className="min-h-[100px] resize-y"
-                    />
+            {currentQuestion?.parts.map((part, partIndex) => {
+              const explainKey = `${part.id}_explain`;
+              
+              return (
+                <div key={part.id} className="border-t border-border pt-6">
+                  <div className="flex items-start gap-4">
+                    <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      {String.fromCharCode(97 + partIndex)}
+                    </span>
+                    <div className="flex-1">
+                      <p className="font-medium mb-2">{part.text}</p>
+                      <p className="text-sm text-muted-foreground mb-3">[{part.marks} marks]</p>
+                      
+                      <Textarea
+                        value={answers[part.id] || ''}
+                        onChange={(e) => handleAnswerChange(part.id, e.target.value)}
+                        placeholder="Enter your answer..."
+                        className="min-h-[100px] resize-y"
+                      />
 
-                    {mode === 'practice' && (
-                      <div className="mt-3 flex items-center gap-3">
-                        <Button
-                          variant="secondary"
-                          onClick={() => handleCheckPracticeAnswer(part)}
-                        >
-                          Check Answer
-                        </Button>
-                        
-                        {results[part.id] !== undefined && (
-                          <div className={cn(
-                            'flex items-center gap-2',
-                            results[part.id] ? 'text-emerald-600' : 'text-red-600'
-                          )}>
-                            {results[part.id] ? (
-                              <>
-                                <CheckCircle className="w-5 h-5" />
-                                <span>Correct!</span>
-                              </>
-                            ) : (
-                              <>
-                                <XCircle className="w-5 h-5" />
-                                <span>Incorrect. Answer: {part.answer}</span>
-                              </>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {mode === 'practice' && results[part.id] !== undefined && part.explanation && (
-                      <div className="mt-3 p-4 bg-secondary/10 rounded-lg">
-                        <div className="flex items-center gap-2 text-secondary font-medium mb-2">
-                          <Sparkles className="w-5 h-5" />
-                          Explanation
+                      {mode === 'practice' && (
+                        <div className="mt-3 flex items-center gap-3 flex-wrap">
+                          <Button
+                            variant="secondary"
+                            onClick={() => handleCheckPracticeAnswer(part)}
+                          >
+                            Check Answer
+                          </Button>
+                          
+                          {/* AI Help button in practice mode */}
+                          {results[part.id] === undefined && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleGetAIExplanation(part, currentQuestion?.text || '', false)}
+                              disabled={loadingAI[explainKey]}
+                            >
+                              {loadingAI[explainKey] ? (
+                                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              ) : (
+                                <Lightbulb className="w-4 h-4 mr-2" />
+                              )}
+                              Get AI Help
+                            </Button>
+                          )}
+                          
+                          {results[part.id] !== undefined && (
+                            <div className={cn(
+                              'flex items-center gap-2',
+                              results[part.id] ? 'text-emerald-600' : 'text-red-600'
+                            )}>
+                              {results[part.id] ? (
+                                <>
+                                  <CheckCircle className="w-5 h-5" />
+                                  <span>Correct!</span>
+                                </>
+                              ) : (
+                                <>
+                                  <XCircle className="w-5 h-5" />
+                                  <span>Incorrect. Answer: {part.answer}</span>
+                                </>
+                              )}
+                            </div>
+                          )}
                         </div>
-                        <div className="text-sm text-muted-foreground whitespace-pre-line">{part.explanation}</div>
-                      </div>
-                    )}
+                      )}
+
+                      {/* AI Explanation display */}
+                      {aiExplanations[explainKey] && (
+                        <div className="mt-3 p-4 bg-secondary/10 rounded-lg">
+                          <div className="flex items-center gap-2 text-secondary font-medium mb-2">
+                            <Sparkles className="w-5 h-5" />
+                            AI Explanation
+                          </div>
+                          <MarkdownRenderer content={aiExplanations[explainKey]} className="text-sm" />
+                        </div>
+                      )}
+
+                      {mode === 'practice' && results[part.id] !== undefined && part.explanation && (
+                        <div className="mt-3 p-4 bg-secondary/10 rounded-lg">
+                          <div className="flex items-center gap-2 text-secondary font-medium mb-2">
+                            <Sparkles className="w-5 h-5" />
+                            Explanation
+                          </div>
+                          <div className="text-sm text-muted-foreground whitespace-pre-line">{part.explanation}</div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </Card>
 
