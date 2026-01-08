@@ -6,6 +6,7 @@ import DashboardLayout from '@/components/layout/DashboardLayout';
 import ExamFilters from '@/components/exam-library/ExamFilters';
 import ExamListItem from '@/components/exam-library/ExamListItem';
 import ExamCard from '@/components/exam-library/ExamCard';
+import ExamModeSelectionModal from '@/components/exam/ExamModeSelectionModal';
 import { Button } from '@/components/ui/button';
 import { BookOpen, Grid3X3, List } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -30,6 +31,10 @@ export default function ExamsPage({ type }: ExamsPageProps) {
   const [selectedYear, setSelectedYear] = useState('All');
   const [selectedDifficulty, setSelectedDifficulty] = useState('All');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  
+  // Modal state for exam mode selection
+  const [modeModalOpen, setModeModalOpen] = useState(false);
+  const [selectedExam, setSelectedExam] = useState<Exam | null>(null);
 
   useEffect(() => {
     const fetchExams = async () => {
@@ -91,8 +96,12 @@ export default function ExamsPage({ type }: ExamsPageProps) {
     setSelectedYear('All');
   };
 
-  const handleStartExam = (examId: string, mode: 'practice' | 'simulation') => {
-    navigate(`/exam/${examId}?mode=${mode}`);
+  const handleStartExam = (examId: string) => {
+    const exam = exams.find(e => e.id === examId);
+    if (exam) {
+      setSelectedExam(exam);
+      setModeModalOpen(true);
+    }
   };
 
   return (
@@ -184,6 +193,17 @@ export default function ExamsPage({ type }: ExamsPageProps) {
               />
             ))}
           </div>
+        )}
+
+        {/* Exam Mode Selection Modal */}
+        {selectedExam && (
+          <ExamModeSelectionModal
+            open={modeModalOpen}
+            onOpenChange={setModeModalOpen}
+            examId={selectedExam.id}
+            examTitle={selectedExam.title}
+            timeLimit={selectedExam.time_limit}
+          />
         )}
       </div>
     </DashboardLayout>

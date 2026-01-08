@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import DashboardLayout from '@/components/layout/DashboardLayout';
@@ -15,6 +16,7 @@ import {
   BookOpen,
   Trophy,
   Calendar,
+  MessageSquare,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { format, subDays, startOfWeek, endOfWeek, isWithinInterval } from 'date-fns';
@@ -32,6 +34,7 @@ interface LinkedStudent {
 }
 
 export default function ParentDashboard() {
+  const navigate = useNavigate();
   const { profile, user } = useAuth();
   const [linkedStudents, setLinkedStudents] = useState<LinkedStudent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -140,11 +143,16 @@ export default function ParentDashboard() {
               Monitor your children's learning progress
             </p>
           </div>
-          
-          <Button className="gap-2" onClick={() => setShowLinkDialog(true)}>
-            <UserPlus className="w-4 h-4" />
-            Link a Child
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" className="gap-2" onClick={() => navigate('/forum')}>
+              <MessageSquare className="w-4 h-4" />
+              Community Forum
+            </Button>
+            <Button className="gap-2" onClick={() => setShowLinkDialog(true)}>
+              <UserPlus className="w-4 h-4" />
+              Link a Child
+            </Button>
+          </div>
         </div>
 
         <LinkChildDialog 

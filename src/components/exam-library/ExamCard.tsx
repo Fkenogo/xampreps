@@ -17,7 +17,7 @@ interface ExamCardProps {
     is_free: boolean;
     description?: string | null;
   };
-  onStart: (examId: string, mode: 'practice' | 'simulation') => void;
+  onStart: (examId: string) => void;
   index?: number;
 }
 
@@ -110,22 +110,13 @@ export default function ExamCard({ exam, onStart, index = 0 }: ExamCardProps) {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            className="flex-1"
-            onClick={() => onStart(exam.id, 'practice')}
-          >
-            Practice
-          </Button>
-          <Button
-            className="flex-1 gap-2"
-            onClick={() => onStart(exam.id, 'simulation')}
-          >
-            <Play className="w-4 h-4" />
-            Start
-          </Button>
-        </div>
+        <Button
+          className="w-full gap-2"
+          onClick={() => onStart(exam.id)}
+        >
+          <Play className="w-4 h-4" />
+          Start Exam
+        </Button>
       </div>
     </div>
   );

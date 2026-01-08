@@ -21,6 +21,7 @@ import HistoryPage from "./pages/HistoryPage";
 import AchievementsPage from "./pages/AchievementsPage";
 import PaymentSuccessPage from "./pages/PaymentSuccessPage";
 import PricingPage from "./pages/PricingPage";
+import ForumPage from "./pages/ForumPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -117,6 +118,12 @@ const App = () => (
             <Route path="/achievements" element={
               <ProtectedRoute>
                 <AchievementsPage />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/forum" element={
+              <ProtectedRoute>
+                <ForumPage />
               </ProtectedRoute>
             } />
 

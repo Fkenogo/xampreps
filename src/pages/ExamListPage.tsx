@@ -57,7 +57,7 @@ const ExamListPage: React.FC<ExamListPageProps> = ({ pageType, allExams, onNavig
     setSelectedYear('All');
   };
 
-  const handleStartExam = (examId: string, mode: 'practice' | 'simulation') => {
+  const handleStartExam = (examId: string) => {
     onNavigateToAuth();
   };
 
