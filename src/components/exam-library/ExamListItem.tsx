@@ -17,7 +17,7 @@ interface ExamListItemProps {
     is_free: boolean;
     description?: string | null;
   };
-  onStart: (examId: string, mode: 'practice' | 'simulation') => void;
+  onStart: (examId: string) => void;
   index?: number;
 }
 
@@ -128,17 +128,8 @@ export default function ExamListItem({ exam, onStart, index = 0 }: ExamListItemP
         {/* Actions */}
         <div className="flex items-center gap-2 shrink-0">
           <Button
-            variant="ghost"
-            size="icon"
-            className="hidden sm:flex text-muted-foreground hover:text-primary"
-            onClick={() => onStart(exam.id, 'practice')}
-            title="Practice Mode"
-          >
-            <BookOpen className="w-5 h-5" />
-          </Button>
-          <Button
             className="gap-2"
-            onClick={() => onStart(exam.id, 'simulation')}
+            onClick={() => onStart(exam.id)}
           >
             Start Exam
           </Button>
