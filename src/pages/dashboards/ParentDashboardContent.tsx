@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import StatCard from '@/components/dashboard/StatCard';
+import { CommunityForumCard } from '@/components/forum';
 import { Button } from '@/components/ui/button';
 import { 
   Users, 
@@ -24,6 +26,7 @@ interface LinkedStudent {
 }
 
 export default function ParentDashboardContent() {
+  const navigate = useNavigate();
   const { profile, user } = useAuth();
   const [linkedStudents, setLinkedStudents] = useState<LinkedStudent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -193,6 +196,23 @@ export default function ParentDashboardContent() {
             ))}
           </div>
         )}
+      </div>
+
+      {/* Community Forum Card */}
+      <div className="grid md:grid-cols-2 gap-6">
+        <CommunityForumCard onNewPost={() => navigate('/forum?new=true')} />
+
+        <div className="bg-card rounded-2xl border border-border p-6">
+          <h3 className="font-semibold text-foreground mb-4">Recent Forum Activity</h3>
+          <div className="space-y-4">
+            <p className="text-muted-foreground text-sm">
+              Join the parent community to discuss study tips, share experiences, and get support.
+            </p>
+            <Button variant="outline" onClick={() => navigate('/forum')} className="w-full">
+              Browse Discussions
+            </Button>
+          </div>
+        </div>
       </div>
 
       {/* Quick Insights */}

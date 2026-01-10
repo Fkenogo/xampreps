@@ -25,6 +25,7 @@ import {
   ListOrdered,
   Copy,
   Loader2,
+  MessageSquare,
 } from 'lucide-react';
 import {
   Table,
@@ -47,6 +48,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import type { Database } from '@/integrations/supabase/types';
+import AdminForumModeration from '@/components/admin/AdminForumModeration';
 
 type AppRole = Database['public']['Enums']['app_role'];
 type Exam = Database['public']['Tables']['exams']['Row'];
@@ -409,6 +411,10 @@ export default function AdminDashboard() {
               <TrendingUp className="w-4 h-4" />
               Analytics
             </TabsTrigger>
+            <TabsTrigger value="community" className="gap-2">
+              <MessageSquare className="w-4 h-4" />
+              Community
+            </TabsTrigger>
           </TabsList>
 
           {/* Users Tab */}
@@ -610,6 +616,11 @@ export default function AdminDashboard() {
                 <p className="text-muted-foreground text-sm">Analytics charts coming soon...</p>
               </div>
             </div>
+          </TabsContent>
+
+          {/* Community Tab */}
+          <TabsContent value="community">
+            <AdminForumModeration />
           </TabsContent>
         </Tabs>
 
