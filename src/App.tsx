@@ -16,6 +16,7 @@ import AdminDashboard from "./pages/dashboards/AdminDashboard";
 import ExamsPage from "./pages/ExamsPage";
 import ExamTakingPage from "./pages/ExamTakingPage";
 import ExamResultsPage from "./pages/ExamResultsPage";
+import ReviewSessionPage from "./pages/ReviewSessionPage";
 import SettingsPage from "./pages/SettingsPage";
 import HistoryPage from "./pages/HistoryPage";
 import AchievementsPage from "./pages/AchievementsPage";
@@ -23,7 +24,6 @@ import PaymentSuccessPage from "./pages/PaymentSuccessPage";
 import PricingPage from "./pages/PricingPage";
 import ForumPage from "./pages/ForumPage";
 import NotFound from "./pages/NotFound";
-
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -118,6 +118,12 @@ const App = () => (
             <Route path="/achievements" element={
               <ProtectedRoute>
                 <AchievementsPage />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/review" element={
+              <ProtectedRoute>
+                <ReviewSessionPage />
               </ProtectedRoute>
             } />
 

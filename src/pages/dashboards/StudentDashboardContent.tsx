@@ -7,6 +7,8 @@ import StreakCalendar from '@/components/dashboard/StreakCalendar';
 import AchievementBadge from '@/components/dashboard/AchievementBadge';
 import QuickActionCard from '@/components/dashboard/QuickActionCard';
 import SubjectCard from '@/components/dashboard/SubjectCard';
+import SpacedRepetitionCard from '@/components/dashboard/SpacedRepetitionCard';
+import StudyRemindersCard from '@/components/dashboard/StudyRemindersCard';
 import { 
   Zap, 
   Trophy, 
@@ -187,10 +189,16 @@ export default function StudentDashboardContent() {
         </div>
 
         <div className="space-y-6">
+          {/* Spaced Repetition Card */}
+          <SpacedRepetitionCard />
+          
           <StreakCalendar 
             streak={streak} 
             lastExamDate={progress?.last_exam_date || undefined} 
           />
+          
+          {/* Study Reminders Card */}
+          <StudyRemindersCard />
           
           <div className="bg-card rounded-2xl border border-border p-6">
             <div className="flex items-center justify-between mb-4">
