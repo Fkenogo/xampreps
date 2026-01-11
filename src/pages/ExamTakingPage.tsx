@@ -377,6 +377,59 @@ export default function ExamTakingPage() {
         time_taken: exam.time_limit * 60 - timeLeft,
       });
 
+      // Update question history for spaced repetition
+      const now = new Date();
+      const questionHistoryUpdates = questions.flatMap(question =>
+        question.parts.map(part => {
+          const isCorrect = newResults[part.id];
+          // Calculate next review time based on SM-2 variant
+          const intervalHours = isCorrect ? 24 : 1; // 24 hours if correct, 1 hour if incorrect
+          const nextReview = new Date(now.getTime() + intervalHours * 60 * 60 * 1000);
+          
+          return {
+            user_id: profile.id,
+            question_part_id: part.id,
+            exam_id: exam.id,
+            is_correct: isCorrect,
+            streak: isCorrect ? 1 : 0,
+            next_review: nextReview.toISOString(),
+            last_attempt: now.toISOString(),
+          };
+        })
+      );
+
+      // Upsert question history (update if exists, insert if new)
+      for (const historyItem of questionHistoryUpdates) {
+        const { data: existing } = await supabase
+          .from('question_history')
+          .select('id, streak')
+          .eq('user_id', profile.id)
+          .eq('question_part_id', historyItem.question_part_id)
+          .maybeSingle();
+
+        if (existing) {
+          // Update existing record with SM-2 algorithm
+          const newStreak = historyItem.is_correct ? existing.streak + 1 : 0;
+          const intervalHours = historyItem.is_correct 
+            ? Math.min(newStreak * 24, 720) // Max 30 days
+            : 1;
+          const nextReview = new Date(now.getTime() + intervalHours * 60 * 60 * 1000);
+
+          await supabase
+            .from('question_history')
+            .update({
+              is_correct: historyItem.is_correct,
+              streak: newStreak,
+              next_review: nextReview.toISOString(),
+              last_attempt: now.toISOString(),
+            })
+            .eq('id', existing.id);
+        } else {
+          // Insert new record
+          await supabase.from('question_history').insert(historyItem);
+        }
+      }
+
       const { xpEarned, newStreak, streakUpdated } = await updateUserProgress({
         userId: profile.id,
         scorePercentage,
