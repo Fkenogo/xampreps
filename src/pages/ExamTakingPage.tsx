@@ -500,6 +500,38 @@ export default function ExamTakingPage() {
     );
   }
 
+  // Build user answers data for results page
+  const buildUserAnswersData = () => {
+    const answersData: Record<string, { partId: string; answer: string; isCorrect: boolean }[]> = {};
+    questions.forEach(question => {
+      answersData[question.id] = question.parts.map(part => ({
+        partId: part.id,
+        answer: answers[part.id] || '',
+        isCorrect: results[part.id] || false,
+      }));
+    });
+    return answersData;
+  };
+
+  const handleViewDetailedResults = async () => {
+    // Get the attempt ID from the most recent attempt
+    if (!profile || !exam) return;
+    
+    const { data: attemptData } = await supabase
+      .from('exam_attempts')
+      .select('id')
+      .eq('user_id', profile.id)
+      .eq('exam_id', exam.id)
+      .order('completed_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    
+    if (attemptData) {
+      const answersParam = encodeURIComponent(JSON.stringify(buildUserAnswersData()));
+      navigate(`/exam/${exam.id}/results/${attemptData.id}?answers=${answersParam}`);
+    }
+  };
+
   // Results View
   if (showResults) {
     const { score, total } = calculateScore();
@@ -528,14 +560,26 @@ export default function ExamTakingPage() {
               You scored {score} out of {total} questions correctly.
             </p>
             
-            <Button onClick={handleExit}>
-              Back to {role === 'admin' ? 'Dashboard' : 'Exams'}
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button onClick={handleViewDetailedResults} className="gap-2">
+                <Sparkles className="w-4 h-4" />
+                View Detailed Results
+              </Button>
+              <Button variant="outline" onClick={handleExit}>
+                Back to {role === 'admin' ? 'Dashboard' : 'Exams'}
+              </Button>
+            </div>
           </Card>
 
-          {/* Review Section */}
+          {/* Quick Review Section */}
           <div className="mt-8 space-y-6">
-            <h2 className="text-xl font-bold">Review Your Answers</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold">Quick Review</h2>
+              <Button variant="ghost" size="sm" onClick={handleViewDetailedResults} className="gap-1">
+                Full Review with AI Help
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
             {questions.map((question, qIndex) => (
               <Card key={question.id} className="p-6">
                 <h3 className="font-bold mb-4">Question {qIndex + 1}</h3>
