@@ -16,6 +16,8 @@ import {
   RotateCcw,
   BookOpen,
   BarChart3,
+  FileText,
+  ExternalLink,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { Database } from '@/integrations/supabase/types';
@@ -279,6 +281,24 @@ export default function ExamResultsPage() {
                     />
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* Explanation PDF Link */}
+            {exam.explanation_pdf_url && (
+              <div className="bg-primary/5 border border-primary/20 rounded-xl p-4 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <FileText className="w-6 h-6 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-medium text-foreground">Detailed Explanations Available</h4>
+                  <p className="text-sm text-muted-foreground">Download the full PDF with step-by-step solutions</p>
+                </div>
+                <Button variant="outline" size="sm" className="gap-2" asChild>
+                  <a href={exam.explanation_pdf_url} target="_blank" rel="noopener noreferrer">
+                    View PDF <ExternalLink className="w-4 h-4" />
+                  </a>
+                </Button>
               </div>
             )}
 
