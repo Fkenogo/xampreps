@@ -318,6 +318,39 @@ export type Database = {
           },
         ]
       }
+      link_codes: {
+        Row: {
+          code: string
+          created_at: string
+          creator_id: string
+          creator_type: string
+          expires_at: string
+          id: string
+          used_at: string | null
+          used_by: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          creator_id: string
+          creator_type: string
+          expires_at: string
+          id?: string
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          creator_id?: string
+          creator_type?: string
+          expires_at?: string
+          id?: string
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Relationships: []
+      }
       link_requests: {
         Row: {
           created_at: string
