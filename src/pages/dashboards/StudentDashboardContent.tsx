@@ -9,6 +9,9 @@ import QuickActionCard from '@/components/dashboard/QuickActionCard';
 import SubjectCard from '@/components/dashboard/SubjectCard';
 import SpacedRepetitionCard from '@/components/dashboard/SpacedRepetitionCard';
 import StudyRemindersCard from '@/components/dashboard/StudyRemindersCard';
+import LinkedAccountsCard from '@/components/dashboard/LinkedAccountsCard';
+import RedeemLinkCodeDialog from '@/components/modals/RedeemLinkCodeDialog';
+import { Button } from '@/components/ui/button';
 import { 
   Zap, 
   Trophy, 
@@ -17,6 +20,7 @@ import {
   TrendingUp,
   Clock,
   Flame,
+  Key,
 } from 'lucide-react';
 import type { Database } from '@/integrations/supabase/types';
 
@@ -26,6 +30,7 @@ export default function StudentDashboardContent() {
   const { profile, progress } = useAuth();
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [userAchievementIds, setUserAchievementIds] = useState<string[]>([]);
+  const [showRedeemDialog, setShowRedeemDialog] = useState(false);
   const [examStats, setExamStats] = useState({
     totalAttempts: 0,
     averageScore: 0,
@@ -96,18 +101,34 @@ export default function StudentDashboardContent() {
           </p>
         </div>
         
-        <div className="flex items-center gap-4 bg-card rounded-2xl border border-border p-4">
-          <ProgressRing progress={dailyProgress} size={80} strokeWidth={6}>
-            <div className="text-center">
-              <span className="text-lg font-bold text-foreground">{Math.round(dailyProgress)}%</span>
+        <div className="flex items-center gap-4">
+          <Button 
+            variant="outline" 
+            className="gap-2"
+            onClick={() => setShowRedeemDialog(true)}
+          >
+            <Key className="w-4 h-4" />
+            Enter Link Code
+          </Button>
+          <div className="bg-card rounded-2xl border border-border p-4 flex items-center gap-4">
+            <ProgressRing progress={dailyProgress} size={80} strokeWidth={6}>
+              <div className="text-center">
+                <span className="text-lg font-bold text-foreground">{Math.round(dailyProgress)}%</span>
+              </div>
+            </ProgressRing>
+            <div>
+              <p className="text-sm text-muted-foreground">Daily Goal</p>
+              <p className="font-semibold text-foreground">{Math.round(xp % dailyGoal)}/{dailyGoal} XP</p>
             </div>
-          </ProgressRing>
-          <div>
-            <p className="text-sm text-muted-foreground">Daily Goal</p>
-            <p className="font-semibold text-foreground">{Math.round(xp % dailyGoal)}/{dailyGoal} XP</p>
           </div>
         </div>
       </div>
+
+      <RedeemLinkCodeDialog
+        open={showRedeemDialog}
+        onOpenChange={setShowRedeemDialog}
+        onSuccess={() => window.location.reload()}
+      />
 
       {/* Stats Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -196,6 +217,9 @@ export default function StudentDashboardContent() {
             streak={streak} 
             lastExamDate={progress?.last_exam_date || undefined} 
           />
+          
+          {/* Linked Accounts Card */}
+          <LinkedAccountsCard />
           
           {/* Study Reminders Card */}
           <StudyRemindersCard />

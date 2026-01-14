@@ -14,12 +14,19 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
-import { UserPlus, Mail, Search, Loader2, Users } from 'lucide-react';
+import { UserPlus, Mail, Search, Loader2, Users, Key, Copy, Check, RefreshCw, Clock } from 'lucide-react';
 
 interface AddStudentDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSuccess?: () => void;
+}
+
+interface LinkCode {
+  id: string;
+  code: string;
+  expires_at: string;
+  used_by: string | null;
 }
 
 export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddStudentDialogProps) {
@@ -29,6 +36,20 @@ export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddS
   const [loading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState<{ id: string; name: string; email: string } | null>(null);
   const [notFound, setNotFound] = useState(false);
+  const [activeCodes, setActiveCodes] = useState<LinkCode[]>([]);
+  const [copied, setCopied] = useState<string | null>(null);
+
+  const fetchActiveCodes = async () => {
+    if (!user?.id) return;
+    const { data } = await supabase
+      .from('link_codes')
+      .select('*')
+      .eq('creator_id', user.id)
+      .is('used_by', null)
+      .gt('expires_at', new Date().toISOString())
+      .order('created_at', { ascending: false });
+    if (data) setActiveCodes(data);
+  };
 
   const handleSearch = async () => {
     if (!email.trim()) {
@@ -174,6 +195,55 @@ export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddS
     setLoading(false);
   };
 
+  const generateCode = () => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let code = '';
+    for (let i = 0; i < 8; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+  };
+
+  const handleGenerateCode = async () => {
+    if (!user?.id) return;
+
+    setLoading(true);
+    const code = generateCode();
+    const expiresAt = new Date();
+    expiresAt.setHours(expiresAt.getHours() + 24);
+
+    const { error } = await supabase
+      .from('link_codes')
+      .insert({
+        code,
+        creator_id: user.id,
+        creator_type: 'school',
+        expires_at: expiresAt.toISOString(),
+      });
+
+    if (error) {
+      toast.error('Failed to generate code');
+    } else {
+      toast.success('Link code generated!');
+      fetchActiveCodes();
+    }
+    setLoading(false);
+  };
+
+  const handleCopyCode = async (code: string) => {
+    await navigator.clipboard.writeText(code);
+    setCopied(code);
+    toast.success('Code copied!');
+    setTimeout(() => setCopied(null), 2000);
+  };
+
+  const getTimeRemaining = (expiresAt: string) => {
+    const diff = new Date(expiresAt).getTime() - Date.now();
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    return `${hours}h ${minutes}m`;
+  };
+
   const handleClose = () => {
     setEmail('');
     setBulkEmails('');
@@ -191,21 +261,58 @@ export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddS
             Add Students
           </DialogTitle>
           <DialogDescription>
-            Add students to your school by email
+            Add students to your school using codes or email
           </DialogDescription>
         </DialogHeader>
 
-        <Tabs defaultValue="single" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
+        <Tabs defaultValue="code" className="w-full" onValueChange={(v) => v === 'code' && fetchActiveCodes()}>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="code" className="gap-2">
+              <Key className="w-4 h-4" />
+              Code
+            </TabsTrigger>
             <TabsTrigger value="single" className="gap-2">
               <Mail className="w-4 h-4" />
               Single
             </TabsTrigger>
             <TabsTrigger value="bulk" className="gap-2">
               <Users className="w-4 h-4" />
-              Bulk Import
+              Bulk
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="code" className="space-y-4 py-4">
+            <Button onClick={handleGenerateCode} disabled={loading} className="w-full gap-2">
+              {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
+              Generate School Code
+            </Button>
+
+            {activeCodes.length > 0 && (
+              <div className="space-y-3">
+                <p className="text-sm font-medium text-muted-foreground">Active Codes</p>
+                {activeCodes.map((linkCode) => (
+                  <div key={linkCode.id} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border border-border">
+                    <div>
+                      <p className="font-mono text-lg font-bold tracking-widest text-foreground">{linkCode.code}</p>
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
+                        <Clock className="w-3 h-3" />
+                        <span>Expires in {getTimeRemaining(linkCode.expires_at)}</span>
+                      </div>
+                    </div>
+                    <Button variant="outline" size="icon" onClick={() => handleCopyCode(linkCode.code)}>
+                      {copied === linkCode.code ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
+              <p className="text-sm text-muted-foreground">
+                Share this code with students. They can enter it in their dashboard to join your school. Codes expire after 24 hours.
+              </p>
+            </div>
+          </TabsContent>
 
           <TabsContent value="single" className="space-y-4 py-4">
             <div className="space-y-2">
@@ -227,9 +334,7 @@ export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddS
 
             {notFound && (
               <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
-                <p className="text-sm text-red-500">
-                  No student account found with this email.
-                </p>
+                <p className="text-sm text-red-500">No student account found with this email.</p>
               </div>
             )}
 
@@ -245,7 +350,7 @@ export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddS
                   </div>
                 </div>
                 <Button onClick={handleSendRequest} disabled={loading} className="w-full">
-                  {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                  {loading && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
                   Send Link Request
                 </Button>
               </div>
@@ -267,7 +372,7 @@ export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddS
               </p>
             </div>
             <Button onClick={handleBulkInvite} disabled={loading} className="w-full">
-              {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+              {loading && <Loader2 className="w-4 h-4 animate-spin mr-2" />}
               Send Bulk Requests
             </Button>
           </TabsContent>
