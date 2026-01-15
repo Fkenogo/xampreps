@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import StatCard from '@/components/dashboard/StatCard';
+import LinkRequestsCard from '@/components/dashboard/LinkRequestsCard';
+import AddStudentDialog from '@/components/modals/AddStudentDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -39,54 +41,57 @@ export default function SchoolDashboardContent() {
   const [students, setStudents] = useState<StudentData[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
+  const [showAddDialog, setShowAddDialog] = useState(false);
+
+  const fetchStudents = async () => {
+    if (!user?.id) return;
+
+    const { data: links } = await supabase
+      .from('linked_accounts')
+      .select('student_id')
+      .eq('parent_or_school_id', user.id);
+
+    if (links && links.length > 0) {
+      const studentIds = links.map(l => l.student_id);
+      
+      const { data: profiles } = await supabase
+        .from('profiles')
+        .select('*')
+        .in('id', studentIds);
+
+      const { data: progress } = await supabase
+        .from('user_progress')
+        .select('*')
+        .in('user_id', studentIds);
+
+      const { data: attempts } = await supabase
+        .from('exam_attempts')
+        .select('user_id')
+        .in('user_id', studentIds);
+
+      if (profiles) {
+        const studentData: StudentData[] = profiles.map(p => {
+          const studentProgress = progress?.find(pr => pr.user_id === p.id);
+          const studentAttempts = attempts?.filter(a => a.user_id === p.id).length || 0;
+          return {
+            id: p.id,
+            name: p.name,
+            email: p.email,
+            level: p.level || undefined,
+            xp: studentProgress?.xp || 0,
+            streak: studentProgress?.streak || 0,
+            examsTaken: studentAttempts,
+          };
+        });
+        setStudents(studentData);
+      }
+    } else {
+      setStudents([]);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const fetchStudents = async () => {
-      if (!user?.id) return;
-
-      const { data: links } = await supabase
-        .from('linked_accounts')
-        .select('student_id')
-        .eq('parent_or_school_id', user.id);
-
-      if (links && links.length > 0) {
-        const studentIds = links.map(l => l.student_id);
-        
-        const { data: profiles } = await supabase
-          .from('profiles')
-          .select('*')
-          .in('id', studentIds);
-
-        const { data: progress } = await supabase
-          .from('user_progress')
-          .select('*')
-          .in('user_id', studentIds);
-
-        const { data: attempts } = await supabase
-          .from('exam_attempts')
-          .select('user_id')
-          .in('user_id', studentIds);
-
-        if (profiles) {
-          const studentData: StudentData[] = profiles.map(p => {
-            const studentProgress = progress?.find(pr => pr.user_id === p.id);
-            const studentAttempts = attempts?.filter(a => a.user_id === p.id).length || 0;
-            return {
-              id: p.id,
-              name: p.name,
-              email: p.email,
-              level: p.level || undefined,
-              xp: studentProgress?.xp || 0,
-              streak: studentProgress?.streak || 0,
-              examsTaken: studentAttempts,
-            };
-          });
-          setStudents(studentData);
-        }
-      }
-      setLoading(false);
-    };
-
     fetchStudents();
   }, [user?.id]);
 
@@ -119,14 +124,21 @@ export default function SchoolDashboardContent() {
             <Download className="w-4 h-4" />
             Export Report
           </Button>
-          <Button className="gap-2">
+          <Button className="gap-2" onClick={() => setShowAddDialog(true)}>
             <UserPlus className="w-4 h-4" />
             Add Student
           </Button>
         </div>
       </div>
 
-      {/* Stats Overview */}
+      <AddStudentDialog
+        open={showAddDialog}
+        onOpenChange={setShowAddDialog}
+        onSuccess={fetchStudents}
+      />
+
+      {/* Link Requests */}
+      <LinkRequestsCard />
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Students"

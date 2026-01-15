@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import DashboardLayout from '@/components/layout/DashboardLayout';
+import AccountLinkingSection from '@/components/settings/AccountLinkingSection';
+import LinkRequestsCard from '@/components/dashboard/LinkRequestsCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,7 +18,7 @@ import { toast } from 'sonner';
 import { User, Mail, GraduationCap, School, Save } from 'lucide-react';
 
 export default function SettingsPage() {
-  const { profile, refreshProfile } = useAuth();
+  const { profile, refreshProfile, role } = useAuth();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: profile?.name || '',
@@ -57,6 +59,7 @@ export default function SettingsPage() {
           <p className="text-muted-foreground mt-1">Manage your account preferences</p>
         </div>
 
+        {/* Profile Information */}
         <div className="bg-card rounded-2xl border border-border p-6 space-y-6">
           <h2 className="text-xl font-semibold text-foreground">Profile Information</h2>
           
@@ -88,25 +91,27 @@ export default function SettingsPage() {
               <p className="text-xs text-muted-foreground">Email cannot be changed</p>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="level" className="flex items-center gap-2">
-                <GraduationCap className="w-4 h-4" />
-                Education Level
-              </Label>
-            <Select
-                value={formData.level}
-                onValueChange={(value: 'PLE' | 'UCE' | 'UACE') => setFormData({ ...formData, level: value })}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select level" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="PLE">PLE - Primary</SelectItem>
-                  <SelectItem value="UCE">UCE - O-Level</SelectItem>
-                  <SelectItem value="UACE">UACE - A-Level</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            {role === 'student' && (
+              <div className="space-y-2">
+                <Label htmlFor="level" className="flex items-center gap-2">
+                  <GraduationCap className="w-4 h-4" />
+                  Education Level
+                </Label>
+                <Select
+                  value={formData.level}
+                  onValueChange={(value: 'PLE' | 'UCE' | 'UACE') => setFormData({ ...formData, level: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select level" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="PLE">PLE - Primary</SelectItem>
+                    <SelectItem value="UCE">UCE - O-Level</SelectItem>
+                    <SelectItem value="UACE">UACE - A-Level</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
 
             <div className="space-y-2">
               <Label htmlFor="school" className="flex items-center gap-2">
@@ -127,6 +132,12 @@ export default function SettingsPage() {
             {loading ? 'Saving...' : 'Save Changes'}
           </Button>
         </div>
+
+        {/* Link Requests - Show pending requests */}
+        <LinkRequestsCard />
+
+        {/* Account Linking Section */}
+        <AccountLinkingSection />
       </div>
     </DashboardLayout>
   );

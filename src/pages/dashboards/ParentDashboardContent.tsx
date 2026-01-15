@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import StatCard from '@/components/dashboard/StatCard';
+import LinkRequestsCard from '@/components/dashboard/LinkRequestsCard';
 import { CommunityForumCard } from '@/components/forum';
+import LinkChildDialog from '@/components/modals/LinkChildDialog';
 import { Button } from '@/components/ui/button';
 import { 
   Users, 
@@ -30,47 +32,50 @@ export default function ParentDashboardContent() {
   const { profile, user } = useAuth();
   const [linkedStudents, setLinkedStudents] = useState<LinkedStudent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showLinkDialog, setShowLinkDialog] = useState(false);
+
+  const fetchLinkedStudents = async () => {
+    if (!user?.id) return;
+
+    const { data: links } = await supabase
+      .from('linked_accounts')
+      .select('student_id')
+      .eq('parent_or_school_id', user.id);
+
+    if (links && links.length > 0) {
+      const studentIds = links.map(l => l.student_id);
+      
+      const { data: profiles } = await supabase
+        .from('profiles')
+        .select('*')
+        .in('id', studentIds);
+
+      const { data: progress } = await supabase
+        .from('user_progress')
+        .select('*')
+        .in('user_id', studentIds);
+
+      if (profiles) {
+        const students: LinkedStudent[] = profiles.map(p => {
+          const studentProgress = progress?.find(pr => pr.user_id === p.id);
+          return {
+            id: p.id,
+            name: p.name,
+            email: p.email,
+            level: p.level || undefined,
+            xp: studentProgress?.xp || 0,
+            streak: studentProgress?.streak || 0,
+          };
+        });
+        setLinkedStudents(students);
+      }
+    } else {
+      setLinkedStudents([]);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const fetchLinkedStudents = async () => {
-      if (!user?.id) return;
-
-      const { data: links } = await supabase
-        .from('linked_accounts')
-        .select('student_id')
-        .eq('parent_or_school_id', user.id);
-
-      if (links && links.length > 0) {
-        const studentIds = links.map(l => l.student_id);
-        
-        const { data: profiles } = await supabase
-          .from('profiles')
-          .select('*')
-          .in('id', studentIds);
-
-        const { data: progress } = await supabase
-          .from('user_progress')
-          .select('*')
-          .in('user_id', studentIds);
-
-        if (profiles) {
-          const students: LinkedStudent[] = profiles.map(p => {
-            const studentProgress = progress?.find(pr => pr.user_id === p.id);
-            return {
-              id: p.id,
-              name: p.name,
-              email: p.email,
-              level: p.level || undefined,
-              xp: studentProgress?.xp || 0,
-              streak: studentProgress?.streak || 0,
-            };
-          });
-          setLinkedStudents(students);
-        }
-      }
-      setLoading(false);
-    };
-
     fetchLinkedStudents();
   }, [user?.id]);
 
@@ -92,11 +97,20 @@ export default function ParentDashboardContent() {
           </p>
         </div>
         
-        <Button className="gap-2">
+        <Button className="gap-2" onClick={() => setShowLinkDialog(true)}>
           <UserPlus className="w-4 h-4" />
           Link a Child
         </Button>
       </div>
+
+      <LinkChildDialog
+        open={showLinkDialog}
+        onOpenChange={setShowLinkDialog}
+        onSuccess={fetchLinkedStudents}
+      />
+
+      {/* Link Requests */}
+      <LinkRequestsCard />
 
       {/* Stats Overview */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

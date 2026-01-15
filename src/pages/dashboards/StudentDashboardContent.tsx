@@ -10,9 +10,10 @@ import SubjectCard from '@/components/dashboard/SubjectCard';
 import SpacedRepetitionCard from '@/components/dashboard/SpacedRepetitionCard';
 import StudyRemindersCard from '@/components/dashboard/StudyRemindersCard';
 import LinkedAccountsCard from '@/components/dashboard/LinkedAccountsCard';
+import LinkRequestsCard from '@/components/dashboard/LinkRequestsCard';
 import RedeemLinkCodeDialog from '@/components/modals/RedeemLinkCodeDialog';
 import { Button } from '@/components/ui/button';
-import { 
+import {
   Zap, 
   Trophy, 
   BookOpen, 
@@ -217,6 +218,9 @@ export default function StudentDashboardContent() {
             streak={streak} 
             lastExamDate={progress?.last_exam_date || undefined} 
           />
+          
+          {/* Link Requests Card */}
+          <LinkRequestsCard />
           
           {/* Linked Accounts Card */}
           <LinkedAccountsCard />
