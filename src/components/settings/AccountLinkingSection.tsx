@@ -262,9 +262,20 @@ export default function AccountLinkingSection() {
                   <p className="font-medium text-foreground truncate">{account.name}</p>
                   <p className="text-xs text-muted-foreground truncate">{account.email}</p>
                 </div>
-                <span className="px-2 py-1 bg-muted rounded-full text-xs text-muted-foreground capitalize">
-                  {account.type}
-                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-1.5 text-muted-foreground hover:text-destructive"
+                  disabled={unlinking === account.id}
+                  onClick={() => handleUnlink(account.id, account.name)}
+                >
+                  {unlinking === account.id ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Unlink className="w-4 h-4" />
+                  )}
+                  <span className="text-xs">Unlink</span>
+                </Button>
               </div>
             ))}
           </div>
