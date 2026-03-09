@@ -117,6 +117,19 @@ export default function LinkedAccountsCard() {
               <p className="font-medium text-foreground truncate">{account.name}</p>
               <p className="text-xs text-muted-foreground capitalize">{account.type}</p>
             </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-muted-foreground hover:text-destructive"
+              disabled={unlinking === account.id}
+              onClick={() => handleUnlink(account.id, account.name)}
+            >
+              {unlinking === account.id ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Unlink className="w-4 h-4" />
+              )}
+            </Button>
           </div>
         ))}
       </div>
