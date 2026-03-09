@@ -17,6 +17,20 @@ export default function LinkedAccountsCard() {
   const { user } = useAuth();
   const [linkedAccounts, setLinkedAccounts] = useState<LinkedAccount[]>([]);
   const [loading, setLoading] = useState(true);
+  const [unlinking, setUnlinking] = useState<string | null>(null);
+
+  const handleUnlink = async (linkId: string, name: string) => {
+    if (!confirm(`Are you sure you want to unlink from ${name}?`)) return;
+    setUnlinking(linkId);
+    const { error } = await supabase.from('linked_accounts').delete().eq('id', linkId);
+    setUnlinking(null);
+    if (error) {
+      toast.error('Failed to unlink account');
+    } else {
+      toast.success(`Unlinked from ${name}`);
+      setLinkedAccounts(prev => prev.filter(a => a.id !== linkId));
+    }
+  };
 
   useEffect(() => {
     const fetchLinkedAccounts = async () => {
