@@ -114,6 +114,19 @@ export default function AccountLinkingSection() {
     setShowSendRequestDialog(true);
   };
 
+  const handleUnlink = async (linkId: string, name: string) => {
+    if (!confirm(`Are you sure you want to unlink from ${name}?`)) return;
+    setUnlinking(linkId);
+    const { error } = await supabase.from('linked_accounts').delete().eq('id', linkId);
+    setUnlinking(null);
+    if (error) {
+      toast.error('Failed to unlink account');
+    } else {
+      toast.success(`Unlinked from ${name}`);
+      setLinkedAccounts(prev => prev.filter(a => a.id !== linkId));
+    }
+  };
+
   const getAccountIcon = (type: string) => {
     switch (type) {
       case 'school':
