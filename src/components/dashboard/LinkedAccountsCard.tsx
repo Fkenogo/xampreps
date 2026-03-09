@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Users, UserCheck, School } from 'lucide-react';
+import { Users, UserCheck, School, Unlink, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 interface LinkedAccount {
   id: string;
@@ -15,6 +17,20 @@ export default function LinkedAccountsCard() {
   const { user } = useAuth();
   const [linkedAccounts, setLinkedAccounts] = useState<LinkedAccount[]>([]);
   const [loading, setLoading] = useState(true);
+  const [unlinking, setUnlinking] = useState<string | null>(null);
+
+  const handleUnlink = async (linkId: string, name: string) => {
+    if (!confirm(`Are you sure you want to unlink from ${name}?`)) return;
+    setUnlinking(linkId);
+    const { error } = await supabase.from('linked_accounts').delete().eq('id', linkId);
+    setUnlinking(null);
+    if (error) {
+      toast.error('Failed to unlink account');
+    } else {
+      toast.success(`Unlinked from ${name}`);
+      setLinkedAccounts(prev => prev.filter(a => a.id !== linkId));
+    }
+  };
 
   useEffect(() => {
     const fetchLinkedAccounts = async () => {
@@ -115,6 +131,19 @@ export default function LinkedAccountsCard() {
               <p className="font-medium text-foreground truncate">{account.name}</p>
               <p className="text-xs text-muted-foreground capitalize">{account.type}</p>
             </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-muted-foreground hover:text-destructive"
+              disabled={unlinking === account.id}
+              onClick={() => handleUnlink(account.id, account.name)}
+            >
+              {unlinking === account.id ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Unlink className="w-4 h-4" />
+              )}
+            </Button>
           </div>
         ))}
       </div>

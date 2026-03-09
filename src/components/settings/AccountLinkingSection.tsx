@@ -13,7 +13,7 @@ import {
   School,
   UserCheck,
   Link2,
-  Plus,
+  
   Unlink,
   Loader2,
 } from 'lucide-react';
@@ -30,6 +30,7 @@ export default function AccountLinkingSection() {
   const { user, role } = useAuth();
   const [linkedAccounts, setLinkedAccounts] = useState<LinkedAccount[]>([]);
   const [loading, setLoading] = useState(true);
+  const [unlinking, setUnlinking] = useState<string | null>(null);
   const [showRedeemDialog, setShowRedeemDialog] = useState(false);
   const [showSendRequestDialog, setShowSendRequestDialog] = useState(false);
   const [showGenerateCodeDialog, setShowGenerateCodeDialog] = useState(false);
@@ -111,6 +112,19 @@ export default function AccountLinkingSection() {
   const handleSendRequest = (targetRole: 'student' | 'parent' | 'school') => {
     setRequestTargetRole(targetRole);
     setShowSendRequestDialog(true);
+  };
+
+  const handleUnlink = async (linkId: string, name: string) => {
+    if (!confirm(`Are you sure you want to unlink from ${name}?`)) return;
+    setUnlinking(linkId);
+    const { error } = await supabase.from('linked_accounts').delete().eq('id', linkId);
+    setUnlinking(null);
+    if (error) {
+      toast.error('Failed to unlink account');
+    } else {
+      toast.success(`Unlinked from ${name}`);
+      setLinkedAccounts(prev => prev.filter(a => a.id !== linkId));
+    }
   };
 
   const getAccountIcon = (type: string) => {
@@ -248,9 +262,20 @@ export default function AccountLinkingSection() {
                   <p className="font-medium text-foreground truncate">{account.name}</p>
                   <p className="text-xs text-muted-foreground truncate">{account.email}</p>
                 </div>
-                <span className="px-2 py-1 bg-muted rounded-full text-xs text-muted-foreground capitalize">
-                  {account.type}
-                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-1.5 text-muted-foreground hover:text-destructive"
+                  disabled={unlinking === account.id}
+                  onClick={() => handleUnlink(account.id, account.name)}
+                >
+                  {unlinking === account.id ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Unlink className="w-4 h-4" />
+                  )}
+                  <span className="text-xs">Unlink</span>
+                </Button>
               </div>
             ))}
           </div>
