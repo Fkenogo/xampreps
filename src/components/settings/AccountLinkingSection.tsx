@@ -30,6 +30,7 @@ export default function AccountLinkingSection() {
   const { user, role } = useAuth();
   const [linkedAccounts, setLinkedAccounts] = useState<LinkedAccount[]>([]);
   const [loading, setLoading] = useState(true);
+  const [unlinking, setUnlinking] = useState<string | null>(null);
   const [showRedeemDialog, setShowRedeemDialog] = useState(false);
   const [showSendRequestDialog, setShowSendRequestDialog] = useState(false);
   const [showGenerateCodeDialog, setShowGenerateCodeDialog] = useState(false);
