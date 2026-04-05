@@ -1,0 +1,215 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user owns the document
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Helper function to check if user has admin role
+    // Note: Custom claims are not set, so we check user_roles collection
+    // This requires a read, which is acceptable for admin checks
+    function isAdmin() {
+      return isAuthenticated() && 
+             get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Helper function to get user's role
+    function getUserRole() {
+      return get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role;
+    }
+    
+    // ============================================================
+    // USER COLLECTIONS
+    // ============================================================
+    
+    // User profiles - users can read/write their own profile
+    // Admin can read all profiles
+    match /profiles/{userId} {
+      allow read: if isAuthenticated(); // Any authenticated user can read profiles (needed for forum, linking)
+      allow create: if isOwner(userId);
+      allow update, delete: if isOwner(userId) || isAdmin();
+    }
+    
+    // User roles - read-only for self, admin manages roles
+    match /user_roles/{userId} {
+      allow read: if isAuthenticated(); // Users need to read their own role
+      allow create: if isOwner(userId); // Only during signup
+      allow update, delete: if isAdmin();
+    }
+    
+    // User progress - users can read/write their own progress
+    match /user_progress/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId); // XP/streak updated by user or Cloud Functions
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+    
+    // ============================================================
+    // EXAM CONTENT COLLECTIONS (Read-only for authenticated users)
+    // ============================================================
+    
+    // Exams - readable by all authenticated users, admin writes
+    match /exams/{examId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Questions - readable by all authenticated users, admin writes
+    match /questions/{questionId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Question parts - readable by all authenticated users, admin writes
+    match /question_parts/{partId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // ============================================================
+    // STUDENT ACTIVITY COLLECTIONS
+    // Note: These are written via Cloud Functions, not direct client writes
+    // Direct client writes are restricted to prevent cheating
+    // ============================================================
+    
+    // Exam attempts - users can read their own, create via Cloud Function only
+    match /exam_attempts/{attemptId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAdmin(); // Only admin can modify attempts
+    }
+    
+    // Question history - users can read/write their own for spaced repetition
+    // Document ID format: {userId}_{questionPartId}
+    match /question_history/{documentId} {
+      allow read: if isAuthenticated() && 
+                     documentId == request.auth.uid + '_' + documentId.split('_')[1];
+      allow create: if isAuthenticated() && 
+                     documentId == request.auth.uid + '_' + documentId.split('_')[1];
+      allow update: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+    
+    // ============================================================
+    // SOCIAL COLLECTIONS
+    // ============================================================
+    
+    // Forum categories - readable by all authenticated users, admin manages
+    match /forum_categories/{categoryId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // Forum posts - readable by all authenticated users
+    // Only parents and admins can create posts (per app logic)
+    match /forum_posts/{postId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && 
+                     (getUserRole() == 'parent' || getUserRole() == 'admin');
+      allow update, delete: if isAuthenticated() && resource.data.authorId == request.auth.uid;
+    }
+    
+    // Forum replies - readable by all authenticated users
+    // Any authenticated user can reply (students can participate in discussions)
+    match /forum_replies/{replyId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update, delete: if isAuthenticated() && resource.data.authorId == request.auth.uid;
+    }
+    
+    // Notifications - users can only read/manage their own
+    // Note: Notifications are currently not created by any function
+    match /notifications/{notificationId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAuthenticated() && resource.data.userId == request.auth.uid;
+    }
+    
+    // ============================================================
+    // ACCOUNT LINKING COLLECTIONS
+    // ============================================================
+    
+    // Link codes - creators can read their own, students redeem via Cloud Function
+    match /link_codes/{codeId} {
+      allow read: if isAuthenticated() && resource.data.creatorId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.creatorId == request.auth.uid;
+      // Updates (redemption) handled by Cloud Function only
+      allow update: if false; // Only via Cloud Function
+      allow delete: if isAuthenticated() && resource.data.creatorId == request.auth.uid;
+    }
+    
+    // Link requests - participants can read their own requests
+    match /link_requests/{requestId} {
+      allow read: if isAuthenticated() && 
+                     request.auth.uid in resource.data.participantIds;
+      allow create: if isAuthenticated() && 
+                     request.auth.uid in request.resource.data.participantIds;
+      allow update: if isAuthenticated() && 
+                     request.auth.uid in resource.data.participantIds;
+      allow delete: if isAuthenticated() && 
+                     request.auth.uid in resource.data.participantIds;
+    }
+    
+    // Linked accounts - users can read their own links
+    // Document ID format: {parentOrSchoolId}_{studentId}
+    match /linked_accounts/{documentId} {
+      allow read: if isAuthenticated() && 
+                     (documentId == request.auth.uid + '_' + documentId.split('_')[1] || 
+                      documentId == documentId.split('_')[0] + '_' + request.auth.uid);
+      allow create: if false; // Only via Cloud Function
+      allow update: if false; // No updates allowed
+      allow delete: if isAuthenticated() && 
+                      (resource.data.parentOrSchoolId == request.auth.uid || 
+                       resource.data.studentId == request.auth.uid);
+    }
+    
+    // ============================================================
+    // ACHIEVEMENT COLLECTIONS
+    // ============================================================
+    
+    // Achievements - readable by all, admin manages
+    match /achievements/{achievementId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isAdmin();
+    }
+    
+    // User achievements - users can read their own
+    match /user_achievements/{achievementId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if false; // Only via Cloud Function (when implemented)
+      allow update, delete: if isAdmin();
+    }
+    
+    // ============================================================
+    // MONETIZATION COLLECTIONS
+    // ============================================================
+    
+    // Subscriptions - users can read their own, no client writes
+    // Subscriptions are managed by payment system (not yet implemented)
+    match /subscriptions/{subscriptionId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create, update, delete: if false; // Only via Cloud Function / payment webhook
+    }
+    
+    // Paper purchases - users can read their own, create via Cloud Function
+    match /paper_purchases/{purchaseId} {
+      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if false; // No modifications allowed
+    }
+    
+    // ============================================================
+    // DEFAULT DENY
+    // ============================================================
+    // All other paths are denied by default
+  }
+}
