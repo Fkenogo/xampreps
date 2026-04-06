@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { addDoc, collection, deleteDoc, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { getFirebaseDb } from '@/integrations/firebase/client';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Bell, Plus, X, Clock } from 'lucide-react';
@@ -56,25 +57,37 @@ export default function StudyRemindersCard({ className }: StudyRemindersCardProp
   const fetchReminders = async () => {
     if (!user?.id) return;
 
-    const { data, error } = await supabase
-      .from('study_reminders')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('reminder_time');
+    const db = getFirebaseDb();
+    const byUserId = await getDocs(query(collection(db, 'study_reminders'), where('userId', '==', user.id)));
+    const byUserSnake = byUserId.empty
+      ? await getDocs(query(collection(db, 'study_reminders'), where('user_id', '==', user.id)))
+      : byUserId;
 
-    if (!error && data) {
-      setReminders(data);
-    }
+    const items: StudyReminder[] = byUserSnake.docs
+      .map((snap) => {
+        const data = snap.data();
+        return {
+          id: snap.id,
+          subject: typeof data.subject === 'string' ? data.subject : 'All Subjects',
+          reminder_time:
+            typeof data.reminderTime === 'string'
+              ? data.reminderTime
+              : typeof data.reminder_time === 'string'
+                ? data.reminder_time
+                : '16:00',
+          active: typeof data.active === 'boolean' ? data.active : true,
+        };
+      })
+      .sort((a, b) => a.reminder_time.localeCompare(b.reminder_time));
+    setReminders(items);
     setLoading(false);
   };
 
   const handleToggleReminder = async (reminderId: string, active: boolean) => {
-    const { error } = await supabase
-      .from('study_reminders')
-      .update({ active })
-      .eq('id', reminderId);
-
-    if (error) {
+    try {
+      const db = getFirebaseDb();
+      await updateDoc(doc(db, 'study_reminders', reminderId), { active });
+    } catch (_error: unknown) {
       toast.error('Failed to update reminder');
       return;
     }
@@ -97,25 +110,27 @@ export default function StudyRemindersCard({ className }: StudyRemindersCardProp
   const handleAddReminder = async () => {
     if (!user?.id) return;
 
-    const { data, error } = await supabase
-      .from('study_reminders')
-      .insert({
+    try {
+      const db = getFirebaseDb();
+      const created = await addDoc(collection(db, 'study_reminders'), {
+        userId: user.id,
         user_id: user.id,
         subject: newSubject,
+        reminderTime: newTime,
         reminder_time: newTime,
         active: true,
-      })
-      .select()
-      .single();
+      });
 
-    if (error) {
+      setReminders((prev) => [
+        ...prev,
+        { id: created.id, subject: newSubject, reminder_time: newTime, active: true },
+      ]);
+      setIsDialogOpen(false);
+      toast.success('Reminder added!');
+    } catch (_error: unknown) {
       toast.error('Failed to add reminder');
       return;
     }
-
-    setReminders(prev => [...prev, data]);
-    setIsDialogOpen(false);
-    toast.success('Reminder added!');
 
     // Request notification permission
     if ('Notification' in window && Notification.permission === 'default') {
@@ -124,12 +139,10 @@ export default function StudyRemindersCard({ className }: StudyRemindersCardProp
   };
 
   const handleDeleteReminder = async (reminderId: string) => {
-    const { error } = await supabase
-      .from('study_reminders')
-      .delete()
-      .eq('id', reminderId);
-
-    if (error) {
+    try {
+      const db = getFirebaseDb();
+      await deleteDoc(doc(db, 'study_reminders', reminderId));
+    } catch (_error: unknown) {
       toast.error('Failed to delete reminder');
       return;
     }

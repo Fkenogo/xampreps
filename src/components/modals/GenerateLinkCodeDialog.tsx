@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { generateLinkCodeFirebase, listActiveLinkCodesFirebase } from '@/integrations/firebase/linking';
 import {
   Dialog,
   DialogContent,
@@ -21,16 +21,16 @@ interface GenerateLinkCodeDialogProps {
 interface LinkCode {
   id: string;
   code: string;
-  expires_at: string;
-  used_by: string | null;
-  used_at: string | null;
-  created_at: string;
+  expiresAt: string;
+  usedBy: string | null;
+  usedAt: string | null;
+  createdAt: string;
 }
 
-export default function GenerateLinkCodeDialog({ 
-  open, 
-  onOpenChange, 
-  creatorType 
+export default function GenerateLinkCodeDialog({
+  open,
+  onOpenChange,
+  creatorType,
 }: GenerateLinkCodeDialogProps) {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
@@ -46,51 +46,32 @@ export default function GenerateLinkCodeDialog({
   const fetchActiveCodes = async () => {
     if (!user?.id) return;
 
-    const { data, error } = await supabase
-      .from('link_codes')
-      .select('*')
-      .eq('creator_id', user.id)
-      .is('used_by', null)
-      .gt('expires_at', new Date().toISOString())
-      .order('created_at', { ascending: false });
-
-    if (data && !error) {
-      setActiveCodes(data);
+    try {
+      const result = await listActiveLinkCodesFirebase();
+      if (result.ok) {
+        setActiveCodes(result.items || []);
+      }
+    } catch (error) {
+      console.error('Error loading Firebase link codes:', error);
+      toast.error('Failed to load active codes');
     }
-  };
-
-  const generateCode = () => {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let code = '';
-    for (let i = 0; i < 8; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return code;
   };
 
   const handleGenerateCode = async () => {
     if (!user?.id) return;
 
     setLoading(true);
-    const code = generateCode();
-    const expiresAt = new Date();
-    expiresAt.setHours(expiresAt.getHours() + 24); // 24 hour expiry
-
-    const { error } = await supabase
-      .from('link_codes')
-      .insert({
-        code,
-        creator_id: user.id,
-        creator_type: creatorType,
-        expires_at: expiresAt.toISOString(),
-      });
-
-    if (error) {
-      console.error('Error generating code:', error);
+    try {
+      const result = await generateLinkCodeFirebase(creatorType);
+      if (result.ok) {
+        toast.success('Link code generated!');
+        await fetchActiveCodes();
+      } else {
+        toast.error('Failed to generate code');
+      }
+    } catch (error) {
+      console.error('Error generating Firebase code:', error);
       toast.error('Failed to generate code');
-    } else {
-      toast.success('Link code generated!');
-      fetchActiveCodes();
     }
     setLoading(false);
   };
@@ -120,14 +101,14 @@ export default function GenerateLinkCodeDialog({
             Generate Link Code
           </DialogTitle>
           <DialogDescription>
-            Generate a code to share with {creatorType === 'parent' ? 'your child' : 'students'}. 
+            Generate a code to share with {creatorType === 'parent' ? 'your child' : 'students'}.
             They can enter this code to link their account with yours.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
-          <Button 
-            onClick={handleGenerateCode} 
+          <Button
+            onClick={handleGenerateCode}
             disabled={loading}
             className="w-full gap-2"
           >
@@ -143,7 +124,7 @@ export default function GenerateLinkCodeDialog({
             <div className="space-y-3">
               <p className="text-sm font-medium text-muted-foreground">Active Codes</p>
               {activeCodes.map((linkCode) => (
-                <div 
+                <div
                   key={linkCode.id}
                   className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border border-border"
                 >
@@ -153,7 +134,7 @@ export default function GenerateLinkCodeDialog({
                     </p>
                     <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
                       <Clock className="w-3 h-3" />
-                      <span>Expires in {getTimeRemaining(linkCode.expires_at)}</span>
+                      <span>Expires in {getTimeRemaining(linkCode.expiresAt)}</span>
                     </div>
                   </div>
                   <Button

@@ -1,38 +1,61 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import { listExamHistoryFirebase } from '@/integrations/firebase/exams';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import { Clock, Trophy, Target, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { Database } from '@/integrations/supabase/types';
 
-type ExamAttempt = Database['public']['Tables']['exam_attempts']['Row'] & {
-  exams: Database['public']['Tables']['exams']['Row'] | null;
-};
+interface ExamAttemptHistory {
+  id: string;
+  exam_id: string;
+  mode: 'practice' | 'simulation' | 'quiz';
+  score: number;
+  total_questions: number;
+  time_taken: number;
+  completed_at: string;
+  exams: {
+    title: string;
+    subject: string;
+    level: string;
+  } | null;
+}
 
 export default function HistoryPage() {
   const navigate = useNavigate();
   const { profile } = useAuth();
-  const [attempts, setAttempts] = useState<ExamAttempt[]>([]);
+  const [attempts, setAttempts] = useState<ExamAttemptHistory[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchHistory = async () => {
       if (!profile?.id) return;
 
-      const { data } = await supabase
-        .from('exam_attempts')
-        .select('*, exams(*)')
-        .eq('user_id', profile.id)
-        .order('completed_at', { ascending: false });
-
-      if (data) {
-        setAttempts(data as ExamAttempt[]);
+      try {
+        const result = await listExamHistoryFirebase();
+        if (result.ok) {
+          const mapped: ExamAttemptHistory[] = (result.items || []).map((item) => ({
+            id: item.id,
+            exam_id: item.examId,
+            mode: item.mode,
+            score: item.score,
+            total_questions: item.totalQuestions,
+            time_taken: item.timeTaken,
+            completed_at: item.completedAt,
+            exams: item.exam,
+          }));
+          setAttempts(mapped);
+        } else {
+          setAttempts([]);
+        }
+      } catch (error) {
+        console.error('Failed to load Firebase exam history:', error);
+        setAttempts([]);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchHistory();

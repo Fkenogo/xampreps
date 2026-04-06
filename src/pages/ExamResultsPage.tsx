@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { getExamAttemptFirebase } from '@/integrations/firebase/exams';
+import { getExamContentFirebase } from '@/integrations/firebase/content';
 import { useAuth } from '@/contexts/AuthContext';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/button';
@@ -20,10 +21,22 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { Database } from '@/integrations/supabase/types';
+interface Exam {
+  id: string;
+  title: string;
+  subject: string | null;
+  level: string | null;
+}
 
-type ExamAttempt = Database['public']['Tables']['exam_attempts']['Row'];
-type Exam = Database['public']['Tables']['exams']['Row'];
+interface ExamAttemptRecord {
+  id: string;
+  exam_id: string;
+  mode: 'practice' | 'simulation' | 'quiz';
+  score: number;
+  total_questions: number;
+  time_taken: number;
+  completed_at: string;
+}
 
 interface QuestionPart {
   id: string;
@@ -53,7 +66,7 @@ export default function ExamResultsPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { role } = useAuth();
-  const [attempt, setAttempt] = useState<ExamAttempt | null>(null);
+  const [attempt, setAttempt] = useState<ExamAttemptRecord | null>(null);
   const [exam, setExam] = useState<Exam | null>(null);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [userAnswers, setUserAnswers] = useState<Record<string, UserAnswer[]>>({});
@@ -76,47 +89,37 @@ export default function ExamResultsPage() {
   useEffect(() => {
     const fetchResults = async () => {
       if (!attemptId || !examId) return;
-
-      const [attemptRes, examRes, questionsRes] = await Promise.all([
-        supabase
-          .from('exam_attempts')
-          .select('*')
-          .eq('id', attemptId)
-          .maybeSingle(),
-        supabase
-          .from('exams')
-          .select('*')
-          .eq('id', examId)
-          .maybeSingle(),
-        supabase
-          .from('questions')
-          .select(`
-            id,
-            question_number,
-            text,
-            image_url,
-            question_parts (
-              id,
-              text,
-              answer,
-              marks,
-              explanation,
-              order_index
-            )
-          `)
-          .eq('exam_id', examId)
-          .order('question_number'),
-      ]);
-
-      if (attemptRes.data) setAttempt(attemptRes.data);
-      if (examRes.data) setExam(examRes.data);
-      if (questionsRes.data) {
-        const sortedQuestions = questionsRes.data.map(q => ({
-          ...q,
-          question_parts: q.question_parts.sort((a, b) => a.order_index - b.order_index),
-        }));
-        setQuestions(sortedQuestions as Question[]);
+      try {
+        const contentRes = await getExamContentFirebase(examId);
+        if (contentRes.ok) {
+          setExam(contentRes.exam as Exam);
+          const sortedQuestions = (contentRes.questions || []).map((q) => ({
+            ...q,
+            question_parts: (q.question_parts || q.parts || []).sort((a, b) => a.order_index - b.order_index),
+          }));
+          setQuestions(sortedQuestions as Question[]);
+        }
+      } catch (error) {
+        console.error('Failed to load Firebase exam content:', error);
       }
+
+      try {
+        const attemptRes = await getExamAttemptFirebase(attemptId);
+        if (attemptRes.ok) {
+          setAttempt({
+            id: attemptRes.attempt.id,
+            exam_id: attemptRes.attempt.examId,
+            mode: attemptRes.attempt.mode,
+            score: attemptRes.attempt.score,
+            total_questions: attemptRes.attempt.totalQuestions,
+            time_taken: attemptRes.attempt.timeTaken,
+            completed_at: attemptRes.attempt.completedAt,
+          });
+        }
+      } catch (error) {
+        console.error('Failed to load Firebase exam attempt:', error);
+      }
+
       setLoading(false);
     };
 

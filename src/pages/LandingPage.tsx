@@ -20,7 +20,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToAuth, onNavigate 
           
           <div className="container mx-auto text-center relative z-10">
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight animate-fade-in">
-              Ace Your Ugandan National Exams with Msomesa
+              Ace Your Ugandan National Exams with XamPreps
             </h1>
             <p className="mt-6 text-lg text-muted max-w-3xl mx-auto animate-fade-in" style={{ animationDelay: '0.1s' }}>
               Your Ultimate Exam Prep Partner for PLE, UCE & UACE. Access thousands of past papers, receive instant feedback, and learn from detailed AI-powered explanations to boost your exam performance.
@@ -87,7 +87,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToAuth, onNavigate 
         <section className="py-20 px-6">
           <div className="container mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold">Why Msomesa Works for Everyone</h2>
+              <h2 className="text-3xl font-bold">Why XamPreps Works for Everyone</h2>
               <p className="mt-2 text-muted-foreground">Personalized solutions that drive academic success.</p>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
@@ -132,7 +132,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigateToAuth, onNavigate 
         <section className="gradient-primary text-primary-foreground py-20 px-6">
           <div className="container mx-auto text-center">
             <h2 className="text-3xl font-bold">Ready to Ace Your Exams?</h2>
-            <p className="mt-2 max-w-xl mx-auto">Join thousands of students who have improved their exam scores with Msomesa.</p>
+            <p className="mt-2 max-w-xl mx-auto">Join thousands of students who have improved their exam scores with XamPreps.</p>
             <button 
               onClick={onNavigateToAuth} 
               className="mt-6 px-8 py-3 bg-card text-primary font-bold rounded-lg shadow-lg hover:bg-card/90 transition-transform hover:scale-105"

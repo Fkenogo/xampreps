@@ -22,7 +22,7 @@ const StudentDashboard: React.FC<StudentDashboardProps> = ({ currentUser, allExa
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <SparklesIcon className="w-8 h-8 text-primary" />
-            <span className="text-xl font-bold">Msomesa</span>
+            <span className="text-xl font-bold">XamPreps</span>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-right">

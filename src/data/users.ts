@@ -37,7 +37,7 @@ export const mockUsers: User[] = [
   { 
     id: '4', 
     name: 'Admin User', 
-    email: 'admin@msomesa.com', 
+    email: 'admin@xampreps.com', 
     role: 'admin', 
     password: 'admin123'
   },

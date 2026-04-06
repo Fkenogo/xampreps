@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import { getFirebaseApp } from '@/integrations/firebase/client';
+import { getFirestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import AccountLinkingSection from '@/components/settings/AccountLinkingSection';
 import LinkRequestsCard from '@/components/dashboard/LinkRequestsCard';
@@ -32,21 +33,20 @@ export default function SettingsPage() {
     if (!profile?.id) return;
     
     setLoading(true);
-    const { error } = await supabase
-      .from('profiles')
-      .update({
+    try {
+      const db = getFirestore(getFirebaseApp());
+      await setDoc(doc(db, 'profiles', profile.id), {
         name: formData.name,
         level: formData.level as 'PLE' | 'UCE' | 'UACE',
         school: formData.school || null,
         phone: formData.phone || null,
-      })
-      .eq('id', profile.id);
-
-    if (error) {
-      toast.error('Failed to update profile');
-    } else {
+        updated_at: serverTimestamp(),
+      }, { merge: true });
       toast.success('Profile updated successfully');
       refreshProfile?.();
+    } catch (error) {
+      console.error('Failed to update profile:', error);
+      toast.error('Failed to update profile');
     }
     setLoading(false);
   };

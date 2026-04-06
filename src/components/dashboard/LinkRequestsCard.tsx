@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import {
+  listLinkRequestsFirebase,
+  respondToLinkRequestFirebase,
+} from '@/integrations/firebase/linking';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { 
@@ -13,9 +16,7 @@ import {
   Clock,
   Send,
 } from 'lucide-react';
-import type { Database } from '@/integrations/supabase/types';
-
-type LinkStatus = Database['public']['Enums']['link_status'];
+type LinkStatus = 'pending' | 'accepted' | 'rejected';
 
 interface LinkRequest {
   id: string;
@@ -40,63 +41,32 @@ export default function LinkRequestsCard() {
   const fetchRequests = async () => {
     if (!user?.id) return;
 
-    // Fetch all pending requests involving this user
-    const { data: requestsData, error } = await supabase
-      .from('link_requests')
-      .select('*')
-      .eq('status', 'pending')
-      .or(`requester_id.eq.${user.id},target_id.eq.${user.id}`);
-
-    if (error) {
-      console.error('Error fetching link requests:', error);
-      setLoading(false);
-      return;
-    }
-
-    if (requestsData && requestsData.length > 0) {
-      // Get all unique user IDs to fetch profiles
-      const userIds = [
-        ...new Set([
-          ...requestsData.map(r => r.requester_id),
-          ...requestsData.map(r => r.target_id),
-        ]),
-      ];
-
-      const { data: profiles } = await supabase
-        .from('profiles')
-        .select('id, name, email')
-        .in('id', userIds);
-
-      const { data: roles } = await supabase
-        .from('user_roles')
-        .select('user_id, role')
-        .in('user_id', userIds);
-
-      const enrichedRequests: LinkRequest[] = requestsData.map(req => {
-        const requesterProfile = profiles?.find(p => p.id === req.requester_id);
-        const targetProfile = profiles?.find(p => p.id === req.target_id);
-        const requesterRole = roles?.find(r => r.user_id === req.requester_id);
-        
-        return {
+    try {
+      const response = await listLinkRequestsFirebase();
+      if (response.ok) {
+        const mapped: LinkRequest[] = (response.items || []).map((req) => ({
           id: req.id,
-          requester_id: req.requester_id,
-          target_id: req.target_id,
-          status: req.status,
-          created_at: req.created_at,
-          requesterName: requesterProfile?.name || 'Unknown',
-          requesterEmail: requesterProfile?.email || '',
-          requesterType: requesterRole?.role === 'school' ? 'school' : 'parent',
-          isIncoming: req.target_id === user.id,
-          targetName: targetProfile?.name,
-          targetEmail: targetProfile?.email,
-        };
-      });
-
-      setRequests(enrichedRequests);
-    } else {
+          requester_id: req.requesterId,
+          target_id: req.targetId,
+          status: req.status as LinkStatus,
+          created_at: req.createdAt,
+          requesterName: req.requesterName,
+          requesterEmail: req.requesterEmail,
+          requesterType: req.requesterType,
+          isIncoming: req.isIncoming,
+          targetName: req.targetName,
+          targetEmail: req.targetEmail,
+        }));
+        setRequests(mapped);
+      } else {
+        setRequests([]);
+      }
+    } catch (error) {
+      console.error('Error fetching Firebase link requests:', error);
       setRequests([]);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -106,53 +76,39 @@ export default function LinkRequestsCard() {
   const handleAccept = async (request: LinkRequest) => {
     setProcessingId(request.id);
 
-    // Update request status
-    const { error: updateError } = await supabase
-      .from('link_requests')
-      .update({ status: 'accepted' as LinkStatus, updated_at: new Date().toISOString() })
-      .eq('id', request.id);
-
-    if (updateError) {
-      console.error('Error accepting request:', updateError);
+    try {
+      const result = await respondToLinkRequestFirebase(request.id, 'accept');
+      if (result.ok) {
+        toast.success(`Connected with ${request.requesterName}!`);
+        await fetchRequests();
+      } else {
+        toast.error('Failed to accept request');
+      }
+    } catch (error) {
+      console.error('Error accepting Firebase link request:', error);
       toast.error('Failed to accept request');
+    } finally {
       setProcessingId(null);
-      return;
     }
-
-    // Create the linked account
-    const { error: linkError } = await supabase
-      .from('linked_accounts')
-      .insert({
-        parent_or_school_id: request.requester_id,
-        student_id: request.target_id,
-      });
-
-    if (linkError) {
-      console.error('Error creating link:', linkError);
-      toast.error('Failed to create link');
-    } else {
-      toast.success(`Connected with ${request.requesterName}!`);
-      fetchRequests();
-    }
-    setProcessingId(null);
   };
 
   const handleReject = async (request: LinkRequest) => {
     setProcessingId(request.id);
 
-    const { error } = await supabase
-      .from('link_requests')
-      .update({ status: 'rejected' as LinkStatus, updated_at: new Date().toISOString() })
-      .eq('id', request.id);
-
-    if (error) {
-      console.error('Error rejecting request:', error);
+    try {
+      const result = await respondToLinkRequestFirebase(request.id, 'reject');
+      if (result.ok) {
+        toast.success('Request declined');
+        await fetchRequests();
+      } else {
+        toast.error('Failed to reject request');
+      }
+    } catch (error) {
+      console.error('Error rejecting Firebase link request:', error);
       toast.error('Failed to reject request');
-    } else {
-      toast.success('Request declined');
-      fetchRequests();
+    } finally {
+      setProcessingId(null);
     }
-    setProcessingId(null);
   };
 
   const getTimeAgo = (dateStr: string) => {

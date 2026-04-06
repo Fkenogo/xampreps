@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import {
+  listStudentDashboardSummaryFirebase,
+  type FirebaseAchievement,
+} from '@/integrations/firebase/student';
 import StatCard from '@/components/dashboard/StatCard';
 import ProgressRing from '@/components/dashboard/ProgressRing';
 import StreakCalendar from '@/components/dashboard/StreakCalendar';
@@ -14,18 +17,17 @@ import LinkRequestsCard from '@/components/dashboard/LinkRequestsCard';
 import RedeemLinkCodeDialog from '@/components/modals/RedeemLinkCodeDialog';
 import { Button } from '@/components/ui/button';
 import {
-  Zap, 
-  Trophy, 
-  BookOpen, 
-  Target, 
+  Zap,
+  Trophy,
+  BookOpen,
+  Target,
   TrendingUp,
   Clock,
   Flame,
   Key,
 } from 'lucide-react';
-import type { Database } from '@/integrations/supabase/types';
 
-type Achievement = Database['public']['Tables']['achievements']['Row'];
+type Achievement = FirebaseAchievement;
 
 export default function StudentDashboardContent() {
   const { profile, progress } = useAuth();
@@ -40,34 +42,21 @@ export default function StudentDashboardContent() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data: achievementsData } = await supabase
-        .from('achievements')
-        .select('*')
-        .limit(6);
-      
-      if (achievementsData) {
-        setAchievements(achievementsData);
-      }
-
-      const { data: userAchievements } = await supabase
-        .from('user_achievements')
-        .select('achievement_id');
-      
-      if (userAchievements) {
-        setUserAchievementIds(userAchievements.map(ua => ua.achievement_id));
-      }
-
-      const { data: attempts } = await supabase
-        .from('exam_attempts')
-        .select('score, total_questions');
-      
-      if (attempts && attempts.length > 0) {
-        const avgScore = attempts.reduce((acc, a) => acc + (a.score / a.total_questions) * 100, 0) / attempts.length;
-        setExamStats({
-          totalAttempts: attempts.length,
-          averageScore: Math.round(avgScore),
-          bestSubject: 'Mathematics',
-        });
+      try {
+        const summary = await listStudentDashboardSummaryFirebase();
+        if (summary.ok) {
+          setAchievements(summary.achievements);
+          setUserAchievementIds(summary.userAchievementIds || []);
+          setExamStats(
+            summary.examStats || {
+              totalAttempts: 0,
+              averageScore: 0,
+              bestSubject: 'Mathematics',
+            }
+          );
+        }
+      } catch (error) {
+        console.error('Failed to fetch Firebase student summary:', error);
       }
     };
 
@@ -96,15 +85,15 @@ export default function StudentDashboardContent() {
             Hey {profile?.name?.split(' ')[0] || 'Champion'}! 👋
           </h1>
           <p className="text-muted-foreground mt-1">
-            {streak > 0 
+            {streak > 0
               ? `You're on fire! ${streak} day streak 🔥`
-              : "Ready to crush some exams today?"}
+              : 'Ready to crush some exams today?'}
           </p>
         </div>
-        
+
         <div className="flex items-center gap-4">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="gap-2"
             onClick={() => setShowRedeemDialog(true)}
           >
@@ -143,7 +132,7 @@ export default function StudentDashboardContent() {
         <StatCard
           title="Day Streak"
           value={streak}
-          subtitle={streak > 0 ? "Keep it up!" : "Start today"}
+          subtitle={streak > 0 ? 'Keep it up!' : 'Start today'}
           icon={Flame}
           gradient="from-orange-500 to-red-500"
         />
@@ -213,21 +202,21 @@ export default function StudentDashboardContent() {
         <div className="space-y-6">
           {/* Spaced Repetition Card */}
           <SpacedRepetitionCard />
-          
-          <StreakCalendar 
-            streak={streak} 
-            lastExamDate={progress?.last_exam_date || undefined} 
+
+          <StreakCalendar
+            streak={streak}
+            lastExamDate={progress?.last_exam_date || undefined}
           />
-          
+
           {/* Link Requests Card */}
           <LinkRequestsCard />
-          
+
           {/* Linked Accounts Card */}
           <LinkedAccountsCard />
-          
+
           {/* Study Reminders Card */}
           <StudyRemindersCard />
-          
+
           <div className="bg-card rounded-2xl border border-border p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold text-foreground">Recent Achievements</h3>
@@ -254,11 +243,11 @@ export default function StudentDashboardContent() {
       {/* Motivational Footer */}
       <div className="bg-gradient-to-r from-primary/10 via-violet-500/10 to-purple-500/10 rounded-2xl p-6 text-center">
         <p className="text-lg font-medium text-foreground">
-          {examStats.averageScore >= 80 
-            ? "🌟 You're doing amazing! Keep up the excellent work!"
+          {examStats.averageScore >= 80
+            ? '🌟 You\'re doing amazing! Keep up the excellent work!'
             : examStats.averageScore >= 60
-            ? "💪 Great progress! A little more practice and you'll be a master!"
-            : "🚀 Every expert was once a beginner. Keep practicing!"}
+              ? "💪 Great progress! A little more practice and you'll be a master!"
+              : '🚀 Every expert was once a beginner. Keep practicing!'}
         </p>
       </div>
     </div>

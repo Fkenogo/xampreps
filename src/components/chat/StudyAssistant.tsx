@@ -4,20 +4,19 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
+import { studyAssistantFirebase } from '@/integrations/firebase/assistant';
 
 type Message = {
   role: 'user' | 'assistant';
   content: string;
 };
 
-const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/study-assistant`;
-
 export const StudyAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi there! 👋 I'm Msomesa AI, your study buddy! Ask me anything about your subjects - I'm here to help you ace your exams! 📚✨"
+      content: "Hi there! 👋 I'm XamPreps AI, your study buddy! Ask me anything about your subjects - I'm here to help you ace your exams! 📚✨"
     }
   ]);
   const [input, setInput] = useState('');
@@ -30,67 +29,12 @@ export const StudyAssistant: React.FC = () => {
     }
   }, [messages]);
 
-  const streamChat = async (userMessages: Message[]) => {
-    const resp = await fetch(CHAT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-      },
-      body: JSON.stringify({ messages: userMessages }),
-    });
-
-    if (!resp.ok) {
-      const error = await resp.json();
-      throw new Error(error.error || "Failed to get response");
+  const requestChat = async (userMessages: Message[]) => {
+    const result = await studyAssistantFirebase(userMessages);
+    if (!result.ok || !result.reply) {
+      throw new Error('Failed to get response');
     }
-
-    if (!resp.body) throw new Error("No response body");
-
-    const reader = resp.body.getReader();
-    const decoder = new TextDecoder();
-    let textBuffer = "";
-    let assistantContent = "";
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      
-      textBuffer += decoder.decode(value, { stream: true });
-
-      let newlineIndex: number;
-      while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
-        let line = textBuffer.slice(0, newlineIndex);
-        textBuffer = textBuffer.slice(newlineIndex + 1);
-
-        if (line.endsWith("\r")) line = line.slice(0, -1);
-        if (line.startsWith(":") || line.trim() === "") continue;
-        if (!line.startsWith("data: ")) continue;
-
-        const jsonStr = line.slice(6).trim();
-        if (jsonStr === "[DONE]") break;
-
-        try {
-          const parsed = JSON.parse(jsonStr);
-          const content = parsed.choices?.[0]?.delta?.content as string | undefined;
-          if (content) {
-            assistantContent += content;
-            setMessages(prev => {
-              const last = prev[prev.length - 1];
-              if (last?.role === "assistant" && prev.length > 1) {
-                return prev.map((m, i) => 
-                  i === prev.length - 1 ? { ...m, content: assistantContent } : m
-                );
-              }
-              return [...prev, { role: "assistant", content: assistantContent }];
-            });
-          }
-        } catch {
-          textBuffer = line + "\n" + textBuffer;
-          break;
-        }
-      }
-    }
+    setMessages((prev) => [...prev, { role: 'assistant', content: result.reply }]);
   };
 
   const handleSend = async () => {
@@ -103,7 +47,7 @@ export const StudyAssistant: React.FC = () => {
     setIsLoading(true);
 
     try {
-      await streamChat(newMessages.filter(m => m.role === 'user' || m.content !== messages[0].content));
+      await requestChat(newMessages);
     } catch (error) {
       console.error('Chat error:', error);
       setMessages(prev => [...prev, {
@@ -147,7 +91,7 @@ export const StudyAssistant: React.FC = () => {
                 <Sparkles className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-sm">Msomesa AI</h3>
+                <h3 className="font-bold text-sm">XamPreps AI</h3>
                 <p className="text-xs opacity-80">Your Study Buddy</p>
               </div>
             </div>

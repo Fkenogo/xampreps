@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import { listLinkedStudentsOverviewFirebase } from '@/integrations/firebase/linking';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import StatCard from '@/components/dashboard/StatCard';
 import LinkChildDialog from '@/components/modals/LinkChildDialog';
 import { Button } from '@/components/ui/button';
-import { 
+import {
   Users, 
   TrendingUp, 
   Clock, 
@@ -19,7 +19,7 @@ import {
   MessageSquare,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { format, subDays, startOfWeek, endOfWeek, isWithinInterval } from 'date-fns';
+import { format, subDays } from 'date-fns';
 
 interface LinkedStudent {
   id: string;
@@ -44,75 +44,30 @@ export default function ParentDashboard() {
     const fetchLinkedStudents = async () => {
       if (!user?.id) return;
 
-      const { data: links } = await supabase
-        .from('linked_accounts')
-        .select('student_id')
-        .eq('parent_or_school_id', user.id);
-
-      if (links && links.length > 0) {
-        const studentIds = links.map(l => l.student_id);
-        
-        // Fetch student profiles and progress
-        const { data: profiles } = await supabase
-          .from('profiles')
-          .select('*')
-          .in('id', studentIds);
-
-        const { data: progress } = await supabase
-          .from('user_progress')
-          .select('*')
-          .in('user_id', studentIds);
-
-        // Fetch exam attempts for study time and scores
-        const weekStart = startOfWeek(new Date(), { weekStartsOn: 1 });
-        const weekEnd = endOfWeek(new Date(), { weekStartsOn: 1 });
-        
-        const { data: attempts } = await supabase
-          .from('exam_attempts')
-          .select('*, exams(title)')
-          .in('user_id', studentIds)
-          .order('completed_at', { ascending: false });
-
-        if (profiles) {
-          const students: LinkedStudent[] = profiles.map(p => {
-            const studentProgress = progress?.find(pr => pr.user_id === p.id);
-            const studentAttempts = attempts?.filter(a => a.user_id === p.id) || [];
-            
-            // Calculate average score
-            const avgScore = studentAttempts.length > 0
-              ? Math.round(studentAttempts.reduce((acc, a) => acc + (a.score / a.total_questions) * 100, 0) / studentAttempts.length)
-              : 0;
-            
-            // Calculate study time this week (based on time_taken from attempts)
-            const weeklyAttempts = studentAttempts.filter(a => {
-              const attemptDate = new Date(a.completed_at);
-              return isWithinInterval(attemptDate, { start: weekStart, end: weekEnd });
-            });
-            const studyMinutesThisWeek = weeklyAttempts.reduce((acc, a) => acc + (a.time_taken || 0), 0) / 60;
-            
-            // Recent activity (last 5 attempts)
-            const recentActivity = studentAttempts.slice(0, 5).map(a => ({
-              date: a.completed_at,
-              score: Math.round((a.score / a.total_questions) * 100),
-              examTitle: (a.exams as any)?.title || 'Unknown Exam',
-            }));
-
-            return {
-              id: p.id,
-              name: p.name,
-              email: p.email,
-              level: p.level || undefined,
-              xp: studentProgress?.xp || 0,
-              streak: studentProgress?.streak || 0,
-              avgScore,
-              studyMinutesThisWeek,
-              recentActivity,
-            };
-          });
+      try {
+        const response = await listLinkedStudentsOverviewFirebase();
+        if (response.ok) {
+          const students: LinkedStudent[] = (response.items || []).map((item) => ({
+            id: item.id,
+            name: item.name,
+            email: item.email,
+            level: item.level || undefined,
+            xp: item.xp,
+            streak: item.streak,
+            avgScore: item.avgScore,
+            studyMinutesThisWeek: item.studyMinutesThisWeek,
+            recentActivity: item.recentActivity,
+          }));
           setLinkedStudents(students);
+        } else {
+          setLinkedStudents([]);
         }
+      } catch (error) {
+        console.error('Error fetching Firebase linked students:', error);
+        setLinkedStudents([]);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchLinkedStudents();

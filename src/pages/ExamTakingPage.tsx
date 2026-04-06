@@ -1,8 +1,11 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { updateUserProgress } from '@/hooks/useXPAndStreak';
+import {
+  submitExamAttemptFirebase,
+  getLatestExamAttemptIdFirebase,
+} from '@/integrations/firebase/exams';
+import { getExamContentFirebase } from '@/integrations/firebase/content';
 import { useAIExplanation } from '@/hooks/useAIExplanation';
 import { fireConfetti, fireStars } from '@/hooks/useConfetti';
 import { Button } from '@/components/ui/button';
@@ -24,11 +27,33 @@ import {
   Zap,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { Database } from '@/integrations/supabase/types';
 
-type Exam = Database['public']['Tables']['exams']['Row'];
-type Question = Database['public']['Tables']['questions']['Row'];
-type QuestionPart = Database['public']['Tables']['question_parts']['Row'];
+interface Exam {
+  id: string;
+  title: string;
+  subject: string | null;
+  level: string | null;
+  time_limit: number;
+}
+
+interface Question {
+  id: string;
+  exam_id: string;
+  question_number: number;
+  text: string;
+  image_url: string | null;
+}
+
+interface QuestionPart {
+  id: string;
+  question_id: string;
+  text: string;
+  answer: string;
+  marks: number;
+  explanation: string | null;
+  order_index: number;
+  answer_type: string;
+}
 
 interface QuestionWithParts extends Question {
   parts: QuestionPart[];
@@ -71,44 +96,26 @@ export default function ExamTakingPage() {
     const fetchExam = async () => {
       if (!examId) return;
 
-      const { data: examData, error: examError } = await supabase
-        .from('exams')
-        .select('*')
-        .eq('id', examId)
-        .maybeSingle();
+      try {
+        const response = await getExamContentFirebase(examId);
+        if (!response.ok || !response.exam) {
+          navigate('/exams');
+          return;
+        }
 
-      if (examError || !examData) {
-        console.error('Error fetching exam:', examError);
-        navigate('/exams');
-        return;
-      }
-
-      setExam(examData);
-      setTimeLeft(examData.time_limit * 60);
-
-      const { data: questionsData } = await supabase
-        .from('questions')
-        .select('*')
-        .eq('exam_id', examId)
-        .order('question_number');
-
-      if (questionsData) {
-        const questionIds = questionsData.map(q => q.id);
-        const { data: partsData } = await supabase
-          .from('question_parts')
-          .select('*')
-          .in('question_id', questionIds)
-          .order('order_index');
-
-        const questionsWithParts: QuestionWithParts[] = questionsData.map(q => ({
-          ...q,
-          parts: (partsData || []).filter(p => p.question_id === q.id),
+        setExam(response.exam as Exam);
+        setTimeLeft((response.exam.time_limit || 60) * 60);
+        const questionsWithParts: QuestionWithParts[] = (response.questions || []).map((q) => ({
+          ...(q as unknown as Question),
+          parts: (q.parts || q.question_parts || []) as QuestionPart[],
         }));
-
         setQuestions(questionsWithParts);
+      } catch (error) {
+        console.error('Error fetching Firebase exam content:', error);
+        navigate('/exams');
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     fetchExam();
@@ -367,15 +374,6 @@ export default function ExamTakingPage() {
       
       // Map quiz mode to practice for database (quiz is a UI variant of practice)
       const dbMode = mode === 'quiz' ? 'practice' : mode;
-      
-      await supabase.from('exam_attempts').insert({
-        user_id: profile.id,
-        exam_id: exam.id,
-        mode: dbMode,
-        score,
-        total_questions: totalParts,
-        time_taken: exam.time_limit * 60 - timeLeft,
-      });
 
       // Update question history for spaced repetition
       const now = new Date();
@@ -397,44 +395,21 @@ export default function ExamTakingPage() {
           };
         })
       );
-
-      // Upsert question history (update if exists, insert if new)
-      for (const historyItem of questionHistoryUpdates) {
-        const { data: existing } = await supabase
-          .from('question_history')
-          .select('id, streak')
-          .eq('user_id', profile.id)
-          .eq('question_part_id', historyItem.question_part_id)
-          .maybeSingle();
-
-        if (existing) {
-          // Update existing record with SM-2 algorithm
-          const newStreak = historyItem.is_correct ? existing.streak + 1 : 0;
-          const intervalHours = historyItem.is_correct 
-            ? Math.min(newStreak * 24, 720) // Max 30 days
-            : 1;
-          const nextReview = new Date(now.getTime() + intervalHours * 60 * 60 * 1000);
-
-          await supabase
-            .from('question_history')
-            .update({
-              is_correct: historyItem.is_correct,
-              streak: newStreak,
-              next_review: nextReview.toISOString(),
-              last_attempt: now.toISOString(),
-            })
-            .eq('id', existing.id);
-        } else {
-          // Insert new record
-          await supabase.from('question_history').insert(historyItem);
-        }
-      }
-
-      const { xpEarned, newStreak, streakUpdated } = await updateUserProgress({
-        userId: profile.id,
-        scorePercentage,
+      const result = await submitExamAttemptFirebase({
+        examId: exam.id,
+        mode: dbMode,
+        score,
         totalQuestions: totalParts,
+        timeTaken: exam.time_limit * 60 - timeLeft,
+        questionHistoryUpdates: questionHistoryUpdates.map((item) => ({
+          questionPartId: item.question_part_id,
+          isCorrect: item.is_correct,
+          nextReview: item.next_review,
+        })),
       });
+      const xpEarned = result.xpEarned || 0;
+      const newStreak = result.newStreak;
+      const streakUpdated = !!result.streakUpdated;
 
       if (scorePercentage >= 80) {
         fireConfetti();
@@ -453,15 +428,6 @@ export default function ExamTakingPage() {
         toast.success(`🔥 ${newStreak} day streak!`);
       }
 
-      supabase.functions.invoke('check-achievements', {
-        body: { userId: profile.id },
-      }).then(({ data }) => {
-        if (data?.newAchievements?.length > 0) {
-          data.newAchievements.forEach((achievement: string) => {
-            toast.success(`🏆 Achievement Unlocked: ${achievement}!`);
-          });
-        }
-      }).catch(console.error);
     }
   };
 
@@ -517,18 +483,12 @@ export default function ExamTakingPage() {
     // Get the attempt ID from the most recent attempt
     if (!profile || !exam) return;
     
-    const { data: attemptData } = await supabase
-      .from('exam_attempts')
-      .select('id')
-      .eq('user_id', profile.id)
-      .eq('exam_id', exam.id)
-      .order('completed_at', { ascending: false })
-      .limit(1)
-      .maybeSingle();
+    const response = await getLatestExamAttemptIdFirebase(exam.id);
+    const attemptId = response.ok ? response.attemptId : null;
     
-    if (attemptData) {
+    if (attemptId) {
       const answersParam = encodeURIComponent(JSON.stringify(buildUserAnswersData()));
-      navigate(`/exam/${exam.id}/results/${attemptData.id}?answers=${answersParam}`);
+      navigate(`/exam/${exam.id}/results/${attemptId}?answers=${answersParam}`);
     }
   };
 

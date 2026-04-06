@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { listExamHistoryFirebase } from '@/integrations/firebase/exams';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -28,24 +28,23 @@ export default function WeeklyProgressChart({ className }: WeeklyProgressChartPr
 
       const today = new Date();
       const weekData: DayData[] = [];
+      const historyResult = await listExamHistoryFirebase();
+      const attempts = historyResult.items || [];
 
       // Get data for last 7 days
       for (let i = 6; i >= 0; i--) {
         const date = subDays(today, i);
-        const dayStart = startOfDay(date).toISOString();
-        const dayEnd = endOfDay(date).toISOString();
+        const dayStart = startOfDay(date).getTime();
+        const dayEnd = endOfDay(date).getTime();
+        const dayAttempts = attempts.filter((attempt) => {
+          const completedAt = new Date(attempt.completedAt).getTime();
+          return completedAt >= dayStart && completedAt <= dayEnd;
+        });
 
-        const { data: attempts } = await supabase
-          .from('exam_attempts')
-          .select('score, total_questions')
-          .eq('user_id', profile.id)
-          .gte('completed_at', dayStart)
-          .lte('completed_at', dayEnd);
-
-        const exams = attempts?.length || 0;
-        const avgScore = attempts && attempts.length > 0
+        const exams = dayAttempts.length;
+        const avgScore = dayAttempts.length > 0
           ? Math.round(
-              attempts.reduce((acc, a) => acc + (a.score / a.total_questions) * 100, 0) / attempts.length
+              dayAttempts.reduce((acc, a) => acc + (a.score / a.totalQuestions) * 100, 0) / dayAttempts.length
             )
           : 0;
 

@@ -1,7 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import {
+  listReviewDueQuestionsFirebase,
+  submitReviewAnswerFirebase,
+} from '@/integrations/firebase/content';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import Card from '@/components/common/Card';
@@ -19,12 +22,42 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { fireConfetti } from '@/hooks/useConfetti';
-import type { Database } from '@/integrations/supabase/types';
+interface QuestionHistory {
+  id: string;
+  user_id: string;
+  question_part_id: string;
+  exam_id: string;
+  is_correct: boolean;
+  streak: number;
+  next_review: string;
+  last_attempt: string;
+}
 
-type QuestionHistory = Database['public']['Tables']['question_history']['Row'];
-type QuestionPart = Database['public']['Tables']['question_parts']['Row'];
-type Question = Database['public']['Tables']['questions']['Row'];
-type Exam = Database['public']['Tables']['exams']['Row'];
+interface QuestionPart {
+  id: string;
+  question_id: string;
+  text: string;
+  answer: string;
+  marks: number;
+  explanation: string | null;
+  order_index: number;
+  answer_type: string;
+}
+
+interface Question {
+  id: string;
+  exam_id: string;
+  question_number: number;
+  text: string;
+  image_url: string | null;
+}
+
+interface Exam {
+  id: string;
+  title: string;
+  subject: string | null;
+  level: string | null;
+}
 
 interface ReviewItem {
   history: QuestionHistory;
@@ -50,65 +83,25 @@ export default function ReviewSessionPage() {
     const fetchDueQuestions = async () => {
       if (!user?.id) return;
 
-      // Fetch question history where next_review <= now
-      const { data: historyData, error: historyError } = await supabase
-        .from('question_history')
-        .select('*')
-        .eq('user_id', user.id)
-        .lte('next_review', new Date().toISOString())
-        .limit(20);
+      try {
+        const result = await listReviewDueQuestionsFirebase(20);
+        if (!result.ok || !result.items || result.items.length === 0) {
+          setLoading(false);
+          return;
+        }
 
-      if (historyError || !historyData || historyData.length === 0) {
+        const items: ReviewItem[] = result.items.map((item) => ({
+          history: item.history as unknown as QuestionHistory,
+          part: item.part as unknown as QuestionPart,
+          question: item.question as unknown as Question,
+          exam: item.exam as unknown as Exam,
+        }));
+        setReviewItems(items);
+      } catch (error) {
+        console.error('Error fetching Firebase review questions:', error);
+      } finally {
         setLoading(false);
-        return;
       }
-
-      // Fetch the question parts
-      const partIds = historyData.map(h => h.question_part_id);
-      const { data: partsData } = await supabase
-        .from('question_parts')
-        .select('*')
-        .in('id', partIds);
-
-      if (!partsData) {
-        setLoading(false);
-        return;
-      }
-
-      // Fetch the questions
-      const questionIds = [...new Set(partsData.map(p => p.question_id))];
-      const { data: questionsData } = await supabase
-        .from('questions')
-        .select('*')
-        .in('id', questionIds);
-
-      if (!questionsData) {
-        setLoading(false);
-        return;
-      }
-
-      // Fetch the exams
-      const examIds = [...new Set(questionsData.map(q => q.exam_id))];
-      const { data: examsData } = await supabase
-        .from('exams')
-        .select('*')
-        .in('id', examIds);
-
-      if (!examsData) {
-        setLoading(false);
-        return;
-      }
-
-      // Build review items
-      const items: ReviewItem[] = historyData.map(history => {
-        const part = partsData.find(p => p.id === history.question_part_id)!;
-        const question = questionsData.find(q => q.id === part.question_id)!;
-        const exam = examsData.find(e => e.id === question.exam_id)!;
-        return { history, part, question, exam };
-      }).filter(item => item.part && item.question && item.exam);
-
-      setReviewItems(items);
-      setLoading(false);
     };
 
     fetchDueQuestions();
@@ -207,16 +200,13 @@ export default function ReviewSessionPage() {
     // Calculate next review using SM-2 variant
     const { nextReview, newStreak } = calculateNextReview(correct, currentItem.history.streak);
 
-    // Update question history
-    await supabase
-      .from('question_history')
-      .update({
-        last_attempt: new Date().toISOString(),
-        is_correct: correct,
-        streak: newStreak,
-        next_review: nextReview.toISOString(),
-      })
-      .eq('id', currentItem.history.id);
+    await submitReviewAnswerFirebase({
+      historyId: currentItem.history.id,
+      isCorrect: correct,
+      streak: newStreak,
+      nextReview: nextReview.toISOString(),
+      lastAttempt: new Date().toISOString(),
+    });
 
     if (correct) {
       toast.success('+5 XP for correct answer!', {

@@ -48,7 +48,7 @@ export default function MarkdownRenderer({ content, className }: MarkdownRendere
     html = html.replace(/\n\n/g, '</p><p class="my-2">');
     
     // Single newlines in non-list context
-    html = html.replace(/(?<!\>)\n(?!\<)/g, '<br/>');
+    html = html.replace(/(?<!>)\n(?!<)/g, '<br/>');
     
     // Wrap in paragraph
     html = `<p class="my-2">${html}</p>`;

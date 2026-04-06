@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import {
+  searchLinkTargetFirebase,
+  sendLinkRequestFirebase,
+} from '@/integrations/firebase/linking';
 import {
   Dialog,
   DialogContent,
@@ -12,11 +15,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
-import { 
-  Send, 
-  Search, 
-  Loader2, 
-  UserCheck,
+import {
+  Send,
+  Search,
+  Loader2,
   AlertCircle,
   Mail,
 } from 'lucide-react';
@@ -34,7 +36,7 @@ export default function SendLinkRequestDialog({
   targetRole,
   onSuccess,
 }: SendLinkRequestDialogProps) {
-  const { user, role } = useAuth();
+  const { user } = useAuth();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState<{
@@ -67,64 +69,34 @@ export default function SendLinkRequestDialog({
     setSearchResult(null);
     setError(null);
 
-    // Find user by email
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('id, name, email')
-      .eq('email', email.toLowerCase().trim())
-      .maybeSingle();
+    try {
+      const result = await searchLinkTargetFirebase(email, targetRole);
+      if (!result.ok || !result.target) {
+        const reason = result.reason || 'not_found';
+        if (reason === 'role_mismatch') {
+          setError(`This account is not a ${getTargetLabel()} account`);
+        } else if (reason === 'already_linked') {
+          setError('You are already linked to this account');
+        } else if (reason === 'pending_exists') {
+          setError('A link request already exists between you and this user');
+        } else if (reason === 'self') {
+          setError('You cannot link your own account');
+        } else {
+          setError(`No ${getTargetLabel()} found with this email`);
+        }
+        setLoading(false);
+        return;
+      }
 
-    if (profileError || !profile) {
-      setError(`No ${getTargetLabel()} found with this email`);
-      setLoading(false);
-      return;
+      setSearchResult({
+        id: result.target.id,
+        name: result.target.name,
+        email: result.target.email,
+      });
+    } catch (searchError) {
+      console.error('Firebase search link target error:', searchError);
+      setError('Unable to search this user right now');
     }
-
-    // Check if they have the correct role
-    const { data: userRole } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', profile.id)
-      .maybeSingle();
-
-    if (userRole?.role !== targetRole) {
-      setError(`This account is not a ${getTargetLabel()} account`);
-      setLoading(false);
-      return;
-    }
-
-    // Check if already linked
-    const { data: existingLink } = await supabase
-      .from('linked_accounts')
-      .select('id')
-      .or(
-        `and(parent_or_school_id.eq.${user?.id},student_id.eq.${profile.id}),and(parent_or_school_id.eq.${profile.id},student_id.eq.${user?.id})`
-      )
-      .maybeSingle();
-
-    if (existingLink) {
-      setError('You are already linked to this account');
-      setLoading(false);
-      return;
-    }
-
-    // Check for pending request
-    const { data: pendingRequest } = await supabase
-      .from('link_requests')
-      .select('id')
-      .or(
-        `and(requester_id.eq.${user?.id},target_id.eq.${profile.id}),and(requester_id.eq.${profile.id},target_id.eq.${user?.id})`
-      )
-      .eq('status', 'pending')
-      .maybeSingle();
-
-    if (pendingRequest) {
-      setError('A link request already exists between you and this user');
-      setLoading(false);
-      return;
-    }
-
-    setSearchResult(profile);
     setLoading(false);
   };
 
@@ -132,22 +104,18 @@ export default function SendLinkRequestDialog({
     if (!searchResult || !user?.id) return;
 
     setLoading(true);
-
-    const { error: insertError } = await supabase
-      .from('link_requests')
-      .insert({
-        requester_id: user.id,
-        target_id: searchResult.id,
-        status: 'pending',
-      });
-
-    if (insertError) {
-      console.error('Error sending request:', insertError);
+    try {
+      const result = await sendLinkRequestFirebase(searchResult.id);
+      if (result.ok) {
+        toast.success(`Link request sent to ${searchResult.name}!`);
+        handleClose();
+        onSuccess?.();
+      } else {
+        toast.error('Failed to send link request');
+      }
+    } catch (requestError) {
+      console.error('Error sending Firebase link request:', requestError);
       toast.error('Failed to send link request');
-    } else {
-      toast.success(`Link request sent to ${searchResult.name}!`);
-      handleClose();
-      onSuccess?.();
     }
     setLoading(false);
   };
@@ -191,9 +159,9 @@ export default function SendLinkRequestDialog({
                 }}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               />
-              <Button 
-                onClick={handleSearch} 
-                disabled={loading} 
+              <Button
+                onClick={handleSearch}
+                disabled={loading}
                 variant="secondary"
               >
                 {loading ? (
@@ -223,9 +191,9 @@ export default function SendLinkRequestDialog({
                   <p className="text-sm text-muted-foreground">{searchResult.email}</p>
                 </div>
               </div>
-              <Button 
-                onClick={handleSendRequest} 
-                disabled={loading} 
+              <Button
+                onClick={handleSendRequest}
+                disabled={loading}
                 className="w-full gap-2"
               >
                 {loading ? (
@@ -240,7 +208,7 @@ export default function SendLinkRequestDialog({
 
           <div className="p-4 bg-muted/50 rounded-lg">
             <p className="text-sm text-muted-foreground">
-              The {getTargetLabel()} will receive your request and can choose to accept or decline. 
+              The {getTargetLabel()} will receive your request and can choose to accept or decline.
               Once accepted, accounts will be linked.
             </p>
           </div>

@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import {
+  adminListExamQuestionsFullFirebase,
+  adminSaveExamQuestionsFirebase,
+} from '@/integrations/firebase/admin';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -20,17 +23,37 @@ import {
 } from '@/components/ui/accordion';
 import { useToast } from '@/hooks/use-toast';
 import { ChevronLeft, ChevronRight, Save, Plus, Trash2, Loader2 } from 'lucide-react';
-import type { Database } from '@/integrations/supabase/types';
 import BulkQuestionImport from './BulkQuestionImport';
 import ImageUpload from './ImageUpload';
 import BatchImageUpload from './BatchImageUpload';
 
-type Question = Database['public']['Tables']['questions']['Row'];
-type QuestionPart = Database['public']['Tables']['question_parts']['Row'];
+type Question = {
+  id: string;
+  exam_id: string;
+  question_number: number;
+  text: string;
+  image_url: string | null;
+  table_data: unknown;
+  created_at: string;
+};
+type QuestionPart = {
+  id: string;
+  question_id: string;
+  text: string;
+  answer: string;
+  explanation: string;
+  marks: number;
+  order_index: number;
+  answer_type: string;
+  created_at: string;
+};
 
 interface QuestionWithParts extends Question {
   parts: QuestionPart[];
 }
+
+const getErrorMessage = (error: unknown): string =>
+  error instanceof Error ? error.message : 'Unexpected error';
 
 interface QuestionEditorProps {
   examId: string;
@@ -53,36 +76,16 @@ export default function QuestionEditor({ examId, examTitle, onBack }: QuestionEd
   const fetchQuestions = async () => {
     setLoading(true);
     try {
-      const { data: questionsData, error: questionsError } = await supabase
-        .from('questions')
-        .select('*')
-        .eq('exam_id', examId)
-        .order('question_number');
-
-      if (questionsError) throw questionsError;
-
-      const questionsWithParts: QuestionWithParts[] = [];
-
-      for (const question of questionsData || []) {
-        const { data: partsData, error: partsError } = await supabase
-          .from('question_parts')
-          .select('*')
-          .eq('question_id', question.id)
-          .order('order_index');
-
-        if (partsError) throw partsError;
-
-        questionsWithParts.push({
-          ...question,
-          parts: partsData || [],
-        });
+      const result = await adminListExamQuestionsFullFirebase(examId);
+      if (result.ok) {
+        setQuestions(result.items as QuestionWithParts[]);
+      } else {
+        setQuestions([]);
       }
-
-      setQuestions(questionsWithParts);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Error loading questions',
-        description: error.message,
+        description: getErrorMessage(error),
         variant: 'destructive',
       });
     } finally {
@@ -92,14 +95,14 @@ export default function QuestionEditor({ examId, examTitle, onBack }: QuestionEd
 
   const currentQuestion = questions[currentIndex];
 
-  const updateQuestion = (field: keyof Question, value: any) => {
+  const updateQuestion = (field: keyof Question, value: Question[keyof Question]) => {
     setQuestions(prev => prev.map((q, i) => 
       i === currentIndex ? { ...q, [field]: value } : q
     ));
     setHasChanges(true);
   };
 
-  const updatePart = (partIndex: number, field: keyof QuestionPart, value: any) => {
+  const updatePart = (partIndex: number, field: keyof QuestionPart, value: QuestionPart[keyof QuestionPart]) => {
     setQuestions(prev => prev.map((q, i) => 
       i === currentIndex 
         ? { 
@@ -175,143 +178,42 @@ export default function QuestionEditor({ examId, examTitle, onBack }: QuestionEd
     
     if (!confirm('Are you sure you want to delete this question?')) return;
 
-    try {
-      if (!currentQuestion.id.startsWith('new-')) {
-        // Delete parts first
-        const { error: partsError } = await supabase
-          .from('question_parts')
-          .delete()
-          .eq('question_id', currentQuestion.id);
-
-        if (partsError) throw partsError;
-
-        // Then delete question
-        const { error: questionError } = await supabase
-          .from('questions')
-          .delete()
-          .eq('id', currentQuestion.id);
-
-        if (questionError) throw questionError;
-      }
-
-      setQuestions(prev => prev.filter((_, i) => i !== currentIndex));
-      setCurrentIndex(Math.max(0, currentIndex - 1));
-      
-      toast({ title: 'Question deleted' });
-    } catch (error: any) {
-      toast({
-        title: 'Error deleting question',
-        description: error.message,
-        variant: 'destructive',
-      });
-    }
+    setQuestions(prev => prev.filter((_, i) => i !== currentIndex));
+    setCurrentIndex(Math.max(0, currentIndex - 1));
+    setHasChanges(true);
+    toast({ title: 'Question removed (save to apply)' });
   };
 
   const saveChanges = async () => {
     setSaving(true);
     try {
-      for (const question of questions) {
-        const isNewQuestion = question.id.startsWith('new-');
+      const payload = questions.map((question, questionIndex) => ({
+        question_number: question.question_number || questionIndex + 1,
+        text: question.text || '',
+        image_url: question.image_url || null,
+        table_data: question.table_data || null,
+        parts: question.parts.map((part, partIndex) => ({
+          text: part.text || '',
+          answer: part.answer || '',
+          explanation: part.explanation || '',
+          marks: part.marks || 1,
+          order_index: typeof part.order_index === 'number' ? part.order_index : partIndex,
+          answer_type: part.answer_type || 'text',
+        })),
+      }));
 
-        if (isNewQuestion) {
-          // Insert new question
-          const { data: newQuestion, error: questionError } = await supabase
-            .from('questions')
-            .insert({
-              exam_id: examId,
-              question_number: question.question_number,
-              text: question.text,
-              image_url: question.image_url,
-              table_data: question.table_data,
-            })
-            .select()
-            .single();
-
-          if (questionError) throw questionError;
-
-          // Insert parts for new question
-          for (const part of question.parts) {
-            const { error: partError } = await supabase
-              .from('question_parts')
-              .insert({
-                question_id: newQuestion.id,
-                text: part.text,
-                answer: part.answer,
-                explanation: part.explanation,
-                marks: part.marks,
-                order_index: part.order_index,
-                answer_type: part.answer_type,
-              });
-
-            if (partError) throw partError;
-          }
-        } else {
-          // Update existing question
-          const { error: questionError } = await supabase
-            .from('questions')
-            .update({
-              question_number: question.question_number,
-              text: question.text,
-              image_url: question.image_url,
-            })
-            .eq('id', question.id);
-
-          if (questionError) throw questionError;
-
-          // Update or insert parts
-          for (const part of question.parts) {
-            const isNewPart = part.id.startsWith('new-');
-
-            if (isNewPart) {
-              const { error: partError } = await supabase
-                .from('question_parts')
-                .insert({
-                  question_id: question.id,
-                  text: part.text,
-                  answer: part.answer,
-                  explanation: part.explanation,
-                  marks: part.marks,
-                  order_index: part.order_index,
-                  answer_type: part.answer_type,
-                });
-
-              if (partError) throw partError;
-            } else {
-              const { error: partError } = await supabase
-                .from('question_parts')
-                .update({
-                  text: part.text,
-                  answer: part.answer,
-                  explanation: part.explanation,
-                  marks: part.marks,
-                  order_index: part.order_index,
-                  answer_type: part.answer_type,
-                })
-                .eq('id', part.id);
-
-              if (partError) throw partError;
-            }
-          }
-        }
-      }
-
-      // Update exam question count
-      const { error: examError } = await supabase
-        .from('exams')
-        .update({ question_count: questions.length })
-        .eq('id', examId);
-
-      if (examError) throw examError;
+      const result = await adminSaveExamQuestionsFirebase(examId, payload);
+      if (!result.ok) throw new Error('Failed to save exam questions');
 
       setHasChanges(false);
       toast({ title: 'All changes saved successfully' });
       
       // Refresh to get proper IDs
       fetchQuestions();
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Error saving changes',
-        description: error.message,
+        description: getErrorMessage(error),
         variant: 'destructive',
       });
     } finally {

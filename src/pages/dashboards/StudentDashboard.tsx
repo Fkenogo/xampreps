@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import {
+  listStudentDashboardSummaryFirebase,
+  type FirebaseAchievement,
+} from '@/integrations/firebase/student';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import StatCard from '@/components/dashboard/StatCard';
 import ProgressRing from '@/components/dashboard/ProgressRing';
@@ -13,7 +16,7 @@ import WeeklyProgressChart from '@/components/dashboard/WeeklyProgressChart';
 import RecentActivity from '@/components/dashboard/RecentActivity';
 import PersonalizedInsights from '@/components/dashboard/PersonalizedInsights';
 import StudyAssistant from '@/components/chat/StudyAssistant';
-import { 
+import {
   Zap, 
   Trophy, 
   BookOpen, 
@@ -23,10 +26,8 @@ import {
   Flame,
   Sparkles,
 } from 'lucide-react';
-import type { Database } from '@/integrations/supabase/types';
 import { cn } from '@/lib/utils';
-
-type Achievement = Database['public']['Tables']['achievements']['Row'];
+type Achievement = FirebaseAchievement;
 
 interface SubjectProgress {
   subject: string;
@@ -48,84 +49,31 @@ export default function StudentDashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch achievements
-      const { data: achievementsData } = await supabase
-        .from('achievements')
-        .select('*')
-        .limit(6);
-      
-      if (achievementsData) {
-        setAchievements(achievementsData);
-      }
-
-      // Fetch user achievements
-      const { data: userAchievements } = await supabase
-        .from('user_achievements')
-        .select('achievement_id');
-      
-      if (userAchievements) {
-        setUserAchievementIds(userAchievements.map(ua => ua.achievement_id));
-      }
-
-      // Fetch exam stats with subject data
-      const { data: attempts } = await supabase
-        .from('exam_attempts')
-        .select('score, total_questions, exams(subject)');
-      
-      if (attempts && attempts.length > 0) {
-        const avgScore = attempts.reduce((acc, a) => acc + (a.score / a.total_questions) * 100, 0) / attempts.length;
-        
-        // Calculate subject progress
-        const subjectData: Record<string, { correct: number; total: number; count: number }> = {};
-        attempts.forEach((a) => {
-          const subject = (a.exams as any)?.subject || 'Unknown';
-          if (!subjectData[subject]) {
-            subjectData[subject] = { correct: 0, total: 0, count: 0 };
-          }
-          subjectData[subject].correct += a.score;
-          subjectData[subject].total += a.total_questions;
-          subjectData[subject].count += 1;
-        });
-
-        // Find best subject
-        let bestSubject = 'Mathematics';
-        let bestScore = 0;
-        Object.entries(subjectData).forEach(([subject, data]) => {
-          const score = (data.correct / data.total) * 100;
-          if (score > bestScore) {
-            bestScore = score;
-            bestSubject = subject;
-          }
-        });
-
-        setExamStats({
-          totalAttempts: attempts.length,
-          averageScore: Math.round(avgScore),
-          bestSubject,
-        });
-
-        // Set subject progress
-        const subjects = ['Mathematics', 'Science', 'English', 'Social Studies'];
-        const progressData = subjects.map(subject => {
-          const data = subjectData[subject];
-          return {
-            subject,
-            progress: data ? Math.round((data.correct / data.total) * 100) : 0,
-            examCount: data?.count || 0,
-          };
-        });
-        setSubjectProgress(progressData);
-      } else {
-        // Default subjects with 0 progress
+      try {
+        const summary = await listStudentDashboardSummaryFirebase();
+        if (summary.ok) {
+          setAchievements(summary.achievements);
+          setUserAchievementIds(summary.userAchievementIds || []);
+          setExamStats(
+            summary.examStats || {
+              totalAttempts: 0,
+              averageScore: 0,
+              bestSubject: 'Mathematics',
+            }
+          );
+          setSubjectProgress(summary.subjectProgress || []);
+        }
+      } catch (error) {
+        console.error('Failed to fetch Firebase student summary:', error);
         setSubjectProgress([
           { subject: 'Mathematics', progress: 0, examCount: 0 },
           { subject: 'Science', progress: 0, examCount: 0 },
           { subject: 'English', progress: 0, examCount: 0 },
           { subject: 'Social Studies', progress: 0, examCount: 0 },
         ]);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     fetchData();

@@ -1,0 +1,109 @@
+On branch fix/firestore-rules-compile
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	deleted:    .env
+	modified:   .gitignore
+	deleted:    bun.lock
+	modified:   index.html
+	modified:   package-lock.json
+	modified:   package.json
+	modified:   src/components/ProtectedRoute.tsx
+	modified:   src/components/admin/AdminForumModeration.tsx
+	modified:   src/components/admin/BatchImageUpload.tsx
+	modified:   src/components/admin/BulkQuestionImport.tsx
+	modified:   src/components/admin/ExamEditDialog.tsx
+	modified:   src/components/admin/ImageUpload.tsx
+	modified:   src/components/admin/PdfUpload.tsx
+	modified:   src/components/admin/QuestionEditor.tsx
+	modified:   src/components/chat/StudyAssistant.tsx
+	modified:   src/components/common/MarkdownRenderer.tsx
+	modified:   src/components/dashboard/LinkRequestsCard.tsx
+	modified:   src/components/dashboard/LinkedAccountsCard.tsx
+	modified:   src/components/dashboard/PersonalizedInsights.tsx
+	modified:   src/components/dashboard/QuickExamFinder.tsx
+	modified:   src/components/dashboard/RecentActivity.tsx
+	modified:   src/components/dashboard/SpacedRepetitionCard.tsx
+	modified:   src/components/dashboard/StudyRemindersCard.tsx
+	modified:   src/components/dashboard/WeeklyProgressChart.tsx
+	modified:   src/components/layout/DashboardLayout.tsx
+	modified:   src/components/layout/PublicLayout.tsx
+	modified:   src/components/modals/AddStudentDialog.tsx
+	modified:   src/components/modals/GenerateLinkCodeDialog.tsx
+	modified:   src/components/modals/LinkChildDialog.tsx
+	modified:   src/components/modals/RedeemLinkCodeDialog.tsx
+	modified:   src/components/modals/SendLinkRequestDialog.tsx
+	modified:   src/components/notifications/NotificationBell.tsx
+	modified:   src/components/pricing/ParentSection.tsx
+	modified:   src/components/settings/AccountLinkingSection.tsx
+	modified:   src/components/ui/command.tsx
+	modified:   src/components/ui/textarea.tsx
+	modified:   src/contexts/AuthContext.tsx
+	modified:   src/data/notifications.ts
+	modified:   src/data/users.ts
+	modified:   src/hooks/useAIExplanation.ts
+	modified:   src/hooks/useExamAccess.ts
+	modified:   src/hooks/useXPAndStreak.ts
+	deleted:    src/integrations/supabase/client.ts
+	deleted:    src/integrations/supabase/types.ts
+	modified:   src/pages/AchievementsPage.tsx
+	modified:   src/pages/Auth.tsx
+	modified:   src/pages/ExamResultsPage.tsx
+	modified:   src/pages/ExamTakingPage.tsx
+	modified:   src/pages/ExamsPage.tsx
+	modified:   src/pages/ForumPage.tsx
+	modified:   src/pages/HistoryPage.tsx
+	modified:   src/pages/LandingPage.tsx
+	modified:   src/pages/LoginPage.tsx
+	modified:   src/pages/PaymentSuccessPage.tsx
+	modified:   src/pages/PricingPage.tsx
+	modified:   src/pages/ReviewSessionPage.tsx
+	modified:   src/pages/SettingsPage.tsx
+	modified:   src/pages/StudentDashboard.tsx
+	modified:   src/pages/dashboards/AdminDashboard.tsx
+	modified:   src/pages/dashboards/ParentDashboard.tsx
+	modified:   src/pages/dashboards/ParentDashboardContent.tsx
+	modified:   src/pages/dashboards/SchoolDashboard.tsx
+	modified:   src/pages/dashboards/SchoolDashboardContent.tsx
+	modified:   src/pages/dashboards/StudentDashboard.tsx
+	modified:   src/pages/dashboards/StudentDashboardContent.tsx
+	modified:   src/vite-env.d.ts
+	deleted:    supabase/config.toml
+	deleted:    supabase/functions/ai-explanations/index.ts
+	deleted:    supabase/functions/check-achievements/index.ts
+	deleted:    supabase/functions/study-assistant/index.ts
+	deleted:    supabase/migrations/20251202083608_71b66d07-d9e9-43e4-a564-421213ceacc7.sql
+	deleted:    supabase/migrations/20251202103439_31512bce-d370-4176-b24b-7654c9a8e4ef.sql
+	deleted:    supabase/migrations/20251204141921_522dce3d-a1ca-4b2b-940d-d68650282c7b.sql
+	deleted:    supabase/migrations/20251204144442_245afbb1-f74f-4437-9be2-3b52f0f9b047.sql
+	deleted:    supabase/migrations/20251205162332_9dfe7d11-5ff7-4c8e-a09f-0d9deabb7386.sql
+	deleted:    supabase/migrations/20251208110604_bf77c60e-234c-41b5-9e4c-715ba23c3540.sql
+	deleted:    supabase/migrations/20251210083844_ce269b72-5802-4e8b-b669-1cbcf4a7201e.sql
+	deleted:    supabase/migrations/20260102195437_e6e3c689-0c54-4166-b8d0-cd8657ba6dcd.sql
+	deleted:    supabase/migrations/20260107063536_355d663e-8593-4744-8833-9d8ede7616a6.sql
+	deleted:    supabase/migrations/20260113071635_350b0a75-4d7c-4d11-8940-907131c488dc.sql
+	deleted:    supabase/migrations/20260114072723_9f9aa22d-d58e-4cdf-8882-887b23a51709.sql
+	deleted:    supabase/migrations/20260309143320_788a84e5-ff33-4161-850a-246b1181879b.sql
+	modified:   tailwind.config.ts
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.env.example
+	.firebaserc
+	.nvmrc
+	AUDIT_REPORT.md
+	CODEBASE_REVIEW_REPORT.md
+	CURRENT_GIT_STATUS_BEFORE_RULES_FIX.txt
+	FIREBASE_DATA_MODEL_DRAFT.md
+	ONBOARDING_AND_FIX_PLAN.md
+	PRODUCT_IDENTITY_REPORT.md
+	WORKING_WITH_KENOGO.md
+	docs/
+	firebase.json
+	firestore.indexes.json
+	firestore.rules
+	functions/
+	src/integrations/firebase/
+	storage.rules
+
+no changes added to commit (use "git add" and/or "git commit -a")

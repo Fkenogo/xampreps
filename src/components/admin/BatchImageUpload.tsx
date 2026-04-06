@@ -1,5 +1,7 @@
-import { useState, useRef } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { useRef, useState } from 'react';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { getFirebaseStorage } from '@/integrations/firebase/client';
+import { adminSetQuestionImageUrlsFirebase } from '@/integrations/firebase/admin';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -45,37 +47,32 @@ export default function BatchImageUpload({ examId, questionCount, onUploadComple
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    
-    const newImages: ImageFile[] = files.map((file, index) => {
-      // Try to extract question number from filename (e.g., "q5.png", "question_5.jpg", "5.png")
+
+    const newImages: ImageFile[] = files.map((file) => {
       const match = file.name.match(/(?:q(?:uestion)?[_-]?)?(\d+)/i);
-      const extractedNumber = match ? parseInt(match[1]) : null;
-      
+      const extractedNumber = match ? parseInt(match[1], 10) : null;
+
       return {
         file,
         preview: URL.createObjectURL(file),
         questionNumber: extractedNumber && extractedNumber <= questionCount ? extractedNumber : null,
-        status: 'pending' as const,
+        status: 'pending',
       };
     });
 
-    setImages(prev => [...prev, ...newImages]);
-    
-    // Reset input
+    setImages((prev) => [...prev, ...newImages]);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
   };
 
   const updateQuestionNumber = (index: number, value: string) => {
-    const num = value ? parseInt(value) : null;
-    setImages(prev => prev.map((img, i) => 
-      i === index ? { ...img, questionNumber: num } : img
-    ));
+    const num = value ? parseInt(value, 10) : null;
+    setImages((prev) => prev.map((img, i) => (i === index ? { ...img, questionNumber: num } : img)));
   };
 
   const removeImage = (index: number) => {
-    setImages(prev => {
+    setImages((prev) => {
       const newImages = [...prev];
       URL.revokeObjectURL(newImages[index].preview);
       newImages.splice(index, 1);
@@ -84,9 +81,11 @@ export default function BatchImageUpload({ examId, questionCount, onUploadComple
   };
 
   const uploadImages = async () => {
-    const imagesToUpload = images.filter(img => img.questionNumber && img.status === 'pending');
-    
-    if (imagesToUpload.length === 0) {
+    const pendingIndexes = images
+      .map((img, idx) => ({ img, idx }))
+      .filter(({ img }) => img.questionNumber && img.status === 'pending');
+
+    if (pendingIndexes.length === 0) {
       toast({
         title: 'No images to upload',
         description: 'Please assign question numbers to images before uploading.',
@@ -97,79 +96,84 @@ export default function BatchImageUpload({ examId, questionCount, onUploadComple
 
     setUploading(true);
 
-    for (let i = 0; i < images.length; i++) {
-      const img = images[i];
-      if (!img.questionNumber || img.status !== 'pending') continue;
+    const storage = getFirebaseStorage();
+    const updates: Array<{ question_number: number; image_url: string }> = [];
+    let successCount = 0;
+    let errorCount = 0;
 
-      // Update status to uploading
-      setImages(prev => prev.map((item, idx) => 
-        idx === i ? { ...item, status: 'uploading' } : item
-      ));
+    for (const { img, idx } of pendingIndexes) {
+      const questionNumber = img.questionNumber;
+      if (!questionNumber) continue;
+
+      setImages((prev) => prev.map((item, i) => (i === idx ? { ...item, status: 'uploading' } : item)));
 
       try {
-        // Get the question ID for this question number
-        const { data: questionData, error: questionError } = await supabase
-          .from('questions')
-          .select('id')
-          .eq('exam_id', examId)
-          .eq('question_number', img.questionNumber)
-          .single();
+        const fileExt = img.file.name.split('.').pop() || 'jpg';
+        const filePath = `question-images/${examId}/q${questionNumber}-${Date.now()}.${fileExt}`;
+        const fileRef = ref(storage, filePath);
+        await uploadBytes(fileRef, img.file);
+        const publicUrl = await getDownloadURL(fileRef);
 
-        if (questionError || !questionData) {
-          throw new Error(`Question ${img.questionNumber} not found`);
+        updates.push({ question_number: questionNumber, image_url: publicUrl });
+        successCount += 1;
+        setImages((prev) => prev.map((item, i) => (i === idx ? { ...item, status: 'success' } : item)));
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : 'Upload failed';
+        errorCount += 1;
+        setImages((prev) =>
+          prev.map((item, i) => (i === idx ? { ...item, status: 'error', error: message } : item))
+        );
+      }
+    }
+
+    if (updates.length > 0) {
+      try {
+        const result = await adminSetQuestionImageUrlsFirebase(examId, updates);
+        if (Array.isArray(result.missing) && result.missing.length > 0) {
+          for (const number of result.missing) {
+            setImages((prev) =>
+              prev.map((item) =>
+                item.questionNumber === number && item.status === 'success'
+                  ? { ...item, status: 'error', error: `Question ${number} not found in this exam` }
+                  : item
+              )
+            );
+          }
+          successCount -= result.missing.length;
+          errorCount += result.missing.length;
         }
-
-        // Upload image to storage
-        const fileExt = img.file.name.split('.').pop();
-        const fileName = `${examId}/q${img.questionNumber}-${Date.now()}.${fileExt}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from('question-images')
-          .upload(fileName, img.file);
-
-        if (uploadError) throw uploadError;
-
-        // Get public URL
-        const { data: urlData } = supabase.storage
-          .from('question-images')
-          .getPublicUrl(fileName);
-
-        // Update question with image URL
-        const { error: updateError } = await supabase
-          .from('questions')
-          .update({ image_url: urlData.publicUrl })
-          .eq('id', questionData.id);
-
-        if (updateError) throw updateError;
-
-        // Update status to success
-        setImages(prev => prev.map((item, idx) => 
-          idx === i ? { ...item, status: 'success' } : item
-        ));
-      } catch (error: any) {
-        // Update status to error
-        setImages(prev => prev.map((item, idx) => 
-          idx === i ? { ...item, status: 'error', error: error.message } : item
-        ));
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : 'Failed to update questions with uploaded images';
+        toast({
+          title: 'Upload failed',
+          description: message,
+          variant: 'destructive',
+        });
+        setUploading(false);
+        return;
       }
     }
 
     setUploading(false);
-    
-    const successCount = images.filter(img => img.status === 'success').length;
-    const errorCount = images.filter(img => img.status === 'error').length;
-    
+
     if (successCount > 0) {
       toast({
         title: 'Upload complete',
         description: `${successCount} image(s) uploaded successfully${errorCount > 0 ? `, ${errorCount} failed` : ''}.`,
       });
       onUploadComplete();
+      return;
     }
+
+    toast({
+      title: 'Upload failed',
+      description: 'No images were uploaded successfully.',
+      variant: 'destructive',
+    });
   };
 
   const clearAll = () => {
-    images.forEach(img => URL.revokeObjectURL(img.preview));
+    images.forEach((img) => URL.revokeObjectURL(img.preview));
     setImages([]);
   };
 
@@ -179,10 +183,10 @@ export default function BatchImageUpload({ examId, questionCount, onUploadComple
   };
 
   const questionNumbers = Array.from({ length: questionCount }, (_, i) => i + 1);
-  const assignedNumbers = images.map(img => img.questionNumber).filter(Boolean);
+  const assignedNumbers = images.map((img) => img.questionNumber).filter(Boolean);
 
   return (
-    <Dialog open={open} onOpenChange={(isOpen) => isOpen ? setOpen(true) : handleClose()}>
+    <Dialog open={open} onOpenChange={(isOpen) => (isOpen ? setOpen(true) : handleClose())}>
       <DialogTrigger asChild>
         <Button variant="outline">
           <ImagePlus className="h-4 w-4 mr-2" />
@@ -193,12 +197,11 @@ export default function BatchImageUpload({ examId, questionCount, onUploadComple
         <DialogHeader>
           <DialogTitle>Batch Upload Question Images</DialogTitle>
           <DialogDescription>
-            Upload multiple images and assign them to questions. Name files like "q5.png" for auto-detection.
+            Upload multiple images and assign them to questions. Name files like &quot;q5.png&quot; for auto-detection.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4">
-          {/* File Input */}
           <div className="flex items-center gap-4">
             <Input
               ref={fileInputRef}
@@ -216,34 +219,19 @@ export default function BatchImageUpload({ examId, questionCount, onUploadComple
             )}
           </div>
 
-          {/* Image List */}
           {images.length > 0 && (
             <ScrollArea className="h-[400px] border rounded-lg p-4">
               <div className="space-y-4">
                 {images.map((img, index) => (
-                  <div 
-                    key={index} 
-                    className="flex items-center gap-4 p-3 border rounded-lg bg-card"
-                  >
-                    {/* Preview */}
-                    <img 
-                      src={img.preview} 
-                      alt={`Preview ${index}`}
-                      className="w-20 h-20 object-cover rounded border"
-                    />
+                  <div key={index} className="flex items-center gap-4 p-3 border rounded-lg bg-card">
+                    <img src={img.preview} alt={`Preview ${index}`} className="w-20 h-20 object-cover rounded border" />
 
-                    {/* File Info */}
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">{img.file.name}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {(img.file.size / 1024).toFixed(1)} KB
-                      </p>
-                      {img.error && (
-                        <p className="text-xs text-destructive mt-1">{img.error}</p>
-                      )}
+                      <p className="text-xs text-muted-foreground">{(img.file.size / 1024).toFixed(1)} KB</p>
+                      {img.error && <p className="text-xs text-destructive mt-1">{img.error}</p>}
                     </div>
 
-                    {/* Question Number Select */}
                     <div className="w-32">
                       <Label className="text-xs text-muted-foreground">Question #</Label>
                       <Select
@@ -255,9 +243,9 @@ export default function BatchImageUpload({ examId, questionCount, onUploadComple
                           <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
-                          {questionNumbers.map(num => (
-                            <SelectItem 
-                              key={num} 
+                          {questionNumbers.map((num) => (
+                            <SelectItem
+                              key={num}
                               value={num.toString()}
                               disabled={assignedNumbers.includes(num) && img.questionNumber !== num}
                             >
@@ -268,26 +256,15 @@ export default function BatchImageUpload({ examId, questionCount, onUploadComple
                       </Select>
                     </div>
 
-                    {/* Status / Actions */}
                     <div className="w-10 flex justify-center">
                       {img.status === 'pending' && (
-                        <Button 
-                          variant="ghost" 
-                          size="icon"
-                          onClick={() => removeImage(index)}
-                        >
+                        <Button variant="ghost" size="icon" onClick={() => removeImage(index)}>
                           <X className="h-4 w-4" />
                         </Button>
                       )}
-                      {img.status === 'uploading' && (
-                        <Loader2 className="h-5 w-5 animate-spin text-primary" />
-                      )}
-                      {img.status === 'success' && (
-                        <Check className="h-5 w-5 text-green-500" />
-                      )}
-                      {img.status === 'error' && (
-                        <X className="h-5 w-5 text-destructive" />
-                      )}
+                      {img.status === 'uploading' && <Loader2 className="h-5 w-5 animate-spin text-primary" />}
+                      {img.status === 'success' && <Check className="h-5 w-5 text-green-500" />}
+                      {img.status === 'error' && <X className="h-5 w-5 text-destructive" />}
                     </div>
                   </div>
                 ))}
@@ -295,14 +272,13 @@ export default function BatchImageUpload({ examId, questionCount, onUploadComple
             </ScrollArea>
           )}
 
-          {/* Upload Button */}
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={handleClose}>
               Cancel
             </Button>
-            <Button 
-              onClick={uploadImages} 
-              disabled={uploading || images.filter(img => img.questionNumber && img.status === 'pending').length === 0}
+            <Button
+              onClick={uploadImages}
+              disabled={uploading || images.filter((img) => img.questionNumber && img.status === 'pending').length === 0}
             >
               {uploading ? (
                 <>
@@ -312,7 +288,7 @@ export default function BatchImageUpload({ examId, questionCount, onUploadComple
               ) : (
                 <>
                   <Upload className="h-4 w-4 mr-2" />
-                  Upload {images.filter(img => img.questionNumber && img.status === 'pending').length} Images
+                  Upload {images.filter((img) => img.questionNumber && img.status === 'pending').length} Images
                 </>
               )}
             </Button>

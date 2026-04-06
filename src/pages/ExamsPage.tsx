@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import { listExamsFirebase } from '@/integrations/firebase/content';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import ExamFilters from '@/components/exam-library/ExamFilters';
 import ExamListItem from '@/components/exam-library/ExamListItem';
@@ -9,10 +9,17 @@ import ExamCard from '@/components/exam-library/ExamCard';
 import ExamModeSelectionModal from '@/components/exam/ExamModeSelectionModal';
 import { Button } from '@/components/ui/button';
 import { BookOpen, Grid3X3, List } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import type { Database } from '@/integrations/supabase/types';
 
-type Exam = Database['public']['Tables']['exams']['Row'];
+interface Exam {
+  id: string;
+  title: string;
+  subject: string;
+  level: string;
+  year: number;
+  difficulty: string;
+  type: 'Past Paper' | 'Practice Paper';
+  time_limit: number;
+}
 
 interface ExamsPageProps {
   type?: 'Past Paper' | 'Practice Paper';
@@ -38,21 +45,19 @@ export default function ExamsPage({ type }: ExamsPageProps) {
 
   useEffect(() => {
     const fetchExams = async () => {
-      let query = supabase
-        .from('exams')
-        .select('*')
-        .order('year', { ascending: false });
-
-      if (type) {
-        query = query.eq('type', type);
+      try {
+        const response = await listExamsFirebase(type);
+        if (response.ok) {
+          setExams(response.items as Exam[]);
+        } else {
+          setExams([]);
+        }
+      } catch (error) {
+        console.error('Error fetching Firebase exams:', error);
+        setExams([]);
+      } finally {
+        setLoading(false);
       }
-
-      const { data } = await query;
-      
-      if (data) {
-        setExams(data);
-      }
-      setLoading(false);
     };
 
     fetchExams();

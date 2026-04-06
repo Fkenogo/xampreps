@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { format } from 'date-fns';
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import { getFirebaseDb } from '@/integrations/firebase/client';
 
 export type AccessType = 'standard' | 'purchased' | 'free-trial' | 'none';
 
@@ -33,21 +34,28 @@ export const useExamAccess = (examId?: string): ExamAccessResult => {
     }
 
     setIsLoading(true);
+    const db = getFirebaseDb();
     const currentMonth = format(new Date(), 'yyyy-MM');
 
     try {
-      // Check subscription status
-      const { data: subscription } = await supabase
-        .from('subscriptions')
-        .select('plan, expires_at')
-        .eq('user_id', user.id)
-        .maybeSingle();
+      const subscriptionByUserId = await getDocs(query(collection(db, 'subscriptions'), where('userId', '==', user.id)));
+      const subscriptionByUserSnake = subscriptionByUserId.empty
+        ? await getDocs(query(collection(db, 'subscriptions'), where('user_id', '==', user.id)))
+        : subscriptionByUserId;
+      const subscription = subscriptionByUserSnake.empty ? null : subscriptionByUserSnake.docs[0].data();
 
-      // Check for Standard or Premium (Standard is new, Premium is legacy)
-      const planStr = subscription?.plan as string;
-      const hasStandardOrPremium = subscription && 
-        (planStr === 'Standard' || planStr === 'Premium') &&
-        (!subscription.expires_at || new Date(subscription.expires_at) > new Date());
+      const plan = typeof subscription?.plan === 'string' ? subscription.plan : '';
+      const expiresAtRaw = subscription?.expiresAt || subscription?.expires_at || null;
+      const expiresAt =
+        typeof expiresAtRaw === 'string'
+          ? expiresAtRaw
+          : expiresAtRaw && typeof expiresAtRaw.toDate === 'function'
+            ? expiresAtRaw.toDate().toISOString()
+            : null;
+
+      const hasStandardOrPremium =
+        (plan === 'Standard' || plan === 'Premium') &&
+        (!expiresAt || new Date(expiresAt) > new Date());
 
       if (hasStandardOrPremium) {
         setHasAccess(true);
@@ -58,22 +66,27 @@ export const useExamAccess = (examId?: string): ExamAccessResult => {
         return;
       }
 
-      // Check paper purchases for this month using raw query
-      const { data: purchases, error: purchasesError } = await supabase
-        .from('paper_purchases' as any)
-        .select('id, exam_id')
-        .eq('user_id', user.id)
-        .eq('month_year', currentMonth);
+      const purchasesByUserId = await getDocs(query(collection(db, 'paper_purchases'), where('userId', '==', user.id)));
+      const purchasesByUserSnake = await getDocs(query(collection(db, 'paper_purchases'), where('user_id', '==', user.id)));
+      const purchasesMerged = [...purchasesByUserId.docs, ...purchasesByUserSnake.docs];
+      const purchases = purchasesMerged
+        .map((snap) => ({ id: snap.id, ...snap.data() }))
+        .filter((purchase) => {
+          const monthYear =
+            typeof purchase.monthYear === 'string'
+              ? purchase.monthYear
+              : typeof purchase.month_year === 'string'
+                ? purchase.month_year
+                : '';
+          return monthYear === currentMonth;
+        });
 
-      // Handle as unknown first then cast
-      const purchaseList = (purchases as unknown as Array<{ id: string; exam_id: string }>) || [];
-      const count = purchaseList.length;
+      const count = purchases.length;
       setMonthlyPurchasesRemaining(Math.max(0, 2 - count));
       setCanPurchase(count < 2);
 
-      // Check if this specific exam was purchased
-      if (examId && purchaseList.length > 0) {
-        const wasPurchased = purchaseList.some(p => p.exam_id === examId);
+      if (examId && purchases.length > 0) {
+        const wasPurchased = purchases.some((p) => p.examId === examId || p.exam_id === examId);
         if (wasPurchased) {
           setHasAccess(true);
           setAccessType('purchased');
@@ -82,20 +95,23 @@ export const useExamAccess = (examId?: string): ExamAccessResult => {
         }
       }
 
-      // Check free trial status from user_progress
-      const { data: userProgress } = await supabase
-        .from('user_progress')
-        .select('*')
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-      // Type assertion for new columns
-      const progressData = userProgress as Record<string, unknown> | null;
-      const freeTrialUsed = (progressData?.free_trial_used as boolean) || false;
-      const freeTrialExamId = progressData?.free_trial_exam_id as string | null;
+      const progressRef = doc(db, 'user_progress', user.id);
+      const progressDoc = await getDoc(progressRef);
+      const progressData = progressDoc.exists() ? progressDoc.data() : null;
+      const freeTrialUsed =
+        typeof progressData?.freeTrialUsed === 'boolean'
+          ? progressData.freeTrialUsed
+          : typeof progressData?.free_trial_used === 'boolean'
+            ? progressData.free_trial_used
+            : false;
+      const freeTrialExamId =
+        typeof progressData?.freeTrialExamId === 'string'
+          ? progressData.freeTrialExamId
+          : typeof progressData?.free_trial_exam_id === 'string'
+            ? progressData.free_trial_exam_id
+            : null;
       setFreeTrialAvailable(!freeTrialUsed);
 
-      // Check if this specific exam used free trial
       if (examId && freeTrialExamId === examId) {
         setHasAccess(true);
         setAccessType('free-trial');
@@ -103,19 +119,17 @@ export const useExamAccess = (examId?: string): ExamAccessResult => {
         return;
       }
 
-      // Check if exam is free
       if (examId) {
-        const { data: exam } = await supabase
-          .from('exams')
-          .select('is_free')
-          .eq('id', examId)
-          .maybeSingle();
-
-        if (exam?.is_free) {
-          setHasAccess(true);
-          setAccessType('free-trial');
-          setIsLoading(false);
-          return;
+        const examDoc = await getDoc(doc(db, 'exams', examId));
+        if (examDoc.exists()) {
+          const exam = examDoc.data();
+          const isFree = typeof exam.isFree === 'boolean' ? exam.isFree : !!exam.is_free;
+          if (isFree) {
+            setHasAccess(true);
+            setAccessType('free-trial');
+            setIsLoading(false);
+            return;
+          }
         }
       }
 
@@ -131,19 +145,20 @@ export const useExamAccess = (examId?: string): ExamAccessResult => {
   const recordPurchase = async (purchaseExamId: string): Promise<boolean> => {
     if (!user || monthlyPurchasesRemaining <= 0) return false;
 
+    const db = getFirebaseDb();
     const currentMonth = format(new Date(), 'yyyy-MM');
 
     try {
-      const { error } = await supabase
-        .from('paper_purchases' as any)
-        .insert({
-          user_id: user.id,
-          exam_id: purchaseExamId,
-          amount: 2000,
-          month_year: currentMonth,
-        });
-
-      if (error) throw error;
+      await addDoc(collection(db, 'paper_purchases'), {
+        userId: user.id,
+        user_id: user.id,
+        examId: purchaseExamId,
+        exam_id: purchaseExamId,
+        amount: 2000,
+        monthYear: currentMonth,
+        month_year: currentMonth,
+        createdAt: new Date().toISOString(),
+      });
       await checkAccess();
       return true;
     } catch (error) {
@@ -155,17 +170,14 @@ export const useExamAccess = (examId?: string): ExamAccessResult => {
   const useFreeTrialForExam = async (trialExamId: string): Promise<boolean> => {
     if (!user || !freeTrialAvailable) return false;
 
+    const db = getFirebaseDb();
     try {
-      // Using raw update for new columns
-      const { error } = await supabase
-        .from('user_progress')
-        .update({
-          free_trial_used: true,
-          free_trial_exam_id: trialExamId,
-        } as any)
-        .eq('user_id', user.id);
-
-      if (error) throw error;
+      await setDoc(doc(db, 'user_progress', user.id), {
+        freeTrialUsed: true,
+        free_trial_used: true,
+        freeTrialExamId: trialExamId,
+        free_trial_exam_id: trialExamId,
+      }, { merge: true });
       await checkAccess();
       return true;
     } catch (error) {

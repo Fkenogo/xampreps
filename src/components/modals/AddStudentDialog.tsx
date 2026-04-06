@@ -1,6 +1,11 @@
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import {
+  generateLinkCodeFirebase,
+  listActiveLinkCodesFirebase,
+  searchLinkTargetFirebase,
+  sendLinkRequestFirebase,
+} from '@/integrations/firebase/linking';
 import {
   Dialog,
   DialogContent,
@@ -25,8 +30,8 @@ interface AddStudentDialogProps {
 interface LinkCode {
   id: string;
   code: string;
-  expires_at: string;
-  used_by: string | null;
+  expiresAt: string;
+  usedBy: string | null;
 }
 
 export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddStudentDialogProps) {
@@ -41,14 +46,15 @@ export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddS
 
   const fetchActiveCodes = async () => {
     if (!user?.id) return;
-    const { data } = await supabase
-      .from('link_codes')
-      .select('*')
-      .eq('creator_id', user.id)
-      .is('used_by', null)
-      .gt('expires_at', new Date().toISOString())
-      .order('created_at', { ascending: false });
-    if (data) setActiveCodes(data);
+    try {
+      const result = await listActiveLinkCodesFirebase();
+      if (result.ok) {
+        setActiveCodes(result.items || []);
+      }
+    } catch (error) {
+      console.error('Error loading Firebase link codes:', error);
+      toast.error('Failed to load active codes');
+    }
   };
 
   const handleSearch = async () => {
@@ -61,58 +67,31 @@ export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddS
     setSearchResult(null);
     setNotFound(false);
 
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('id, name, email')
-      .eq('email', email.toLowerCase().trim())
-      .maybeSingle();
-
-    if (!profile) {
-      setNotFound(true);
-      setLoading(false);
-      return;
+    try {
+      const result = await searchLinkTargetFirebase(email, 'student');
+      if (!result.ok || !result.target) {
+        const reason = result.reason || 'not_found';
+        if (reason === 'role_mismatch') {
+          toast.error('This account is not a student account');
+        } else if (reason === 'already_linked') {
+          toast.error('This student is already linked to your school');
+        } else if (reason === 'pending_exists') {
+          toast.error('You already have a pending request for this student');
+        } else {
+          setNotFound(true);
+        }
+        setLoading(false);
+        return;
+      }
+      setSearchResult({
+        id: result.target.id,
+        name: result.target.name,
+        email: result.target.email,
+      });
+    } catch (error) {
+      console.error('Firebase student search failed:', error);
+      toast.error('Failed to search student');
     }
-
-    const { data: role } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', profile.id)
-      .maybeSingle();
-
-    if (role?.role !== 'student') {
-      toast.error('This account is not a student account');
-      setLoading(false);
-      return;
-    }
-
-    const { data: existingLink } = await supabase
-      .from('linked_accounts')
-      .select('id')
-      .eq('parent_or_school_id', user?.id)
-      .eq('student_id', profile.id)
-      .maybeSingle();
-
-    if (existingLink) {
-      toast.error('This student is already linked to your school');
-      setLoading(false);
-      return;
-    }
-
-    const { data: pendingRequest } = await supabase
-      .from('link_requests')
-      .select('id')
-      .eq('requester_id', user?.id)
-      .eq('target_id', profile.id)
-      .eq('status', 'pending')
-      .maybeSingle();
-
-    if (pendingRequest) {
-      toast.error('You already have a pending request for this student');
-      setLoading(false);
-      return;
-    }
-
-    setSearchResult(profile);
     setLoading(false);
   };
 
@@ -121,21 +100,19 @@ export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddS
 
     setLoading(true);
 
-    const { error } = await supabase
-      .from('link_requests')
-      .insert({
-        requester_id: user.id,
-        target_id: searchResult.id,
-        status: 'pending',
-      });
-
-    if (error) {
+    try {
+      const result = await sendLinkRequestFirebase(searchResult.id);
+      if (result.ok) {
+        toast.success('Link request sent to student');
+        setEmail('');
+        setSearchResult(null);
+        onSuccess?.();
+      } else {
+        toast.error('Failed to send link request');
+      }
+    } catch (error) {
+      console.error('Firebase send request failed:', error);
       toast.error('Failed to send link request');
-    } else {
-      toast.success('Link request sent to student');
-      setEmail('');
-      setSearchResult(null);
-      onSuccess?.();
     }
     setLoading(false);
   };
@@ -153,33 +130,19 @@ export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddS
     let failCount = 0;
 
     for (const studentEmail of emails) {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('email', studentEmail)
-        .maybeSingle();
-
-      if (profile) {
-        const { data: existingLink } = await supabase
-          .from('linked_accounts')
-          .select('id')
-          .eq('parent_or_school_id', user.id)
-          .eq('student_id', profile.id)
-          .maybeSingle();
-
-        if (!existingLink) {
-          const { error } = await supabase
-            .from('link_requests')
-            .insert({
-              requester_id: user.id,
-              target_id: profile.id,
-              status: 'pending',
-            });
-
-          if (!error) successCount++;
-          else failCount++;
+      try {
+        const result = await searchLinkTargetFirebase(studentEmail, 'student');
+        if (!result.ok || !result.target) {
+          failCount++;
+          continue;
         }
-      } else {
+        const requestResult = await sendLinkRequestFirebase(result.target.id);
+        if (requestResult.ok) {
+          successCount++;
+        } else {
+          failCount++;
+        }
+      } catch (_error) {
         failCount++;
       }
     }
@@ -195,37 +158,21 @@ export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddS
     setLoading(false);
   };
 
-  const generateCode = () => {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let code = '';
-    for (let i = 0; i < 8; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return code;
-  };
-
   const handleGenerateCode = async () => {
     if (!user?.id) return;
 
     setLoading(true);
-    const code = generateCode();
-    const expiresAt = new Date();
-    expiresAt.setHours(expiresAt.getHours() + 24);
-
-    const { error } = await supabase
-      .from('link_codes')
-      .insert({
-        code,
-        creator_id: user.id,
-        creator_type: 'school',
-        expires_at: expiresAt.toISOString(),
-      });
-
-    if (error) {
+    try {
+      const result = await generateLinkCodeFirebase('school');
+      if (result.ok) {
+        toast.success('Link code generated!');
+        await fetchActiveCodes();
+      } else {
+        toast.error('Failed to generate code');
+      }
+    } catch (error) {
+      console.error('Error generating Firebase code:', error);
       toast.error('Failed to generate code');
-    } else {
-      toast.success('Link code generated!');
-      fetchActiveCodes();
     }
     setLoading(false);
   };
@@ -296,7 +243,7 @@ export default function AddStudentDialog({ open, onOpenChange, onSuccess }: AddS
                       <p className="font-mono text-lg font-bold tracking-widest text-foreground">{linkCode.code}</p>
                       <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
                         <Clock className="w-3 h-3" />
-                        <span>Expires in {getTimeRemaining(linkCode.expires_at)}</span>
+                        <span>Expires in {getTimeRemaining(linkCode.expiresAt)}</span>
                       </div>
                     </div>
                     <Button variant="outline" size="icon" onClick={() => handleCopyCode(linkCode.code)}>

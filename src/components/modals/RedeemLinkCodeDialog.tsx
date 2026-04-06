@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/contexts/AuthContext';
+import { redeemLinkCodeFirebase } from '@/integrations/firebase/linking';
 import {
   Dialog,
   DialogContent,
@@ -20,94 +19,51 @@ interface RedeemLinkCodeDialogProps {
   onSuccess?: () => void;
 }
 
-export default function RedeemLinkCodeDialog({ 
-  open, 
+export default function RedeemLinkCodeDialog({
+  open,
   onOpenChange,
-  onSuccess 
+  onSuccess,
 }: RedeemLinkCodeDialogProps) {
-  const { user } = useAuth();
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleRedeem = async () => {
-    if (!code.trim()) {
-      setError('Please enter a code');
-      return;
-    }
+  const completeSuccess = (message: string) => {
+    toast.success(message);
+    setCode('');
+    onOpenChange(false);
+    onSuccess?.();
+  };
 
-    if (!user?.id) {
-      setError('You must be logged in');
+  const handleRedeem = async () => {
+    const normalizedCode = code.toUpperCase().trim();
+    if (!normalizedCode) {
+      setError('Please enter a code');
       return;
     }
 
     setLoading(true);
     setError(null);
 
-    // Find the link code
-    const { data: linkCode, error: findError } = await supabase
-      .from('link_codes')
-      .select('*')
-      .eq('code', code.toUpperCase().trim())
-      .is('used_by', null)
-      .gt('expires_at', new Date().toISOString())
-      .single();
+    try {
+      const result = await redeemLinkCodeFirebase(normalizedCode);
+      if (!result.ok) {
+        setError('Invalid or expired code. Please check and try again.');
+        return;
+      }
 
-    if (findError || !linkCode) {
-      setError('Invalid or expired code. Please check and try again.');
+      if (result.status === 'already_linked' || result.status === 'already_redeemed') {
+        completeSuccess('Account was already linked.');
+        return;
+      }
+
+      completeSuccess('Successfully linked account!');
+    } catch (err) {
+      console.error('Redeem error:', err);
+      setError('Failed to redeem code. Please try again.');
+    } finally {
       setLoading(false);
-      return;
     }
-
-    // Check if already linked
-    const { data: existingLink } = await supabase
-      .from('linked_accounts')
-      .select('id')
-      .eq('parent_or_school_id', linkCode.creator_id)
-      .eq('student_id', user.id)
-      .maybeSingle();
-
-    if (existingLink) {
-      setError('You are already linked to this account');
-      setLoading(false);
-      return;
-    }
-
-    // Mark code as used
-    const { error: updateError } = await supabase
-      .from('link_codes')
-      .update({ 
-        used_by: user.id, 
-        used_at: new Date().toISOString() 
-      })
-      .eq('id', linkCode.id);
-
-    if (updateError) {
-      console.error('Error updating code:', updateError);
-      setError('Failed to redeem code');
-      setLoading(false);
-      return;
-    }
-
-    // Create linked account
-    const { error: linkError } = await supabase
-      .from('linked_accounts')
-      .insert({
-        parent_or_school_id: linkCode.creator_id,
-        student_id: user.id,
-      });
-
-    if (linkError) {
-      console.error('Error creating link:', linkError);
-      setError('Failed to link accounts');
-      setLoading(false);
-      return;
-    }
-
-    toast.success(`Successfully linked with ${linkCode.creator_type === 'parent' ? 'parent' : 'school'}!`);
-    setCode('');
-    onOpenChange(false);
-    onSuccess?.();
   };
 
   const handleClose = () => {
@@ -154,8 +110,8 @@ export default function RedeemLinkCodeDialog({
             </div>
           )}
 
-          <Button 
-            onClick={handleRedeem} 
+          <Button
+            onClick={handleRedeem}
             disabled={loading || !code.trim()}
             className="w-full gap-2"
           >
@@ -169,7 +125,7 @@ export default function RedeemLinkCodeDialog({
 
           <div className="p-4 bg-muted/50 rounded-lg">
             <p className="text-sm text-muted-foreground">
-              Ask your parent or school administrator for a link code. 
+              Ask your parent or school administrator for a link code.
               Once linked, they can view your learning progress.
             </p>
           </div>

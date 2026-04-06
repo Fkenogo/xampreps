@@ -13,12 +13,12 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
     
-    // Helper function to check if user has admin role
+    // Helper function to check if user has admin or super_admin role
     // Note: Custom claims are not set, so we check user_roles collection
     // This requires a read, which is acceptable for admin checks
     function isAdmin() {
-      return isAuthenticated() && 
-             get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role == 'admin';
+      let userRole = get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role;
+      return isAuthenticated() && (userRole == 'admin' || userRole == 'super_admin');
     }
     
     // Helper function to get user's role

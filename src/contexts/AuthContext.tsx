@@ -1,16 +1,40 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
-import type { Database } from '@/integrations/supabase/types';
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut as firebaseSignOut,
+  updateProfile as updateFirebaseProfile,
+} from 'firebase/auth';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp,
+} from 'firebase/firestore';
+import { getFirebaseApp } from '@/integrations/firebase/client';
 
-type AppRole = Database['public']['Enums']['app_role'];
+export type AppRole = 'student' | 'parent' | 'school' | 'admin' | 'super_admin';
+export type EducationLevel = 'PLE' | 'UCE' | 'UACE' | string;
+
+interface AuthUser {
+  id: string;
+  email: string | null;
+}
+
+interface AuthSession {
+  provider: 'firebase';
+  accessToken: string | null;
+}
 
 interface Profile {
   id: string;
   name: string;
   email: string;
   avatar_url?: string;
-  level?: Database['public']['Enums']['education_level'];
+  level?: EducationLevel;
   school?: string;
   phone?: string;
   dob?: string;
@@ -24,8 +48,8 @@ interface UserProgress {
 }
 
 interface AuthContextType {
-  user: User | null;
-  session: Session | null;
+  user: AuthUser | null;
+  session: AuthSession | null;
   profile: Profile | null;
   role: AppRole | null;
   progress: UserProgress | null;
@@ -34,124 +58,169 @@ interface AuthContextType {
   signUp: (email: string, password: string, metadata?: { name?: string; role?: AppRole }) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
+  // Super admin features
+  isSuperAdmin: boolean;
+  viewAsRole: AppRole | null;
+  setViewAsRole: (role: AppRole | null) => void;
+  effectiveRole: AppRole | null; // Returns viewAsRole if set, otherwise real role
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const isAppRole = (value: unknown): value is AppRole =>
+  value === 'student' || value === 'parent' || value === 'school' || value === 'admin' || value === 'super_admin';
+
+const getError = (error: unknown): Error =>
+  error instanceof Error ? error : new Error('Unknown authentication error');
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [session, setSession] = useState<AuthSession | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [role, setRole] = useState<AppRole | null>(null);
   const [progress, setProgress] = useState<UserProgress | null>(null);
   const [loading, setLoading] = useState(true);
+  const [viewAsRole, setViewAsRoleState] = useState<AppRole | null>(null);
 
-  const fetchUserData = async (userId: string) => {
-    // Fetch profile
-    const { data: profileData } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
+  // Compute effective role (view-as overrides for UI, but real role for security)
+  const effectiveRole = viewAsRole || role;
+  // Check if current user is super admin based on real persisted role
+  const isSuperAdmin = role === 'super_admin';
 
-    if (profileData) {
-      setProfile(profileData as Profile);
+  const fetchFirebaseUserData = async (userId: string, email: string | null, displayName: string | null) => {
+    const app = getFirebaseApp();
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const profileSnap = await getDoc(doc(db, 'profiles', userId));
+    const profileData = profileSnap.data() as Partial<Profile> | undefined;
+    const fallbackName = displayName || email?.split('@')[0] || 'User';
+    setProfile({
+      id: userId,
+      name: profileData?.name || fallbackName,
+      email: profileData?.email || email || '',
+      avatar_url: profileData?.avatar_url,
+      level: profileData?.level,
+      school: profileData?.school,
+      phone: profileData?.phone,
+      dob: profileData?.dob,
+      contact_person: profileData?.contact_person,
+    });
+
+    let resolvedRole: AppRole | null = null;
+    if (auth.currentUser) {
+      const tokenResult = await auth.currentUser.getIdTokenResult();
+      if (isAppRole(tokenResult.claims.role)) {
+        resolvedRole = tokenResult.claims.role;
+      }
     }
-
-    // Fetch role - prioritize admin role if user has multiple roles
-    const { data: roleData } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', userId);
-
-    if (roleData && roleData.length > 0) {
-      // Prioritize roles: admin > school > parent > student
-      const rolePriority: AppRole[] = ['admin', 'school', 'parent', 'student'];
-      const userRoles = roleData.map(r => r.role);
-      const prioritizedRole = rolePriority.find(r => userRoles.includes(r)) || userRoles[0];
-      setRole(prioritizedRole);
+    if (!resolvedRole) {
+      const roleSnap = await getDoc(doc(db, 'user_roles', userId));
+      const roleValue = roleSnap.data()?.role;
+      resolvedRole = isAppRole(roleValue) ? roleValue : 'student';
     }
+    setRole(resolvedRole);
 
-    // Fetch progress
-    const { data: progressData } = await supabase
-      .from('user_progress')
-      .select('xp, streak, last_exam_date')
-      .eq('user_id', userId)
-      .single();
-
+    const progressSnap = await getDoc(doc(db, 'user_progress', userId));
+    const progressData = progressSnap.data();
     if (progressData) {
-      setProgress(progressData);
+      setProgress({
+        xp: typeof progressData.xp === 'number' ? progressData.xp : 0,
+        streak: typeof progressData.streak === 'number' ? progressData.streak : 0,
+        last_exam_date: typeof progressData.last_exam_date === 'string' ? progressData.last_exam_date : undefined,
+      });
+    } else {
+      setProgress({ xp: 0, streak: 0 });
     }
   };
 
   const refreshProfile = async () => {
     if (user?.id) {
-      await fetchUserData(user.id);
+      const auth = getAuth(getFirebaseApp());
+      const firebaseUser = auth.currentUser;
+      await fetchFirebaseUserData(user.id, firebaseUser?.email || null, firebaseUser?.displayName || null);
     }
   };
 
   useEffect(() => {
-    // Set up auth state listener FIRST
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-
-        // Defer Supabase calls with setTimeout
-        if (session?.user) {
-          setTimeout(() => {
-            fetchUserData(session.user.id);
-          }, 0);
-        } else {
-          setProfile(null);
-          setRole(null);
-          setProgress(null);
-        }
-        setLoading(false);
-      }
-    );
-
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        fetchUserData(session.user.id);
+    const auth = getAuth(getFirebaseApp());
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        const token = await firebaseUser.getIdToken();
+        setSession({ provider: 'firebase', accessToken: token });
+        setUser({ id: firebaseUser.uid, email: firebaseUser.email });
+        await fetchFirebaseUserData(firebaseUser.uid, firebaseUser.email, firebaseUser.displayName);
+      } else {
+        setSession(null);
+        setUser(null);
+        setProfile(null);
+        setRole(null);
+        setProgress(null);
       }
       setLoading(false);
     });
-
-    return () => subscription.unsubscribe();
+    return () => unsubscribe();
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return { error };
+    try {
+      await signInWithEmailAndPassword(getAuth(getFirebaseApp()), email, password);
+      return { error: null };
+    } catch (error: unknown) {
+      return { error: getError(error) };
+    }
   };
 
   const signUp = async (email: string, password: string, metadata?: { name?: string; role?: AppRole }) => {
-    const redirectUrl = `${window.location.origin}/`;
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: redirectUrl,
-        data: {
-          name: metadata?.name || email.split('@')[0],
-          role: metadata?.role || 'student',
-        },
-      },
-    });
-    return { error };
+    try {
+      const app = getFirebaseApp();
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+      const credential = await createUserWithEmailAndPassword(auth, email, password);
+
+      if (metadata?.name) {
+        await updateFirebaseProfile(credential.user, { displayName: metadata.name });
+      }
+
+      const roleToUse = metadata?.role || 'student';
+      await setDoc(doc(db, 'profiles', credential.user.uid), {
+        id: credential.user.uid,
+        email,
+        name: metadata?.name || email.split('@')[0],
+        created_at: serverTimestamp(),
+        updated_at: serverTimestamp(),
+      }, { merge: true });
+      await setDoc(doc(db, 'user_roles', credential.user.uid), {
+        role: roleToUse,
+        updated_at: serverTimestamp(),
+      }, { merge: true });
+      await setDoc(doc(db, 'user_progress', credential.user.uid), {
+        xp: 0,
+        streak: 0,
+        updated_at: serverTimestamp(),
+      }, { merge: true });
+
+      return { error: null };
+    } catch (error: unknown) {
+      return { error: getError(error) };
+    }
   };
 
   const signOut = async () => {
-    await supabase.auth.signOut();
+    await firebaseSignOut(getAuth(getFirebaseApp()));
     setUser(null);
     setSession(null);
     setProfile(null);
     setRole(null);
     setProgress(null);
+    setViewAsRoleState(null);
+  };
+
+  // View-as setter - only allowed for super admin
+  const setViewAsRole = (newRole: AppRole | null) => {
+    if (isSuperAdmin) {
+      setViewAsRoleState(newRole);
+    }
   };
 
   return (
@@ -167,6 +236,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         signUp,
         signOut,
         refreshProfile,
+        isSuperAdmin,
+        viewAsRole,
+        setViewAsRole,
+        effectiveRole,
       }}
     >
       {children}

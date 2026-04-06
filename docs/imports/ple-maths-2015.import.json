@@ -1,0 +1,510 @@
+[
+  {
+    "question_number": 1,
+    "text": "Work out: 124 - 45",
+    "parts": [
+      {
+        "text": "",
+        "answer": "79",
+        "explanation": "124 - 45 = 79\n\nStep-by-step:\n• Borrow from tens: 14 - 5 = 9\n• Borrow from hundreds: 11 - 4 = 7\n• Result: 79",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 2,
+    "text": "Write in figures: Eighty thousand, ten.",
+    "parts": [
+      {
+        "text": "",
+        "answer": "80010",
+        "explanation": "Eighty thousand = 80,000\nTen = 10\n80,000 + 10 = 80,010",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 3,
+    "text": "Simplify: 18x - 5(3x + 7)",
+    "parts": [
+      {
+        "text": "",
+        "answer": "3x - 35",
+        "explanation": "18x - 5(3x + 7)\n= 18x - 15x - 35\n= 3x - 35",
+        "marks": 2,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 4,
+    "text": "Given that set K = {g, m, v, z}, find the number of subsets in set K.",
+    "parts": [
+      {
+        "text": "",
+        "answer": "16",
+        "explanation": "Set K has 4 elements.\nNumber of subsets = 2^n = 2^4 = 16",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 5,
+    "text": "Work out 7 - 3 on the number line below.",
+    "image_url": "ple/maths/2015/q05-numberline.png",
+    "parts": [
+      {
+        "text": "",
+        "answer": "4",
+        "explanation": "Start at 7 on the number line.\nMove 3 steps to the left: 7 → 6 → 5 → 4\nAnswer: 4",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 6,
+    "text": "Find the sum of the 5th and 8th prime numbers.",
+    "parts": [
+      {
+        "text": "",
+        "answer": "30",
+        "explanation": "Prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, ...\n5th prime = 11\n8th prime = 19\n11 + 19 = 30",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 7,
+    "text": "Work out: 14/15 ÷ 2/5",
+    "parts": [
+      {
+        "text": "",
+        "answer": "7/3",
+        "explanation": "14/15 ÷ 2/5\n= 14/15 × 5/2\n= 70/30\n= 7/3 (or 2⅓)",
+        "marks": 2,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 8,
+    "text": "A birthday party started at 4:30 p.m. and lasted 2¾ hours. At what time did the party end?",
+    "parts": [
+      {
+        "text": "",
+        "answer": "7:15pm",
+        "explanation": "Start: 4:30 p.m.\nAdd 2 hours: 6:30 p.m.\nAdd ¾ hour (45 min): 7:15 p.m.",
+        "marks": 2,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 9,
+    "text": "Show all the lines of folding symmetry in the figure below.",
+    "image_url": "ple/maths/2015/q09-symmetry.png",
+    "parts": [
+      {
+        "text": "",
+        "answer": "2",
+        "explanation": "The figure has 2 lines of symmetry:\n• One vertical line through the center\n• One horizontal line through the center",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 10,
+    "text": "A trader sold a pair of shoes at sh32,800 making a profit of sh1,200. What was the cost price of the pair of shoes?",
+    "parts": [
+      {
+        "text": "",
+        "answer": "31600",
+        "explanation": "Selling price = sh32,800\nProfit = sh1,200\nCost price = Selling price - Profit\n= 32,800 - 1,200 = sh31,600",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 11,
+    "text": "In a car park there are 192 cars. The probability that a car picked at random from the park is made in Japan is 5/8. How many cars are not made in Japan?",
+    "parts": [
+      {
+        "text": "",
+        "answer": "72",
+        "explanation": "Total cars = 192\nJapanese cars = 5/8 × 192 = 120\nNon-Japanese cars = 192 - 120 = 72",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 12,
+    "text": "How many packets of 200 grammes can be got from 2.6 kilogrammes of salt?",
+    "parts": [
+      {
+        "text": "",
+        "answer": "13",
+        "explanation": "2.6 kg = 2,600 g\nNumber of packets = 2,600 ÷ 200 = 13",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 13,
+    "text": "Given that a = -2, b = 3 and c = 4, find the value of b(a² + c)",
+    "parts": [
+      {
+        "text": "",
+        "answer": "24",
+        "explanation": "a² = (-2)² = 4\na² + c = 4 + 4 = 8\nb(a² + c) = 3 × 8 = 24",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 14,
+    "text": "Work out: 1101₂ + 111₂",
+    "parts": [
+      {
+        "text": "",
+        "answer": "10100",
+        "explanation": "Binary addition:\n  1101\n+ 0111\n------\n 10100\n\nAnswer: 10100₂",
+        "marks": 2,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 15,
+    "text": "Find the size of angle y in the figure below.",
+    "image_url": "ple/maths/2015/q15-angle.png",
+    "parts": [
+      {
+        "text": "",
+        "answer": "65",
+        "explanation": "Given: 2y = 130°\ny = 130° ÷ 2 = 65°",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 16,
+    "text": "The Venn diagram below shows the prime factors of 12 and 18. Find the Lowest Common Multiple (LCM) of 12 and 18.",
+    "image_url": "ple/maths/2015/q16-venn.png",
+    "parts": [
+      {
+        "text": "",
+        "answer": "36",
+        "explanation": "12 = 2 × 2 × 3\n18 = 2 × 3 × 3\nLCM = 2 × 2 × 3 × 3 = 36",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 17,
+    "text": "Find the median of the numbers: 8, 10, 4, 1, 6 and 9.",
+    "parts": [
+      {
+        "text": "",
+        "answer": "7",
+        "explanation": "Ordered: 1, 4, 6, 8, 9, 10\nMedian = average of middle two = (6 + 8) ÷ 2 = 7",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 18,
+    "text": "Gidudu has goats and sheep in the ratio of 3:2. If he has 24 goats, how many sheep does he have?",
+    "parts": [
+      {
+        "text": "",
+        "answer": "16",
+        "explanation": "Ratio goats:sheep = 3:2\n3 parts = 24 goats\n1 part = 8\nSheep = 2 parts = 16",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 19,
+    "text": "A bucket was ¾ full of water. When 4 litres were removed, it became ½ full of water. What is the capacity of the bucket?",
+    "parts": [
+      {
+        "text": "",
+        "answer": "16",
+        "explanation": "Let capacity = x litres\n¾x - 4 = ½x\n¾x - ½x = 4\n¼x = 4\nx = 16 litres",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 20,
+    "text": "In a poultry farm, eggs are packed into boxes which hold 144 eggs. How many boxes of the same size are needed to pack 1,008 eggs?",
+    "parts": [
+      {
+        "text": "",
+        "answer": "7",
+        "explanation": "Total eggs = 1,008\nEggs per box = 144\nBoxes needed = 1,008 ÷ 144 = 7",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 21,
+    "text": "In a class, 31 pupils play tennis (T) and (d + 5) play volleyball (V) only. d pupils play both games while 3 play neither of the games.\n\n(a) Use the above information to complete the Venn diagram below.\n(b) If 27 pupils play volleyball altogether, find the value of d.",
+    "image_url": "ple/maths/2015/q21-venn.png",
+    "parts": [
+      {
+        "text": "(a) Complete the Venn diagram",
+        "answer": "T only: 31-d, V only: d+5, Both: d, Neither: 3",
+        "explanation": "Tennis only = 31 - d (since 31 play tennis including those who play both)\nVolleyball only = d + 5\nBoth = d\nNeither = 3",
+        "marks": 2,
+        "answer_type": "text"
+      },
+      {
+        "text": "(b) Find the value of d",
+        "answer": "11",
+        "explanation": "Volleyball altogether = 27\nVolleyball only + Both = 27\n(d + 5) + d = 27\n2d + 5 = 27\n2d = 22\nd = 11",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 22,
+    "text": "(a) What number has been expanded below?\n(6 × 10³) + (2 × 10¹) + (7 × 10⁰) + (3 × 10⁻²)\n\n(b) Work out: (8.5 × 14) + (8.5 × 16)",
+    "parts": [
+      {
+        "text": "(a) Find the number",
+        "answer": "6027.03",
+        "explanation": "6 × 10³ = 6,000\n2 × 10¹ = 20\n7 × 10⁰ = 7\n3 × 10⁻² = 0.03\nTotal = 6,000 + 20 + 7 + 0.03 = 6,027.03",
+        "marks": 3,
+        "answer_type": "numeric"
+      },
+      {
+        "text": "(b) Work out the expression",
+        "answer": "255",
+        "explanation": "(8.5 × 14) + (8.5 × 16)\n= 8.5 × (14 + 16)\n= 8.5 × 30\n= 255",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 23,
+    "text": "The table below shows the rate at which different currencies were sold and bought in a commercial bank during the month of September.\n\n| Currency | Selling (Ug.Sh.) | Buying (Ug.Sh.) |\n|----------|------------------|------------------|\n| 1 US dollar ($) | 3,600 | 3,650 |\n| 1 Euro (€) | 4,000 | 4,020 |\n| 1 Rwandese franc | 4.0 | 5.0 |\n\n(a) How many Euros did Musa get for Ug. Sh. 603,000?\n(b) Amina came from Rwanda with 109,500 Rwandese francs and exchanged them for US dollars. How many US dollars did she get from the bank?",
+    "parts": [
+      {
+        "text": "(a) Euros for Ug. Sh. 603,000",
+        "answer": "150",
+        "explanation": "Bank sells 1 Euro at sh4,020 (buying from customer)\nEuros = 603,000 ÷ 4,020 = 150 Euros",
+        "marks": 2,
+        "answer_type": "numeric"
+      },
+      {
+        "text": "(b) US dollars for 109,500 Rwandese francs",
+        "answer": "150",
+        "explanation": "First convert RWF to UGX:\n109,500 × 5.0 = 547,500 UGX\nThen convert to USD:\n547,500 ÷ 3,650 = 150 US dollars",
+        "marks": 3,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 24,
+    "text": "Betty filled container A below with drinking water. She served visitors with the water using cups of size B shown in the diagram.\n\nContainer A: Cylinder, radius = 14 cm, height = 50 cm\nCup B: Cylinder, radius = 3.5 cm, height = 10 cm\n\nFind the total number of full cups of water she served the visitors. (Use π = 22/7)",
+    "image_url": "ple/maths/2015/q24-cylinders.png",
+    "parts": [
+      {
+        "text": "",
+        "answer": "80",
+        "explanation": "Volume of container A = πr²h = (22/7) × 14² × 50 = 30,800 cm³\nVolume of one cup = πr²h = (22/7) × 3.5² × 10 = 385 cm³\nNumber of cups = 30,800 ÷ 385 = 80 cups",
+        "marks": 6,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 25,
+    "text": "A fruit seller sold the following number of mangoes in six days: 60, 35, 40, 28, 42 and 35.\n\n(a) What is the modal number of mangoes sold?\n(b) Work out the mean number of mangoes sold.\n(c) By the end of the seventh day, the mean number of mangoes sold was 44. How many mangoes were sold on the seventh day?",
+    "parts": [
+      {
+        "text": "(a) Modal number of mangoes",
+        "answer": "35",
+        "explanation": "Mode is the most frequent value.\n35 appears twice, all others appear once.\nMode = 35",
+        "marks": 1,
+        "answer_type": "numeric"
+      },
+      {
+        "text": "(b) Mean number of mangoes",
+        "answer": "40",
+        "explanation": "Sum = 60 + 35 + 40 + 28 + 42 + 35 = 240\nMean = 240 ÷ 6 = 40",
+        "marks": 2,
+        "answer_type": "numeric"
+      },
+      {
+        "text": "(c) Mangoes sold on seventh day",
+        "answer": "68",
+        "explanation": "Mean for 7 days = 44\nTotal for 7 days = 44 × 7 = 308\nTotal for 6 days = 240\nSeventh day = 308 - 240 = 68",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 26,
+    "text": "In the figure below line AB is parallel to CD. Angle CTD = 44° and Angle TQR = 56°.\n\nFind the size of:\n(a) angle k\n(b) angle g",
+    "image_url": "ple/maths/2015/q26-parallel-lines.png",
+    "parts": [
+      {
+        "text": "(a) Angle k",
+        "answer": "80",
+        "explanation": "Angles on a straight line sum to 180°\nk + 44° + 56° = 180°\nk + 100° = 180°\nk = 80°",
+        "marks": 2,
+        "answer_type": "numeric"
+      },
+      {
+        "text": "(b) Angle g",
+        "answer": "136",
+        "explanation": "Angle g and 44° are on a straight line (supplementary)\ng + 44° = 180°\ng = 136°",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 27,
+    "text": "The table below shows how a motor cyclist travelled from town R through towns Q and S to town P.\n\n| Town | Arrival | Departure |\n|------|---------|----------|\n| R | — | 9:00 a.m. |\n| Q | 9:30 a.m. | 9:42 a.m. |\n| S | 10:35 a.m. | 11:10 a.m. |\n| P | 1:30 p.m. | — |\n\n(a) How long did the motor cyclist stay at town S?\n(b) Find the time the motor cyclist took to travel from town R to town P.\n(c) If the distance from town R to town P is 180 km, calculate the average speed of the motor cyclist for the whole journey.",
+    "parts": [
+      {
+        "text": "(a) Time stayed at town S",
+        "answer": "35",
+        "explanation": "Arrival at S: 10:35 a.m.\nDeparture from S: 11:10 a.m.\nTime at S = 11:10 - 10:35 = 35 minutes",
+        "marks": 1,
+        "answer_type": "numeric"
+      },
+      {
+        "text": "(b) Total travel time from R to P",
+        "answer": "4 hours 30 minutes",
+        "explanation": "Departure from R: 9:00 a.m.\nArrival at P: 1:30 p.m.\nTime = 4 hours 30 minutes",
+        "marks": 2,
+        "answer_type": "text"
+      },
+      {
+        "text": "(c) Average speed",
+        "answer": "40",
+        "explanation": "Distance = 180 km\nTime = 4.5 hours\nAverage speed = 180 ÷ 4.5 = 40 km/hr",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 28,
+    "text": "Madada sold his radio to Aguti at sh. 63,000 making a loss of 10%. Aguti later sold the radio to Chebet at a profit of 15%.\n\n(a) Calculate the amount of money Madada paid for the radio.\n(b) For how much money did Aguti sell the radio?",
+    "parts": [
+      {
+        "text": "(a) Madada's cost price",
+        "answer": "70000",
+        "explanation": "Selling at 10% loss means selling at 90% of cost\n90% of cost = 63,000\nCost = 63,000 × 100/90 = 70,000",
+        "marks": 3,
+        "answer_type": "numeric"
+      },
+      {
+        "text": "(b) Aguti's selling price",
+        "answer": "72450",
+        "explanation": "Aguti bought at 63,000\nSold at 15% profit\nProfit = 15% × 63,000 = 9,450\nSelling price = 63,000 + 9,450 = 72,450",
+        "marks": 2,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 29,
+    "text": "Study the figure below and use it to answer the questions that follow.\n\nThe figure is a composite shape made of a rectangle (7m × 9m) and a triangle (base 4m, height 3m) attached to one side. The total length of one side is 10m.\n\n(a) Calculate the area of the figure.\n(b) Work out the perimeter of the figure.",
+    "image_url": "ple/maths/2015/q29-composite-shape.png",
+    "parts": [
+      {
+        "text": "(a) Area of the figure",
+        "answer": "69",
+        "explanation": "Area of rectangle = 7 × 9 = 63 m²\nArea of triangle = ½ × 4 × 3 = 6 m²\nTotal area = 63 + 6 = 69 m²",
+        "marks": 3,
+        "answer_type": "numeric"
+      },
+      {
+        "text": "(b) Perimeter of the figure",
+        "answer": "36",
+        "explanation": "Slanted side (Pythagoras): √(4² + 3²) = √25 = 5 m\nPerimeter = 10 + 5 + 5 + 7 + 9 = 36 m",
+        "marks": 3,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 30,
+    "text": "Two taps F and E are connected to a water tank. Tap F can fill the tank in 2 hours while E can empty it in 3 hours. One day when the tank was ½ full of water, the taps were opened at the same time. How long did it take to fill the tank?",
+    "parts": [
+      {
+        "text": "",
+        "answer": "3",
+        "explanation": "Tap F fills ½ tank per hour\nTap E empties ⅓ tank per hour\nNet rate = ½ - ⅓ = 1/6 tank per hour\nTank is ½ full, so ½ needs to be filled\nTime = ½ ÷ 1/6 = 3 hours",
+        "marks": 5,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 31,
+    "text": "A geometry set costs half as much as a book. A book costs sh.600 more than a fountain pen. If the total cost of the three items is sh.6,900, find the cost of the geometry set.",
+    "parts": [
+      {
+        "text": "",
+        "answer": "1500",
+        "explanation": "Let geometry set = x\nBook = 2x\nFountain pen = 2x - 600\nTotal: x + 2x + (2x - 600) = 6,900\n5x - 600 = 6,900\n5x = 7,500\nx = 1,500",
+        "marks": 4,
+        "answer_type": "numeric"
+      }
+    ]
+  },
+  {
+    "question_number": 32,
+    "text": "A plane flew from airport K to airport T on a bearing of 120°. The distance between K and T is 600 km. It then left airport T for airport R on a bearing of 210°. The distance between T and R is 500 km.\n\n(a) Sketch the journey made by the plane.\n(b) Using a scale of 1 cm to represent 100 km draw an accurate diagram to show the journey made by the plane.\n(c) Find the bearing of airport R from airport K.",
+    "parts": [
+      {
+        "text": "(a) Sketch the journey",
+        "answer": "sketch showing K to T at 120° bearing, then T to R at 210° bearing",
+        "explanation": "Draw point K, then line at 120° (clockwise from north) for 6 cm (600 km). From T, draw line at 210° for 5 cm (500 km) to R.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      },
+      {
+        "text": "(b) Accurate scale diagram",
+        "answer": "accurate diagram with K-T = 6cm at 120°, T-R = 5cm at 210°",
+        "explanation": "Scale: 1 cm = 100 km\nK to T: 6 cm at bearing 120°\nT to R: 5 cm at bearing 210°\nUse protractor and ruler for accuracy.",
+        "marks": 4,
+        "answer_type": "open-ended"
+      },
+      {
+        "text": "(c) Bearing of R from K",
+        "answer": "160",
+        "explanation": "Using scale drawing or trigonometry:\nMeasure the angle clockwise from north at K to the line KR.\nBearing of R from K ≈ 160°",
+        "marks": 1,
+        "answer_type": "numeric"
+      }
+    ]
+  }
+]

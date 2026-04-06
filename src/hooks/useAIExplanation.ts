@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { getAIExplanationFirebase } from '@/integrations/firebase/ai';
 import { toast } from 'sonner';
 
 interface UseAIExplanationOptions {
@@ -16,18 +16,14 @@ export function useAIExplanation(options: UseAIExplanationOptions = {}) {
     setExplanation(null);
 
     try {
-      const { data, error } = await supabase.functions.invoke('ai-explanations', {
-        body: {
-          type: 'explanation',
-          questionText,
-          correctAnswer,
-          studentLevel: options.studentLevel,
-          subject: options.subject,
-          marks,
-        },
+      const data = await getAIExplanationFirebase({
+        type: 'explanation',
+        questionText,
+        correctAnswer,
+        studentLevel: options.studentLevel,
+        subject: options.subject,
+        marks,
       });
-
-      if (error) throw error;
       
       if (data?.explanation) {
         setExplanation(data.explanation);
@@ -48,19 +44,15 @@ export function useAIExplanation(options: UseAIExplanationOptions = {}) {
     setExplanation(null);
 
     try {
-      const { data, error } = await supabase.functions.invoke('ai-explanations', {
-        body: {
-          type: 'feedback',
-          questionText,
-          correctAnswer,
-          userAnswer,
-          studentLevel: options.studentLevel,
-          subject: options.subject,
-          marks,
-        },
+      const data = await getAIExplanationFirebase({
+        type: 'feedback',
+        questionText,
+        correctAnswer,
+        userAnswer,
+        studentLevel: options.studentLevel,
+        subject: options.subject,
+        marks,
       });
-
-      if (error) throw error;
       
       if (data?.explanation) {
         setExplanation(data.explanation);

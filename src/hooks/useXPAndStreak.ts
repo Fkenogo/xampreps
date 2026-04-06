@@ -1,4 +1,5 @@
-import { supabase } from '@/integrations/supabase/client';
+import { doc, getDoc, getDocs, query, setDoc, collection, where } from 'firebase/firestore';
+import { getFirebaseDb } from '@/integrations/firebase/client';
 
 interface UpdateProgressParams {
   userId: string;
@@ -7,17 +8,33 @@ interface UpdateProgressParams {
 }
 
 export async function updateUserProgress({ userId, scorePercentage, totalQuestions }: UpdateProgressParams) {
+  const db = getFirebaseDb();
   // Calculate XP earned based on score
   const baseXP = totalQuestions * 10; // 10 XP per question
   const bonusMultiplier = scorePercentage >= 80 ? 1.5 : scorePercentage >= 60 ? 1.2 : 1;
   const xpEarned = Math.round(baseXP * (scorePercentage / 100) * bonusMultiplier);
 
   // Get current progress
-  const { data: currentProgress } = await supabase
-    .from('user_progress')
-    .select('*')
-    .eq('user_id', userId)
-    .maybeSingle();
+  const progressRef = doc(db, 'user_progress', userId);
+  const progressDoc = await getDoc(progressRef);
+  const byIdData = progressDoc.exists() ? progressDoc.data() : null;
+  const byUserId = byIdData
+    ? byIdData
+    : (await getDocs(query(collection(db, 'user_progress'), where('userId', '==', userId)))).docs[0]?.data() ||
+      (await getDocs(query(collection(db, 'user_progress'), where('user_id', '==', userId)))).docs[0]?.data() ||
+      null;
+  const currentProgress = byUserId
+    ? {
+        xp: typeof byUserId.xp === 'number' ? byUserId.xp : 0,
+        streak: typeof byUserId.streak === 'number' ? byUserId.streak : 0,
+        last_exam_date:
+          typeof byUserId.lastExamDate === 'string'
+            ? byUserId.lastExamDate
+            : typeof byUserId.last_exam_date === 'string'
+              ? byUserId.last_exam_date
+              : null,
+      }
+    : null;
 
   if (!currentProgress) {
     console.error('No user progress found for user:', userId);
@@ -54,17 +71,16 @@ export async function updateUserProgress({ userId, scorePercentage, totalQuestio
   }
 
   // Update progress
-  const { error } = await supabase
-    .from('user_progress')
-    .update({
+  try {
+    await setDoc(progressRef, {
       xp: currentProgress.xp + xpEarned,
       streak: newStreak,
+      lastExamDate: today,
       last_exam_date: today,
+      updatedAt: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-    })
-    .eq('user_id', userId);
-
-  if (error) {
+    }, { merge: true });
+  } catch (error: unknown) {
     console.error('Error updating user progress:', error);
     return { xpEarned: 0, streakUpdated: false };
   }

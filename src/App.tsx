@@ -9,6 +9,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
+import BusinessConsole from "./pages/dashboards/BusinessConsole";
 import StudentDashboard from "./pages/dashboards/StudentDashboard";
 import ParentDashboard from "./pages/dashboards/ParentDashboard";
 import SchoolDashboard from "./pages/dashboards/SchoolDashboard";
@@ -59,6 +60,13 @@ const App = () => (
               </ProtectedRoute>
             } />
             
+            {/* Business Console - Super Admin Only */}
+            <Route path="/dashboard/business-console" element={
+              <ProtectedRoute allowedRoles={['super_admin']}>
+                <BusinessConsole />
+              </ProtectedRoute>
+            } />
+            
             <Route path="/dashboard/student" element={
               <ProtectedRoute allowedRoles={['student']}>
                 <StudentDashboard />
@@ -77,8 +85,9 @@ const App = () => (
               </ProtectedRoute>
             } />
             
+            {/* Admin Dashboard - accessible by admin and super_admin */}
             <Route path="/dashboard/admin" element={
-              <ProtectedRoute allowedRoles={['admin']}>
+              <ProtectedRoute allowedRoles={['admin', 'super_admin']}>
                 <AdminDashboard />
               </ProtectedRoute>
             } />
