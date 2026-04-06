@@ -1,51 +1,40 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import { listStudentDashboardSummaryFirebase, type FirebaseAchievement } from '@/integrations/firebase/student';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Trophy, Lock, CheckCircle, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { Database } from '@/integrations/supabase/types';
 
-type Achievement = Database['public']['Tables']['achievements']['Row'];
-type UserAchievement = Database['public']['Tables']['user_achievements']['Row'];
+type Achievement = FirebaseAchievement;
 
 export default function AchievementsPage() {
-  const { profile } = useAuth();
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [userAchievements, setUserAchievements] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAchievements = async () => {
-      const { data: allAchievements } = await supabase
-        .from('achievements')
-        .select('*')
-        .order('xp_reward');
-
-      if (allAchievements) {
-        setAchievements(allAchievements);
-      }
-
-      if (profile?.id) {
-        const { data: userAch } = await supabase
-          .from('user_achievements')
-          .select('achievement_id')
-          .eq('user_id', profile.id);
-
-        if (userAch) {
-          setUserAchievements(userAch.map(a => a.achievement_id));
+      try {
+        const summary = await listStudentDashboardSummaryFirebase();
+        if (summary.ok) {
+          const sortedAchievements = [...summary.achievements].sort(
+            (a, b) => a.xp_reward - b.xp_reward
+          );
+          setAchievements(sortedAchievements);
+          setUserAchievements(summary.userAchievementIds || []);
         }
+      } catch (error) {
+        console.error('Failed to fetch achievements from Firebase:', error);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     fetchAchievements();
-  }, [profile?.id]);
+  }, []);
 
   const earnedCount = userAchievements.length;
   const totalXP = achievements
-    .filter(a => userAchievements.includes(a.id))
+    .filter((a) => userAchievements.includes(a.id))
     .reduce((acc, a) => acc + a.xp_reward, 0);
 
   if (loading) {
@@ -89,25 +78,27 @@ export default function AchievementsPage() {
         <div className="grid md:grid-cols-2 gap-4">
           {achievements.map((achievement) => {
             const isEarned = userAchievements.includes(achievement.id);
-            
+
             return (
               <div
                 key={achievement.id}
                 className={cn(
                   'bg-card rounded-2xl border p-6 transition-all',
-                  isEarned 
-                    ? 'border-amber-500/50 bg-amber-500/5' 
+                  isEarned
+                    ? 'border-amber-500/50 bg-amber-500/5'
                     : 'border-border opacity-60'
                 )}
               >
                 <div className="flex items-start gap-4">
-                  <div className={cn(
-                    'w-14 h-14 rounded-xl flex items-center justify-center text-2xl',
-                    isEarned ? 'bg-amber-500/20' : 'bg-muted'
-                  )}>
+                  <div
+                    className={cn(
+                      'w-14 h-14 rounded-xl flex items-center justify-center text-2xl',
+                      isEarned ? 'bg-amber-500/20' : 'bg-muted'
+                    )}
+                  >
                     {achievement.icon || '🏆'}
                   </div>
-                  
+
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
                       <h3 className="font-semibold text-foreground">{achievement.name}</h3>

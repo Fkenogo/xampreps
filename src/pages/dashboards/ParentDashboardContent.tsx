@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import { listLinkedStudentsOverviewFirebase } from '@/integrations/firebase/linking';
 import StatCard from '@/components/dashboard/StatCard';
 import LinkRequestsCard from '@/components/dashboard/LinkRequestsCard';
 import { CommunityForumCard } from '@/components/forum';
@@ -37,42 +37,28 @@ export default function ParentDashboardContent() {
   const fetchLinkedStudents = async () => {
     if (!user?.id) return;
 
-    const { data: links } = await supabase
-      .from('linked_accounts')
-      .select('student_id')
-      .eq('parent_or_school_id', user.id);
-
-    if (links && links.length > 0) {
-      const studentIds = links.map(l => l.student_id);
-      
-      const { data: profiles } = await supabase
-        .from('profiles')
-        .select('*')
-        .in('id', studentIds);
-
-      const { data: progress } = await supabase
-        .from('user_progress')
-        .select('*')
-        .in('user_id', studentIds);
-
-      if (profiles) {
-        const students: LinkedStudent[] = profiles.map(p => {
-          const studentProgress = progress?.find(pr => pr.user_id === p.id);
-          return {
-            id: p.id,
-            name: p.name,
-            email: p.email,
-            level: p.level || undefined,
-            xp: studentProgress?.xp || 0,
-            streak: studentProgress?.streak || 0,
-          };
-        });
+    try {
+      const response = await listLinkedStudentsOverviewFirebase();
+      if (response.ok) {
+        const students: LinkedStudent[] = (response.items || []).map((item) => ({
+          id: item.id,
+          name: item.name,
+          email: item.email,
+          level: item.level || undefined,
+          xp: item.xp,
+          streak: item.streak,
+          recentScore: item.avgScore || undefined,
+        }));
         setLinkedStudents(students);
+      } else {
+        setLinkedStudents([]);
       }
-    } else {
+    } catch (error) {
+      console.error('Error fetching Firebase linked students:', error);
       setLinkedStudents([]);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {

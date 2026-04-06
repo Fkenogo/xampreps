@@ -12,8 +12,9 @@ export default function Dashboard() {
     );
   }
 
-  // Redirect based on role
+  // Redirect based on role - super_admin lands on /dashboard/admin
   switch (role) {
+    case 'super_admin':
     case 'admin':
       return <Navigate to="/dashboard/admin" replace />;
     case 'school':

@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import {
+  adminListExamQuestionsPreviewFirebase,
+  adminUpsertExamFirebase,
+} from '@/integrations/firebase/admin';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -23,10 +26,27 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { Search, ChevronLeft, ChevronRight, FileText, Loader2 } from 'lucide-react';
 import PdfUpload from './PdfUpload';
-import type { Database } from '@/integrations/supabase/types';
-
-type Exam = Database['public']['Tables']['exams']['Row'];
-type Question = Database['public']['Tables']['questions']['Row'];
+type Exam = {
+  id: string;
+  title: string;
+  subject: string;
+  level: 'PLE' | 'UCE' | 'UACE';
+  year: number;
+  time_limit: number;
+  difficulty: 'Easy' | 'Medium' | 'Hard';
+  type: 'Past Paper' | 'Practice Paper';
+  is_free: boolean;
+  description: string | null;
+  explanation_pdf_url: string | null;
+};
+type Question = {
+  id: string;
+  exam_id: string;
+  question_number: number;
+  text: string;
+  image_url: string | null;
+  table_data: unknown;
+};
 
 interface QuestionPreview extends Question {
   parts_count: number;
@@ -106,34 +126,13 @@ export default function ExamEditDialog({ exam, open, onOpenChange, onSaved }: Ex
   const fetchQuestions = async (examId: string) => {
     setQuestionsLoading(true);
     try {
-      // Fetch questions
-      const { data: questionsData, error: questionsError } = await supabase
-        .from('questions')
-        .select('*')
-        .eq('exam_id', examId)
-        .order('question_number');
-
-      if (questionsError) throw questionsError;
-
-      // Fetch parts count for each question
-      const questionIds = questionsData?.map(q => q.id) || [];
-      const { data: partsData } = await supabase
-        .from('question_parts')
-        .select('question_id')
-        .in('question_id', questionIds);
-
-      const partsCounts: Record<string, number> = {};
-      partsData?.forEach(p => {
-        partsCounts[p.question_id] = (partsCounts[p.question_id] || 0) + 1;
-      });
-
-      const questionsWithParts: QuestionPreview[] = (questionsData || []).map(q => ({
-        ...q,
-        parts_count: partsCounts[q.id] || 0,
-      }));
-
-      setQuestions(questionsWithParts);
-    } catch (error: any) {
+      const result = await adminListExamQuestionsPreviewFirebase(examId);
+      if (result.ok) {
+        setQuestions(result.items as QuestionPreview[]);
+      } else {
+        setQuestions([]);
+      }
+    } catch (error: unknown) {
       console.error('Error fetching questions:', error);
     } finally {
       setQuestionsLoading(false);
@@ -161,53 +160,29 @@ export default function ExamEditDialog({ exam, open, onOpenChange, onSaved }: Ex
     setLoading(true);
 
     try {
-      if (exam) {
-        // Update existing exam
-        const { error } = await supabase
-          .from('exams')
-          .update({
-            title: formData.title,
-            subject: formData.subject,
-            level: formData.level,
-            year: formData.year,
-            time_limit: formData.time_limit,
-            difficulty: formData.difficulty,
-            type: formData.type,
-            is_free: formData.is_free,
-            description: formData.description || null,
-            explanation_pdf_url: formData.explanation_pdf_url,
-          })
-          .eq('id', exam.id);
-
-        if (error) throw error;
-        toast({ title: 'Exam updated successfully' });
-      } else {
-        // Create new exam
-        const { error } = await supabase
-          .from('exams')
-          .insert({
-            title: formData.title,
-            subject: formData.subject,
-            level: formData.level,
-            year: formData.year,
-            time_limit: formData.time_limit,
-            difficulty: formData.difficulty,
-            type: formData.type,
-            is_free: formData.is_free,
-            description: formData.description || null,
-            explanation_pdf_url: formData.explanation_pdf_url,
-          });
-
-        if (error) throw error;
-        toast({ title: 'Exam created successfully' });
-      }
+      const result = await adminUpsertExamFirebase({
+        id: exam?.id,
+        title: formData.title,
+        subject: formData.subject,
+        level: formData.level,
+        year: formData.year,
+        time_limit: formData.time_limit,
+        difficulty: formData.difficulty,
+        type: formData.type,
+        is_free: formData.is_free,
+        description: formData.description || null,
+        explanation_pdf_url: formData.explanation_pdf_url,
+      });
+      if (!result.ok) throw new Error('Failed to save exam');
+      toast({ title: exam ? 'Exam updated successfully' : 'Exam created successfully' });
 
       onSaved();
       onOpenChange(false);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Failed to save exam';
       toast({
         title: 'Error',
-        description: error.message,
+        description: message,
         variant: 'destructive',
       });
     } finally {

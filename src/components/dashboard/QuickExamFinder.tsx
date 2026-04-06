@@ -1,15 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { listExamsFirebase } from '@/integrations/firebase/content';
+import { listExamHistoryFirebase } from '@/integrations/firebase/exams';
 import { Search, ArrowRight, Clock, TrendingUp, BookOpen, Star } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import type { Database } from '@/integrations/supabase/types';
-
-type Exam = Database['public']['Tables']['exams']['Row'];
+type Exam = {
+  id: string;
+  title: string;
+  subject: string;
+  level: string;
+  year: number;
+  difficulty: string;
+  is_free: boolean;
+  time_limit: number;
+  question_count?: number;
+};
 
 const subjects = ['Mathematics', 'Science', 'English', 'Social Studies'];
 
@@ -48,40 +57,39 @@ export default function QuickExamFinder({
   useEffect(() => {
     const fetchExams = async () => {
       setLoading(true);
-      
-      let query = supabase.from('exams').select('*');
-      
-      if (selectedSubject) {
-        query = query.eq('subject', selectedSubject);
-      }
-      
-      if (profile?.level) {
-        query = query.eq('level', profile.level);
-      }
 
-      const { data: examsData } = await query.order('year', { ascending: false }).limit(20);
-      
-      if (examsData) {
-        const filtered = examsData.filter(exam => 
-          exam.title.toLowerCase().includes(search.toLowerCase()) ||
-          exam.subject.toLowerCase().includes(search.toLowerCase())
+      const examsResponse = await listExamsFirebase();
+      const allExams = (examsResponse.items || []).map((exam) => ({
+        id: exam.id,
+        title: exam.title,
+        subject: exam.subject,
+        level: exam.level,
+        year: exam.year,
+        difficulty: exam.difficulty,
+        is_free: exam.is_free,
+        time_limit: exam.time_limit,
+        question_count: exam.question_count,
+      }));
+
+      const filtered = allExams
+        .filter((exam) => (selectedSubject ? exam.subject === selectedSubject : true))
+        .filter((exam) => (profile?.level ? exam.level === profile.level : true))
+        .filter(
+          (exam) =>
+            exam.title.toLowerCase().includes(search.toLowerCase()) ||
+            exam.subject.toLowerCase().includes(search.toLowerCase())
         );
-        setExams(filtered.slice(0, maxResults));
-      }
+      setExams(filtered.slice(0, maxResults));
 
       if (showRecommendations) {
-        const { data: recentAttempt } = await supabase
-          .from('exam_attempts')
-          .select('exam_id, exams(*)')
-          .order('completed_at', { ascending: false })
-          .limit(1)
-          .maybeSingle();
-        
-        if (recentAttempt?.exams) {
-          setRecentExam(recentAttempt.exams as unknown as Exam);
+        const history = await listExamHistoryFirebase();
+        const latest = history.items && history.items.length > 0 ? history.items[0] : null;
+        if (latest) {
+          const matchingExam = allExams.find((exam) => exam.id === latest.examId);
+          setRecentExam(matchingExam || null);
         }
       }
-      
+
       setLoading(false);
     };
 

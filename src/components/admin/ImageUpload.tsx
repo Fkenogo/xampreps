@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { getFirebaseStorage } from '@/integrations/firebase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -50,30 +51,24 @@ export default function ImageUpload({ currentImageUrl, onImageChange, questionId
 
     setUploading(true);
     try {
+      const storage = getFirebaseStorage();
       // Generate unique filename
       const fileExt = file.name.split('.').pop();
       const fileName = `${questionId || 'temp'}-${Date.now()}.${fileExt}`;
-      const filePath = `questions/${fileName}`;
+      const filePath = `question-images/questions/${fileName}`;
 
-      // Upload to Supabase Storage
-      const { error: uploadError } = await supabase.storage
-        .from('question-images')
-        .upload(filePath, file);
+      const fileRef = ref(storage, filePath);
+      await uploadBytes(fileRef, file);
+      const publicUrl = await getDownloadURL(fileRef);
 
-      if (uploadError) throw uploadError;
-
-      // Get public URL
-      const { data: urlData } = supabase.storage
-        .from('question-images')
-        .getPublicUrl(filePath);
-
-      onImageChange(urlData.publicUrl);
-      setUrlInput(urlData.publicUrl);
+      onImageChange(publicUrl);
+      setUrlInput(publicUrl);
       toast({ title: 'Image uploaded successfully' });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Upload failed';
       toast({
         title: 'Upload failed',
-        description: error.message,
+        description: message,
         variant: 'destructive',
       });
     } finally {
@@ -94,14 +89,11 @@ export default function ImageUpload({ currentImageUrl, onImageChange, questionId
   };
 
   const handleRemoveImage = async () => {
-    // If the image was uploaded to our storage, try to delete it
-    if (currentImageUrl?.includes('question-images')) {
+    if (currentImageUrl?.includes('firebasestorage.googleapis.com') || currentImageUrl?.startsWith('gs://')) {
       try {
-        const path = currentImageUrl.split('question-images/')[1];
-        if (path) {
-          await supabase.storage.from('question-images').remove([path]);
-        }
-      } catch (error) {
+        const storage = getFirebaseStorage();
+        await deleteObject(ref(storage, currentImageUrl));
+      } catch (error: unknown) {
         console.error('Error deleting image:', error);
       }
     }

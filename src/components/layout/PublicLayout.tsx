@@ -19,7 +19,7 @@ const PublicLayout: React.FC<PublicLayoutProps> = ({ children, onNavigateToAuth,
             onClick={() => onNavigate('landing')}
           >
             <SparklesIcon className="w-8 h-8 text-primary" />
-            <span className="text-xl font-bold">Msomesa</span>
+            <span className="text-xl font-bold">XamPreps</span>
           </div>
           
           <nav className="hidden md:flex items-center gap-8">
@@ -75,7 +75,7 @@ const PublicLayout: React.FC<PublicLayoutProps> = ({ children, onNavigateToAuth,
             <div className="md:col-span-1">
               <div className="flex items-center gap-2 justify-center md:justify-start">
                 <SparklesIcon className="w-8 h-8 text-primary-foreground" />
-                <span className="text-xl font-bold text-primary-foreground">Msomesa</span>
+                <span className="text-xl font-bold text-primary-foreground">XamPreps</span>
               </div>
               <p className="text-sm text-muted-foreground mt-2">Transforming the way we learn.</p>
             </div>
@@ -98,7 +98,7 @@ const PublicLayout: React.FC<PublicLayoutProps> = ({ children, onNavigateToAuth,
           </div>
           
           <div className="text-center text-muted-foreground text-sm mt-12 border-t border-muted-foreground/20 pt-8">
-            © {new Date().getFullYear()} Msomesa. All rights reserved.
+            © {new Date().getFullYear()} XamPreps. All rights reserved.
           </div>
         </div>
       </footer>

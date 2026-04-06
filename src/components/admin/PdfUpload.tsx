@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { getFirebaseStorage } from '@/integrations/firebase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -34,35 +35,28 @@ export default function PdfUpload({ currentPdfUrl, onPdfChange, examId }: PdfUpl
     setUploading(true);
 
     try {
+      const storage = getFirebaseStorage();
       const fileName = `${examId}-explanation-${Date.now()}.pdf`;
-      const filePath = `explanations/${fileName}`;
+      const filePath = `explanation-pdfs/explanations/${fileName}`;
 
-      // Delete old file if exists
       if (currentPdfUrl) {
-        const oldPath = currentPdfUrl.split('/').slice(-2).join('/');
-        await supabase.storage.from('explanation-pdfs').remove([oldPath]);
+        try {
+          await deleteObject(ref(storage, currentPdfUrl));
+        } catch (_error: unknown) {
+          // Ignore deletion failures for old urls to avoid blocking replacement upload.
+        }
       }
 
-      // Upload new file
-      const { error: uploadError } = await supabase.storage
-        .from('explanation-pdfs')
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: true,
-        });
-
-      if (uploadError) throw uploadError;
-
-      // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('explanation-pdfs')
-        .getPublicUrl(filePath);
+      const fileRef = ref(storage, filePath);
+      await uploadBytes(fileRef, file);
+      const publicUrl = await getDownloadURL(fileRef);
 
       onPdfChange(publicUrl);
       toast.success('PDF uploaded successfully');
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Failed to upload PDF';
       console.error('Upload error:', error);
-      toast.error(error.message || 'Failed to upload PDF');
+      toast.error(message);
     } finally {
       setUploading(false);
     }
@@ -72,11 +66,11 @@ export default function PdfUpload({ currentPdfUrl, onPdfChange, examId }: PdfUpl
     if (!currentPdfUrl) return;
 
     try {
-      const path = currentPdfUrl.split('/').slice(-2).join('/');
-      await supabase.storage.from('explanation-pdfs').remove([path]);
+      const storage = getFirebaseStorage();
+      await deleteObject(ref(storage, currentPdfUrl));
       onPdfChange(null);
       toast.success('PDF removed');
-    } catch (error: any) {
+    } catch (_error: unknown) {
       toast.error('Failed to remove PDF');
     }
   };

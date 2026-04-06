@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import {
+  listLinkedAccountsFirebase,
+  unlinkAccountFirebase,
+} from '@/integrations/firebase/linking';
 import { Users, UserCheck, School, Unlink, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -22,13 +25,20 @@ export default function LinkedAccountsCard() {
   const handleUnlink = async (linkId: string, name: string) => {
     if (!confirm(`Are you sure you want to unlink from ${name}?`)) return;
     setUnlinking(linkId);
-    const { error } = await supabase.from('linked_accounts').delete().eq('id', linkId);
-    setUnlinking(null);
-    if (error) {
+
+    try {
+      const result = await unlinkAccountFirebase(linkId);
+      if (result.ok) {
+        toast.success(`Unlinked from ${name}`);
+        setLinkedAccounts((prev) => prev.filter((a) => a.id !== linkId));
+      } else {
+        toast.error('Failed to unlink account');
+      }
+    } catch (error) {
+      console.error('Error unlinking Firebase account:', error);
       toast.error('Failed to unlink account');
-    } else {
-      toast.success(`Unlinked from ${name}`);
-      setLinkedAccounts(prev => prev.filter(a => a.id !== linkId));
+    } finally {
+      setUnlinking(null);
     }
   };
 
@@ -36,50 +46,28 @@ export default function LinkedAccountsCard() {
     const fetchLinkedAccounts = async () => {
       if (!user?.id) return;
 
-      // Fetch links where this student is linked
-      const { data: links, error } = await supabase
-        .from('linked_accounts')
-        .select('id, parent_or_school_id, linked_at')
-        .eq('student_id', user.id);
-
-      if (error) {
-        console.error('Error fetching linked accounts:', error);
-        setLoading(false);
-        return;
-      }
-
-      if (links && links.length > 0) {
-        const parentOrSchoolIds = links.map(l => l.parent_or_school_id);
-
-        // Fetch profiles
-        const { data: profiles } = await supabase
-          .from('profiles')
-          .select('id, name, email')
-          .in('id', parentOrSchoolIds);
-
-        // Fetch roles to determine if parent or school
-        const { data: roles } = await supabase
-          .from('user_roles')
-          .select('user_id, role')
-          .in('user_id', parentOrSchoolIds);
-
-        if (profiles) {
-          const accounts: LinkedAccount[] = links.map(link => {
-            const profile = profiles.find(p => p.id === link.parent_or_school_id);
-            const role = roles?.find(r => r.user_id === link.parent_or_school_id);
-            
-            return {
-              id: link.id,
-              name: profile?.name || 'Unknown',
-              email: profile?.email || '',
-              type: role?.role === 'school' ? 'school' : 'parent',
-              linkedAt: link.linked_at,
-            };
-          });
+      try {
+        const response = await listLinkedAccountsFirebase();
+        if (response.ok) {
+          const accounts = response.items
+            .filter((item) => item.type === 'parent' || item.type === 'school')
+            .map((item) => ({
+              id: item.id,
+              name: item.name,
+              email: item.email,
+              type: item.type as 'parent' | 'school',
+              linkedAt: item.linkedAt,
+            }));
           setLinkedAccounts(accounts);
+        } else {
+          setLinkedAccounts([]);
         }
+      } catch (error) {
+        console.error('Error fetching Firebase linked accounts:', error);
+        setLinkedAccounts([]);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchLinkedAccounts();

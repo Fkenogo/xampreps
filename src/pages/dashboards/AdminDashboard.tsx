@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import {
+  adminDashboardSummaryFirebase,
+  adminDuplicateExamFirebase,
+  adminListExamsFirebase,
+} from '@/integrations/firebase/admin';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import StatCard from '@/components/dashboard/StatCard';
 import ExamEditDialog from '@/components/admin/ExamEditDialog';
@@ -47,11 +51,24 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { Database } from '@/integrations/supabase/types';
 import AdminForumModeration from '@/components/admin/AdminForumModeration';
 
-type AppRole = Database['public']['Enums']['app_role'];
-type Exam = Database['public']['Tables']['exams']['Row'];
+type AppRole = 'student' | 'parent' | 'school' | 'admin';
+type Exam = {
+  id: string;
+  title: string;
+  subject: string;
+  level: 'PLE' | 'UCE' | 'UACE';
+  year: number;
+  type: 'Past Paper' | 'Practice Paper';
+  difficulty: 'Easy' | 'Medium' | 'Hard';
+  time_limit: number;
+  is_free: boolean;
+  description: string | null;
+  topic: string | null;
+  question_count: number;
+  explanation_pdf_url: string | null;
+};
 
 interface UserData {
   id: string;
@@ -97,79 +114,30 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch users
-      const { data: profiles } = await supabase
-        .from('profiles')
-        .select('*')
-        .limit(100);
-
-      const { data: roles } = await supabase
-        .from('user_roles')
-        .select('*');
-
-      if (profiles && roles) {
-        const usersData: UserData[] = profiles.map(p => {
-          const userRole = roles.find(r => r.user_id === p.id);
-          return {
-            id: p.id,
-            name: p.name,
-            email: p.email,
-            role: userRole?.role || 'student',
-            createdAt: p.created_at,
-          };
-        });
-        setUsers(usersData);
+      try {
+        const result = await adminDashboardSummaryFirebase();
+        if (result.ok) {
+          setUsers(result.users as UserData[]);
+          setExams(result.exams as Exam[]);
+          setStats(result.stats);
+        }
+      } catch (error) {
+        console.error('Failed to load admin dashboard summary:', error);
+      } finally {
+        setLoading(false);
       }
-
-      // Fetch exams
-      const { data: examsData } = await supabase
-        .from('exams')
-        .select('*')
-        .order('year', { ascending: false })
-        .limit(100);
-
-      if (examsData) {
-        setExams(examsData);
-      }
-
-      // Fetch stats
-      const { count: userCount } = await supabase
-        .from('profiles')
-        .select('*', { count: 'exact', head: true });
-
-      const { count: examCount } = await supabase
-        .from('exams')
-        .select('*', { count: 'exact', head: true });
-
-      const { count: attemptCount } = await supabase
-        .from('exam_attempts')
-        .select('*', { count: 'exact', head: true });
-
-      const { count: premiumCount } = await supabase
-        .from('subscriptions')
-        .select('*', { count: 'exact', head: true })
-        .eq('plan', 'Premium');
-
-      setStats({
-        totalUsers: userCount || 0,
-        totalExams: examCount || 0,
-        totalAttempts: attemptCount || 0,
-        premiumUsers: premiumCount || 0,
-      });
-
-      setLoading(false);
     };
 
     fetchData();
   }, []);
 
   const fetchExams = async () => {
-    const { data: examsData } = await supabase
-      .from('exams')
-      .select('*')
-      .order('year', { ascending: false })
-      .limit(100);
-    if (examsData) setExams(examsData);
+    try {
+      const result = await adminListExamsFirebase();
+      if (result.ok) setExams(result.items as Exam[]);
+    } catch (error) {
+      console.error('Failed to fetch exams:', error);
+    }
   };
 
   const handleEditExam = (exam: Exam) => {
@@ -193,90 +161,12 @@ export default function AdminDashboard() {
   const handleDuplicateExam = async (exam: Exam) => {
     setDuplicating(exam.id);
     try {
-      // Create new exam with copied details
-      const { data: newExam, error: examError } = await supabase
-        .from('exams')
-        .insert({
-          title: `${exam.title} (Copy)`,
-          subject: exam.subject,
-          level: exam.level,
-          year: exam.year,
-          type: exam.type,
-          difficulty: exam.difficulty,
-          time_limit: exam.time_limit,
-          is_free: exam.is_free,
-          description: exam.description,
-          topic: exam.topic,
-          question_count: 0,
-        })
-        .select()
-        .single();
-
-      if (examError) throw examError;
-
-      // Fetch original questions
-      const { data: questions, error: questionsError } = await supabase
-        .from('questions')
-        .select('*')
-        .eq('exam_id', exam.id)
-        .order('question_number');
-
-      if (questionsError) throw questionsError;
-
-      // Duplicate questions and their parts
-      for (const question of questions || []) {
-        const { data: newQuestion, error: newQuestionError } = await supabase
-          .from('questions')
-          .insert({
-            exam_id: newExam.id,
-            question_number: question.question_number,
-            text: question.text,
-            image_url: question.image_url,
-            table_data: question.table_data,
-          })
-          .select()
-          .single();
-
-        if (newQuestionError) throw newQuestionError;
-
-        // Fetch and duplicate parts
-        const { data: parts, error: partsError } = await supabase
-          .from('question_parts')
-          .select('*')
-          .eq('question_id', question.id)
-          .order('order_index');
-
-        if (partsError) throw partsError;
-
-        for (const part of parts || []) {
-          const { error: partError } = await supabase
-            .from('question_parts')
-            .insert({
-              question_id: newQuestion.id,
-              text: part.text,
-              answer: part.answer,
-              explanation: part.explanation,
-              marks: part.marks,
-              order_index: part.order_index,
-              answer_type: part.answer_type,
-            });
-
-          if (partError) throw partError;
-        }
-      }
-
-      // Update question count
-      await supabase
-        .from('exams')
-        .update({ question_count: questions?.length || 0 })
-        .eq('id', newExam.id);
-
+      const result = await adminDuplicateExamFirebase(exam.id);
+      if (!result.ok) throw new Error('Failed to duplicate exam');
       await fetchExams();
-      
-      // Auto-open the new exam for editing
-      setSelectedExam(newExam);
+      setSelectedExam(result.exam as Exam);
       setEditDialogOpen(true);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error duplicating exam:', error);
     } finally {
       setDuplicating(null);

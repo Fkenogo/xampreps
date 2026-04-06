@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import {
+  listLinkedAccountsFirebase,
+  unlinkAccountFirebase,
+} from '@/integrations/firebase/linking';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import RedeemLinkCodeDialog from '@/components/modals/RedeemLinkCodeDialog';
@@ -39,70 +42,26 @@ export default function AccountLinkingSection() {
   const fetchLinkedAccounts = async () => {
     if (!user?.id) return;
 
-    let accounts: LinkedAccount[] = [];
-
-    if (role === 'student') {
-      // Students: fetch parents/schools linked to them
-      const { data: links } = await supabase
-        .from('linked_accounts')
-        .select('id, parent_or_school_id, linked_at')
-        .eq('student_id', user.id);
-
-      if (links && links.length > 0) {
-        const ids = links.map(l => l.parent_or_school_id);
-        
-        const { data: profiles } = await supabase
-          .from('profiles')
-          .select('id, name, email')
-          .in('id', ids);
-
-        const { data: roles } = await supabase
-          .from('user_roles')
-          .select('user_id, role')
-          .in('user_id', ids);
-
-        accounts = links.map(link => {
-          const profile = profiles?.find(p => p.id === link.parent_or_school_id);
-          const userRole = roles?.find(r => r.user_id === link.parent_or_school_id);
-          return {
-            id: link.id,
-            name: profile?.name || 'Unknown',
-            email: profile?.email || '',
-            type: userRole?.role === 'school' ? 'school' : 'parent',
-            linkedAt: link.linked_at,
-          };
-        });
+    try {
+      const response = await listLinkedAccountsFirebase();
+      if (response.ok) {
+        const mapped = response.items.map((item) => ({
+          id: item.id,
+          name: item.name,
+          email: item.email,
+          type: item.type,
+          linkedAt: item.linkedAt,
+        }));
+        setLinkedAccounts(mapped);
+      } else {
+        setLinkedAccounts([]);
       }
-    } else if (role === 'parent' || role === 'school') {
-      // Parents/Schools: fetch students linked to them
-      const { data: links } = await supabase
-        .from('linked_accounts')
-        .select('id, student_id, linked_at')
-        .eq('parent_or_school_id', user.id);
-
-      if (links && links.length > 0) {
-        const ids = links.map(l => l.student_id);
-        
-        const { data: profiles } = await supabase
-          .from('profiles')
-          .select('id, name, email')
-          .in('id', ids);
-
-        accounts = links.map(link => {
-          const profile = profiles?.find(p => p.id === link.student_id);
-          return {
-            id: link.id,
-            name: profile?.name || 'Unknown',
-            email: profile?.email || '',
-            type: 'student' as const,
-            linkedAt: link.linked_at,
-          };
-        });
-      }
+    } catch (error) {
+      console.error('Error fetching Firebase linked accounts:', error);
+      setLinkedAccounts([]);
+    } finally {
+      setLoading(false);
     }
-
-    setLinkedAccounts(accounts);
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -117,13 +76,20 @@ export default function AccountLinkingSection() {
   const handleUnlink = async (linkId: string, name: string) => {
     if (!confirm(`Are you sure you want to unlink from ${name}?`)) return;
     setUnlinking(linkId);
-    const { error } = await supabase.from('linked_accounts').delete().eq('id', linkId);
-    setUnlinking(null);
-    if (error) {
+
+    try {
+      const result = await unlinkAccountFirebase(linkId);
+      if (result.ok) {
+        toast.success(`Unlinked from ${name}`);
+        setLinkedAccounts((prev) => prev.filter((a) => a.id !== linkId));
+      } else {
+        toast.error('Failed to unlink account');
+      }
+    } catch (error) {
+      console.error('Error unlinking Firebase account:', error);
       toast.error('Failed to unlink account');
-    } else {
-      toast.success(`Unlinked from ${name}`);
-      setLinkedAccounts(prev => prev.filter(a => a.id !== linkId));
+    } finally {
+      setUnlinking(null);
     }
   };
 

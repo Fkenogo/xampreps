@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { listExamHistoryFirebase } from '@/integrations/firebase/exams';
 import { Clock, CheckCircle, XCircle, Trophy, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
-import type { Database } from '@/integrations/supabase/types';
-
-type ExamAttempt = Database['public']['Tables']['exam_attempts']['Row'] & {
-  exams: Database['public']['Tables']['exams']['Row'] | null;
+type ExamAttempt = {
+  id: string;
+  exam_id: string;
+  score: number;
+  total_questions: number;
+  completed_at: string;
+  exams: { title: string | null } | null;
 };
 
 interface RecentActivityProps {
@@ -25,17 +28,18 @@ export default function RecentActivity({ limit = 5, className }: RecentActivityP
   useEffect(() => {
     const fetchAttempts = async () => {
       if (!profile?.id) return;
-      
-      const { data } = await supabase
-        .from('exam_attempts')
-        .select('*, exams(*)')
-        .eq('user_id', profile.id)
-        .order('completed_at', { ascending: false })
-        .limit(limit);
-      
-      if (data) {
-        setAttempts(data as ExamAttempt[]);
-      }
+
+      const history = await listExamHistoryFirebase();
+      setAttempts(
+        (history.items || []).slice(0, limit).map((item) => ({
+          id: item.id,
+          exam_id: item.examId,
+          score: item.score,
+          total_questions: item.totalQuestions,
+          completed_at: item.completedAt,
+          exams: item.exam ? { title: item.exam.title } : null,
+        }))
+      );
       setLoading(false);
     };
 

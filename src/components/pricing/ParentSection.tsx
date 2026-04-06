@@ -12,7 +12,7 @@ const ParentSection: React.FC = () => {
     <div className="bg-muted/50 rounded-xl p-6 text-center">
       <div className="text-2xl mb-2">👨‍👩‍👧</div>
       <h3 className="text-lg font-semibold mb-4">For Parents</h3>
-      <p className="text-sm text-muted-foreground mb-4">Msomesa helps you:</p>
+      <p className="text-sm text-muted-foreground mb-4">XamPreps helps you:</p>
       
       <ul className="space-y-3 text-left max-w-xs mx-auto">
         {benefits.map((benefit, index) => (

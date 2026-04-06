@@ -18,7 +18,7 @@ interface PricingPageProps {
 const PricingPage: React.FC<PricingPageProps> = ({ onNavigateToAuth, onNavigate }) => {
   const handleContactSchools = () => {
     // Could open a contact modal or navigate to contact page
-    window.location.href = 'mailto:schools@msomesa.com?subject=School Plan Inquiry';
+    window.location.href = 'mailto:schools@xampreps.com?subject=School Plan Inquiry';
   };
 
   return (
@@ -64,7 +64,7 @@ const PricingPage: React.FC<PricingPageProps> = ({ onNavigateToAuth, onNavigate 
           <div className="text-center space-y-4 pt-4 pb-8">
             <div className="space-y-1">
               <p className="text-sm text-muted-foreground">Exams reward practice.</p>
-              <p className="font-semibold">Msomesa makes practice simple.</p>
+              <p className="font-semibold">XamPreps makes practice simple.</p>
             </div>
             
             <Button 

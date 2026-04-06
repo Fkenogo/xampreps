@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import { collection, getDocs, limit as fireLimit, query, where } from 'firebase/firestore';
+import { getFirebaseDb } from '@/integrations/firebase/client';
 import { cn } from '@/lib/utils';
 import NotificationBell from '@/components/notifications/NotificationBell';
 import RenewalReminder from '@/components/payment/RenewalReminder';
@@ -31,9 +32,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import type { Database } from '@/integrations/supabase/types';
-
-type AppRole = Database['public']['Enums']['app_role'];
+type AppRole = 'student' | 'parent' | 'school' | 'admin' | 'super_admin';
 
 interface NavItem {
   label: string;
@@ -73,6 +72,13 @@ const roleNavItems: Record<AppRole, NavItem[]> = {
     { label: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
     { label: 'Settings', href: '/settings', icon: Settings },
   ],
+  super_admin: [
+    { label: 'Business Console', href: '/dashboard/business-console', icon: Shield },
+    { label: 'Admin Panel', href: '/dashboard/admin', icon: Home },
+    { label: 'Exams', href: '/exams', icon: BookOpen },
+    { label: 'Forum', href: '/forum', icon: FileText },
+    { label: 'Settings', href: '/settings', icon: Settings },
+  ],
 };
 
 interface SubscriptionInfo {
@@ -89,31 +95,45 @@ export default function DashboardLayout({ children, previewRole, onPreviewRoleCh
   const navigate = useNavigate();
 
   const displayRole = previewRole || role || 'student';
-  const navItems = roleNavItems[displayRole];
+  const navItems = roleNavItems[displayRole] || roleNavItems.student; // Safe fallback
   const isPreviewMode = previewRole !== null && previewRole !== undefined;
 
   // Fetch subscription status
   useEffect(() => {
     const fetchSubscription = async () => {
       if (!user?.id) return;
-      
-      const { data } = await supabase
-        .from('subscriptions')
-        .select('plan, expires_at')
-        .eq('user_id', user.id)
-        .single();
-      
-      if (data) {
+
+      const db = getFirebaseDb();
+      const byUserId = await getDocs(query(
+        collection(db, 'subscriptions'),
+        where('userId', '==', user.id),
+        fireLimit(1)
+      ));
+      const byUserSnake = byUserId.empty ? await getDocs(query(
+        collection(db, 'subscriptions'),
+        where('user_id', '==', user.id),
+        fireLimit(1)
+      )) : byUserId;
+
+      if (!byUserSnake.empty) {
+        const data = byUserSnake.docs[0].data();
+        const expiresAtRaw = data.expiresAt || data.expires_at || null;
+        const expiresAt =
+          typeof expiresAtRaw === 'string'
+            ? expiresAtRaw
+            : expiresAtRaw && typeof expiresAtRaw.toDate === 'function'
+              ? expiresAtRaw.toDate().toISOString()
+              : null;
         let daysRemaining: number | null = null;
-        if (data.expires_at) {
-          const expiryDate = new Date(data.expires_at);
+        if (expiresAt) {
+          const expiryDate = new Date(expiresAt);
           const today = new Date();
           daysRemaining = Math.ceil((expiryDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
         }
-        
+
         setSubscription({
-          plan: data.plan,
-          expiresAt: data.expires_at,
+          plan: typeof data.plan === 'string' ? data.plan : 'Free',
+          expiresAt,
           daysRemaining,
         });
       }
@@ -181,7 +201,7 @@ export default function DashboardLayout({ children, previewRole, onPreviewRoleCh
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-primary-foreground">
                 <Sparkles className="w-5 h-5" />
               </div>
-              <span className="text-xl font-bold text-foreground">Msomesa</span>
+              <span className="text-xl font-bold text-foreground">XamPreps</span>
             </Link>
           </div>
 
@@ -233,10 +253,12 @@ export default function DashboardLayout({ children, previewRole, onPreviewRoleCh
             })}
           </nav>
 
-          {/* Admin View Switcher */}
-          {role === 'admin' && (
+          {/* Admin & Super Admin View Switcher */}
+          {(role === 'admin' || role === 'super_admin') && (
             <div className="p-4 border-t border-border">
-              <p className="text-xs text-muted-foreground mb-2 px-2">Preview Dashboard As:</p>
+              <p className="text-xs text-muted-foreground mb-2 px-2">
+                {role === 'super_admin' ? 'View As:' : 'Preview Dashboard As:'}
+              </p>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="w-full justify-between">
@@ -260,11 +282,19 @@ export default function DashboardLayout({ children, previewRole, onPreviewRoleCh
                     <BarChart3 className="w-4 h-4 mr-2" />
                     School View
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => onPreviewRoleChange?.(null)}>
-                    <Shield className="w-4 h-4 mr-2" />
+                  <DropdownMenuItem onClick={() => onPreviewRoleChange?.('admin')}>
+                    <User className="w-4 h-4 mr-2" />
                     Admin View
                   </DropdownMenuItem>
+                  {role === 'super_admin' && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => onPreviewRoleChange?.(null)}>
+                        <Shield className="w-4 h-4 mr-2" />
+                        Super Admin View
+                      </DropdownMenuItem>
+                    </>
+                  )}
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>

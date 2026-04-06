@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { listReviewDueQuestionsFirebase } from '@/integrations/firebase/content';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { getFirebaseDb } from '@/integrations/firebase/client';
 import { Button } from '@/components/ui/button';
 import { Brain, RefreshCw, TrendingUp, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -22,30 +24,24 @@ export default function SpacedRepetitionCard({ className }: SpacedRepetitionCard
     const fetchReviewData = async () => {
       if (!user?.id) return;
 
-      // Fetch questions due for review (next_review <= now)
-      const { data: dueQuestions, error } = await supabase
-        .from('question_history')
-        .select('id, streak')
-        .eq('user_id', user.id)
-        .lte('next_review', new Date().toISOString());
+      const dueResult = await listReviewDueQuestionsFirebase(100);
+      const dueQuestions = dueResult.items || [];
+      setDueCount(dueQuestions.length);
+      const totalStreak = dueQuestions.reduce((acc, item) => acc + (item.history.streak || 0), 0);
+      setReviewStreak(dueQuestions.length > 0 ? Math.round(totalStreak / dueQuestions.length) : 0);
 
-      if (!error && dueQuestions) {
-        setDueCount(dueQuestions.length);
-        // Calculate average streak for mastery indicator
-        const totalStreak = dueQuestions.reduce((acc, q) => acc + q.streak, 0);
-        setReviewStreak(dueQuestions.length > 0 ? Math.round(totalStreak / dueQuestions.length) : 0);
-      }
-
-      // Fetch mastered questions (streak >= 5)
-      const { data: mastered } = await supabase
-        .from('question_history')
-        .select('id')
-        .eq('user_id', user.id)
-        .gte('streak', 5);
-
-      if (mastered) {
-        setMasteredCount(mastered.length);
-      }
+      const db = getFirebaseDb();
+      const masteredByUserId = await getDocs(query(
+        collection(db, 'question_history'),
+        where('userId', '==', user.id),
+        where('streak', '>=', 5)
+      ));
+      const masteredByUserSnake = masteredByUserId.empty ? await getDocs(query(
+        collection(db, 'question_history'),
+        where('user_id', '==', user.id),
+        where('streak', '>=', 5)
+      )) : masteredByUserId;
+      setMasteredCount(masteredByUserSnake.size);
 
       setLoading(false);
     };

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { listExamHistoryFirebase } from '@/integrations/firebase/exams';
 import { Lightbulb, TrendingUp, Target, Award, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -15,6 +15,13 @@ interface PersonalizedInsightsProps {
   className?: string;
 }
 
+interface AttemptWithExam {
+  score: number;
+  totalQuestions: number;
+  completedAt: string;
+  exam: { subject: string | null } | null;
+}
+
 export default function PersonalizedInsights({ className }: PersonalizedInsightsProps) {
   const { profile, progress } = useAuth();
   const [insights, setInsights] = useState<Insight[]>([]);
@@ -26,23 +33,23 @@ export default function PersonalizedInsights({ className }: PersonalizedInsights
 
       const newInsights: Insight[] = [];
 
-      // Fetch exam attempts for analysis
-      const { data: attempts } = await supabase
-        .from('exam_attempts')
-        .select('score, total_questions, completed_at, exams(subject)')
-        .eq('user_id', profile.id)
-        .order('completed_at', { ascending: false })
-        .limit(20);
+      const historyResult = await listExamHistoryFirebase();
+      const typedAttempts = ((historyResult.items || []).slice(0, 20).map((item) => ({
+        score: item.score,
+        totalQuestions: item.totalQuestions,
+        completedAt: item.completedAt,
+        exam: item.exam ? { subject: item.exam.subject } : null,
+      })) as AttemptWithExam[]) || [];
 
-      if (attempts && attempts.length > 0) {
+      if (typedAttempts.length > 0) {
         // Calculate subject performance
         const subjectScores: Record<string, { total: number; count: number }> = {};
-        attempts.forEach((a) => {
-          const subject = (a.exams as any)?.subject || 'Unknown';
+        typedAttempts.forEach((a) => {
+          const subject = a.exam?.subject || 'Unknown';
           if (!subjectScores[subject]) {
             subjectScores[subject] = { total: 0, count: 0 };
           }
-          subjectScores[subject].total += (a.score / a.total_questions) * 100;
+          subjectScores[subject].total += (a.score / a.totalQuestions) * 100;
           subjectScores[subject].count += 1;
         });
 
@@ -81,12 +88,12 @@ export default function PersonalizedInsights({ className }: PersonalizedInsights
         }
 
         // Recent improvement check
-        const recentAttempts = attempts.slice(0, 5);
-        const olderAttempts = attempts.slice(5, 10);
+        const recentAttempts = typedAttempts.slice(0, 5);
+        const olderAttempts = typedAttempts.slice(5, 10);
         
         if (recentAttempts.length >= 3 && olderAttempts.length >= 3) {
-          const recentAvg = recentAttempts.reduce((a, b) => a + (b.score / b.total_questions) * 100, 0) / recentAttempts.length;
-          const olderAvg = olderAttempts.reduce((a, b) => a + (b.score / b.total_questions) * 100, 0) / olderAttempts.length;
+          const recentAvg = recentAttempts.reduce((a, b) => a + (b.score / b.totalQuestions) * 100, 0) / recentAttempts.length;
+          const olderAvg = olderAttempts.reduce((a, b) => a + (b.score / b.totalQuestions) * 100, 0) / olderAttempts.length;
           
           if (recentAvg > olderAvg + 5) {
             newInsights.push({

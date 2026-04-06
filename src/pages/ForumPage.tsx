@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import {
+  createForumPostFirebase,
+  createForumReplyFirebase,
+  listForumCategoriesFirebase,
+  listForumPostsFirebase,
+  listForumRepliesFirebase,
+} from '@/integrations/firebase/forum';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -75,66 +81,44 @@ export default function ForumPage() {
   }, []);
 
   const fetchCategories = async () => {
-    const { data, error } = await supabase
-      .from('forum_categories')
-      .select('*')
-      .order('name');
-
-    if (data) setCategories(data);
+    try {
+      const result = await listForumCategoriesFirebase();
+      if (result.ok) {
+        setCategories(result.items);
+      }
+    } catch (error) {
+      console.error('Error fetching Firebase forum categories:', error);
+    }
   };
 
   const fetchPosts = async (categoryId?: string) => {
     setLoading(true);
-    let query = supabase
-      .from('forum_posts')
-      .select('*, author:profiles!forum_posts_author_id_fkey(name)')
-      .order('is_pinned', { ascending: false })
-      .order('created_at', { ascending: false });
-
-    if (categoryId) {
-      query = query.eq('category_id', categoryId);
+    try {
+      const result = await listForumPostsFirebase(categoryId);
+      if (result.ok) {
+        setPosts(result.items);
+      } else {
+        setPosts([]);
+      }
+    } catch (error) {
+      console.error('Error fetching Firebase forum posts:', error);
+      setPosts([]);
+    } finally {
+      setLoading(false);
     }
-
-    const { data, error } = await query;
-
-    if (data) {
-      // Fetch reply counts
-      const postIds = data.map((p) => p.id);
-      const { data: replyCounts } = await supabase
-        .from('forum_replies')
-        .select('post_id')
-        .in('post_id', postIds);
-
-      const counts: Record<string, number> = {};
-      replyCounts?.forEach((r) => {
-        counts[r.post_id] = (counts[r.post_id] || 0) + 1;
-      });
-
-      setPosts(
-        data.map((p) => ({
-          ...p,
-          author: p.author as { name: string } | undefined,
-          replies_count: counts[p.id] || 0,
-        }))
-      );
-    }
-    setLoading(false);
   };
 
   const fetchReplies = async (postId: string) => {
-    const { data } = await supabase
-      .from('forum_replies')
-      .select('*, author:profiles!forum_replies_author_id_fkey(name)')
-      .eq('post_id', postId)
-      .order('created_at', { ascending: true });
-
-    if (data) {
-      setReplies(
-        data.map((r) => ({
-          ...r,
-          author: r.author as { name: string } | undefined,
-        }))
-      );
+    try {
+      const result = await listForumRepliesFirebase(postId);
+      if (result.ok) {
+        setReplies(result.items);
+      } else {
+        setReplies([]);
+      }
+    } catch (error) {
+      console.error('Error fetching Firebase forum replies:', error);
+      setReplies([]);
     }
   };
 
@@ -156,29 +140,35 @@ export default function ForumPage() {
     }
 
     setSubmitting(true);
-    const { error } = await supabase.from('forum_posts').insert({
-      title: newPostTitle.trim(),
-      content: newPostContent.trim(),
-      category_id: newPostCategory,
-      author_id: user.id,
-      tags: newPostTags
-        .split(',')
-        .map((t) => t.trim())
-        .filter(Boolean),
-    });
-
-    if (error) {
+    try {
+      const result = await createForumPostFirebase({
+        title: newPostTitle.trim(),
+        content: newPostContent.trim(),
+        categoryId: newPostCategory,
+        tags: newPostTags
+          .split(',')
+          .map((t) => t.trim())
+          .filter(Boolean),
+      });
+      if (!result.ok) {
+        toast.error('Failed to create post');
+        setSubmitting(false);
+        return;
+      }
+    } catch (error) {
       toast.error('Failed to create post');
       console.error(error);
-    } else {
-      toast.success('Post created successfully!');
-      setShowNewPostModal(false);
-      setNewPostTitle('');
-      setNewPostContent('');
-      setNewPostCategory('');
-      setNewPostTags('');
-      fetchPosts(selectedCategory || undefined);
+      setSubmitting(false);
+      return;
     }
+
+    toast.success('Post created successfully!');
+    setShowNewPostModal(false);
+    setNewPostTitle('');
+    setNewPostContent('');
+    setNewPostCategory('');
+    setNewPostTags('');
+    fetchPosts(selectedCategory || undefined);
     setSubmitting(false);
   };
 
@@ -194,20 +184,25 @@ export default function ForumPage() {
     }
 
     setSubmittingReply(true);
-    const { error } = await supabase.from('forum_replies').insert({
-      post_id: selectedPost.id,
-      author_id: user.id,
-      content: replyContent.trim(),
-    });
-
-    if (error) {
+    try {
+      const result = await createForumReplyFirebase({
+        postId: selectedPost.id,
+        content: replyContent.trim(),
+      });
+      if (!result.ok) {
+        toast.error('Failed to post reply');
+        setSubmittingReply(false);
+        return;
+      }
+    } catch (error) {
       toast.error('Failed to post reply');
       console.error(error);
-    } else {
-      toast.success('Reply posted!');
-      setReplyContent('');
-      fetchReplies(selectedPost.id);
+      setSubmittingReply(false);
+      return;
     }
+    toast.success('Reply posted!');
+    setReplyContent('');
+    fetchReplies(selectedPost.id);
     setSubmittingReply(false);
   };
 

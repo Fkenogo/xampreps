@@ -1,6 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
+import {
+  deleteNotificationFirebase,
+  listNotificationsFirebase,
+  markAllNotificationsReadFirebase,
+  markNotificationReadFirebase,
+} from '@/integrations/firebase/notifications';
 import { Button } from '@/components/ui/button';
 import {
   Popover,
@@ -10,9 +15,14 @@ import {
 import { Bell, Check, CheckCheck, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
-import type { Database } from '@/integrations/supabase/types';
 
-type Notification = Database['public']['Tables']['notifications']['Row'];
+interface Notification {
+  id: string;
+  user_id: string;
+  text: string;
+  read: boolean;
+  created_at: string;
+}
 
 export default function NotificationBell() {
   const { user } = useAuth();
@@ -26,48 +36,29 @@ export default function NotificationBell() {
     if (!user?.id) return;
 
     const fetchNotifications = async () => {
-      const { data } = await supabase
-        .from('notifications')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(20);
-
-      if (data) {
-        setNotifications(data);
+      try {
+        const result = await listNotificationsFirebase(20);
+        if (result.ok) {
+          setNotifications(result.items as unknown as Notification[]);
+        } else {
+          setNotifications([]);
+        }
+      } catch (error) {
+        console.error('Error fetching Firebase notifications:', error);
+        setNotifications([]);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchNotifications();
 
-    // Subscribe to realtime notifications
-    const channel = supabase
-      .channel('notifications-channel')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'notifications',
-          filter: `user_id=eq.${user.id}`,
-        },
-        (payload) => {
-          setNotifications(prev => [payload.new as Notification, ...prev]);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    const interval = setInterval(fetchNotifications, 30000);
+    return () => clearInterval(interval);
   }, [user?.id]);
 
   const markAsRead = async (id: string) => {
-    await supabase
-      .from('notifications')
-      .update({ read: true })
-      .eq('id', id);
+    await markNotificationReadFirebase(id);
 
     setNotifications(prev =>
       prev.map(n => (n.id === id ? { ...n, read: true } : n))
@@ -75,16 +66,13 @@ export default function NotificationBell() {
   };
 
   const markAllAsRead = async () => {
-    await supabase
-      .from('notifications')
-      .update({ read: true })
-      .eq('user_id', user?.id);
+    await markAllNotificationsReadFirebase();
 
     setNotifications(prev => prev.map(n => ({ ...n, read: true })));
   };
 
   const deleteNotification = async (id: string) => {
-    await supabase.from('notifications').delete().eq('id', id);
+    await deleteNotificationFirebase(id);
     setNotifications(prev => prev.filter(n => n.id !== id));
   };
 

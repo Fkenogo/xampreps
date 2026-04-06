@@ -6,9 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { GraduationCap, Users, Building, Mail, Lock, User, ArrowLeft, Sparkles } from 'lucide-react';
-import type { Database } from '@/integrations/supabase/types';
-
-type AppRole = Database['public']['Enums']['app_role'];
+type AppRole = 'student' | 'parent' | 'school' | 'admin';
 
 type AuthMode = 'login' | 'signup-student' | 'signup-parent' | 'signup-school';
 
@@ -78,7 +76,7 @@ export default function Auth() {
         } else {
           toast({
             title: "Account created! 🚀",
-            description: "Welcome to Msomesa! Your adventure begins now!",
+            description: "Welcome to XamPreps! Your adventure begins now!",
           });
           navigate('/dashboard', { replace: true });
         }
@@ -114,7 +112,7 @@ export default function Auth() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/80 text-primary-foreground mb-4 shadow-lg shadow-primary/25">
             <Sparkles className="w-8 h-8" />
           </div>
-          <h1 className="text-3xl font-bold text-foreground">Msomesa</h1>
+          <h1 className="text-3xl font-bold text-foreground">XamPreps</h1>
           <p className="text-muted-foreground mt-2">Your learning adventure awaits!</p>
         </div>
 

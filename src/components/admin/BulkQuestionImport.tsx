@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { adminBulkImportQuestionsFirebase } from '@/integrations/firebase/admin';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -39,6 +39,14 @@ interface ImportedQuestion {
     answer_type: 'text' | 'numeric' | 'open-ended';
   }[];
 }
+
+type AnswerType = ImportedQuestion['parts'][number]['answer_type'];
+
+const isAnswerType = (value: string): value is AnswerType =>
+  value === 'text' || value === 'numeric' || value === 'open-ended';
+
+const getErrorMessage = (error: unknown): string =>
+  error instanceof Error ? error.message : 'Unknown error';
 
 export default function BulkQuestionImport({ examId, onImportComplete }: BulkQuestionImportProps) {
   const { toast } = useToast();
@@ -100,13 +108,16 @@ export default function BulkQuestionImport({ examId, onImportComplete }: BulkQue
       question_number: q.question_number || i + 1,
       text: q.text || '',
       image_url: q.image_url,
-      parts: (q.parts || []).map((p: any, j: number) => ({
-        text: p.text || '',
-        answer: p.answer || '',
-        explanation: p.explanation || '',
-        marks: p.marks || 1,
-        answer_type: p.answer_type || 'text',
-      })),
+      parts: (q.parts || []).map((p: unknown) => {
+        const part = (p || {}) as Partial<ImportedQuestion['parts'][number]>;
+        return {
+          text: part.text || '',
+          answer: part.answer || '',
+          explanation: part.explanation || '',
+          marks: part.marks || 1,
+          answer_type: isAnswerType(part.answer_type || '') ? part.answer_type : 'text',
+        };
+      }),
     }));
   };
 
@@ -150,7 +161,7 @@ export default function BulkQuestionImport({ examId, onImportComplete }: BulkQue
         answer: row.answer || '',
         explanation: row.explanation || '',
         marks: parseInt(row.marks) || 1,
-        answer_type: (row.answer_type as any) || 'text',
+        answer_type: isAnswerType(row.answer_type) ? row.answer_type : 'text',
       });
     }
 
@@ -162,8 +173,8 @@ export default function BulkQuestionImport({ examId, onImportComplete }: BulkQue
     try {
       const questions = parseJson(jsonInput);
       setPreview(questions);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(getErrorMessage(err));
       setPreview([]);
     }
   };
@@ -173,8 +184,8 @@ export default function BulkQuestionImport({ examId, onImportComplete }: BulkQue
     try {
       const questions = parseCsv(csvInput);
       setPreview(questions);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError(getErrorMessage(err));
       setPreview([]);
     }
   };
@@ -192,8 +203,8 @@ export default function BulkQuestionImport({ examId, onImportComplete }: BulkQue
           const questions = parseJson(content);
           setPreview(questions);
           setError(null);
-        } catch (err: any) {
-          setError(err.message);
+        } catch (err: unknown) {
+          setError(getErrorMessage(err));
         }
       } else if (file.name.endsWith('.csv')) {
         setCsvInput(content);
@@ -201,8 +212,8 @@ export default function BulkQuestionImport({ examId, onImportComplete }: BulkQue
           const questions = parseCsv(content);
           setPreview(questions);
           setError(null);
-        } catch (err: any) {
-          setError(err.message);
+        } catch (err: unknown) {
+          setError(getErrorMessage(err));
         }
       }
     };
@@ -217,47 +228,8 @@ export default function BulkQuestionImport({ examId, onImportComplete }: BulkQue
 
     setImporting(true);
     try {
-      for (const question of preview) {
-        // Insert question
-        const { data: newQuestion, error: questionError } = await supabase
-          .from('questions')
-          .insert({
-            exam_id: examId,
-            question_number: question.question_number,
-            text: question.text,
-            image_url: question.image_url || null,
-          })
-          .select()
-          .single();
-
-        if (questionError) throw questionError;
-
-        // Insert parts
-        for (let i = 0; i < question.parts.length; i++) {
-          const part = question.parts[i];
-          const { error: partError } = await supabase
-            .from('question_parts')
-            .insert({
-              question_id: newQuestion.id,
-              text: part.text,
-              answer: part.answer,
-              explanation: part.explanation || null,
-              marks: part.marks,
-              order_index: i,
-              answer_type: part.answer_type,
-            });
-
-          if (partError) throw partError;
-        }
-      }
-
-      // Update exam question count
-      const { error: examError } = await supabase
-        .from('exams')
-        .update({ question_count: preview.length })
-        .eq('id', examId);
-
-      if (examError) throw examError;
+      const result = await adminBulkImportQuestionsFirebase(examId, preview);
+      if (!result.ok) throw new Error('Import failed');
 
       toast({ title: `Successfully imported ${preview.length} questions` });
       setOpen(false);
@@ -265,10 +237,10 @@ export default function BulkQuestionImport({ examId, onImportComplete }: BulkQue
       setJsonInput('');
       setCsvInput('');
       onImportComplete();
-    } catch (err: any) {
+    } catch (err: unknown) {
       toast({
         title: 'Import failed',
-        description: err.message,
+        description: getErrorMessage(err),
         variant: 'destructive',
       });
     } finally {

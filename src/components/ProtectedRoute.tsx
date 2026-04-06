@@ -1,8 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import type { Database } from '@/integrations/supabase/types';
-
-type AppRole = Database['public']['Enums']['app_role'];
+type AppRole = 'student' | 'parent' | 'school' | 'admin' | 'super_admin';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -13,7 +11,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children, 
   allowedRoles 
 }) => {
-  const { user, role, loading } = useAuth();
+  const { user, role, isSuperAdmin, loading } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -28,10 +26,23 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
-  if (allowedRoles && role && !allowedRoles.includes(role)) {
-    // Redirect to appropriate dashboard based on role
-    const dashboardPath = `/dashboard/${role}`;
-    return <Navigate to={dashboardPath} replace />;
+  if (allowedRoles) {
+    // Use real role for access control (not effectiveRole which includes view-as)
+    // View-as is UI-only and should never affect route access
+    if (!role) {
+      return <Navigate to="/dashboard" replace />;
+    }
+
+    // Super admin can access all role-restricted routes
+    if (isSuperAdmin) {
+      return <>{children}</>;
+    }
+
+    if (!allowedRoles.includes(role)) {
+      // Redirect to appropriate dashboard based on real role
+      const dashboardPath = `/dashboard/${role}`;
+      return <Navigate to={dashboardPath} replace />;
+    }
   }
 
   return <>{children}</>;
