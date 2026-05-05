@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Clock, Loader2, AlertTriangle, UserCheck } from 'lucide-react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 import { getExamAttemptDetailsFirebase } from '@/integrations/firebase/exams';
 import { loadV2ExamDataFirebase } from '@/integrations/firebase/content';
 import type { FirebaseAttemptSubmission, FirebaseExamAttempt } from '@/integrations/firebase/exams';
@@ -33,6 +34,7 @@ function formatAnswer(submission: FirebaseAttemptSubmission) {
 export default function ExamResultsPage() {
   const { examId, attemptId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [attempt, setAttempt] = useState<FirebaseExamAttempt | null>(null);
   const [submissions, setSubmissions] = useState<FirebaseAttemptSubmission[]>([]);
@@ -43,13 +45,30 @@ export default function ExamResultsPage() {
       if (!examId || !attemptId) return;
 
       try {
+        console.info('[ExamResultsPage] Loading V2 result route', {
+          routeExamId: examId,
+          routeAttemptId: attemptId,
+          currentUserId: user?.id || null,
+        });
         const [attemptLoad, examLoad] = await Promise.allSettled([
-          getExamAttemptDetailsFirebase(attemptId),
+          getExamAttemptDetailsFirebase(attemptId, {
+            routeExamId: examId,
+            currentUserId: user?.id || null,
+          }),
           loadV2ExamDataFirebase(examId),
         ]);
 
         if (attemptLoad.status === 'rejected') {
-          console.error('[ExamResultsPage] Failed to load V2 attempt', { examId, attemptId, error: attemptLoad.reason });
+          const error = attemptLoad.reason as { code?: unknown; message?: unknown };
+          console.error('[ExamResultsPage] Failed to load V2 attempt', {
+            routeExamId: examId,
+            routeAttemptId: attemptId,
+            path: `exam_attempts/${attemptId}`,
+            currentUserId: user?.id || null,
+            code: typeof error?.code === 'string' ? error.code : null,
+            message: typeof error?.message === 'string' ? error.message : String(attemptLoad.reason),
+            error: attemptLoad.reason,
+          });
           setLoading(false);
           return;
         }
@@ -95,7 +114,7 @@ export default function ExamResultsPage() {
     }
 
     void load();
-  }, [attemptId, examId]);
+  }, [attemptId, examId, user?.id]);
 
   const interactionsById = useMemo(
     () => new Map((state?.interactions || []).map((interaction) => [interaction.interactionId, interaction])),

@@ -1,5 +1,6 @@
 import { httpsCallable } from 'firebase/functions';
 import {
+  QueryDocumentSnapshot,
   Timestamp,
   collection,
   doc,
@@ -67,6 +68,11 @@ export interface FirebaseExamHistoryItem {
     subject: string;
     level: string;
   } | null;
+}
+
+interface ResultLoadDebugContext {
+  routeExamId?: string | null;
+  currentUserId?: string | null;
 }
 
 export interface FirebaseAttemptSubmission extends Pick<
@@ -166,6 +172,22 @@ function toIso(value: unknown): string | null {
     return value.toDate().toISOString();
   }
   return null;
+}
+
+function firebaseErrorDetails(error: unknown) {
+  const maybe = error as { code?: unknown; message?: unknown };
+  return {
+    code: typeof maybe?.code === 'string' ? maybe.code : null,
+    message: typeof maybe?.message === 'string' ? maybe.message : String(error),
+  };
+}
+
+function firstString(...values: unknown[]) {
+  return values.find((value): value is string => typeof value === 'string' && value.trim().length > 0) || '';
+}
+
+function firstNumber(...values: unknown[]) {
+  return values.find((value): value is number => typeof value === 'number' && Number.isFinite(value));
 }
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
@@ -443,74 +465,178 @@ export async function submitExamAttemptFirebase(payload: SubmitExamAttemptInput)
 }
 
 export async function getLatestExamAttemptIdFirebase(examId: string, userId: string) {
-  const snapshot = await getDocs(
-    query(collection(db, 'exam_attempts'), where('userId', '==', userId), where('examId', '==', examId)),
-  );
+  const snapshots = await Promise.allSettled([
+    getDocs(query(collection(db, 'exam_attempts'), where('userId', '==', userId), where('examId', '==', examId))),
+    getDocs(query(collection(db, 'exam_attempts'), where('user_id', '==', userId), where('exam_id', '==', examId))),
+  ]);
 
-  const latest = snapshot.docs
+  const latest = snapshots
+    .flatMap((result) => result.status === 'fulfilled' ? result.value.docs : [])
     .map((docSnap) => ({
       id: docSnap.id,
-      submittedAt: toIso(docSnap.data().submittedAt),
+      submittedAt: toIso(docSnap.data().submittedAt) || toIso(docSnap.data().submitted_at),
     }))
     .sort((a, b) => (b.submittedAt || '').localeCompare(a.submittedAt || ''))[0];
 
   return { ok: Boolean(latest), attemptId: latest?.id || null };
 }
 
-export async function getExamAttemptFirebase(attemptId: string) {
-  const snap = await getDoc(doc(db, 'exam_attempts', attemptId));
+export async function getExamAttemptFirebase(attemptId: string, debugContext: ResultLoadDebugContext = {}) {
+  const attemptPath = `exam_attempts/${attemptId}`;
+  console.info('[V2 results] Reading attempt', {
+    routeExamId: debugContext.routeExamId || null,
+    routeAttemptId: attemptId,
+    path: attemptPath,
+    currentUserId: debugContext.currentUserId || null,
+  });
+
+  let snap;
+  try {
+    snap = await getDoc(doc(db, 'exam_attempts', attemptId));
+  } catch (error) {
+    console.error('[V2 results] Attempt read failed', {
+      routeExamId: debugContext.routeExamId || null,
+      routeAttemptId: attemptId,
+      path: attemptPath,
+      currentUserId: debugContext.currentUserId || null,
+      ...firebaseErrorDetails(error),
+    });
+    throw error;
+  }
+
+  console.info('[V2 results] Attempt read complete', {
+    routeExamId: debugContext.routeExamId || null,
+    routeAttemptId: attemptId,
+    path: attemptPath,
+    currentUserId: debugContext.currentUserId || null,
+    exists: snap.exists(),
+    userId: snap.exists() ? snap.data().userId || null : null,
+    user_id: snap.exists() ? snap.data().user_id || null : null,
+    examId: snap.exists() ? snap.data().examId || null : null,
+    exam_id: snap.exists() ? snap.data().exam_id || null : null,
+  });
+
   if (!snap.exists()) {
     return { ok: false, attempt: null };
   }
 
   const data = snap.data();
+  const resolvedExamId = firstString(data.examId, data.exam_id, debugContext.routeExamId);
+  const resolvedUserId = firstString(data.userId, data.user_id, data.uid, data.studentId, data.student_id);
   return {
     ok: true,
     attempt: {
       id: snap.id,
-      userId: data.userId,
-      examId: data.examId,
+      userId: resolvedUserId,
+      examId: resolvedExamId,
       mode: data.mode,
       status: data.status || 'submitted',
-      durationSeconds: typeof data.durationSeconds === 'number' ? data.durationSeconds : 0,
-      autoScore: typeof data.autoScore === 'number' ? data.autoScore : 0,
-      manualScore: typeof data.manualScore === 'number' ? data.manualScore : null,
-      finalScore: typeof data.finalScore === 'number' ? data.finalScore : 0,
-      maxScore: typeof data.maxScore === 'number' ? data.maxScore : 0,
-      submittedAt: toIso(data.submittedAt),
-      completedAt: toIso(data.completedAt),
+      durationSeconds: firstNumber(data.durationSeconds, data.duration_seconds, data.timeTaken, data.time_taken) ?? 0,
+      autoScore: firstNumber(data.autoScore, data.auto_score) ?? 0,
+      manualScore: firstNumber(data.manualScore, data.manual_score) ?? null,
+      finalScore: firstNumber(data.finalScore, data.final_score, data.score) ?? 0,
+      maxScore: firstNumber(data.maxScore, data.max_score, data.totalQuestions, data.total_questions) ?? 0,
+      submittedAt: toIso(data.submittedAt) || toIso(data.submitted_at),
+      completedAt: toIso(data.completedAt) || toIso(data.completed_at),
     } satisfies FirebaseExamAttempt,
   };
 }
 
-export async function getExamAttemptDetailsFirebase(attemptId: string) {
-  const attemptResult = await getExamAttemptFirebase(attemptId);
+function mapSubmissionDoc(docSnap: QueryDocumentSnapshot) {
+  const data = docSnap.data();
+  return {
+    submissionId: docSnap.id,
+    itemId: firstString(data.itemId, data.item_id),
+    interactionId: firstString(data.interactionId, data.interaction_id),
+    responsePayload: data.responsePayload || data.response_payload || {},
+    isAnswered: data.isAnswered !== false && data.is_answered !== false,
+    autoScore: firstNumber(data.autoScore, data.auto_score),
+    manualScore: firstNumber(data.manualScore, data.manual_score),
+    finalScore: firstNumber(data.finalScore, data.final_score),
+    autoFeedback: data.autoFeedback || data.auto_feedback || undefined,
+    teacherFeedback: data.teacherFeedback || data.teacher_feedback || undefined,
+    reviewStatus: data.reviewStatus || data.review_status || 'pending',
+    submittedAt: toIso(data.submittedAt) || toIso(data.submitted_at),
+  } satisfies FirebaseAttemptSubmission;
+}
+
+export async function getExamAttemptDetailsFirebase(attemptId: string, debugContext: ResultLoadDebugContext = {}) {
+  const attemptResult = await getExamAttemptFirebase(attemptId, debugContext);
   if (!attemptResult.ok || !attemptResult.attempt) {
     return { ok: false, attempt: null, submissions: [] };
   }
 
-  const submissionsSnapshot = await getDocs(
-    query(collection(db, 'submissions'), where('attemptId', '==', attemptId)),
+  const submissionQueries = [
+    {
+      label: 'attemptId',
+      path: `submissions where attemptId == ${attemptId}`,
+      run: () => getDocs(query(collection(db, 'submissions'), where('attemptId', '==', attemptId))),
+    },
+    {
+      label: 'attempt_id',
+      path: `submissions where attempt_id == ${attemptId}`,
+      run: () => getDocs(query(collection(db, 'submissions'), where('attempt_id', '==', attemptId))),
+    },
+  ];
+
+  const submissionsById = new Map<string, FirebaseAttemptSubmission>();
+  const submissionResults = await Promise.allSettled(
+    submissionQueries.map(async (submissionQuery) => ({
+      submissionQuery,
+      snapshot: await submissionQuery.run(),
+    })),
   );
-  const submissions = submissionsSnapshot.docs
-    .map((docSnap) => {
-      const data = docSnap.data();
-      return {
-        submissionId: docSnap.id,
-        itemId: data.itemId,
-        interactionId: data.interactionId,
-        responsePayload: data.responsePayload || {},
-        isAnswered: data.isAnswered !== false,
-        autoScore: typeof data.autoScore === 'number' ? data.autoScore : undefined,
-        manualScore: typeof data.manualScore === 'number' ? data.manualScore : undefined,
-        finalScore: typeof data.finalScore === 'number' ? data.finalScore : undefined,
-        autoFeedback: data.autoFeedback || undefined,
-        teacherFeedback: data.teacherFeedback || undefined,
-        reviewStatus: data.reviewStatus || 'pending',
-        submittedAt: toIso(data.submittedAt),
-      } satisfies FirebaseAttemptSubmission;
-    })
+
+  submissionResults.forEach((result, index) => {
+    const submissionQuery = submissionQueries[index];
+    if (result.status === 'fulfilled') {
+      console.info('[V2 results] Submissions query complete', {
+        routeExamId: debugContext.routeExamId || null,
+        routeAttemptId: attemptId,
+        path: result.value.submissionQuery.path,
+        currentUserId: debugContext.currentUserId || null,
+        count: result.value.snapshot.size,
+      });
+      result.value.snapshot.docs.forEach((docSnap) => submissionsById.set(docSnap.id, mapSubmissionDoc(docSnap)));
+      return;
+    }
+
+    console.error('[V2 results] Submissions query failed', {
+      routeExamId: debugContext.routeExamId || null,
+      routeAttemptId: attemptId,
+      path: submissionQuery.path,
+      currentUserId: debugContext.currentUserId || null,
+      ...firebaseErrorDetails(result.reason),
+    });
+  });
+
+  if (submissionResults.every((result) => result.status === 'rejected')) {
+    console.warn('[V2 results] All submissions queries failed; showing attempt shell without submissions', {
+      routeExamId: debugContext.routeExamId || null,
+      routeAttemptId: attemptId,
+      currentUserId: debugContext.currentUserId || null,
+    });
+  }
+
+  if (submissionsById.size === 0) {
+    console.info('[V2 results] No submissions found for attempt', {
+      routeExamId: debugContext.routeExamId || null,
+      routeAttemptId: attemptId,
+      currentUserId: debugContext.currentUserId || null,
+    });
+  }
+
+  const submissions = Array.from(submissionsById.values())
     .sort((a, b) => a.interactionId.localeCompare(b.interactionId));
+
+  console.info('[V2 results] Attempt details loaded', {
+    routeExamId: debugContext.routeExamId || null,
+    routeAttemptId: attemptId,
+    currentUserId: debugContext.currentUserId || null,
+    attemptExamId: attemptResult.attempt.examId,
+    attemptUserId: attemptResult.attempt.userId,
+    submissionsCount: submissions.length,
+  });
 
   return { ok: true, attempt: attemptResult.attempt, submissions };
 }
@@ -524,27 +650,41 @@ export async function listExamHistoryFirebase(userId?: string | null) {
     };
   }
 
-  const attemptsSnapshot = await getDocs(
-    query(collection(db, 'exam_attempts'), where('userId', '==', normalizedUserId)),
-  );
+  const attemptSnapshots = await Promise.allSettled([
+    getDocs(query(collection(db, 'exam_attempts'), where('userId', '==', normalizedUserId))),
+    getDocs(query(collection(db, 'exam_attempts'), where('user_id', '==', normalizedUserId))),
+  ]);
+
+  attemptSnapshots.forEach((result) => {
+    if (result.status === 'rejected') {
+      console.warn('[listExamHistoryFirebase] Optional attempt history query failed', firebaseErrorDetails(result.reason));
+    }
+  });
+
+  const attemptDocs = Array.from(new Map(
+    attemptSnapshots
+      .flatMap((result) => result.status === 'fulfilled' ? result.value.docs : [])
+      .map((docSnap) => [docSnap.id, docSnap])
+  ).values());
 
   const items = await Promise.all(
-    attemptsSnapshot.docs.map(async (docSnap) => {
+    attemptDocs.map(async (docSnap) => {
       const data = docSnap.data();
-      const examSnap = await getDoc(doc(db, 'exams', data.examId));
+      const attemptExamId = firstString(data.examId, data.exam_id);
+      const examSnap = await getDoc(doc(db, 'exams', attemptExamId));
       if (!examSnap.exists() || examSnap.data().engineVersion !== 'v2') {
         return null;
       }
 
       return {
         id: docSnap.id,
-        examId: data.examId,
+        examId: attemptExamId,
         mode: data.mode || 'practice',
         status: data.status || 'submitted',
-        score: typeof data.finalScore === 'number' ? data.finalScore : 0,
-        totalQuestions: typeof data.maxScore === 'number' ? data.maxScore : 0,
-        timeTaken: typeof data.durationSeconds === 'number' ? data.durationSeconds : 0,
-        completedAt: toIso(data.completedAt) || toIso(data.submittedAt),
+        score: firstNumber(data.finalScore, data.final_score, data.score) ?? 0,
+        totalQuestions: firstNumber(data.maxScore, data.max_score, data.totalQuestions, data.total_questions) ?? 0,
+        timeTaken: firstNumber(data.durationSeconds, data.duration_seconds, data.timeTaken, data.time_taken) ?? 0,
+        completedAt: toIso(data.completedAt) || toIso(data.completed_at) || toIso(data.submittedAt) || toIso(data.submitted_at),
         exam: {
           title: examSnap.data().title || 'Untitled V2 Exam',
           subject: examSnap.data().subject || '',

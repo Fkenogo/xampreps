@@ -10,7 +10,7 @@ type ExamAttempt = {
   exam_id: string;
   score: number;
   total_questions: number;
-  completed_at: string;
+  completed_at: string | null;
   exams: { title: string | null } | null;
 };
 
@@ -47,6 +47,7 @@ export default function RecentActivity({ limit = 5, className }: RecentActivityP
   }, [profile?.id, limit]);
 
   const getScoreColor = (score: number, total: number) => {
+    if (total <= 0) return 'text-muted-foreground';
     const percentage = (score / total) * 100;
     if (percentage >= 80) return 'text-emerald-500';
     if (percentage >= 60) return 'text-amber-500';
@@ -54,6 +55,7 @@ export default function RecentActivity({ limit = 5, className }: RecentActivityP
   };
 
   const getScoreIcon = (score: number, total: number) => {
+    if (total <= 0) return <Clock className="w-4 h-4 text-muted-foreground" />;
     const percentage = (score / total) * 100;
     if (percentage >= 80) return <Trophy className="w-4 h-4 text-emerald-500" />;
     if (percentage >= 60) return <CheckCircle className="w-4 h-4 text-amber-500" />;
@@ -116,13 +118,13 @@ export default function RecentActivity({ limit = 5, className }: RecentActivityP
                   {attempt.exams?.title || 'Unknown Exam'}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {formatDistanceToNow(new Date(attempt.completed_at), { addSuffix: true })}
+                  {attempt.completed_at ? formatDistanceToNow(new Date(attempt.completed_at), { addSuffix: true }) : 'Pending review'}
                 </p>
               </div>
 
               <div className="text-right">
                 <p className={cn('font-bold text-sm', getScoreColor(attempt.score, attempt.total_questions))}>
-                  {Math.round((attempt.score / attempt.total_questions) * 100)}%
+                  {attempt.total_questions > 0 ? Math.round((attempt.score / attempt.total_questions) * 100) : 0}%
                 </p>
                 <p className="text-xs text-muted-foreground">
                   {attempt.score}/{attempt.total_questions}
