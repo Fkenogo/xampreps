@@ -1,348 +1,303 @@
-import { useState, useEffect, useMemo } from 'react';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { getExamAttemptFirebase } from '@/integrations/firebase/exams';
-import { getExamContentFirebase } from '@/integrations/firebase/content';
-import { useAuth } from '@/contexts/AuthContext';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ArrowLeft, CheckCircle2, Clock, Loader2, AlertTriangle, UserCheck } from 'lucide-react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import QuestionReviewCard from '@/components/exam/QuestionReviewCard';
-import { 
-  Trophy, 
-  Clock, 
-  Target, 
-  ArrowLeft,
-  CheckCircle,
-  XCircle,
-  RotateCcw,
-  BookOpen,
-  BarChart3,
-  FileText,
-  ExternalLink,
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
-interface Exam {
-  id: string;
-  title: string;
-  subject: string | null;
-  level: string | null;
+import { getExamAttemptDetailsFirebase } from '@/integrations/firebase/exams';
+import { loadV2ExamDataFirebase } from '@/integrations/firebase/content';
+import type { FirebaseAttemptSubmission, FirebaseExamAttempt } from '@/integrations/firebase/exams';
+import type { V2Interaction, V2Item } from '@/types/v2';
+
+interface ExamResultState {
+  examTitle: string;
+  examSubject: string;
+  examLevel: string;
+  items: V2Item[];
+  interactions: V2Interaction[];
 }
 
-interface ExamAttemptRecord {
-  id: string;
-  exam_id: string;
-  mode: 'practice' | 'simulation' | 'quiz';
-  score: number;
-  total_questions: number;
-  time_taken: number;
-  completed_at: string;
-}
-
-interface QuestionPart {
-  id: string;
-  text: string;
-  answer: string;
-  marks: number;
-  explanation: string | null;
-  order_index: number;
-}
-
-interface Question {
-  id: string;
-  question_number: number;
-  text: string;
-  image_url: string | null;
-  question_parts: QuestionPart[];
-}
-
-interface UserAnswer {
-  partId: string;
-  answer: string;
-  isCorrect: boolean;
+function formatAnswer(submission: FirebaseAttemptSubmission) {
+  const payload = submission.responsePayload || {};
+  if (typeof payload.textAnswer === 'string') return payload.textAnswer;
+  if (payload.textAnswer && typeof payload.textAnswer === 'object') {
+    return Object.entries(payload.textAnswer)
+      .map(([key, value]) => `${key}: ${String(value)}`)
+      .join('\n');
+  }
+  if (payload.selectedOptions?.length) return payload.selectedOptions.join(', ');
+  if (payload.tableAnswers) return Object.values(payload.tableAnswers).join(', ');
+  if (payload.uploadedFileUrl) return 'Uploaded file';
+  return 'No answer submitted';
 }
 
 export default function ExamResultsPage() {
   const { examId, attemptId } = useParams();
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { role } = useAuth();
-  const [attempt, setAttempt] = useState<ExamAttemptRecord | null>(null);
-  const [exam, setExam] = useState<Exam | null>(null);
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [userAnswers, setUserAnswers] = useState<Record<string, UserAnswer[]>>({});
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('overview');
-
-  // Get user answers from URL params (passed from ExamTakingPage)
-  useEffect(() => {
-    const answersParam = searchParams.get('answers');
-    if (answersParam) {
-      try {
-        const parsedAnswers = JSON.parse(decodeURIComponent(answersParam));
-        setUserAnswers(parsedAnswers);
-      } catch (e) {
-        console.error('Failed to parse answers:', e);
-      }
-    }
-  }, [searchParams]);
+  const [attempt, setAttempt] = useState<FirebaseExamAttempt | null>(null);
+  const [submissions, setSubmissions] = useState<FirebaseAttemptSubmission[]>([]);
+  const [state, setState] = useState<ExamResultState | null>(null);
 
   useEffect(() => {
-    const fetchResults = async () => {
-      if (!attemptId || !examId) return;
+    async function load() {
+      if (!examId || !attemptId) return;
+
       try {
-        const contentRes = await getExamContentFirebase(examId);
-        if (contentRes.ok) {
-          setExam(contentRes.exam as Exam);
-          const sortedQuestions = (contentRes.questions || []).map((q) => ({
-            ...q,
-            question_parts: (q.question_parts || q.parts || []).sort((a, b) => a.order_index - b.order_index),
-          }));
-          setQuestions(sortedQuestions as Question[]);
+        const [attemptLoad, examLoad] = await Promise.allSettled([
+          getExamAttemptDetailsFirebase(attemptId),
+          loadV2ExamDataFirebase(examId),
+        ]);
+
+        if (attemptLoad.status === 'rejected') {
+          console.error('[ExamResultsPage] Failed to load V2 attempt', { examId, attemptId, error: attemptLoad.reason });
+          setLoading(false);
+          return;
         }
-      } catch (error) {
-        console.error('Failed to load Firebase exam content:', error);
-      }
 
-      try {
-        const attemptRes = await getExamAttemptFirebase(attemptId);
-        if (attemptRes.ok) {
-          setAttempt({
-            id: attemptRes.attempt.id,
-            exam_id: attemptRes.attempt.examId,
-            mode: attemptRes.attempt.mode,
-            score: attemptRes.attempt.score,
-            total_questions: attemptRes.attempt.totalQuestions,
-            time_taken: attemptRes.attempt.timeTaken,
-            completed_at: attemptRes.attempt.completedAt,
+        const attemptResult = attemptLoad.value;
+        const examResult = examLoad.status === 'fulfilled' ? examLoad.value : null;
+        if (examLoad.status === 'rejected') {
+          console.warn('[ExamResultsPage] V2 exam content failed to load; showing attempt summary only', {
+            examId,
+            attemptId,
+            error: examLoad.reason,
           });
         }
-      } catch (error) {
-        console.error('Failed to load Firebase exam attempt:', error);
+
+        if (!attemptResult.ok || !attemptResult.attempt || !examResult?.exam) {
+          if (attemptResult.ok && attemptResult.attempt) {
+            setAttempt(attemptResult.attempt);
+            setSubmissions(attemptResult.submissions);
+            setState({
+              examTitle: 'V2 Exam Results',
+              examSubject: '',
+              examLevel: '',
+              items: [],
+              interactions: [],
+            });
+          }
+          setLoading(false);
+          return;
+        }
+
+        setAttempt(attemptResult.attempt);
+        setSubmissions(attemptResult.submissions);
+        setState({
+          examTitle: examResult.exam.title,
+          examSubject: examResult.exam.subject,
+          examLevel: examResult.exam.level,
+          items: Array.from(examResult.items.values()).flat(),
+          interactions: Array.from(examResult.interactions.values()).flat(),
+        });
+      } finally {
+        setLoading(false);
       }
+    }
 
-      setLoading(false);
-    };
-
-    fetchResults();
+    void load();
   }, [attemptId, examId]);
 
-  // Performance breakdown by topic
-  const performanceBreakdown = useMemo(() => {
-    if (!questions.length || !Object.keys(userAnswers).length) return null;
+  const interactionsById = useMemo(
+    () => new Map((state?.interactions || []).map((interaction) => [interaction.interactionId, interaction])),
+    [state?.interactions],
+  );
+  const itemsById = useMemo(
+    () => new Map((state?.items || []).map((item) => [item.itemId, item])),
+    [state?.items],
+  );
 
-    let totalCorrect = 0;
-    let totalParts = 0;
-
-    questions.forEach(q => {
-      const qAnswers = userAnswers[q.id] || [];
-      q.question_parts.forEach(part => {
-        totalParts++;
-        const userAnswer = qAnswers.find(a => a.partId === part.id);
-        if (userAnswer?.isCorrect) totalCorrect++;
-      });
-    });
-
-    return {
-      totalCorrect,
-      totalParts,
-      percentage: totalParts > 0 ? Math.round((totalCorrect / totalParts) * 100) : 0,
-    };
-  }, [questions, userAnswers]);
-
-  const handleStudyTopic = (subject: string) => {
-    navigate(`/exams?subject=${encodeURIComponent(subject)}`);
-  };
+  const reviewRequiredCount = useMemo(
+    () => submissions.filter((submission) => submission.reviewStatus === 'teacherReview').length,
+    [submissions],
+  );
+  const unansweredCount = useMemo(
+    () => submissions.filter((submission) => submission.reviewStatus === 'unanswered' || submission.isAnswered === false).length,
+    [submissions],
+  );
 
   if (loading) {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       </DashboardLayout>
     );
   }
 
-  if (!attempt || !exam) {
+  if (!attempt || !state) {
     return (
       <DashboardLayout>
-        <div className="text-center py-12">
-          <h2 className="text-xl font-bold mb-2">Results not found</h2>
-          <Button onClick={() => navigate(-1)}>Go Back</Button>
+        <div className="max-w-3xl mx-auto py-16 text-center space-y-4">
+          <h1 className="text-2xl font-semibold text-foreground">Results unavailable</h1>
+          <p className="text-muted-foreground">This V2 exam attempt could not be loaded.</p>
+          <Button onClick={() => navigate('/history')}>Go to exam history</Button>
         </div>
       </DashboardLayout>
     );
   }
 
-  const percentage = Math.round((attempt.score / attempt.total_questions) * 100);
-  const isPassing = percentage >= 50;
-  const isExcellent = percentage >= 80;
+  const percentage = attempt.maxScore > 0 ? Math.round((attempt.finalScore / attempt.maxScore) * 100) : 0;
+  const statusLabel = attempt.status === 'pending_review'
+    ? 'Submitted / pending teacher review'
+    : attempt.status === 'submitted'
+      ? 'Submitted'
+      : attempt.status === 'completed'
+        ? 'Completed'
+        : attempt.status;
 
   return (
     <DashboardLayout>
       <div className="max-w-4xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
-            <ArrowLeft className="w-5 h-5" />
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="icon" onClick={() => navigate('/history')}>
+            <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-foreground">{exam.title}</h1>
-            <p className="text-muted-foreground">{exam.subject} • {exam.level}</p>
+            <h1 className="text-2xl font-semibold text-foreground">{state.examTitle}</h1>
+            <p className="text-muted-foreground">
+              {state.examSubject} • {state.examLevel}
+            </p>
           </div>
         </div>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="overview" className="gap-2">
-              <BarChart3 className="w-4 h-4" />
-              Overview
-            </TabsTrigger>
-            <TabsTrigger value="review" className="gap-2">
-              <BookOpen className="w-4 h-4" />
-              Question Review
-            </TabsTrigger>
-          </TabsList>
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <p className="text-sm text-muted-foreground">Current Score</p>
+            <p className="mt-2 text-3xl font-semibold text-foreground">
+              {attempt.finalScore}/{attempt.maxScore}
+            </p>
+            <p className="text-sm text-muted-foreground">{percentage}%</p>
+          </div>
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <p className="text-sm text-muted-foreground">Attempt Status</p>
+            <p className="mt-2 text-2xl font-semibold text-foreground">{statusLabel}</p>
+            <p className="text-sm text-muted-foreground">
+              {attempt.completedAt || attempt.submittedAt || 'No completion timestamp'}
+            </p>
+          </div>
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <p className="text-sm text-muted-foreground">Teacher Review</p>
+            <p className="mt-2 text-2xl font-semibold text-foreground">{reviewRequiredCount}</p>
+            <p className="text-sm text-muted-foreground">
+              {unansweredCount > 0 ? `${unansweredCount} unanswered, ` : ''}responses awaiting manual review
+            </p>
+          </div>
+        </div>
 
-          <TabsContent value="overview" className="space-y-6 mt-6">
-            {/* Score Card */}
-            <div className={cn(
-              'rounded-2xl border p-8 text-center',
-              isExcellent ? 'bg-emerald-500/10 border-emerald-500/30' :
-              isPassing ? 'bg-amber-500/10 border-amber-500/30' :
-              'bg-red-500/10 border-red-500/30'
-            )}>
-              <div className={cn(
-                'w-32 h-32 mx-auto rounded-full flex items-center justify-center mb-6',
-                isExcellent ? 'bg-emerald-500/20' :
-                isPassing ? 'bg-amber-500/20' :
-                'bg-red-500/20'
-              )}>
-                <span className={cn(
-                  'text-5xl font-bold',
-                  isExcellent ? 'text-emerald-500' :
-                  isPassing ? 'text-amber-500' :
-                  'text-red-500'
-                )}>
-                  {percentage}%
-                </span>
-              </div>
-              
-              <h2 className="text-2xl font-bold text-foreground mb-2">
-                {isExcellent ? 'Excellent!' : isPassing ? 'Good Job!' : 'Keep Practicing!'}
-              </h2>
-              <p className="text-muted-foreground">
-                You scored {attempt.score} out of {attempt.total_questions} questions correctly
-              </p>
-            </div>
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="bg-card rounded-xl border border-border p-4 text-center">
-                <CheckCircle className="w-6 h-6 text-emerald-500 mx-auto mb-2" />
-                <p className="text-2xl font-bold text-foreground">{attempt.score}</p>
-                <p className="text-sm text-muted-foreground">Correct</p>
-              </div>
-              <div className="bg-card rounded-xl border border-border p-4 text-center">
-                <XCircle className="w-6 h-6 text-red-500 mx-auto mb-2" />
-                <p className="text-2xl font-bold text-foreground">{attempt.total_questions - attempt.score}</p>
-                <p className="text-sm text-muted-foreground">Incorrect</p>
-              </div>
-              <div className="bg-card rounded-xl border border-border p-4 text-center">
-                <Clock className="w-6 h-6 text-primary mx-auto mb-2" />
-                <p className="text-2xl font-bold text-foreground">
-                  {attempt.time_taken ? `${Math.floor(attempt.time_taken / 60)}m` : '--'}
+        {reviewRequiredCount > 0 && (
+          <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-amber-900">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="mt-0.5 h-5 w-5" />
+              <div>
+                <p className="font-medium">Manual review is pending.</p>
+                <p className="text-sm">
+                  This answer may be correct but needs teacher review. Linked teachers can score these responses from
+                  their V2 teacher review queue.
                 </p>
-                <p className="text-sm text-muted-foreground">Time Taken</p>
               </div>
             </div>
+          </div>
+        )}
 
-            {/* Performance Breakdown */}
-            {performanceBreakdown && (
-              <div className="bg-card rounded-xl border border-border p-6">
-                <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <Target className="w-5 h-5 text-primary" />
-                  Performance Breakdown
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">Parts Correct</span>
-                    <span className="font-medium text-foreground">
-                      {performanceBreakdown.totalCorrect} / {performanceBreakdown.totalParts}
+        <div className="space-y-4">
+          {submissions.map((submission) => {
+            const interaction = interactionsById.get(submission.interactionId);
+            const item = itemsById.get(submission.itemId);
+            const isCorrect = submission.autoFeedback?.isCorrect === true;
+            const awaitingTeacher = submission.reviewStatus === 'teacherReview';
+            const scoredByTeacher = submission.reviewStatus === 'reviewed' && Boolean(submission.teacherFeedback);
+            const unanswered = submission.reviewStatus === 'unanswered' || submission.isAnswered === false;
+
+            return (
+              <div key={submission.submissionId} className="rounded-2xl border border-border bg-card p-5 space-y-4">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <p className="text-sm text-muted-foreground">
+                      {item ? `${item.orderIndex + 1}. ${item.stemText || item.stemMarkdown || 'Untitled item'}` : 'Item'}
+                    </p>
+                    <p className="font-medium text-foreground">
+                      {interaction?.label ? `${interaction.label} ` : ''}
+                      {interaction?.promptText || interaction?.promptMarkdown || 'Interaction'}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm text-muted-foreground">Review status</p>
+                    <p className="font-medium text-foreground">
+                      {unanswered ? 'Unanswered' : scoredByTeacher ? 'Scored by teacher' : awaitingTeacher ? 'Awaiting teacher review' : 'Auto-marked'}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="rounded-xl bg-muted/40 p-4">
+                  <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">Your answer</p>
+                  <p className="mt-2 text-foreground whitespace-pre-wrap">{formatAnswer(submission)}</p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-4 text-sm">
+                  <span className="inline-flex items-center gap-2 text-muted-foreground">
+                    <Clock className="h-4 w-4" />
+                    {submission.submittedAt || 'No timestamp'}
+                  </span>
+                  {scoredByTeacher ? (
+                    <span className="inline-flex items-center gap-2 font-medium text-emerald-600">
+                      <UserCheck className="h-4 w-4" />
+                      Scored by teacher
                     </span>
+                  ) : unanswered ? (
+                    <span className="inline-flex items-center gap-2 font-medium text-muted-foreground">
+                      <Clock className="h-4 w-4" />
+                      Unanswered
+                    </span>
+                  ) : awaitingTeacher ? (
+                    <span className="inline-flex items-center gap-2 font-medium text-amber-700">
+                      <AlertTriangle className="h-4 w-4" />
+                      Awaiting teacher review
+                    </span>
+                  ) : submission.autoFeedback && (
+                    <span
+                      className={`inline-flex items-center gap-2 font-medium ${
+                        isCorrect ? 'text-emerald-600' : 'text-rose-600'
+                      }`}
+                    >
+                      <CheckCircle2 className="h-4 w-4" />
+                      {isCorrect ? 'Auto-marked correct' : 'Auto-marked incorrect'}
+                    </span>
+                  )}
+                  {typeof submission.finalScore === 'number' && (
+                    <span className="text-muted-foreground">
+                      Score: {submission.finalScore}
+                      {typeof submission.autoScore === 'number' ? ` / ${submission.autoScore}` : ''}
+                    </span>
+                  )}
+                </div>
+
+                {submission.autoFeedback?.correctAnswer && (
+                  <div className="rounded-xl border border-border p-4">
+                    <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">Expected answer</p>
+                    <p className="mt-2 text-foreground">{submission.autoFeedback.correctAnswer}</p>
+                    {submission.autoFeedback.explanation && (
+                      <p className="mt-2 text-sm text-muted-foreground">{submission.autoFeedback.explanation}</p>
+                    )}
                   </div>
-                  <div className="w-full bg-muted rounded-full h-3">
-                    <div 
-                      className={cn(
-                        'h-3 rounded-full transition-all',
-                        performanceBreakdown.percentage >= 80 ? 'bg-emerald-500' :
-                        performanceBreakdown.percentage >= 50 ? 'bg-amber-500' :
-                        'bg-red-500'
-                      )}
-                      style={{ width: `${performanceBreakdown.percentage}%` }}
-                    />
+                )}
+
+                {submission.teacherFeedback && (
+                  <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900">
+                    <p className="text-xs uppercase tracking-[0.16em] text-emerald-700">Scored by teacher</p>
+                    <p className="mt-2 text-sm">
+                      {submission.teacherFeedback.teacherName || 'Teacher'}
+                      {typeof submission.teacherFeedback.score === 'number' ? ` awarded ${submission.teacherFeedback.score} mark(s).` : ' reviewed this answer.'}
+                    </p>
+                    {submission.teacherFeedback.comments ? (
+                      <p className="mt-2 whitespace-pre-wrap text-sm">{submission.teacherFeedback.comments}</p>
+                    ) : null}
                   </div>
-                </div>
+                )}
               </div>
-            )}
-
-            {/* Explanation PDF Link */}
-            {exam.explanation_pdf_url && (
-              <div className="bg-primary/5 border border-primary/20 rounded-xl p-4 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <FileText className="w-6 h-6 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-medium text-foreground">Detailed Explanations Available</h4>
-                  <p className="text-sm text-muted-foreground">Download the full PDF with step-by-step solutions</p>
-                </div>
-                <Button variant="outline" size="sm" className="gap-2" asChild>
-                  <a href={exam.explanation_pdf_url} target="_blank" rel="noopener noreferrer">
-                    View PDF <ExternalLink className="w-4 h-4" />
-                  </a>
-                </Button>
-              </div>
-            )}
-
-            {/* Actions */}
-            <div className="flex gap-4">
-              <Button onClick={() => navigate(`/exam/${examId}?mode=${attempt.mode}`)} className="flex-1 gap-2">
-                <RotateCcw className="w-4 h-4" />
-                Retry Exam
-              </Button>
-              <Button variant="outline" onClick={() => navigate('/exams')} className="flex-1">
-                Browse More Exams
-              </Button>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="review" className="space-y-4 mt-6">
-            {questions.length > 0 ? (
-              <>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Click on each question to expand and see detailed explanations. Use "Get AI Help" for additional guidance.
-                </p>
-                {questions.map((question, index) => (
-                  <QuestionReviewCard
-                    key={question.id}
-                    question={question}
-                    userAnswers={userAnswers[question.id] || []}
-                    questionIndex={index}
-                    subject={exam.subject}
-                    level={exam.level}
-                    onStudyTopic={handleStudyTopic}
-                  />
-                ))}
-              </>
-            ) : (
-              <div className="text-center py-12 text-muted-foreground">
-                <BookOpen className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>Question review is not available for this exam.</p>
-              </div>
-            )}
-          </TabsContent>
-        </Tabs>
+            );
+          })}
+        </div>
       </div>
     </DashboardLayout>
   );

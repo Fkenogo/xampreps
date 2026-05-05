@@ -41,6 +41,11 @@ const difficultyColors: Record<string, string> = {
   Hard: 'bg-rose-100 text-rose-600 dark:bg-rose-900/30',
 };
 
+function formatQuestionCount(count?: number) {
+  if (!count || count <= 0) return null;
+  return `${count} question${count === 1 ? '' : 's'}`;
+}
+
 export default function QuickExamFinder({
   maxResults = 4,
   showRecommendations = true,
@@ -82,7 +87,7 @@ export default function QuickExamFinder({
       setExams(filtered.slice(0, maxResults));
 
       if (showRecommendations) {
-        const history = await listExamHistoryFirebase();
+        const history = await listExamHistoryFirebase(profile.id);
         const latest = history.items && history.items.length > 0 ? history.items[0] : null;
         if (latest) {
           const matchingExam = allExams.find((exam) => exam.id === latest.examId);
@@ -97,7 +102,7 @@ export default function QuickExamFinder({
   }, [search, selectedSubject, profile?.level, maxResults, showRecommendations]);
 
   const handleExamClick = (examId: string, mode: 'practice' | 'simulation') => {
-    navigate(`/exam/${examId}?mode=${mode}`);
+    navigate(`/exams/${examId}?mode=${mode}`);
   };
 
   return (
@@ -215,10 +220,12 @@ export default function QuickExamFinder({
                       <Clock className="w-3 h-3" />
                       {exam.time_limit}min
                     </span>
-                    <span className="flex items-center gap-1">
-                      <BookOpen className="w-3 h-3" />
-                      {exam.question_count} Q's
-                    </span>
+                    {exam.question_count && exam.question_count > 0 && (
+                      <span className="flex items-center gap-1">
+                        <BookOpen className="w-3 h-3" />
+                        {formatQuestionCount(exam.question_count)}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0 ml-2" />

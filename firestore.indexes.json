@@ -1,6 +1,62 @@
 {
   "indexes": [
     {
+      "collectionGroup": "sections",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "examId", "order": "ASCENDING" },
+        { "fieldPath": "orderIndex", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "instruction_groups",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "examId", "order": "ASCENDING" },
+        { "fieldPath": "orderIndex", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "instruction_groups",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "sectionId", "order": "ASCENDING" },
+        { "fieldPath": "orderIndex", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "items",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "instructionGroupId", "order": "ASCENDING" },
+        { "fieldPath": "orderIndex", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "items",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "examId", "order": "ASCENDING" },
+        { "fieldPath": "orderIndex", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "interactions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "itemId", "order": "ASCENDING" },
+        { "fieldPath": "orderIndex", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "model_answer_versions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "interactionId", "order": "ASCENDING" },
+        { "fieldPath": "versionNumber", "order": "DESCENDING" }
+      ]
+    },
+    {
       "collectionGroup": "exam_attempts",
       "queryScope": "COLLECTION",
       "fields": [
@@ -15,6 +71,98 @@
         { "fieldPath": "userId", "order": "ASCENDING" },
         { "fieldPath": "examId", "order": "ASCENDING" },
         { "fieldPath": "completedAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "submissions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "examId", "order": "ASCENDING" },
+        { "fieldPath": "reviewStatus", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "review_tasks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "assignedTeacherId", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "review_tasks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "examId", "order": "ASCENDING" },
+        { "fieldPath": "priority", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "feedback_templates",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "active", "order": "ASCENDING" },
+        { "fieldPath": "subject", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "school_admin_links",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "uid", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "school_admin_links",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "schoolId", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "school_student_links",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "schoolId", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "teacher_school_links",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "teacherUid", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "teacher_student_links",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "teacherUid", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "teacher_school_links",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "schoolId", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "parent_student_links",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "parentUid", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
       ]
     },
     {
@@ -39,6 +187,45 @@
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "creatorId", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "student_link_codes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "studentUid", "order": "ASCENDING" },
+        { "fieldPath": "targetType", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "student_link_codes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "issuerUid", "order": "ASCENDING" },
+        { "fieldPath": "issuerRole", "order": "ASCENDING" },
+        { "fieldPath": "targetType", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "student_link_codes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "studentUid", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "student_link_invites",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "issuerUid", "order": "ASCENDING" },
+        { "fieldPath": "targetType", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
         { "fieldPath": "createdAt", "order": "DESCENDING" }
       ]
     },

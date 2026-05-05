@@ -1,0 +1,80 @@
+[
+  {
+    "questionNumber": 5,
+    "questionText": "Name the animal shown in the diagram.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Snail",
+        "explanation": "Tutor: Let’s really observe the diagram carefully. What do you see?\nStudent: I see a shell and a soft body.\nTutor: Good observation. Anything else?\nStudent: It looks like it moves slowly.\nTutor: Exactly. And those feelers in front are called tentacles.\nTutor: Now, which animal has all these features — soft body, shell, slow movement?\nStudent: A snail.\nTutor: Correct. Always use features from the diagram to guide your answer, not guessing.",
+        "marks": 1,
+        "answerType": "text"
+      }
+    ]
+  },
+  {
+    "questionNumber": 40,
+    "questionText": "Give any one way in which crop farmers can keep seeds viable for a long time.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Store them in a dry place",
+        "explanation": "Tutor: First, what does **viable** mean?\nStudent: Able to germinate.\nTutor: Exactly. Seeds remain viable when they stay alive and can still grow when planted.\nTutor: What can spoil seeds?\nStudent: Water? Dampness?\nTutor: Yes. Moisture can make seeds rot or lose their power to germinate.\nTutor: That is why farmers should keep seeds in a **dry place**. They may also use clean containers and protect seeds from insects and rats.\nTutor: So the best short answer is **store them in a dry place**.",
+        "marks": 1,
+        "answerType": "text"
+      }
+    ]
+  },
+  {
+    "questionNumber": 45,
+    "questionText": "",
+    "parts": []
+  },
+  {
+    "questionNumber": 50,
+    "questionText": "",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Social insects",
+        "explanation": "Tutor: Some insects live alone, but others live in groups. Can you think of examples?\nStudent: Ants?\nTutor: Yes, ants. Also bees and termites.\nTutor: These insects cooperate and share duties like collecting food and protecting the group.\nTutor: Such insects are called **social insects**.",
+        "marks": 1,
+        "answerType": "text"
+      },
+      {
+        "partLabel": "b",
+        "answer": "Pollination",
+        "explanation": "Tutor: Why are insects important to plants?\nStudent: They help plants grow?\nTutor: Yes, especially through pollination. Bees carry pollen from one flower to another.\nTutor: This helps plants produce fruits and seeds.\nTutor: So insects play a key role in food production.",
+        "marks": 1,
+        "answerType": "text"
+      },
+      {
+        "partLabel": "c",
+        "answer": "Use of pesticides; Bush burning",
+        "explanation": "Tutor: What actions by humans can harm insects?\nStudent: Spraying chemicals?\nTutor: Yes, pesticides can kill insects.\nTutor: What else?\nStudent: Burning bushes?\nTutor: Correct. Bush burning destroys habitats.\nTutor: So human activities can reduce insect populations.",
+        "marks": 1,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 53,
+    "questionText": "",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "",
+        "explanation": "Tutor: What happens when water becomes ice?\nStudent: It freezes.\nTutor: Correct. That is freezing.\nTutor: What about rainfall?\nStudent: Water vapour cools?\nTutor: Yes, it condenses into droplets. That is condensation.",
+        "marks": 1,
+        "answerType": "text"
+      },
+      {
+        "partLabel": "b",
+        "answer": "Loss of topsoil; Silting",
+        "explanation": "Tutor: What happens when soil is eroded?\nStudent: It is removed.\nTutor: Yes, and that removes fertile topsoil.\nTutor: The soil may also collect in rivers causing silting.",
+        "marks": 1,
+        "answerType": "open-ended"
+      }
+    ]
+  }
+]

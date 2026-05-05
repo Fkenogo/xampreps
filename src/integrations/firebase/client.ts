@@ -28,7 +28,7 @@ export function getFirebaseApp() {
 }
 
 export function getFirebaseFunctions() {
-  return getFunctions(getFirebaseApp());
+  return getFunctions(getFirebaseApp(), "us-central1");
 }
 
 export function getFirebaseStorage() {

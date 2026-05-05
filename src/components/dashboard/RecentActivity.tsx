@@ -29,7 +29,7 @@ export default function RecentActivity({ limit = 5, className }: RecentActivityP
     const fetchAttempts = async () => {
       if (!profile?.id) return;
 
-      const history = await listExamHistoryFirebase();
+      const history = await listExamHistoryFirebase(profile.id);
       setAttempts(
         (history.items || []).slice(0, limit).map((item) => ({
           id: item.id,
@@ -107,7 +107,7 @@ export default function RecentActivity({ limit = 5, className }: RecentActivityP
                 'opacity-0 animate-slide-in-right'
               )}
               style={{ animationDelay: `${index * 100}ms` }}
-              onClick={() => navigate(`/exam/${attempt.exam_id}/results/${attempt.id}`)}
+              onClick={() => navigate(`/exams/${attempt.exam_id}/results/${attempt.id}`)}
             >
               {getScoreIcon(attempt.score, attempt.total_questions)}
               

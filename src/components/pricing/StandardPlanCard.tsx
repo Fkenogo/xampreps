@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 
 interface StandardPlanCardProps {
@@ -11,13 +9,6 @@ interface StandardPlanCardProps {
 }
 
 const StandardPlanCard: React.FC<StandardPlanCardProps> = ({ onSelect }) => {
-  const [isAnnual, setIsAnnual] = useState(false);
-
-  const monthlyPrice = 20000;
-  const annualPrice = 200000;
-  const annualMonthlyEquivalent = Math.round(annualPrice / 12);
-  const monthlySavings = monthlyPrice - annualMonthlyEquivalent;
-
   const features = [
     'Unlimited access to all past exam papers',
     'Full step-by-step explanations for every question',
@@ -30,64 +21,19 @@ const StandardPlanCard: React.FC<StandardPlanCardProps> = ({ onSelect }) => {
     <Card className="border-2 border-primary shadow-lg relative overflow-hidden">
       <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
       <CardHeader className="text-center pb-2">
-        <div className="text-xs font-medium text-primary uppercase tracking-wide mb-2">
-          Standard Price
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <Badge className="bg-primary/10 text-primary border-0 text-xs font-medium">Most popular</Badge>
         </div>
-        <CardTitle className="text-xl">Premium Access</CardTitle>
+        <CardTitle className="text-xl">Subscription Access</CardTitle>
         <CardDescription className="text-sm">
-          Best for students preparing seriously for exams.
+          Unlimited practice for students preparing seriously for exams.
         </CardDescription>
       </CardHeader>
-      
-      <CardContent className="space-y-6">
-        {/* Billing Toggle */}
-        <div className="flex items-center justify-center gap-3 p-3 bg-muted/50 rounded-lg">
-          <Label 
-            htmlFor="billing-toggle" 
-            className={`text-sm cursor-pointer transition-colors ${!isAnnual ? 'text-foreground font-medium' : 'text-muted-foreground'}`}
-          >
-            Monthly
-          </Label>
-          <Switch
-            id="billing-toggle"
-            checked={isAnnual}
-            onCheckedChange={setIsAnnual}
-          />
-          <div className="flex items-center gap-2">
-            <Label 
-              htmlFor="billing-toggle" 
-              className={`text-sm cursor-pointer transition-colors ${isAnnual ? 'text-foreground font-medium' : 'text-muted-foreground'}`}
-            >
-              Annual
-            </Label>
-            {isAnnual && (
-              <Badge variant="secondary" className="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
-                Save 2 months
-              </Badge>
-            )}
-          </div>
-        </div>
 
-        <div className="text-center">
-          {isAnnual ? (
-            <>
-              <div className="flex items-baseline justify-center gap-1">
-                <span className="text-3xl font-bold">UGX {annualPrice.toLocaleString()}</span>
-                <span className="text-muted-foreground text-sm">/ year</span>
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                That's UGX {annualMonthlyEquivalent.toLocaleString()}/month • Save UGX {(monthlySavings * 12).toLocaleString()}
-              </p>
-            </>
-          ) : (
-            <>
-              <div className="flex items-baseline justify-center gap-1">
-                <span className="text-3xl font-bold">UGX {monthlyPrice.toLocaleString()}</span>
-                <span className="text-muted-foreground text-sm">/ month</span>
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">Unlimited exam practice.</p>
-            </>
-          )}
+      <CardContent className="space-y-6">
+        <div className="text-center py-3 bg-muted/40 rounded-xl">
+          <p className="text-sm text-muted-foreground">Monthly and annual plans available</p>
+          <p className="text-xs text-muted-foreground mt-1">Pricing shown after sign-up</p>
         </div>
 
         <div>
@@ -102,16 +48,16 @@ const StandardPlanCard: React.FC<StandardPlanCardProps> = ({ onSelect }) => {
           </ul>
         </div>
 
-        <Button 
-          onClick={onSelect} 
+        <Button
+          onClick={onSelect}
           className="w-full text-base py-6"
           size="lg"
         >
-          👉 Go {isAnnual ? 'Annual' : 'Standard'}
+          Get access
         </Button>
-        
+
         <p className="text-xs text-center text-muted-foreground">
-          Cancel anytime
+          Contact us to manage your subscription
         </p>
       </CardContent>
     </Card>

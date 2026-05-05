@@ -1,0 +1,1107 @@
+[
+  {
+    "question_number": 1,
+    "text": "Name any one type of latrine.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Name any one type of latrine.",
+        "answer": "Pit latrine",
+        "explanation": "A pit latrine is one common type of toilet used for safe disposal of human waste. Other acceptable types include VIP latrine, flush latrine, or compost latrine.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 2,
+    "text": "Give any one reason why it is dangerous to take shelter under tall trees during rain.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Give any one reason why it is dangerous to take shelter under tall trees during rain.",
+        "answer": "Lightning can strike the tree",
+        "explanation": "Tall trees can attract lightning, which may injure or kill someone under them.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 3,
+    "text": "State any one function of the diaphragm during the process of breathing.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State any one function of the diaphragm during the process of breathing.",
+        "answer": "It helps air enter and leave the lungs",
+        "explanation": "The diaphragm contracts and flattens during inhalation, increasing chest space and helping air enter the lungs. During exhalation, it relaxes and pushes air out.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 4,
+    "text": "Name any one agent of soil erosion.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Name any one agent of soil erosion.",
+        "answer": "Running water",
+        "explanation": "Moving water carries away topsoil. Wind is another agent of soil erosion.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 5,
+    "text": "The diagram below shows an animal in the group of invertebrates. Use it to answer questions 5 and 6.\n\nName the animal shown in the diagram.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Name the animal shown in the diagram.",
+        "answer": "Snail",
+        "explanation": "The diagram shows a snail with a shell and soft body.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 6,
+    "text": "State the group of invertebrates to which the animal belongs.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State the group of invertebrates to which the animal belongs.",
+        "answer": "Molluscs",
+        "explanation": "A snail belongs to the mollusc group (also spelled mollusks).",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 7,
+    "text": "Mention any one way in which vegetables can be kept fresh for some time.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Mention any one way in which vegetables can be kept fresh for some time.",
+        "answer": "Keep them in a cool place",
+        "explanation": "Cool conditions slow wilting and spoilage. Other methods include wrapping in a damp cloth or storing in a refrigerator.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 8,
+    "text": "State one way in which bacteria are useful in the formation of soil.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State one way in which bacteria are useful in the formation of soil.",
+        "answer": "They decompose dead plants and animals",
+        "explanation": "Decomposition by bacteria adds humus to the soil, improving fertility.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 9,
+    "text": "Give the reason why a person suffering from bilharzia develops anaemia.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Give the reason why a person suffering from bilharzia develops anaemia.",
+        "answer": "It causes loss of blood",
+        "explanation": "Bilharzia parasites damage body tissues and may lead to blood loss, causing anaemia.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 10,
+    "text": "Mention one way in which air circulation in a rabbit hutch can be improved.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Mention one way in which air circulation in a rabbit hutch can be improved.",
+        "answer": "Put wire mesh openings",
+        "explanation": "Openings allow fresh air to move through the hutch.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 11,
+    "text": "State the reason why the human skin develops goose pimples during cold weather.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State the reason why the human skin develops goose pimples during cold weather.",
+        "answer": "To reduce heat loss",
+        "explanation": "Goose pimples help trap a layer of air near the skin and reduce loss of body heat.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 12,
+    "text": "Give any one way in which you can utilise empty plastic bottles at home.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Give any one way in which you can utilise empty plastic bottles at home.",
+        "answer": "Use them for storing liquids",
+        "explanation": "Empty bottles can be reused instead of thrown away. Other uses include making planters, funnels, or bird feeders.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 13,
+    "text": "Mention one function of a bandage found in a first aid kit.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Mention one function of a bandage found in a first aid kit.",
+        "answer": "To cover and protect a wound",
+        "explanation": "A bandage helps stop dirt entering a wound and can support injured parts.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 14,
+    "text": "State any one way in which fermentation is important in our daily life.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State any one way in which fermentation is important in our daily life.",
+        "answer": "It is used in making bread",
+        "explanation": "Fermentation by yeast helps dough rise. Other uses include making yogurt, beer, and traditional beverages.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 15,
+    "text": "State any one reason why a builder would prefer a pulley to an inclined plane when lifting sand from the ground to the top of a building.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State any one reason why a builder would prefer a pulley to an inclined plane when lifting sand from the ground to the top of a building.",
+        "answer": "It lifts the load vertically using less effort over height",
+        "explanation": "A pulley is convenient where materials must be raised straight up to higher levels.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 16,
+    "text": "The diagram below shows a human body organ. Use it to answer questions 16 and 17.\n\nName the organ shown above.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Name the organ shown above.",
+        "answer": "Kidney",
+        "explanation": "The diagram shows a kidney, which is part of the excretory system.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 17,
+    "text": "Give the function of the part labelled N.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Give the function of the part labelled N.",
+        "answer": "It carries urine from the kidney to the bladder",
+        "explanation": "The labelled part is the ureter, which transports urine from the kidney to the bladder.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 18,
+    "text": "Identify any one effect of pests and diseases on tuber crops.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Identify any one effect of pests and diseases on tuber crops.",
+        "answer": "They reduce yield",
+        "explanation": "Pests and diseases damage crops and lower harvest. They can also cause rotting or make crops unfit for consumption.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 19,
+    "text": "State any one way in which taking medicine without the instruction of a health worker can affect a family.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State any one way in which taking medicine without the instruction of a health worker can affect a family.",
+        "answer": "It can waste family money",
+        "explanation": "Wrong medicine may fail to treat disease and create extra treatment costs. Other effects include worsening illness, causing death, or drug resistance.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 20,
+    "text": "Mention any one reason why harvesting of honey should be done during day time.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Mention any one reason why harvesting of honey should be done during day time.",
+        "answer": "Bees are easier to see",
+        "explanation": "Daylight improves safety while handling hives. It also provides better working conditions and visibility.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 21,
+    "text": "Name the disorder in the skeletal system where a bone moves away from its normal position at the joint.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Name the disorder in the skeletal system where a bone moves away from its normal position at the joint.",
+        "answer": "Dislocation",
+        "explanation": "A dislocation happens when a bone is forced out of its normal joint position.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 22,
+    "text": "State the reason why a cubic unit of wool weighs less than a cubic unit of a stone.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State the reason why a cubic unit of wool weighs less than a cubic unit of a stone.",
+        "answer": "Wool is less dense than stone",
+        "explanation": "Density is mass per unit volume. Wool has less mass in the same space compared to stone.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 23,
+    "text": "State one way in which paddocking method of grazing cattle helps to break the life cycle of pests on a farm.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State one way in which paddocking method of grazing cattle helps to break the life cycle of pests on a farm.",
+        "answer": "It denies pests a continuous host",
+        "explanation": "Moving cattle from one paddock to another interrupts pests and parasites that depend on the animals.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 24,
+    "text": "Give one way in which rusting is important to the environment.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Give one way in which rusting is important to the environment.",
+        "answer": "It helps break down iron materials",
+        "explanation": "Rusting contributes to decomposition of discarded iron objects, returning iron compounds to the environment.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 25,
+    "text": "Name the element of Primary Health Care which promotes the human body cleanliness.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Name the element of Primary Health Care which promotes the human body cleanliness.",
+        "answer": "Personal hygiene",
+        "explanation": "Personal hygiene focuses on keeping the body clean to prevent disease.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 26,
+    "text": "Mention any one activity a School Health Club can do to improve the health of people in school.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Mention any one activity a School Health Club can do to improve the health of people in school.",
+        "answer": "Organise a cleaning campaign",
+        "explanation": "Keeping the school environment clean improves health. Other activities include health education talks or handwashing promotion.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 27,
+    "text": "State the property of air used in filling balloons.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State the property of air used in filling balloons.",
+        "answer": "Air occupies space",
+        "explanation": "Air fills the inside of the balloon because it takes up space.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 28,
+    "text": "State any one way in which planting of trees alongside other crops improves the quality of soil.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State any one way in which planting of trees alongside other crops improves the quality of soil.",
+        "answer": "Trees add humus through fallen leaves",
+        "explanation": "Decomposed leaves improve soil fertility. Trees also prevent erosion, fix nitrogen (for suitable types), and improve moisture retention.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 29,
+    "text": "Give one reason why we should regularly wash our hands with clean water and soap.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Give one reason why we should regularly wash our hands with clean water and soap.",
+        "answer": "To remove germs",
+        "explanation": "Handwashing reduces spread of disease-causing organisms.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 30,
+    "text": "Mention one way in which the antennae of insects are similar to the human skin in terms of function.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Mention one way in which the antennae of insects are similar to the human skin in terms of function.",
+        "answer": "Both help in feeling / sensing",
+        "explanation": "Antennae and skin detect touch and surroundings.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 31,
+    "text": "Give one reason why the vacuum in a thermos flask prevents heat loss by conduction and convection.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Give one reason why the vacuum in a thermos flask prevents heat loss by conduction and convection.",
+        "answer": "A vacuum has no particles",
+        "explanation": "Without particles, heat cannot be transferred by conduction or convection.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 32,
+    "text": "The diagram below shows a method of planting crops. Use it to answer questions 32 and 33.\n\nIdentify the method of planting crops shown above.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Identify the method of planting crops shown above.",
+        "answer": "Row planting",
+        "explanation": "The crops are arranged in straight lines. Also called line planting.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 33,
+    "text": "State any one advantage of the method of planting crops shown in the diagram above.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State any one advantage of the method of planting crops shown in the diagram above.",
+        "answer": "It makes weeding easy",
+        "explanation": "Straight rows leave space for easy management. Other advantages include easier harvesting, spraying, and proper spacing.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 34,
+    "text": "Give any one example of an emotional change in adolescents.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Give any one example of an emotional change in adolescents.",
+        "answer": "Mood swings",
+        "explanation": "Adolescents may experience quick emotional changes.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 35,
+    "text": "Name the immunisable viral disease which is spread due to poor sanitation.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Name the immunisable viral disease which is spread due to poor sanitation.",
+        "answer": "Polio",
+        "explanation": "Polio is a viral disease commonly linked to poor sanitation.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 36,
+    "text": "State the reason why a ray of light bends as it passes through a glass block.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State the reason why a ray of light bends as it passes through a glass block.",
+        "answer": "Because light changes speed when entering glass",
+        "explanation": "Refraction occurs when light moves between media of different density.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 37,
+    "text": "State any one way of conserving water as a resource in the environment.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "State any one way of conserving water as a resource in the environment.",
+        "answer": "Harvest rainwater",
+        "explanation": "Stored rainwater reduces waste and supports later use. Other methods include fixing leaks, reducing usage, or treating wastewater.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 38,
+    "text": "Mention one reason why you are encouraged to brush the tongue as well when cleaning the teeth.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Mention one reason why you are encouraged to brush the tongue as well when cleaning the teeth.",
+        "answer": "To remove germs",
+        "explanation": "Germs and food particles collect on the tongue and can cause bad breath.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 39,
+    "text": "Mention any one way in which electric shocks can be prevented in a home.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Mention any one way in which electric shocks can be prevented in a home.",
+        "answer": "Do not touch switches with wet hands",
+        "explanation": "Water increases risk of electric shock. Other methods include insulating wires, repairing naked wires, or switching off power before repair.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 40,
+    "text": "Give any one way in which crop farmers can keep seeds viable for a long time.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "Give any one way in which crop farmers can keep seeds viable for a long time.",
+        "answer": "Store them in a dry place",
+        "explanation": "Dry storage prevents rotting and loss of germination power.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 41,
+    "text": "(a) Name the class of food that helps in the repair of body cells.\n(b) Apart from contamination of food, mention any two other challenges that people who buy food from markets get.\n(c) State any one way of controlling food contamination in a market.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the class of food that helps in the repair of body cells.",
+        "answer": "Proteins",
+        "explanation": "Proteins build and repair worn-out body tissues and cells.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Apart from contamination of food, mention any two other challenges that people who buy food from markets get.",
+        "answer": "High prices and stale/spoilt food",
+        "explanation": "Markets may expose buyers to poor-quality food, congestion, cheating in measurements, or overcrowding.",
+        "marks": 2,
+        "answer_type": "open-ended"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) State any one way of controlling food contamination in a market.",
+        "answer": "Cover food properly",
+        "explanation": "Covering food protects it from dust, flies, and dirt.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 42,
+    "text": "(a) Name the germ that causes cholera.\n(b) Explain why cholera is common in heavily populated communities.\n(c) Apart from proper use of latrines, mention any one other way of controlling the spread of cholera in the communities in (b) above.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the germ that causes cholera.",
+        "answer": "Bacteria",
+        "explanation": "Cholera is caused by a bacterium called Vibrio cholerae.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Explain why cholera is common in heavily populated communities.",
+        "answer": "Poor sanitation and easy spread through contaminated water or food",
+        "explanation": "Crowding makes waste disposal harder and disease spreads faster.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) Apart from proper use of latrines, mention any one other way of controlling the spread of cholera in the communities in (b) above.",
+        "answer": "Boil drinking water",
+        "explanation": "Boiling kills cholera germs. Other methods include handwashing, safe food handling, or proper rubbish disposal.",
+        "marks": 2,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 43,
+    "text": "(a) Name the correct garden tool for transplanting seedlings.\n(b) State the reason why evening time is the best for transplanting seedlings.\n(c) Mention any two advantages of mulching a garden after transplanting.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the correct garden tool for transplanting seedlings.",
+        "answer": "Hand fork",
+        "explanation": "A hand fork or trowel is used carefully around seedlings.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) State the reason why evening time is the best for transplanting seedlings.",
+        "answer": "Seedlings lose less water",
+        "explanation": "The cool evening reduces wilting.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) Mention any two advantages of mulching a garden after transplanting.",
+        "answer": "Conserves soil moisture and suppresses weeds",
+        "explanation": "Mulch protects the soil and supports early plant growth. Other advantages include adding humus and preventing erosion.",
+        "marks": 2,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 44,
+    "text": "The diagram below shows part of the human digestive system. Use it to answer the questions that follow.\n\n(a) Name the parts labelled X, W, Y.\n(b) State any one function of the following parts: Y, Z, Rectum.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a)(i) Name the part labelled X.",
+        "answer": "Liver",
+        "explanation": "X is the liver, the largest internal organ.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "(a)(ii) Name the part labelled W.",
+        "answer": "Stomach",
+        "explanation": "W is the stomach, where food is digested.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 2,
+        "text": "(a)(iii) Name the part labelled Y.",
+        "answer": "Small intestine",
+        "explanation": "Y is the small intestine, where most digestion and absorption occurs.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 3,
+        "text": "(b)(i) State any one function of part Y (small intestine).",
+        "answer": "Absorbs digested food",
+        "explanation": "The small intestine absorbs nutrients from digested food into the bloodstream.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 4,
+        "text": "(b)(ii) State any one function of part Z (large intestine).",
+        "answer": "Absorbs water",
+        "explanation": "The large intestine absorbs water from undigested food and forms faeces.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 5,
+        "text": "(b)(iii) State any one function of the Rectum.",
+        "answer": "Stores faeces before removal",
+        "explanation": "The rectum stores faeces until they are expelled from the body.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 45,
+    "text": "The table below shows some of the steps followed in the cleaning of clothes and the purpose of each step. Complete the table correctly.\n\n| Step | Purpose |\n|------|---------|\n| _____ | Separating clothes according to washing needs. |\n| Soaking | _____ |\n| _____ | Removing dirty soapy water from the clothes. |\n| Ironing | _____ |",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "What is the purpose of soaking clothes?",
+        "answer": "Loosens dirt / makes washing easier",
+        "explanation": "Soaking helps soften stains and dirt before washing.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "What step involves separating clothes according to washing needs?",
+        "answer": "Sorting",
+        "explanation": "Sorting separates clothes by color, fabric type, or washing requirements.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 2,
+        "text": "What step involves removing dirty soapy water from the clothes?",
+        "answer": "Rinsing",
+        "explanation": "Rinsing removes soap and dirt from clothes after washing.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 3,
+        "text": "What is the purpose of ironing clothes?",
+        "answer": "Removes creases / kills germs",
+        "explanation": "Ironing makes clothes neat and can kill germs through heat.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 46,
+    "text": "(a) Give the meaning of the term electromagnet.\n(b) You are provided with the following items: Iron nail, copper wire, a dry cell and some pins. Describe how you can use the items to make a magnet.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Give the meaning of the term electromagnet.",
+        "answer": "A magnet formed when electric current flows through a conductor around iron",
+        "explanation": "It only acts as a magnet when current is flowing.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Describe how you can use the items to make a magnet.",
+        "answer": "Wind copper wire around the iron nail, connect the wire ends to the dry cell terminals, allow current to flow, bring the nail near the pins - the nail attracts the pins",
+        "explanation": "Electric current through the coil magnetises the nail, creating an electromagnet.",
+        "marks": 3,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 47,
+    "text": "(a) Mention any two materials that can be used to produce biogas.\n(b) Give a reason why a biogas digester should be tightly sealed.\n(c) State any one advantage of using biogas.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Mention any two materials that can be used to produce biogas.",
+        "answer": "Cow dung and pig dung",
+        "explanation": "Organic waste such as animal dung, poultry droppings, human waste, or plant remains decomposes to produce biogas.",
+        "marks": 2,
+        "answer_type": "open-ended"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Give a reason why a biogas digester should be tightly sealed.",
+        "answer": "To prevent gas from escaping",
+        "explanation": "Sealing keeps air out and gas in for collection.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) State any one advantage of using biogas.",
+        "answer": "It provides fuel for cooking",
+        "explanation": "Biogas is a useful source of energy. Other advantages include reducing firewood use and reducing pollution.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 48,
+    "text": "The diagram below shows a person wearing a protective item made of cloth. Use it to answer the following questions.\n\n(a) Name the protective item labelled K.\n(b) Identify any two diseases that can be prevented by the use of the protective item K.\n(c) Mention any one good practice of using the protective item K.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the protective item labelled K.",
+        "answer": "Face mask",
+        "explanation": "The person is wearing a cloth face mask.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Identify any two diseases that can be prevented by the use of the protective item K.",
+        "answer": "COVID-19 and tuberculosis",
+        "explanation": "Masks reduce spread of droplets carrying germs. Other preventable diseases include flu/influenza.",
+        "marks": 2,
+        "answer_type": "open-ended"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) Mention any one good practice of using the protective item K.",
+        "answer": "Cover both nose and mouth",
+        "explanation": "A mask only works well if worn properly. Other good practices include washing reusable masks regularly, avoiding sharing, or replacing when dirty.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 49,
+    "text": "(a) Mention one example of musical instruments in each of the groups below:\n(i) String Instruments\n(ii) Percussion Instruments\n(b) Name any two methods of storing sound.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a)(i) Mention one example of a string instrument.",
+        "answer": "Guitar",
+        "explanation": "Other string instruments include violin, harp, or lyre.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "(a)(ii) Mention one example of a percussion instrument.",
+        "answer": "Drum",
+        "explanation": "Other percussion instruments include xylophone, cymbals, or tambourine.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 2,
+        "text": "(b) Name any two methods of storing sound.",
+        "answer": "Audio tape and compact disc (CD)",
+        "explanation": "Sound can be stored on analogue or digital media. Other methods include flash disk, memory card, or computer/phone recording.",
+        "marks": 2,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 50,
+    "text": "(a) State the name given to insects that live and work together.\n(b) Give any one way in which insects are useful to people.\n(c) State any two human activities that are dangerous to insects in the environment.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) State the name given to insects that live and work together.",
+        "answer": "Social insects",
+        "explanation": "Social insects live in organised groups.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Give any one way in which insects are useful to people.",
+        "answer": "Pollination",
+        "explanation": "Insects help flowering plants reproduce. Other uses include honey production, decomposition, or as a food source.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) State any two human activities that are dangerous to insects in the environment.",
+        "answer": "Spraying pesticides and bush burning",
+        "explanation": "These reduce insect populations and damage habitats. Other dangerous activities include deforestation and pollution.",
+        "marks": 2,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 51,
+    "text": "The diagram below shows types of weather. Study it and answer the questions that follow.\n\n(a) Name the type of weather marked C.\n(b) State one way in which the type of weather in A helps in formation of the type of weather in D.\n(c) Give one way in which people protect themselves from the effects of the type of weather in B.\n(d) State any one way in which too much of the type of weather in A is dangerous to the environment.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the type of weather marked C.",
+        "answer": "Cloudy weather",
+        "explanation": "C represents cloudy/overcast weather.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) State one way in which the type of weather in A (sunny) helps in formation of the type of weather in D (rainy).",
+        "answer": "Heat from the sun causes evaporation",
+        "explanation": "Sun heats water, causing evaporation that later leads to rainfall through condensation.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) Give one way in which people protect themselves from the effects of the type of weather in B (windy).",
+        "answer": "Stay indoors",
+        "explanation": "Wind can blow objects and dust. Other protections include wearing protective clothing or securing roofs.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      },
+      {
+        "order_index": 3,
+        "text": "(d) State any one way in which too much of the type of weather in A (sunny) is dangerous to the environment.",
+        "answer": "Drought",
+        "explanation": "Too much sunshine may overheat and dry the environment, causing water shortage or drying of crops.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 52,
+    "text": "(a) State the meaning of the term vaccine.\n(b) Mention the way in which polio vaccine is administered.\n(c) State the reason why vaccines should be stored in a cool place.\n(d) Identify any one way you can support immunization programmes in your community.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) State the meaning of the term vaccine.",
+        "answer": "A substance given to protect the body against a disease",
+        "explanation": "A vaccine helps the body develop immunity.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Mention the way in which polio vaccine is administered.",
+        "answer": "By mouth",
+        "explanation": "Polio vaccine is commonly given as oral drops.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) State the reason why vaccines should be stored in a cool place.",
+        "answer": "Heat can destroy them",
+        "explanation": "Vaccines lose effectiveness if not kept cold.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 3,
+        "text": "(d) Identify any one way you can support immunization programmes in your community.",
+        "answer": "Taking children for immunisation",
+        "explanation": "Community participation improves protection. Other ways include encouraging others or sharing correct information.",
+        "marks": 1,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 53,
+    "text": "(a) Name the physical change which leads to the formation of the following:\n(i) Ice\n(ii) Rainfall\n(b) State any two effects of physical changes caused by soil erosion in the environment.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a)(i) Name the physical change which leads to the formation of ice.",
+        "answer": "Freezing",
+        "explanation": "Water turns to ice when it freezes at 0°C or below.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "(a)(ii) Name the physical change which leads to the formation of rainfall.",
+        "answer": "Condensation",
+        "explanation": "Water vapor condenses to form clouds, which then produce rain.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 2,
+        "text": "(b) State any two effects of physical changes caused by soil erosion in the environment.",
+        "answer": "Loss of fertile topsoil and silting of rivers and lakes",
+        "explanation": "Soil erosion damages land and water systems. Other effects include reduced crop yields and formation of gullies.",
+        "marks": 2,
+        "answer_type": "open-ended"
+      }
+    ]
+  },
+  {
+    "question_number": 54,
+    "text": "(a) Name the two muscles found in the human arm.\n(b) State any one function of muscles in the human body.\n(c) State the importance of maintaining correct posture in humans.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the two muscles found in the human arm.",
+        "answer": "Biceps and triceps",
+        "explanation": "These are the main muscles in the upper arm.",
+        "marks": 2,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) State any one function of muscles in the human body.",
+        "answer": "They enable movement",
+        "explanation": "Muscles contract and relax to move body parts.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) State the importance of maintaining correct posture in humans.",
+        "answer": "Prevents body deformities",
+        "explanation": "Good posture keeps bones and muscles aligned properly, preventing backache and deformities.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  },
+  {
+    "question_number": 55,
+    "text": "(a) The diagram below shows a cup 12 cm high placed 30 cm in front of a plane mirror. Draw the image of the cup.\n(b) The diagram below shows a reflection on a plane mirror PQ.\n(i) Name ray A.\n(ii) State the relationship between angles m and y.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) The diagram below shows a cup 12 cm high placed 30 cm in front of a plane mirror. Draw the image of the cup.",
+        "answer": "Image same size as object, upright, laterally inverted, 30 cm behind the mirror",
+        "explanation": "A plane mirror produces an image that is the same size, upright, laterally inverted, and at the same distance behind the mirror as the object is in front.",
+        "marks": 2,
+        "answer_type": "open-ended"
+      },
+      {
+        "order_index": 1,
+        "text": "(b)(i) Name ray A.",
+        "answer": "Incident ray",
+        "explanation": "The incident ray is the ray of light that strikes the mirror.",
+        "marks": 1,
+        "answer_type": "text"
+      },
+      {
+        "order_index": 2,
+        "text": "(b)(ii) State the relationship between angles m and y.",
+        "answer": "They are equal",
+        "explanation": "In reflection, angle of incidence equals angle of reflection.",
+        "marks": 1,
+        "answer_type": "text"
+      }
+    ]
+  }
+]

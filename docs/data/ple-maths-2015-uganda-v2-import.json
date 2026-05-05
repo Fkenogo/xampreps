@@ -1,0 +1,2484 @@
+{
+  "_meta": {
+    "title": "PLE Mathematics 2015 Uganda - V2 import package",
+    "examSource": "PLE Mathematics 2015 Uganda",
+    "generatedOn": "2026-04-17",
+    "benchmark": "docs/data/kcpe-mathematics-2023-kenya-v2-import.json",
+    "sourceImportFile": "docs/imports/ple-maths-2015.final.import.json",
+    "notes": [
+      "Built against the same top-level V2 import package shape as the successful KCPE Mathematics 2023 Kenya import.",
+      "No Firestore writes were performed during packaging.",
+      "Legacy image references were corrected to local public assets where a clear matching asset exists."
+    ]
+  },
+  "exam": {
+    "title": "PLE Mathematics 2015",
+    "subject": "Mathematics",
+    "level": "PLE",
+    "year": 2015,
+    "country": "UGANDA",
+    "curriculumVersion": "PLE",
+    "durationMinutes": 150,
+    "totalMarks": 100,
+    "status": "published",
+    "version": 1,
+    "createdBy": "system-import",
+    "engineVersion": "v2",
+    "overallInstructions": "This paper has two sections: Section A and Section B. Answer all questions and show your working where necessary.",
+    "sourceFiles": [
+      {
+        "name": "PLE-Maths-2015.pdf",
+        "type": "application/pdf"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "ref": "sec_a",
+      "orderIndex": 0,
+      "title": "Section A",
+      "marks": 40,
+      "sharedInstructions": "Questions 1 to 20 carry two marks each. Answer all questions."
+    },
+    {
+      "ref": "sec_b",
+      "orderIndex": 1,
+      "title": "Section B",
+      "marks": 60,
+      "sharedInstructions": "Questions 21 to 32 carry sixty marks in total. Answer all questions and show your working where necessary."
+    }
+  ],
+  "instructionGroups": [
+    {
+      "ref": "ig_q1_20",
+      "sectionRef": "sec_a",
+      "orderIndex": 0,
+      "instructionsMarkdown": "Answer all questions in Section A. Give the exact number, word, or expression required.",
+      "displayMode": "boxed",
+      "questionRangeLabel": "Questions 1-20"
+    },
+    {
+      "ref": "ig_q21_32",
+      "sectionRef": "sec_b",
+      "orderIndex": 0,
+      "instructionsMarkdown": "Answer all questions in Section B. For multi-part questions, answer each labelled part separately.",
+      "displayMode": "boxed",
+      "questionRangeLabel": "Questions 21-32"
+    }
+  ],
+  "items": [
+    {
+      "ref": "item_q1",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 0,
+      "itemType": "shortText",
+      "stemMarkdown": "Work out: 124 - 45",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 1"
+    },
+    {
+      "ref": "item_q2",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 1,
+      "itemType": "shortText",
+      "stemMarkdown": "Write in figures: Eighty thousand, ten.",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 2"
+    },
+    {
+      "ref": "item_q3",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 2,
+      "itemType": "shortText",
+      "stemMarkdown": "Simplify: 18x - 5(3x + 7)",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 3"
+    },
+    {
+      "ref": "item_q4",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 3,
+      "itemType": "shortText",
+      "stemMarkdown": "Given that set K = {g, m, v, z}, find the number of subsets in set K.",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 4"
+    },
+    {
+      "ref": "item_q5",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 4,
+      "itemType": "diagramInterpretation",
+      "stemMarkdown": "Work out 7 - 3 on the number line below.",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 5",
+      "mediaRefs": [
+        {
+          "mediaId": "media_q5",
+          "url": "/exam-assets/ple-maths-2015/q5-numberline.jpeg",
+          "altText": "Diagram for PLE Mathematics 2015 Question 5",
+          "caption": "Question 5 diagram"
+        }
+      ]
+    },
+    {
+      "ref": "item_q6",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 5,
+      "itemType": "shortText",
+      "stemMarkdown": "Find the sum of the 5th and 8th prime numbers.",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 6"
+    },
+    {
+      "ref": "item_q7",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 6,
+      "itemType": "shortText",
+      "stemMarkdown": "Work out: 14/15 ÷ 2/5",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 7"
+    },
+    {
+      "ref": "item_q8",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 7,
+      "itemType": "shortText",
+      "stemMarkdown": "A birthday party started at 4:30 p.m. and lasted 2¾ hours. At what time did the party end?",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 8"
+    },
+    {
+      "ref": "item_q9",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 8,
+      "itemType": "diagramInterpretation",
+      "stemMarkdown": "Show all the lines of folding symmetry in the figure below.",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 9",
+      "mediaRefs": [
+        {
+          "mediaId": "media_q9",
+          "url": "/exam-assets/ple-maths-2015/Q9-symmetry.jpeg",
+          "altText": "Diagram for PLE Mathematics 2015 Question 9",
+          "caption": "Question 9 diagram"
+        }
+      ]
+    },
+    {
+      "ref": "item_q10",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 9,
+      "itemType": "shortText",
+      "stemMarkdown": "A trader sold a pair of shoes at sh32,800 making a profit of sh1,200. What was the cost price of the pair of shoes?",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 10"
+    },
+    {
+      "ref": "item_q11",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 10,
+      "itemType": "shortText",
+      "stemMarkdown": "In a car park there are 192 cars. The probability that a car picked at random from the park is made in Japan is 5/8. How many cars are not made in Japan?",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 11"
+    },
+    {
+      "ref": "item_q12",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 11,
+      "itemType": "shortText",
+      "stemMarkdown": "How many packets of 200 grammes can be got from 2.6 kilogrammes of salt?",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 12"
+    },
+    {
+      "ref": "item_q13",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 12,
+      "itemType": "shortText",
+      "stemMarkdown": "Given that a = -2, b = 3 and c = 4, find the value of b(a² + c)",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 13"
+    },
+    {
+      "ref": "item_q14",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 13,
+      "itemType": "shortText",
+      "stemMarkdown": "Work out: 1101₂ + 111₂",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 14"
+    },
+    {
+      "ref": "item_q15",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 14,
+      "itemType": "diagramInterpretation",
+      "stemMarkdown": "Find the size of angle y in the figure below.",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 15",
+      "mediaRefs": [
+        {
+          "mediaId": "media_q15",
+          "url": "/exam-assets/ple-maths-2015/q15-angles.jpeg",
+          "altText": "Diagram for PLE Mathematics 2015 Question 15",
+          "caption": "Question 15 diagram"
+        }
+      ]
+    },
+    {
+      "ref": "item_q16",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 15,
+      "itemType": "diagramInterpretation",
+      "stemMarkdown": "The Venn diagram below shows the prime factors of 12 and 18. Find the Lowest Common Multiple (LCM) of 12 and 18.",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 16",
+      "mediaRefs": [
+        {
+          "mediaId": "media_q16",
+          "url": "/exam-assets/ple-maths-2015/q16-venn-diagram.jpeg",
+          "altText": "Diagram for PLE Mathematics 2015 Question 16",
+          "caption": "Question 16 diagram"
+        }
+      ]
+    },
+    {
+      "ref": "item_q17",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 16,
+      "itemType": "shortText",
+      "stemMarkdown": "Find the median of the numbers: 8, 10, 4, 1, 6 and 9.",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 17"
+    },
+    {
+      "ref": "item_q18",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 17,
+      "itemType": "shortText",
+      "stemMarkdown": "Gidudu has goats and sheep in the ratio of 3:2. If he has 24 goats, how many sheep does he have?",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 18"
+    },
+    {
+      "ref": "item_q19",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 18,
+      "itemType": "shortText",
+      "stemMarkdown": "A bucket was ¾ full of water. When 4 litres were removed, it became ½ full of water. What is the capacity of the bucket?",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 19"
+    },
+    {
+      "ref": "item_q20",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_20",
+      "orderIndex": 19,
+      "itemType": "shortText",
+      "stemMarkdown": "In a poultry farm, eggs are packed into boxes which hold 144 eggs. How many boxes of the same size are needed to pack 1,008 eggs?",
+      "marksTotal": 2,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 20"
+    },
+    {
+      "ref": "item_q21",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q21_32",
+      "orderIndex": 20,
+      "itemType": "multiPart",
+      "stemMarkdown": "In a class, 31 pupils play tennis (T) and (d + 5) play volleyball (V) only. d pupils play both games while 3 play neither of the games.\n\n(a) Use the above information to complete the Venn diagram below.\n(b) If 27 pupils play volleyball altogether, find the value of d.",
+      "marksTotal": 4,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 21",
+      "mediaRefs": [
+        {
+          "mediaId": "media_q21",
+          "url": "/exam-assets/ple-maths-2015/q21a-q21b-venn-diagram.jpeg",
+          "altText": "Diagram for PLE Mathematics 2015 Question 21",
+          "caption": "Question 21 diagram"
+        }
+      ]
+    },
+    {
+      "ref": "item_q22",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q21_32",
+      "orderIndex": 21,
+      "itemType": "multiPart",
+      "stemMarkdown": "(a) What number has been expanded below?\n(6 × 10³) + (2 × 10¹) + (7 × 10⁰) + (3 × 10⁻²)\n\n(b) Work out: (8.5 × 14) + (8.5 × 16)",
+      "marksTotal": 5,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 22"
+    },
+    {
+      "ref": "item_q23",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q21_32",
+      "orderIndex": 22,
+      "itemType": "multiPart",
+      "stemMarkdown": "The table below shows the rate at which different currencies were sold and bought in a commercial bank during the month of September.\n\nCurrency Exchange Rates:\n• US Dollar ($): Selling 3,600 UGX | Buying 3,650 UGX\n• Euro (€): Selling 4,000 UGX | Buying 4,020 UGX\n• Rwandese Franc: Selling 4.0 UGX | Buying 5.0 UGX\n\n(a) How many Euros did Musa get for Ug. Sh. 603,000?\n(b) Amina came from Rwanda with 109,500 Rwandese francs and exchanged them for US dollars. How many US dollars did she get from the bank?",
+      "marksTotal": 5,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 23"
+    },
+    {
+      "ref": "item_q24",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q21_32",
+      "orderIndex": 23,
+      "itemType": "diagramInterpretation",
+      "stemMarkdown": "Betty filled container A below with drinking water. She served visitors with the water using cups of size B shown in the diagram.\n\nContainer A: Cylinder, radius = 14 cm, height = 50 cm\nCup B: Cylinder, radius = 3.5 cm, height = 10 cm\n\nFind the total number of full cups of water she served the visitors. (Use π = 22/7)",
+      "marksTotal": 6,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 24",
+      "mediaRefs": [
+        {
+          "mediaId": "media_q24",
+          "url": "/exam-assets/ple-maths-2015/q24-container.jpeg",
+          "altText": "Diagram for PLE Mathematics 2015 Question 24",
+          "caption": "Question 24 diagram"
+        }
+      ]
+    },
+    {
+      "ref": "item_q25",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q21_32",
+      "orderIndex": 24,
+      "itemType": "multiPart",
+      "stemMarkdown": "A fruit seller sold the following number of mangoes in six days: 60, 35, 40, 28, 42 and 35.\n\n(a) What is the modal number of mangoes sold?\n(b) Work out the mean number of mangoes sold.\n(c) By the end of the seventh day, the mean number of mangoes sold was 44. How many mangoes were sold on the seventh day?",
+      "marksTotal": 5,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 25"
+    },
+    {
+      "ref": "item_q26",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q21_32",
+      "orderIndex": 25,
+      "itemType": "multiPart",
+      "stemMarkdown": "In the figure below line AB is parallel to CD. Angle CTD = 44° and Angle TQR = 56°.\n\nFind the size of:\n(a) angle k\n(b) angle g",
+      "marksTotal": 4,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 26",
+      "mediaRefs": [
+        {
+          "mediaId": "media_q26",
+          "url": "/exam-assets/ple-maths-2015/q26a-q26b-parrellels.jpeg",
+          "altText": "Diagram for PLE Mathematics 2015 Question 26",
+          "caption": "Question 26 diagram"
+        }
+      ]
+    },
+    {
+      "ref": "item_q27",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q21_32",
+      "orderIndex": 26,
+      "itemType": "multiPart",
+      "stemMarkdown": "The table below shows how a motor cyclist travelled from town R through towns Q and S to town P.\n\n| Town | Arrival | Departure |\n|------|---------|----------|\n| R | — | 9:00 a.m. |\n| Q | 9:30 a.m. | 9:42 a.m. |\n| S | 10:35 a.m. | 11:10 a.m. |\n| P | 1:30 p.m. | — |\n\n(a) How long did the motor cyclist stay at town S?\n(b) Find the time the motor cyclist took to travel from town R to town P.\n(c) If the distance from town R to town P is 180 km, calculate the average speed of the motor cyclist for the whole journey.",
+      "marksTotal": 5,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 27"
+    },
+    {
+      "ref": "item_q28",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q21_32",
+      "orderIndex": 27,
+      "itemType": "multiPart",
+      "stemMarkdown": "Madada sold his radio to Aguti at sh. 63,000 making a loss of 10%. Aguti later sold the radio to Chebet at a profit of 15%.\n\n(a) Calculate the amount of money Madada paid for the radio.\n(b) For how much money did Aguti sell the radio?",
+      "marksTotal": 5,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 28"
+    },
+    {
+      "ref": "item_q29",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q21_32",
+      "orderIndex": 28,
+      "itemType": "multiPart",
+      "stemMarkdown": "Study the figure below and use it to answer the questions that follow.\n\nThe figure is a composite shape made of a rectangle (7m × 9m) and a triangle (base 4m, height 3m) attached to one side. The total length of one side is 10m.\n\n(a) Calculate the area of the figure.\n(b) Work out the perimeter of the figure.",
+      "marksTotal": 6,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 29",
+      "mediaRefs": [
+        {
+          "mediaId": "media_q29",
+          "url": "/exam-assets/ple-maths-2015/q29a-q29b-perimeter.jpeg",
+          "altText": "Diagram for PLE Mathematics 2015 Question 29",
+          "caption": "Question 29 diagram"
+        }
+      ]
+    },
+    {
+      "ref": "item_q30",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q21_32",
+      "orderIndex": 29,
+      "itemType": "shortText",
+      "stemMarkdown": "Two taps F and E are connected to a water tank. Tap F can fill the tank in 2 hours while E can empty it in 3 hours. One day when the tank was ½ full of water, the taps were opened at the same time. How long did it take to fill the tank?",
+      "marksTotal": 5,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 30"
+    },
+    {
+      "ref": "item_q31",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q21_32",
+      "orderIndex": 30,
+      "itemType": "shortText",
+      "stemMarkdown": "A geometry set costs half as much as a book. A book costs sh.600 more than a fountain pen. If the total cost of the three items is sh.6,900, find the cost of the geometry set.",
+      "marksTotal": 4,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 31"
+    },
+    {
+      "ref": "item_q32",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q21_32",
+      "orderIndex": 31,
+      "itemType": "multiPart",
+      "stemMarkdown": "A plane flew from airport K to airport T on a bearing of 120°. The distance between K and T is 600 km. It then left airport T for airport R on a bearing of 210°. The distance between T and R is 500 km.\n\n(a) Sketch the journey made by the plane.\n(b) Using a scale of 1 cm to represent 100 km draw an accurate diagram to show the journey made by the plane.\n(c) Find the bearing of airport R from airport K.",
+      "marksTotal": 6,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE Mathematics 2015 Uganda, Question 32"
+    }
+  ],
+  "interactions": [
+    {
+      "ref": "int_q1",
+      "itemRef": "item_q1",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q1"
+    },
+    {
+      "ref": "int_q2",
+      "itemRef": "item_q2",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q2"
+    },
+    {
+      "ref": "int_q3",
+      "itemRef": "item_q3",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q3"
+    },
+    {
+      "ref": "int_q4",
+      "itemRef": "item_q4",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q4"
+    },
+    {
+      "ref": "int_q5",
+      "itemRef": "item_q5",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q5"
+    },
+    {
+      "ref": "int_q6",
+      "itemRef": "item_q6",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q6"
+    },
+    {
+      "ref": "int_q7",
+      "itemRef": "item_q7",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q7"
+    },
+    {
+      "ref": "int_q8",
+      "itemRef": "item_q8",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q8"
+    },
+    {
+      "ref": "int_q9",
+      "itemRef": "item_q9",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q9"
+    },
+    {
+      "ref": "int_q10",
+      "itemRef": "item_q10",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q10"
+    },
+    {
+      "ref": "int_q11",
+      "itemRef": "item_q11",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q11"
+    },
+    {
+      "ref": "int_q12",
+      "itemRef": "item_q12",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q12"
+    },
+    {
+      "ref": "int_q13",
+      "itemRef": "item_q13",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q13"
+    },
+    {
+      "ref": "int_q14",
+      "itemRef": "item_q14",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q14"
+    },
+    {
+      "ref": "int_q15",
+      "itemRef": "item_q15",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q15"
+    },
+    {
+      "ref": "int_q16",
+      "itemRef": "item_q16",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q16"
+    },
+    {
+      "ref": "int_q17",
+      "itemRef": "item_q17",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q17"
+    },
+    {
+      "ref": "int_q18",
+      "itemRef": "item_q18",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q18"
+    },
+    {
+      "ref": "int_q19",
+      "itemRef": "item_q19",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q19"
+    },
+    {
+      "ref": "int_q20",
+      "itemRef": "item_q20",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q20"
+    },
+    {
+      "ref": "int_q21_a",
+      "itemRef": "item_q21",
+      "orderIndex": 0,
+      "responseMode": "textarea",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": true,
+      "promptMarkdown": "Complete the Venn diagram",
+      "markingRuleRef": "mr_q21_a",
+      "label": "(a)"
+    },
+    {
+      "ref": "int_q21_b",
+      "itemRef": "item_q21",
+      "orderIndex": 1,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Find the value of d",
+      "markingRuleRef": "mr_q21_b",
+      "label": "(b)"
+    },
+    {
+      "ref": "int_q22_a",
+      "itemRef": "item_q22",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 3,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Find the number",
+      "markingRuleRef": "mr_q22_a",
+      "label": "(a)"
+    },
+    {
+      "ref": "int_q22_b",
+      "itemRef": "item_q22",
+      "orderIndex": 1,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Work out the expression",
+      "markingRuleRef": "mr_q22_b",
+      "label": "(b)"
+    },
+    {
+      "ref": "int_q23_a",
+      "itemRef": "item_q23",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Euros for Ug. Sh. 603,000",
+      "markingRuleRef": "mr_q23_a",
+      "label": "(a)"
+    },
+    {
+      "ref": "int_q23_b",
+      "itemRef": "item_q23",
+      "orderIndex": 1,
+      "responseMode": "textShort",
+      "marks": 3,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "US dollars for 109,500 Rwandese francs",
+      "markingRuleRef": "mr_q23_b",
+      "label": "(b)"
+    },
+    {
+      "ref": "int_q24",
+      "itemRef": "item_q24",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 6,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q24"
+    },
+    {
+      "ref": "int_q25_a",
+      "itemRef": "item_q25",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Modal number of mangoes",
+      "markingRuleRef": "mr_q25_a",
+      "label": "(a)"
+    },
+    {
+      "ref": "int_q25_b",
+      "itemRef": "item_q25",
+      "orderIndex": 1,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Mean number of mangoes",
+      "markingRuleRef": "mr_q25_b",
+      "label": "(b)"
+    },
+    {
+      "ref": "int_q25_c",
+      "itemRef": "item_q25",
+      "orderIndex": 2,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Mangoes sold on seventh day",
+      "markingRuleRef": "mr_q25_c",
+      "label": "(c)"
+    },
+    {
+      "ref": "int_q26_a",
+      "itemRef": "item_q26",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Angle k",
+      "markingRuleRef": "mr_q26_a",
+      "label": "(a)"
+    },
+    {
+      "ref": "int_q26_b",
+      "itemRef": "item_q26",
+      "orderIndex": 1,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Angle g",
+      "markingRuleRef": "mr_q26_b",
+      "label": "(b)"
+    },
+    {
+      "ref": "int_q27_a",
+      "itemRef": "item_q27",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Time stayed at town S",
+      "markingRuleRef": "mr_q27_a",
+      "label": "(a)"
+    },
+    {
+      "ref": "int_q27_b",
+      "itemRef": "item_q27",
+      "orderIndex": 1,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Total travel time from R to P",
+      "markingRuleRef": "mr_q27_b",
+      "label": "(b)"
+    },
+    {
+      "ref": "int_q27_c",
+      "itemRef": "item_q27",
+      "orderIndex": 2,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Average speed",
+      "markingRuleRef": "mr_q27_c",
+      "label": "(c)"
+    },
+    {
+      "ref": "int_q28_a",
+      "itemRef": "item_q28",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 3,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Madada's cost price",
+      "markingRuleRef": "mr_q28_a",
+      "label": "(a)"
+    },
+    {
+      "ref": "int_q28_b",
+      "itemRef": "item_q28",
+      "orderIndex": 1,
+      "responseMode": "textShort",
+      "marks": 2,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Aguti's selling price",
+      "markingRuleRef": "mr_q28_b",
+      "label": "(b)"
+    },
+    {
+      "ref": "int_q29_a",
+      "itemRef": "item_q29",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 3,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Area of the figure",
+      "markingRuleRef": "mr_q29_a",
+      "label": "(a)"
+    },
+    {
+      "ref": "int_q29_b",
+      "itemRef": "item_q29",
+      "orderIndex": 1,
+      "responseMode": "textShort",
+      "marks": 3,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Perimeter of the figure",
+      "markingRuleRef": "mr_q29_b",
+      "label": "(b)"
+    },
+    {
+      "ref": "int_q30",
+      "itemRef": "item_q30",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 5,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q30"
+    },
+    {
+      "ref": "int_q31",
+      "itemRef": "item_q31",
+      "orderIndex": 0,
+      "responseMode": "textShort",
+      "marks": 4,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Enter your answer.",
+      "markingRuleRef": "mr_q31"
+    },
+    {
+      "ref": "int_q32_a",
+      "itemRef": "item_q32",
+      "orderIndex": 0,
+      "responseMode": "textarea",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "promptMarkdown": "Sketch the journey",
+      "markingRuleRef": "mr_q32_a",
+      "label": "(a)"
+    },
+    {
+      "ref": "int_q32_b",
+      "itemRef": "item_q32",
+      "orderIndex": 1,
+      "responseMode": "textarea",
+      "marks": 4,
+      "required": true,
+      "manualReviewDefault": true,
+      "promptMarkdown": "Accurate scale diagram",
+      "markingRuleRef": "mr_q32_b",
+      "label": "(b)"
+    },
+    {
+      "ref": "int_q32_c",
+      "itemRef": "item_q32",
+      "orderIndex": 2,
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Bearing of R from K",
+      "markingRuleRef": "mr_q32_c",
+      "label": "(c)"
+    }
+  ],
+  "markingRules": [
+    {
+      "ref": "mr_q1",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "79",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q2",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "80010",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q3",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "3x - 35",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": false,
+        "allowUnitOmission": false
+      }
+    },
+    {
+      "ref": "mr_q4",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "16",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q5",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "4",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q6",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "30",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q7",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "7/3",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": false,
+        "allowUnitOmission": false
+      }
+    },
+    {
+      "ref": "mr_q8",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "7:15pm",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": false,
+        "allowUnitOmission": false
+      }
+    },
+    {
+      "ref": "mr_q9",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "2",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q10",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "31600",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q11",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "72",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q12",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "13",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q13",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "24",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q14",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "10100",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": false,
+        "allowUnitOmission": false
+      }
+    },
+    {
+      "ref": "mr_q15",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "65",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q16",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "36",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q17",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "7",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q18",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "16",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q19",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "16",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q20",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "7",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q21_a",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "exactAnswer": "T only: 31-d, V only: d+5, Both: d, Neither: 3",
+      "notes": "Manual review required because the source answer is drawing, diagram completion, or scale-sketch based."
+    },
+    {
+      "ref": "mr_q21_b",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "11",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q22_a",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "6027.03",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q22_b",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "255",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q23_a",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "150",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q23_b",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "150",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q24",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "80",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q25_a",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "35",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q25_b",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "40",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q25_c",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "68",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q26_a",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "80",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q26_b",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "136",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q27_a",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "35",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q27_b",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "4.5",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q27_c",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "40",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q28_a",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "70000",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q28_b",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "72450",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q29_a",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "69",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q29_b",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "36",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q30",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "3",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q31",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "1500",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    },
+    {
+      "ref": "mr_q32_a",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "exactAnswer": "sketch showing K to T at 120° bearing, then T to R at 210° bearing",
+      "notes": "Manual review required because the source answer is drawing, diagram completion, or scale-sketch based."
+    },
+    {
+      "ref": "mr_q32_b",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "exactAnswer": "accurate diagram with K-T = 6cm at 120°, T-R = 5cm at 210°",
+      "notes": "Manual review required because the source answer is drawing, diagram completion, or scale-sketch based."
+    },
+    {
+      "ref": "mr_q32_c",
+      "markingMode": "normalizedTextMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "160",
+      "notes": "Auto-mark with normalized answer comparison.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": true
+      }
+    }
+  ],
+  "modelAnswerVersions": [
+    {
+      "ref": "mav_q1",
+      "itemRef": "item_q1",
+      "interactionRef": "int_q1",
+      "versionNumber": 1,
+      "approvedAnswer": "79",
+      "acceptableAlternatives": [
+        "79"
+      ],
+      "explanation": "124 - 45 = 79\n\nStep-by-step:\n• Borrow from tens: 14 - 5 = 9\n• Borrow from hundreds: 11 - 4 = 7\n• Result: 79",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q2",
+      "itemRef": "item_q2",
+      "interactionRef": "int_q2",
+      "versionNumber": 1,
+      "approvedAnswer": "80010",
+      "acceptableAlternatives": [
+        "80010"
+      ],
+      "explanation": "Eighty thousand = 80,000\nTen = 10\n80,000 + 10 = 80,010",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q3",
+      "itemRef": "item_q3",
+      "interactionRef": "int_q3",
+      "versionNumber": 1,
+      "approvedAnswer": "3x - 35",
+      "acceptableAlternatives": [
+        "3x - 35"
+      ],
+      "explanation": "18x - 5(3x + 7)\n= 18x - 15x - 35\n= 3x - 35",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q4",
+      "itemRef": "item_q4",
+      "interactionRef": "int_q4",
+      "versionNumber": 1,
+      "approvedAnswer": "16",
+      "acceptableAlternatives": [
+        "16"
+      ],
+      "explanation": "Set K has 4 elements.\nNumber of subsets = 2^n = 2^4 = 16",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q5",
+      "itemRef": "item_q5",
+      "interactionRef": "int_q5",
+      "versionNumber": 1,
+      "approvedAnswer": "4",
+      "acceptableAlternatives": [
+        "4"
+      ],
+      "explanation": "Start at 7 on the number line.\nMove 3 steps to the left: 7 → 6 → 5 → 4\nAnswer: 4",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q6",
+      "itemRef": "item_q6",
+      "interactionRef": "int_q6",
+      "versionNumber": 1,
+      "approvedAnswer": "30",
+      "acceptableAlternatives": [
+        "30"
+      ],
+      "explanation": "Prime numbers: 2, 3, 5, 7, 11, 13, 17, 19, ...\n5th prime = 11\n8th prime = 19\n11 + 19 = 30",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q7",
+      "itemRef": "item_q7",
+      "interactionRef": "int_q7",
+      "versionNumber": 1,
+      "approvedAnswer": "7/3",
+      "acceptableAlternatives": [
+        "7/3"
+      ],
+      "explanation": "14/15 ÷ 2/5\n= 14/15 × 5/2\n= 70/30\n= 7/3 (or 2⅓)",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q8",
+      "itemRef": "item_q8",
+      "interactionRef": "int_q8",
+      "versionNumber": 1,
+      "approvedAnswer": "7:15pm",
+      "acceptableAlternatives": [
+        "7:15pm"
+      ],
+      "explanation": "Start: 4:30 p.m.\nAdd 2 hours: 6:30 p.m.\nAdd ¾ hour (45 min): 7:15 p.m.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q9",
+      "itemRef": "item_q9",
+      "interactionRef": "int_q9",
+      "versionNumber": 1,
+      "approvedAnswer": "2",
+      "acceptableAlternatives": [
+        "2"
+      ],
+      "explanation": "The figure has 2 lines of symmetry:\n• One vertical line through the center\n• One horizontal line through the center",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q10",
+      "itemRef": "item_q10",
+      "interactionRef": "int_q10",
+      "versionNumber": 1,
+      "approvedAnswer": "31600",
+      "acceptableAlternatives": [
+        "31600"
+      ],
+      "explanation": "Selling price = sh32,800\nProfit = sh1,200\nCost price = Selling price - Profit\n= 32,800 - 1,200 = sh31,600",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q11",
+      "itemRef": "item_q11",
+      "interactionRef": "int_q11",
+      "versionNumber": 1,
+      "approvedAnswer": "72",
+      "acceptableAlternatives": [
+        "72"
+      ],
+      "explanation": "Total cars = 192\nJapanese cars = 5/8 × 192 = 120\nNon-Japanese cars = 192 - 120 = 72",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q12",
+      "itemRef": "item_q12",
+      "interactionRef": "int_q12",
+      "versionNumber": 1,
+      "approvedAnswer": "13",
+      "acceptableAlternatives": [
+        "13"
+      ],
+      "explanation": "2.6 kg = 2,600 g\nNumber of packets = 2,600 ÷ 200 = 13",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q13",
+      "itemRef": "item_q13",
+      "interactionRef": "int_q13",
+      "versionNumber": 1,
+      "approvedAnswer": "24",
+      "acceptableAlternatives": [
+        "24"
+      ],
+      "explanation": "a² = (-2)² = 4\na² + c = 4 + 4 = 8\nb(a² + c) = 3 × 8 = 24",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q14",
+      "itemRef": "item_q14",
+      "interactionRef": "int_q14",
+      "versionNumber": 1,
+      "approvedAnswer": "10100",
+      "acceptableAlternatives": [
+        "10100"
+      ],
+      "explanation": "Binary addition:\n  1101\n+ 0111\n------\n 10100\n\nAnswer: 10100₂",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q15",
+      "itemRef": "item_q15",
+      "interactionRef": "int_q15",
+      "versionNumber": 1,
+      "approvedAnswer": "65",
+      "acceptableAlternatives": [
+        "65"
+      ],
+      "explanation": "Given: 2y = 130°\ny = 130° ÷ 2 = 65°",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q16",
+      "itemRef": "item_q16",
+      "interactionRef": "int_q16",
+      "versionNumber": 1,
+      "approvedAnswer": "36",
+      "acceptableAlternatives": [
+        "36"
+      ],
+      "explanation": "12 = 2 × 2 × 3\n18 = 2 × 3 × 3\nLCM = 2 × 2 × 3 × 3 = 36",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q17",
+      "itemRef": "item_q17",
+      "interactionRef": "int_q17",
+      "versionNumber": 1,
+      "approvedAnswer": "7",
+      "acceptableAlternatives": [
+        "7"
+      ],
+      "explanation": "Ordered: 1, 4, 6, 8, 9, 10\nMedian = average of middle two = (6 + 8) ÷ 2 = 7",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q18",
+      "itemRef": "item_q18",
+      "interactionRef": "int_q18",
+      "versionNumber": 1,
+      "approvedAnswer": "16",
+      "acceptableAlternatives": [
+        "16"
+      ],
+      "explanation": "Ratio goats:sheep = 3:2\n3 parts = 24 goats\n1 part = 8\nSheep = 2 parts = 16",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q19",
+      "itemRef": "item_q19",
+      "interactionRef": "int_q19",
+      "versionNumber": 1,
+      "approvedAnswer": "16",
+      "acceptableAlternatives": [
+        "16"
+      ],
+      "explanation": "Let capacity = x litres\n¾x - 4 = ½x\n¾x - ½x = 4\n¼x = 4\nx = 16 litres",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q20",
+      "itemRef": "item_q20",
+      "interactionRef": "int_q20",
+      "versionNumber": 1,
+      "approvedAnswer": "7",
+      "acceptableAlternatives": [
+        "7"
+      ],
+      "explanation": "Total eggs = 1,008\nEggs per box = 144\nBoxes needed = 1,008 ÷ 144 = 7",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q21_a",
+      "itemRef": "item_q21",
+      "interactionRef": "int_q21_a",
+      "versionNumber": 1,
+      "approvedAnswer": "T only: 31-d, V only: d+5, Both: d, Neither: 3",
+      "acceptableAlternatives": [
+        "T only: 31-d, V only: d+5, Both: d, Neither: 3"
+      ],
+      "explanation": "Tennis only = 31 - d (since 31 play tennis including both)\nVolleyball only = d + 5\nBoth = d\nNeither = 3",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q21_b",
+      "itemRef": "item_q21",
+      "interactionRef": "int_q21_b",
+      "versionNumber": 1,
+      "approvedAnswer": "11",
+      "acceptableAlternatives": [
+        "11"
+      ],
+      "explanation": "Volleyball altogether = 27\nVolleyball only + Both = 27\n(d + 5) + d = 27\n2d + 5 = 27\n2d = 22\nd = 11",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q22_a",
+      "itemRef": "item_q22",
+      "interactionRef": "int_q22_a",
+      "versionNumber": 1,
+      "approvedAnswer": "6027.03",
+      "acceptableAlternatives": [
+        "6027.03"
+      ],
+      "explanation": "6 × 10³ = 6,000\n2 × 10¹ = 20\n7 × 10⁰ = 7\n3 × 10⁻² = 0.03\nTotal = 6,000 + 20 + 7 + 0.03 = 6,027.03",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q22_b",
+      "itemRef": "item_q22",
+      "interactionRef": "int_q22_b",
+      "versionNumber": 1,
+      "approvedAnswer": "255",
+      "acceptableAlternatives": [
+        "255"
+      ],
+      "explanation": "(8.5 × 14) + (8.5 × 16)\n= 8.5 × (14 + 16)\n= 8.5 × 30\n= 255",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q23_a",
+      "itemRef": "item_q23",
+      "interactionRef": "int_q23_a",
+      "versionNumber": 1,
+      "approvedAnswer": "150",
+      "acceptableAlternatives": [
+        "150"
+      ],
+      "explanation": "Bank buys 1 Euro at sh4,020 (customer sells)\nEuros = 603,000 ÷ 4,020 = 150 Euros",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q23_b",
+      "itemRef": "item_q23",
+      "interactionRef": "int_q23_b",
+      "versionNumber": 1,
+      "approvedAnswer": "150",
+      "acceptableAlternatives": [
+        "150"
+      ],
+      "explanation": "First convert RWF to UGX (bank buys RWF at 5.0):\n109,500 × 5.0 = 547,500 UGX\nThen convert to USD (bank sells USD at 3,650):\n547,500 ÷ 3,650 = 150 US dollars",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q24",
+      "itemRef": "item_q24",
+      "interactionRef": "int_q24",
+      "versionNumber": 1,
+      "approvedAnswer": "80",
+      "acceptableAlternatives": [
+        "80"
+      ],
+      "explanation": "Volume of container A = πr²h = (22/7) × 14² × 50 = 30,800 cm³\nVolume of one cup = πr²h = (22/7) × 3.5² × 10 = 385 cm³\nNumber of cups = 30,800 ÷ 385 = 80 cups",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q25_a",
+      "itemRef": "item_q25",
+      "interactionRef": "int_q25_a",
+      "versionNumber": 1,
+      "approvedAnswer": "35",
+      "acceptableAlternatives": [
+        "35"
+      ],
+      "explanation": "Mode is the most frequent value.\n35 appears twice, all others appear once.\nMode = 35",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q25_b",
+      "itemRef": "item_q25",
+      "interactionRef": "int_q25_b",
+      "versionNumber": 1,
+      "approvedAnswer": "40",
+      "acceptableAlternatives": [
+        "40"
+      ],
+      "explanation": "Sum = 60 + 35 + 40 + 28 + 42 + 35 = 240\nMean = 240 ÷ 6 = 40",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q25_c",
+      "itemRef": "item_q25",
+      "interactionRef": "int_q25_c",
+      "versionNumber": 1,
+      "approvedAnswer": "68",
+      "acceptableAlternatives": [
+        "68"
+      ],
+      "explanation": "Mean for 7 days = 44\nTotal for 7 days = 44 × 7 = 308\nTotal for 6 days = 240\nSeventh day = 308 - 240 = 68",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q26_a",
+      "itemRef": "item_q26",
+      "interactionRef": "int_q26_a",
+      "versionNumber": 1,
+      "approvedAnswer": "80",
+      "acceptableAlternatives": [
+        "80"
+      ],
+      "explanation": "Angles on a straight line sum to 180°\nk + 44° + 56° = 180°\nk + 100° = 180°\nk = 80°",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q26_b",
+      "itemRef": "item_q26",
+      "interactionRef": "int_q26_b",
+      "versionNumber": 1,
+      "approvedAnswer": "136",
+      "acceptableAlternatives": [
+        "136"
+      ],
+      "explanation": "Angle g and 44° are on a straight line (supplementary)\ng + 44° = 180°\ng = 136°",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q27_a",
+      "itemRef": "item_q27",
+      "interactionRef": "int_q27_a",
+      "versionNumber": 1,
+      "approvedAnswer": "35",
+      "acceptableAlternatives": [
+        "35"
+      ],
+      "explanation": "Arrival at S: 10:35 a.m.\nDeparture from S: 11:10 a.m.\nTime at S = 11:10 - 10:35 = 35 minutes",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q27_b",
+      "itemRef": "item_q27",
+      "interactionRef": "int_q27_b",
+      "versionNumber": 1,
+      "approvedAnswer": "4.5",
+      "acceptableAlternatives": [
+        "4.5"
+      ],
+      "explanation": "Departure from R: 9:00 a.m.\nArrival at P: 1:30 p.m.\nTime = 4 hours 30 minutes = 4.5 hours",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q27_c",
+      "itemRef": "item_q27",
+      "interactionRef": "int_q27_c",
+      "versionNumber": 1,
+      "approvedAnswer": "40",
+      "acceptableAlternatives": [
+        "40"
+      ],
+      "explanation": "Distance = 180 km\nTime = 4.5 hours\nAverage speed = 180 ÷ 4.5 = 40 km/hr",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q28_a",
+      "itemRef": "item_q28",
+      "interactionRef": "int_q28_a",
+      "versionNumber": 1,
+      "approvedAnswer": "70000",
+      "acceptableAlternatives": [
+        "70000"
+      ],
+      "explanation": "Selling at 10% loss means selling at 90% of cost\n90% of cost = 63,000\nCost = 63,000 × 100/90 = 70,000",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q28_b",
+      "itemRef": "item_q28",
+      "interactionRef": "int_q28_b",
+      "versionNumber": 1,
+      "approvedAnswer": "72450",
+      "acceptableAlternatives": [
+        "72450"
+      ],
+      "explanation": "Aguti bought at 63,000\nSold at 15% profit\nProfit = 15% × 63,000 = 9,450\nSelling price = 63,000 + 9,450 = 72,450",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q29_a",
+      "itemRef": "item_q29",
+      "interactionRef": "int_q29_a",
+      "versionNumber": 1,
+      "approvedAnswer": "69",
+      "acceptableAlternatives": [
+        "69"
+      ],
+      "explanation": "Area of rectangle = 7 × 9 = 63 m²\nArea of triangle = ½ × 4 × 3 = 6 m²\nTotal area = 63 + 6 = 69 m²",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q29_b",
+      "itemRef": "item_q29",
+      "interactionRef": "int_q29_b",
+      "versionNumber": 1,
+      "approvedAnswer": "36",
+      "acceptableAlternatives": [
+        "36"
+      ],
+      "explanation": "Slanted side (Pythagoras): √(4² + 3²) = √25 = 5 m\nPerimeter = 10 + 5 + 5 + 7 + 9 = 36 m",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q30",
+      "itemRef": "item_q30",
+      "interactionRef": "int_q30",
+      "versionNumber": 1,
+      "approvedAnswer": "3",
+      "acceptableAlternatives": [
+        "3"
+      ],
+      "explanation": "Tap F fills ½ tank per hour\nTap E empties ⅓ tank per hour\nNet rate = ½ - ⅓ = 1/6 tank per hour\nTank is ½ full, so ½ needs to be filled\nTime = ½ ÷ 1/6 = 3 hours",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q31",
+      "itemRef": "item_q31",
+      "interactionRef": "int_q31",
+      "versionNumber": 1,
+      "approvedAnswer": "1500",
+      "acceptableAlternatives": [
+        "1500"
+      ],
+      "explanation": "Let geometry set = x\nBook = 2x\nFountain pen = 2x - 600\nTotal: x + 2x + (2x - 600) = 6,900\n5x - 600 = 6,900\n5x = 7,500\nx = 1,500",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q32_a",
+      "itemRef": "item_q32",
+      "interactionRef": "int_q32_a",
+      "versionNumber": 1,
+      "approvedAnswer": "sketch showing K to T at 120° bearing, then T to R at 210° bearing",
+      "acceptableAlternatives": [
+        "sketch showing K to T at 120° bearing, then T to R at 210° bearing"
+      ],
+      "explanation": "Draw point K, then line at 120° (clockwise from north) for 6 cm (600 km). From T, draw line at 210° for 5 cm (500 km) to R.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q32_b",
+      "itemRef": "item_q32",
+      "interactionRef": "int_q32_b",
+      "versionNumber": 1,
+      "approvedAnswer": "accurate diagram with K-T = 6cm at 120°, T-R = 5cm at 210°",
+      "acceptableAlternatives": [
+        "accurate diagram with K-T = 6cm at 120°, T-R = 5cm at 210°"
+      ],
+      "explanation": "Scale: 1 cm = 100 km\nK to T: 6 cm at bearing 120°\nT to R: 5 cm at bearing 210°\nUse protractor and ruler for accuracy.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q32_c",
+      "itemRef": "item_q32",
+      "interactionRef": "int_q32_c",
+      "versionNumber": 1,
+      "approvedAnswer": "160",
+      "acceptableAlternatives": [
+        "160"
+      ],
+      "explanation": "Using scale drawing or trigonometry:\nMeasure the angle clockwise from north at K to the line KR.\nBearing of R from K ≈ 160°",
+      "status": "approved",
+      "updatedBy": "system-import"
+    }
+  ]
+}

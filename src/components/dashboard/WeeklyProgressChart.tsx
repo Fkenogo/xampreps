@@ -24,11 +24,17 @@ export default function WeeklyProgressChart({ className }: WeeklyProgressChartPr
 
   useEffect(() => {
     const fetchWeeklyData = async () => {
-      if (!profile?.id) return;
+      const userId = typeof profile?.id === 'string' ? profile.id.trim() : '';
+      if (!userId) {
+        setData([]);
+        setTrend('neutral');
+        setLoading(false);
+        return;
+      }
 
       const today = new Date();
       const weekData: DayData[] = [];
-      const historyResult = await listExamHistoryFirebase();
+      const historyResult = await listExamHistoryFirebase(userId);
       const attempts = historyResult.items || [];
 
       // Get data for last 7 days

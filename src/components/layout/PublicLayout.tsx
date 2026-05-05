@@ -1,6 +1,8 @@
 import React from 'react';
 import { SparklesIcon } from '../icons';
 import { PublicPage } from '../../types';
+import { useAuth } from '../../contexts/AuthContext';
+import { getDashboardPathForRole } from '../../lib/auth-routing';
 
 interface PublicLayoutProps {
   children: React.ReactNode;
@@ -9,59 +11,71 @@ interface PublicLayoutProps {
 }
 
 const PublicLayout: React.FC<PublicLayoutProps> = ({ children, onNavigateToAuth, onNavigate }) => {
+  const { user, role } = useAuth();
   return (
     <div className="bg-background text-foreground font-sans antialiased">
       {/* Header */}
       <header className="sticky top-0 glass z-50 border-b border-border">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <div 
-            className="flex items-center gap-2 cursor-pointer" 
+          <div
+            className="flex items-center gap-2 cursor-pointer"
             onClick={() => onNavigate('landing')}
           >
             <SparklesIcon className="w-8 h-8 text-primary" />
             <span className="text-xl font-bold">XamPreps</span>
           </div>
-          
+
           <nav className="hidden md:flex items-center gap-8">
-            <button 
-              onClick={() => onNavigate('landing')} 
+            <button
+              onClick={() => onNavigate('landing')}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
               Home
             </button>
-            <button 
-              onClick={() => onNavigate('past-papers')} 
+            <button
+              onClick={() => onNavigate('past-papers')}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
               Past Papers
             </button>
-            <button 
-              onClick={() => onNavigate('practice-papers')} 
+            <button
+              onClick={() => onNavigate('practice-papers')}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
               Practice Papers
             </button>
-            <button 
-              onClick={() => onNavigate('pricing')} 
+            <button
+              onClick={() => onNavigate('pricing')}
               className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
             >
               Pricing
             </button>
           </nav>
-          
+
           <div className="flex items-center gap-2">
-            <button 
-              onClick={onNavigateToAuth} 
-              className="text-sm font-semibold text-secondary hover:bg-secondary/10 px-4 py-2 rounded-lg transition-colors"
-            >
-              Sign In
-            </button>
-            <button 
-              onClick={onNavigateToAuth} 
-              className="text-sm font-semibold gradient-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-md hover:shadow-lg"
-            >
-              Get Started
-            </button>
+            {user && role ? (
+              <button
+                onClick={() => window.location.href = getDashboardPathForRole(role)}
+                className="text-sm font-semibold gradient-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-md hover:shadow-lg"
+              >
+                Dashboard
+              </button>
+            ) : (
+              <>
+                <button
+                  onClick={onNavigateToAuth}
+                  className="text-sm font-semibold text-secondary hover:bg-secondary/10 px-4 py-2 rounded-lg transition-colors"
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={onNavigateToAuth}
+                  className="text-sm font-semibold gradient-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-md hover:shadow-lg"
+                >
+                  Start Practicing
+                </button>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -77,63 +91,88 @@ const PublicLayout: React.FC<PublicLayoutProps> = ({ children, onNavigateToAuth,
                 <SparklesIcon className="w-8 h-8 text-primary-foreground" />
                 <span className="text-xl font-bold text-primary-foreground">XamPreps</span>
               </div>
-              <p className="text-sm text-muted-foreground mt-2">Transforming the way we learn.</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                Practice with purpose. Built for national exams across East Africa.
+              </p>
             </div>
-            
-            <FooterLinks 
-              title="Quick Links" 
-              links={['PLE Papers', 'UCE Papers', 'UACE Papers']} 
-              onNavigate={onNavigate}
-            />
-            <FooterLinks 
-              title="Resources" 
-              links={['About Us', 'Pricing', 'Contact']} 
-              onNavigate={onNavigate}
-            />
-            <FooterLinks 
-              title="Support" 
-              links={['FAQ', 'Terms of Service', 'Privacy Policy']} 
-              onNavigate={onNavigate}
-            />
+
+            <div>
+              <h4 className="font-semibold text-primary-foreground mb-4">Exam Library</h4>
+              <ul className="space-y-2">
+                <li>
+                  <button
+                    onClick={() => onNavigate('past-papers')}
+                    className="text-sm text-muted-foreground hover:text-primary-foreground transition-colors"
+                  >
+                    Past Papers
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => onNavigate('practice-papers')}
+                    className="text-sm text-muted-foreground hover:text-primary-foreground transition-colors"
+                  >
+                    Practice Papers
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => onNavigate('pricing')}
+                    className="text-sm text-muted-foreground hover:text-primary-foreground transition-colors"
+                  >
+                    Pricing
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-primary-foreground mb-4">Exam Levels</h4>
+              <ul className="space-y-2">
+                {['PLE · UCE · UACE', 'KCPE · KCSE', 'PSLE · CSEE', 'O Level · A Level'].map(level => (
+                  <li key={level}>
+                    <span className="text-sm text-muted-foreground">{level}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-primary-foreground mb-4">Get Started</h4>
+              <ul className="space-y-2">
+                <li>
+                  <button
+                    onClick={onNavigateToAuth}
+                    className="text-sm text-muted-foreground hover:text-primary-foreground transition-colors"
+                  >
+                    Create Account
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={onNavigateToAuth}
+                    className="text-sm text-muted-foreground hover:text-primary-foreground transition-colors"
+                  >
+                    Sign In
+                  </button>
+                </li>
+                <li>
+                  <a
+                    href="mailto:schools@xampreps.com"
+                    className="text-sm text-muted-foreground hover:text-primary-foreground transition-colors"
+                  >
+                    Schools &amp; Institutions
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
-          
+
           <div className="text-center text-muted-foreground text-sm mt-12 border-t border-muted-foreground/20 pt-8">
             © {new Date().getFullYear()} XamPreps. All rights reserved.
           </div>
         </div>
       </footer>
-    </div>
-  );
-};
-
-const FooterLinks: React.FC<{
-  title: string; 
-  links: string[]; 
-  onNavigate: (page: PublicPage) => void;
-}> = ({ title, links, onNavigate }) => {
-  const handleFooterClick = (link: string) => {
-    if (link === 'Pricing') {
-      onNavigate('pricing');
-    } else if (link.includes('Papers')) {
-      onNavigate('past-papers');
-    }
-  };
-
-  return (
-    <div>
-      <h4 className="font-semibold text-primary-foreground mb-4">{title}</h4>
-      <ul className="space-y-2">
-        {links.map(link => (
-          <li key={link}>
-            <button 
-              onClick={() => handleFooterClick(link)} 
-              className="text-sm text-muted-foreground hover:text-primary-foreground transition-colors"
-            >
-              {link}
-            </button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };

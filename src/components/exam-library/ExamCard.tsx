@@ -1,4 +1,5 @@
-import { Clock, BookOpen, Star, Lock, TrendingUp, Play } from 'lucide-react';
+import { Clock, BookOpen, Star, TrendingUp, Play, Globe } from 'lucide-react';
+import { COUNTRY_LABELS } from '@/lib/education-system';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -10,15 +11,24 @@ interface ExamCardProps {
     subject: string;
     year: number;
     level: string;
+    country?: string | null;
     difficulty: string;
     time_limit: number;
     question_count: number;
-    avg_score: number;
+    avg_score?: number;
     is_free: boolean;
     description?: string | null;
+    /** Source attribution for Practice Papers — shown when present */
+    source?: string | null;
+    /** Issuing authority for Past Papers — e.g. 'UNEB', 'KNEC' */
+    examAuthority?: string | null;
   };
   onStart: (examId: string) => void;
   index?: number;
+  /** Override the action button label. Defaults to "Start Exam". */
+  startLabel?: string;
+  /** When provided, clicking the card body (not the button) triggers this — used for preview. */
+  onPreview?: (examId: string) => void;
 }
 
 const subjectColors: Record<string, string> = {
@@ -38,7 +48,12 @@ const difficultyConfig: Record<string, { color: string; bgClass: string }> = {
   Hard: { color: 'text-rose-600', bgClass: 'bg-rose-100 dark:bg-rose-900/30' },
 };
 
-export default function ExamCard({ exam, onStart, index = 0 }: ExamCardProps) {
+function formatQuestionCount(count: number) {
+  return `${count} question${count === 1 ? '' : 's'}`;
+}
+
+export default function ExamCard({ exam, onStart, index = 0, startLabel = 'Start Exam', onPreview }: ExamCardProps) {
+  const countryLabel = exam.country ? ((COUNTRY_LABELS as Record<string, string>)[exam.country] ?? exam.country) : null;
   const diffConfig = difficultyConfig[exam.difficulty] || difficultyConfig.Medium;
   const subjectGradient = subjectColors[exam.subject] || 'from-primary to-secondary';
 
@@ -47,9 +62,11 @@ export default function ExamCard({ exam, onStart, index = 0 }: ExamCardProps) {
       className={cn(
         'bg-card rounded-2xl border border-border overflow-hidden',
         'hover:shadow-xl hover:shadow-primary/10 hover:border-primary/30',
-        'transition-all duration-300 group animate-fade-in'
+        'transition-all duration-300 group animate-fade-in',
+        onPreview && 'cursor-pointer'
       )}
       style={{ animationDelay: `${index * 75}ms` }}
+      onClick={onPreview ? () => onPreview(exam.id) : undefined}
     >
       {/* Header Strip */}
       <div className={cn('h-1.5 bg-gradient-to-r', subjectGradient)} />
@@ -88,34 +105,49 @@ export default function ExamCard({ exam, onStart, index = 0 }: ExamCardProps) {
           {exam.title}
         </h3>
 
-        {/* Subject & Year */}
-        <p className="text-sm text-muted-foreground mb-4">
-          {exam.subject} • {exam.year}
+        {/* Subject, Year, Country */}
+        <p className="text-sm text-muted-foreground mb-1">
+          {exam.subject}
+          {exam.year > 0 && <> • {exam.year}</>}
+          {countryLabel && <> • <Globe className="w-3 h-3 inline mx-0.5" />{countryLabel}</>}
         </p>
+        {exam.source && (
+          <p className="text-xs text-muted-foreground italic font-medium">Source: {exam.source}</p>
+        )}
+        {exam.examAuthority && (
+          <p className="text-xs text-muted-foreground mb-1 font-medium">Authority: {exam.examAuthority}</p>
+        )}
+        {(exam.source || exam.examAuthority) && <div className="mb-2" />}
 
-        {/* Stats Row */}
+        {/* Stats Row — only show non-zero values */}
         <div className="flex items-center gap-4 text-sm text-muted-foreground mb-5">
-          <span className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4" />
-            {exam.time_limit} min
-          </span>
-          <span className="flex items-center gap-1.5">
-            <BookOpen className="w-4 h-4" />
-            {exam.question_count} Q's
-          </span>
-          <span className="flex items-center gap-1.5">
-            <TrendingUp className="w-4 h-4" />
-            {exam.avg_score}% avg
-          </span>
+          {exam.time_limit > 0 && (
+            <span className="flex items-center gap-1.5">
+              <Clock className="w-4 h-4" />
+              {exam.time_limit} min
+            </span>
+          )}
+          {exam.question_count > 0 && (
+            <span className="flex items-center gap-1.5">
+              <BookOpen className="w-4 h-4" />
+              {formatQuestionCount(exam.question_count)}
+            </span>
+          )}
+          {exam.avg_score !== undefined && exam.avg_score > 0 && (
+            <span className="flex items-center gap-1.5">
+              <TrendingUp className="w-4 h-4" />
+              {exam.avg_score}% avg
+            </span>
+          )}
         </div>
 
         {/* Actions */}
         <Button
           className="w-full gap-2"
-          onClick={() => onStart(exam.id)}
+          onClick={(e) => { e.stopPropagation(); onStart(exam.id); }}
         >
           <Play className="w-4 h-4" />
-          Start Exam
+          {startLabel}
         </Button>
       </div>
     </div>

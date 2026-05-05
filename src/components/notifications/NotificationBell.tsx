@@ -58,22 +58,32 @@ export default function NotificationBell() {
   }, [user?.id]);
 
   const markAsRead = async (id: string) => {
-    await markNotificationReadFirebase(id);
-
-    setNotifications(prev =>
-      prev.map(n => (n.id === id ? { ...n, read: true } : n))
-    );
+    try {
+      await markNotificationReadFirebase(id);
+      setNotifications(prev =>
+        prev.map(n => (n.id === id ? { ...n, read: true } : n))
+      );
+    } catch (error) {
+      console.warn('Optional notification mark-read failed:', error);
+    }
   };
 
   const markAllAsRead = async () => {
-    await markAllNotificationsReadFirebase();
-
-    setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+    try {
+      await markAllNotificationsReadFirebase();
+      setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+    } catch (error) {
+      console.warn('Optional notification mark-all-read failed:', error);
+    }
   };
 
   const deleteNotification = async (id: string) => {
-    await deleteNotificationFirebase(id);
-    setNotifications(prev => prev.filter(n => n.id !== id));
+    try {
+      await deleteNotificationFirebase(id);
+      setNotifications(prev => prev.filter(n => n.id !== id));
+    } catch (error) {
+      console.warn('Optional notification delete failed:', error);
+    }
   };
 
   return (

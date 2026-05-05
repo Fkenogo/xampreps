@@ -29,11 +29,10 @@ export default function PersonalizedInsights({ className }: PersonalizedInsights
 
   useEffect(() => {
     const generateInsights = async () => {
-      if (!profile?.id) return;
-
       const newInsights: Insight[] = [];
+      const userId = typeof profile?.id === 'string' ? profile.id.trim() : '';
 
-      const historyResult = await listExamHistoryFirebase();
+      const historyResult = await listExamHistoryFirebase(userId);
       const typedAttempts = ((historyResult.items || []).slice(0, 20).map((item) => ({
         score: item.score,
         totalQuestions: item.totalQuestions,

@@ -55,31 +55,42 @@ export default function StudyRemindersCard({ className }: StudyRemindersCardProp
   }, [user?.id]);
 
   const fetchReminders = async () => {
-    if (!user?.id) return;
+    const userId = typeof user?.id === 'string' && user.id.trim().length > 0 ? user.id.trim() : null;
+    if (!userId) {
+      setReminders([]);
+      setLoading(false);
+      return;
+    }
 
-    const db = getFirebaseDb();
-    const byUserId = await getDocs(query(collection(db, 'study_reminders'), where('userId', '==', user.id)));
-    const byUserSnake = byUserId.empty
-      ? await getDocs(query(collection(db, 'study_reminders'), where('user_id', '==', user.id)))
-      : byUserId;
+    try {
+      const db = getFirebaseDb();
+      const byUserId = await getDocs(query(collection(db, 'study_reminders'), where('userId', '==', userId)));
+      const byUserSnake = byUserId.empty
+        ? await getDocs(query(collection(db, 'study_reminders'), where('user_id', '==', userId)))
+        : byUserId;
 
-    const items: StudyReminder[] = byUserSnake.docs
-      .map((snap) => {
-        const data = snap.data();
-        return {
-          id: snap.id,
-          subject: typeof data.subject === 'string' ? data.subject : 'All Subjects',
-          reminder_time:
-            typeof data.reminderTime === 'string'
-              ? data.reminderTime
-              : typeof data.reminder_time === 'string'
-                ? data.reminder_time
-                : '16:00',
-          active: typeof data.active === 'boolean' ? data.active : true,
-        };
-      })
-      .sort((a, b) => a.reminder_time.localeCompare(b.reminder_time));
-    setReminders(items);
+      const items: StudyReminder[] = byUserSnake.docs
+        .map((snap) => {
+          const data = snap.data();
+          return {
+            id: snap.id,
+            subject: typeof data.subject === 'string' ? data.subject : 'All Subjects',
+            reminder_time:
+              typeof data.reminderTime === 'string'
+                ? data.reminderTime
+                : typeof data.reminder_time === 'string'
+                  ? data.reminder_time
+                  : '16:00',
+            active: typeof data.active === 'boolean' ? data.active : true,
+          };
+        })
+        .sort((a, b) => a.reminder_time.localeCompare(b.reminder_time));
+      setReminders(items);
+    } catch (error) {
+      console.error('[StudyRemindersCard] Failed to load reminders', error);
+      setReminders([]);
+    }
+
     setLoading(false);
   };
 

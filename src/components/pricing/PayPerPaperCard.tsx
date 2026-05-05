@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, AlertTriangle } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -12,14 +12,12 @@ const PayPerPaperCard: React.FC<PayPerPaperCardProps> = ({ onSelect }) => {
     <Card className="border border-border">
       <CardHeader className="text-center pb-2">
         <CardTitle className="text-lg">Pay per paper</CardTitle>
+        <p className="text-sm text-muted-foreground">Access one paper at a time.</p>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
-        <div className="text-center">
-          <div className="flex items-baseline justify-center gap-1">
-            <span className="text-2xl font-bold">UGX 2,000</span>
-          </div>
-          <p className="text-xs text-muted-foreground mt-1">One full past exam.</p>
+        <div className="text-center py-2 bg-muted/40 rounded-xl">
+          <p className="text-sm text-muted-foreground">Per-paper pricing available after sign-up</p>
         </div>
 
         <div>
@@ -36,21 +34,16 @@ const PayPerPaperCard: React.FC<PayPerPaperCardProps> = ({ onSelect }) => {
           </ul>
         </div>
 
-        <div className="flex items-center gap-2 p-2.5 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-200 dark:border-amber-800">
-          <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 flex-shrink-0" />
-          <span className="text-xs text-amber-700 dark:text-amber-300">Max 2 papers per month</span>
-        </div>
-
-        <Button 
-          onClick={onSelect} 
+        <Button
+          onClick={onSelect}
           variant="outline"
           className="w-full"
         >
-          👉 Buy this paper
+          View plans
         </Button>
-        
+
         <p className="text-xs text-center text-muted-foreground">
-          Standard is cheaper if you practice often
+          Subscription is better value if you practice regularly
         </p>
       </CardContent>
     </Card>

@@ -22,6 +22,7 @@ interface QuestionPart {
   answer: string;
   marks: number;
   explanation?: string | null;
+  image_url?: string | null;
 }
 
 interface Question {
@@ -175,6 +176,20 @@ export default function QuestionReviewCard({
                         {totalParts > 1 ? `Part ${String.fromCharCode(97 + partIndex)}: ` : ''}
                         {part.text}
                       </p>
+                      {part.image_url && (
+                        <div className="mt-2">
+                          <img
+                            src={part.image_url}
+                            alt={`Part ${String.fromCharCode(97 + partIndex)} diagram`}
+                            className="max-w-full h-auto rounded-lg border border-border"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).style.display = 'none';
+                              (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden');
+                            }}
+                          />
+                          <p className="text-xs text-muted-foreground hidden mt-1">Diagram unavailable</p>
+                        </div>
+                      )}
                       <p className="text-xs text-muted-foreground">
                         ({part.marks} mark{part.marks !== 1 ? 's' : ''})
                       </p>

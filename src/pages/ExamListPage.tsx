@@ -8,6 +8,7 @@ import { Exam, EducationLevel, PublicPage } from '../types';
 import { Grid3X3, List } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { ALL_EDUCATION_LEVELS, getEducationLevelsByCountry } from '@/lib/education-system';
 
 interface ExamListPageProps {
   pageType: 'Past Paper' | 'Practice Paper';
@@ -26,11 +27,17 @@ const ExamListPage: React.FC<ExamListPageProps> = ({ pageType, allExams, onNavig
 
   const papersForType = useMemo(() => allExams.filter(e => e.type === pageType), [allExams, pageType]);
 
-  const { availableSubjects, availableYears } = useMemo(() => {
+  const { availableLevels, availableSubjects, availableYears } = useMemo(() => {
     const papers = selectedLevel === 'All' ? papersForType : papersForType.filter(p => p.level === selectedLevel);
+    const levelSet = new Set(papersForType.map((paper) => paper.level).filter(Boolean));
+    const levels = ALL_EDUCATION_LEVELS.filter((level) => levelSet.has(level));
     const subjects = [...new Set(papers.map(p => p.subject))].sort();
     const years = [...new Set(papers.map(p => p.year.toString()))].sort((a, b) => parseInt(b) - parseInt(a));
-    return { availableSubjects: subjects, availableYears: years };
+    return {
+      availableLevels: levels.length > 0 ? levels : getEducationLevelsByCountry('UGANDA'),
+      availableSubjects: subjects,
+      availableYears: years,
+    };
   }, [papersForType, selectedLevel]);
 
   const filteredPapers = useMemo(() => {
@@ -85,11 +92,11 @@ const ExamListPage: React.FC<ExamListPageProps> = ({ pageType, allExams, onNavig
             <h1 className="text-3xl sm:text-4xl font-bold mb-3 text-foreground">
               {pageType === 'Past Paper' ? 'Past Papers' : 'Practice Papers'}
             </h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              {pageType === 'Past Paper' 
-                ? 'Browse our collection of past papers to sharpen your skills.'
-                : 'Practice with our curated question sets designed to help you master key topics.'}
-            </p>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            {pageType === 'Past Paper' 
+              ? 'Browse official past papers from East African national examinations. Preview before signing in to practice.'
+              : 'Explore practice papers from schools, publishers, and institutions across East Africa. Preview before signing in to practice.'}
+          </p>
           </div>
 
           {/* Filters */}
@@ -105,6 +112,7 @@ const ExamListPage: React.FC<ExamListPageProps> = ({ pageType, allExams, onNavig
               onYearChange={setSelectedYear}
               selectedDifficulty={selectedDifficulty}
               onDifficultyChange={setSelectedDifficulty}
+              availableLevels={availableLevels}
               availableSubjects={availableSubjects}
               availableYears={availableYears}
             />

@@ -22,26 +22,40 @@ export default function SpacedRepetitionCard({ className }: SpacedRepetitionCard
 
   useEffect(() => {
     const fetchReviewData = async () => {
-      if (!user?.id) return;
+      const userId = typeof user?.id === 'string' && user.id.trim().length > 0 ? user.id.trim() : null;
+      if (!userId) {
+        setDueCount(0);
+        setReviewStreak(0);
+        setMasteredCount(0);
+        setLoading(false);
+        return;
+      }
 
-      const dueResult = await listReviewDueQuestionsFirebase(100);
-      const dueQuestions = dueResult.items || [];
-      setDueCount(dueQuestions.length);
-      const totalStreak = dueQuestions.reduce((acc, item) => acc + (item.history.streak || 0), 0);
-      setReviewStreak(dueQuestions.length > 0 ? Math.round(totalStreak / dueQuestions.length) : 0);
+      try {
+        const dueResult = await listReviewDueQuestionsFirebase(100);
+        const dueQuestions = dueResult.items || [];
+        setDueCount(dueQuestions.length);
+        const totalStreak = dueQuestions.reduce((acc, item) => acc + (item.history.streak || 0), 0);
+        setReviewStreak(dueQuestions.length > 0 ? Math.round(totalStreak / dueQuestions.length) : 0);
 
-      const db = getFirebaseDb();
-      const masteredByUserId = await getDocs(query(
-        collection(db, 'question_history'),
-        where('userId', '==', user.id),
-        where('streak', '>=', 5)
-      ));
-      const masteredByUserSnake = masteredByUserId.empty ? await getDocs(query(
-        collection(db, 'question_history'),
-        where('user_id', '==', user.id),
-        where('streak', '>=', 5)
-      )) : masteredByUserId;
-      setMasteredCount(masteredByUserSnake.size);
+        const db = getFirebaseDb();
+        const masteredByUserId = await getDocs(query(
+          collection(db, 'question_history'),
+          where('userId', '==', userId),
+          where('streak', '>=', 5)
+        ));
+        const masteredByUserSnake = masteredByUserId.empty ? await getDocs(query(
+          collection(db, 'question_history'),
+          where('user_id', '==', userId),
+          where('streak', '>=', 5)
+        )) : masteredByUserId;
+        setMasteredCount(masteredByUserSnake.size);
+      } catch (error) {
+        console.error('[SpacedRepetitionCard] Failed to load review data', error);
+        setDueCount(0);
+        setReviewStreak(0);
+        setMasteredCount(0);
+      }
 
       setLoading(false);
     };
