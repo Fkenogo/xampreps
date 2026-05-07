@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { Check, Loader2, RefreshCw, X } from 'lucide-react';
+import { Check, Eye, Loader2, RefreshCw, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,7 +21,13 @@ function field(record: Record<string, unknown> | null | undefined, key: string) 
 }
 
 export default function V2AnswerSuggestionsPanel() {
+  const navigate = useNavigate();
   const [status, setStatus] = useState('pending');
+  const [filters, setFilters] = useState({
+    examId: '',
+    teacherId: '',
+    issueType: '',
+  });
   const [loading, setLoading] = useState(false);
   const [savingId, setSavingId] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<V2AnswerSuggestionItem[]>([]);
@@ -35,7 +42,13 @@ export default function V2AnswerSuggestionsPanel() {
   const loadSuggestions = async () => {
     try {
       setLoading(true);
-      const response = await listAdminAnswerSuggestionsFirebase({ status, limit: 50 });
+      const response = await listAdminAnswerSuggestionsFirebase({
+        status,
+        examId: filters.examId || undefined,
+        teacherId: filters.teacherId || undefined,
+        issueType: filters.issueType || undefined,
+        limit: 75,
+      });
       setSuggestions(response.suggestions || []);
       const nextEdits: typeof edits = {};
       response.suggestions?.forEach((suggestion) => {
@@ -110,10 +123,35 @@ export default function V2AnswerSuggestionsPanel() {
           <Button variant={status === 'all' ? 'default' : 'outline'} size="sm" onClick={() => setStatus('all')}>
             All
           </Button>
+          <Button variant={status === 'accepted' ? 'default' : 'outline'} size="sm" onClick={() => setStatus('accepted')}>
+            Accepted
+          </Button>
+          <Button variant={status === 'rejected' ? 'default' : 'outline'} size="sm" onClick={() => setStatus('rejected')}>
+            Rejected
+          </Button>
           <Button variant="outline" size="icon" onClick={loadSuggestions} disabled={loading}>
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
           </Button>
         </div>
+      </div>
+      <div className="mt-4 grid gap-2 md:grid-cols-4">
+        <Input placeholder="Exam ID" value={filters.examId} onChange={(event) => setFilters((current) => ({ ...current, examId: event.target.value }))} />
+        <Input placeholder="Teacher ID" value={filters.teacherId} onChange={(event) => setFilters((current) => ({ ...current, teacherId: event.target.value }))} />
+        <select
+          className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+          value={filters.issueType}
+          onChange={(event) => setFilters((current) => ({ ...current, issueType: event.target.value }))}
+        >
+          <option value="">All issue types</option>
+          <option value="wrong_or_too_strict_answer_key">Wrong or too strict answer key</option>
+          <option value="missing_alternative_answer">Missing alternative answer</option>
+          <option value="weak_explanation">Weak explanation</option>
+          <option value="marking_mode_should_change">Marking mode should change</option>
+          <option value="needs_manual_review_instead_of_auto_mark">Needs manual review</option>
+          <option value="question_wording_issue">Question wording issue</option>
+          <option value="typo_or_media_issue">Typo or media issue</option>
+        </select>
+        <Button variant="outline" onClick={loadSuggestions} disabled={loading}>Apply filters</Button>
       </div>
 
       {loading ? (
@@ -122,7 +160,7 @@ export default function V2AnswerSuggestionsPanel() {
         </div>
       ) : suggestions.length === 0 ? (
         <div className="mt-4 rounded-lg border border-dashed border-border bg-muted/20 p-4 text-sm text-muted-foreground">
-          No teacher suggestions found for this filter.
+          {status === 'pending' ? 'No pending content feedback.' : 'No content feedback found for this filter.'}
         </div>
       ) : (
         <div className="mt-4 space-y-4">
@@ -139,13 +177,20 @@ export default function V2AnswerSuggestionsPanel() {
               suggestion.currentQuestionText,
               text(field(suggestion.interaction, 'promptMarkdown'), text(field(suggestion.item, 'stemMarkdown'), 'Question')),
             );
+            const studentAnswer = suggestion.studentAnswer || text(field(suggestion.submission, 'responsePayload'), '');
 
             return (
               <article key={suggestion.id} className="rounded-lg border border-border bg-background p-4">
                 <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
                   <div>
                     <h4 className="font-semibold text-foreground">{examTitle}</h4>
-                    <p className="text-sm text-muted-foreground">{suggestion.teacherName} reported {suggestion.issueType.replace(/_/g, ' ')}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {suggestion.teacherName} reported {suggestion.issueType.replace(/_/g, ' ')}
+                      {suggestion.studentName ? ` | Student: ${suggestion.studentName}` : ''}
+                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Question: {suggestion.questionLabel || suggestion.sourceReference || suggestion.interactionId}
+                    </p>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="outline">{suggestion.status}</Badge>
@@ -162,6 +207,10 @@ export default function V2AnswerSuggestionsPanel() {
                     <div>
                       <p className="text-xs uppercase text-muted-foreground">Current answer</p>
                       <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">{suggestion.currentAnswer || 'No current answer recorded'}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase text-muted-foreground">Student answer</p>
+                      <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">{studentAnswer || 'No student answer recorded'}</p>
                     </div>
                     {suggestion.teacherComment ? (
                       <div className="rounded-md bg-muted/40 p-3">
@@ -188,7 +237,7 @@ export default function V2AnswerSuggestionsPanel() {
                       }))}
                     />
                     <Textarea
-                      placeholder="Explanation / teacher guidance"
+                      placeholder="Suggested explanation / teacher guidance"
                       value={edit.explanation}
                       onChange={(event) => setEdits((current) => ({
                         ...current,
@@ -242,6 +291,17 @@ export default function V2AnswerSuggestionsPanel() {
                     <X className="h-4 w-4" />
                     Reject
                   </Button>
+                  {suggestion.examId ? (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="gap-2"
+                      onClick={() => navigate(`/dashboard/admin/v2-exams/${suggestion.examId}/edit`)}
+                    >
+                      <Eye className="h-4 w-4" />
+                      Open context
+                    </Button>
+                  ) : null}
                 </div>
               </article>
             );

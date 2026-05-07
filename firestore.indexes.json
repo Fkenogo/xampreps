@@ -93,6 +93,14 @@
       "collectionGroup": "review_tasks",
       "queryScope": "COLLECTION",
       "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "review_tasks",
+      "queryScope": "COLLECTION",
+      "fields": [
         { "fieldPath": "examId", "order": "ASCENDING" },
         { "fieldPath": "priority", "order": "DESCENDING" }
       ]

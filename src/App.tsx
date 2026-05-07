@@ -14,8 +14,10 @@ import StudentDashboard from "./pages/dashboards/StudentDashboard";
 import ParentDashboard from "./pages/dashboards/ParentDashboard";
 import SchoolDashboard from "./pages/dashboards/SchoolDashboard";
 import TeacherDashboard from "./pages/dashboards/TeacherDashboard";
+import TeacherReviewDetailPage from "./pages/TeacherReviewDetailPage";
 import SchoolAdminDashboard from "./pages/dashboards/SchoolAdminDashboard";
 import AdminDashboard from "./pages/dashboards/AdminDashboard";
+import AdminV2ExamEditorPage from "./pages/AdminV2ExamEditorPage";
 import ExamsPage from "./pages/ExamsPage";
 import ExamTakingPage from "./pages/ExamTakingPage";
 import ExamResultsPage from "./pages/ExamResultsPage";
@@ -112,6 +114,12 @@ const App = () => (
               </ProtectedRoute>
             } />
 
+            <Route path="/dashboard/teacher/reviews/:attemptId" element={
+              <ProtectedRoute allowedRoles={['teacher']}>
+                <TeacherReviewDetailPage />
+              </ProtectedRoute>
+            } />
+
             <Route path="/dashboard/school-admin" element={
               <ProtectedRoute allowedRoles={['school_admin']}>
                 <SchoolAdminDashboard />
@@ -128,6 +136,12 @@ const App = () => (
             <Route path="/dashboard/admin" element={
               <ProtectedRoute allowedRoles={['admin', 'super_admin']}>
                 <AdminDashboard />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/dashboard/admin/v2-exams/:examId/edit" element={
+              <ProtectedRoute allowedRoles={['admin', 'super_admin']}>
+                <AdminV2ExamEditorPage />
               </ProtectedRoute>
             } />
 

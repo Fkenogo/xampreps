@@ -28,6 +28,7 @@ export interface V2ItemRendererProps {
   submissions?: Map<string, any>;
   checkingInteractionIds?: Set<string>;
   interactionErrors?: Record<string, string | null>;
+  readOnly?: boolean;
 }
 
 export const V2ItemRenderer: React.FC<V2ItemRendererProps> = ({
@@ -43,6 +44,7 @@ export const V2ItemRenderer: React.FC<V2ItemRendererProps> = ({
   submissions,
   checkingInteractionIds,
   interactionErrors,
+  readOnly = false,
 }) => {
   const [localResponses, setLocalResponses] = useState<Record<string, any>>({});
   const isMultiPart = item.layoutMode === 'multiPart' || interactions.length > 1;
@@ -114,7 +116,7 @@ export const V2ItemRenderer: React.FC<V2ItemRendererProps> = ({
     }, {});
 
     if (Object.keys(nextResponses).length > 0) {
-      setLocalResponses((prev) => ({ ...nextResponses, ...prev }));
+      setLocalResponses((prev) => ({ ...prev, ...nextResponses }));
     }
   }, [displayInteractions, submissions]);
 
@@ -232,6 +234,7 @@ export const V2ItemRenderer: React.FC<V2ItemRendererProps> = ({
             submission={submissions?.get(interaction.interactionId)}
             checking={checkingInteractionIds?.has(interaction.interactionId) || false}
             error={interactionErrors?.[interaction.interactionId] || null}
+            readOnly={readOnly}
           />
         ))}
       </div>

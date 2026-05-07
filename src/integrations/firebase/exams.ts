@@ -4,6 +4,7 @@ import {
   Timestamp,
   collection,
   doc,
+  documentId,
   getDoc,
   getDocs,
   query,
@@ -12,6 +13,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { getFirebaseDb, getFirebaseFunctions } from '@/integrations/firebase/client';
+import { hasSubmittedAnswer } from '@/lib/v2-response-display';
 import type { V2ExamMode, V2Interaction, V2ResponsePayload, V2Submission } from '@/types/v2';
 
 export interface SubmitExamAttemptInput {
@@ -544,12 +546,17 @@ export async function getExamAttemptFirebase(attemptId: string, debugContext: Re
 
 function mapSubmissionDoc(docSnap: QueryDocumentSnapshot) {
   const data = docSnap.data();
-  return {
+  const interactionIdFromDocId = docSnap.id.includes('__') ? docSnap.id.split('__').slice(1).join('__') : '';
+  const interactionRefId = typeof data.interactionRef === 'string'
+    ? data.interactionRef.split('/').pop()
+    : '';
+  const responsePayload = data.responsePayload || data.response_payload || data.payload || data.answerPayload || {};
+  const mapped = {
     submissionId: docSnap.id,
-    itemId: firstString(data.itemId, data.item_id),
-    interactionId: firstString(data.interactionId, data.interaction_id),
-    responsePayload: data.responsePayload || data.response_payload || {},
-    isAnswered: data.isAnswered !== false && data.is_answered !== false,
+    itemId: firstString(data.itemId, data.item_id, data.itemRef, data.item_ref),
+    interactionId: firstString(data.interactionId, data.interaction_id, interactionRefId, interactionIdFromDocId),
+    responsePayload,
+    isAnswered: (data.isAnswered !== false && data.is_answered !== false) || hasSubmittedAnswer(responsePayload),
     autoScore: firstNumber(data.autoScore, data.auto_score),
     manualScore: firstNumber(data.manualScore, data.manual_score),
     finalScore: firstNumber(data.finalScore, data.final_score),
@@ -558,6 +565,20 @@ function mapSubmissionDoc(docSnap: QueryDocumentSnapshot) {
     reviewStatus: data.reviewStatus || data.review_status || 'pending',
     submittedAt: toIso(data.submittedAt) || toIso(data.submitted_at),
   } satisfies FirebaseAttemptSubmission;
+
+  console.debug('[V2 results] Submission loaded', {
+    submissionId: mapped.submissionId,
+    interactionId: mapped.interactionId,
+    itemId: mapped.itemId,
+    responsePayloadKeys: responsePayload && typeof responsePayload === 'object' ? Object.keys(responsePayload as Record<string, unknown>) : [],
+    hasResponseContent: hasSubmittedAnswer(responsePayload),
+    isAnswered: mapped.isAnswered,
+    reviewStatus: mapped.reviewStatus,
+    autoScore: mapped.autoScore,
+    finalScore: mapped.finalScore,
+  });
+
+  return mapped;
 }
 
 export async function getExamAttemptDetailsFirebase(attemptId: string, debugContext: ResultLoadDebugContext = {}) {
@@ -576,6 +597,15 @@ export async function getExamAttemptDetailsFirebase(attemptId: string, debugCont
       label: 'attempt_id',
       path: `submissions where attempt_id == ${attemptId}`,
       run: () => getDocs(query(collection(db, 'submissions'), where('attempt_id', '==', attemptId))),
+    },
+    {
+      label: 'documentId_prefix',
+      path: `submissions where documentId starts with ${attemptId}__`,
+      run: () => getDocs(query(
+        collection(db, 'submissions'),
+        where(documentId(), '>=', `${attemptId}__`),
+        where(documentId(), '<', `${attemptId}__\uf8ff`),
+      )),
     },
   ];
 

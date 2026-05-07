@@ -299,9 +299,17 @@ export async function loadV2ExamDataFirebase(examId: string): Promise<LoadedV2Ex
     const allContextBlocks = contextBlocksSnapshot.docs.map((docSnap) =>
       deserializeDates<V2ContextBlock>({ contextBlockId: docSnap.id, ...docSnap.data() }),
     );
-    const allItems = itemsSnapshot.docs.map((docSnap) =>
-      deserializeDates<V2Item>({ itemId: docSnap.id, ...docSnap.data() }),
-    );
+    const allItems = itemsSnapshot.docs.map((docSnap) => {
+      const data = docSnap.data();
+      return deserializeDates<V2Item>({
+        itemId: docSnap.id,
+        ...data,
+        stemMarkdown: data.stemMarkdown || data.promptMarkdown || data.stemText || data.promptText || '',
+        stemText: data.stemText || data.promptText || '',
+        promptMarkdown: data.promptMarkdown || data.stemMarkdown || '',
+        marksTotal: data.marksTotal ?? data.marks ?? 0,
+      });
+    });
     const allInteractions = interactionsSnapshot.docs.map((docSnap) =>
       deserializeDates<V2Interaction>({ interactionId: docSnap.id, ...docSnap.data() }),
     );

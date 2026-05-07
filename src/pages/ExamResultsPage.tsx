@@ -1,34 +1,83 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, CheckCircle2, Clock, Loader2, AlertTriangle, UserCheck } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Clock, Loader2, AlertTriangle, UserCheck, XCircle } from 'lucide-react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { getExamAttemptDetailsFirebase } from '@/integrations/firebase/exams';
-import { loadV2ExamDataFirebase } from '@/integrations/firebase/content';
+import { loadV2ExamDataFirebase, type LoadedV2ExamData } from '@/integrations/firebase/content';
 import type { FirebaseAttemptSubmission, FirebaseExamAttempt } from '@/integrations/firebase/exams';
-import type { V2Interaction, V2Item } from '@/types/v2';
+import type { V2Interaction, V2Item, V2ModelAnswerVersion } from '@/types/v2';
+import { V2ContextBlockRenderer } from '@/components/exam/v2/V2ContextBlockRenderer';
+import { V2ItemRenderer } from '@/components/exam/v2/V2ItemRenderer';
+import { hasSubmittedAnswer } from '@/lib/v2-response-display';
 
-interface ExamResultState {
-  examTitle: string;
-  examSubject: string;
-  examLevel: string;
-  items: V2Item[];
-  interactions: V2Interaction[];
+function asText(value: unknown, fallback = '') {
+  return typeof value === 'string' && value.trim() ? value : fallback;
 }
 
-function formatAnswer(submission: FirebaseAttemptSubmission) {
-  const payload = submission.responsePayload || {};
-  if (typeof payload.textAnswer === 'string') return payload.textAnswer;
-  if (payload.textAnswer && typeof payload.textAnswer === 'object') {
-    return Object.entries(payload.textAnswer)
-      .map(([key, value]) => `${key}: ${String(value)}`)
-      .join('\n');
+function getSubmissionStatus(submission: FirebaseAttemptSubmission | null) {
+  const hasAnswer = hasSubmittedAnswer(submission?.responsePayload);
+  if (!submission || (!hasAnswer && (submission.reviewStatus === 'unanswered' || submission.isAnswered === false))) return 'unanswered';
+  if (submission.reviewStatus === 'teacherReview' || submission.autoFeedback?.requiresManualReview) return 'teacher-review-pending';
+  if (submission.reviewStatus === 'teacherOverride' || (submission as unknown as Record<string, unknown>).teacherOverride === true) {
+    return 'teacher-corrected';
   }
-  if (payload.selectedOptions?.length) return payload.selectedOptions.join(', ');
-  if (payload.tableAnswers) return Object.values(payload.tableAnswers).join(', ');
-  if (payload.uploadedFileUrl) return 'Uploaded file';
-  return 'No answer submitted';
+  if (
+    submission.reviewStatus === 'teacherReviewed' ||
+    submission.reviewStatus === 'reviewed' ||
+    Boolean((submission as unknown as Record<string, unknown>).scoredByTeacher)
+  ) {
+    return 'teacher-reviewed';
+  }
+  if (submission.autoFeedback?.isCorrect === true) return 'correct';
+  if (submission.autoFeedback?.isCorrect === false) return 'incorrect';
+  if (!hasAnswer) return 'unanswered';
+  return 'submitted';
+}
+
+function resolveSubmissionForInteraction(
+  submissionsByInteractionId: Map<string, FirebaseAttemptSubmission>,
+  submissionsBySuffix: Map<string, FirebaseAttemptSubmission>,
+  interaction: V2Interaction,
+) {
+  return submissionsByInteractionId.get(interaction.interactionId) ||
+    submissionsBySuffix.get(interaction.interactionId) ||
+    null;
+}
+
+function statusBadge(status: string) {
+  if (status === 'correct') return { label: 'Correct', className: 'border-emerald-300 bg-emerald-50 text-emerald-700' };
+  if (status === 'incorrect') return { label: 'Incorrect', className: 'border-rose-300 bg-rose-50 text-rose-700' };
+  if (status === 'unanswered') return { label: 'Unanswered', className: 'border-muted bg-muted text-muted-foreground' };
+  if (status === 'teacher-review-pending') return { label: 'Awaiting teacher review', className: 'border-amber-300 bg-amber-50 text-amber-700' };
+  if (status === 'teacher-corrected') return { label: 'Teacher corrected auto score', className: 'border-blue-300 bg-blue-50 text-blue-700' };
+  if (status === 'teacher-reviewed') return { label: 'Scored by teacher', className: 'border-blue-300 bg-blue-50 text-blue-700' };
+  return { label: 'Submitted', className: 'border-border bg-background text-foreground' };
+}
+
+function statusIcon(status: string) {
+  if (status === 'correct') return <CheckCircle2 className="h-4 w-4" />;
+  if (status === 'incorrect') return <XCircle className="h-4 w-4" />;
+  if (status === 'teacher-reviewed' || status === 'teacher-corrected') return <UserCheck className="h-4 w-4" />;
+  if (status === 'teacher-review-pending') return <AlertTriangle className="h-4 w-4" />;
+  return <Clock className="h-4 w-4" />;
+}
+
+function findModelAnswer(examData: LoadedV2ExamData, item: V2Item, interaction: V2Interaction): V2ModelAnswerVersion | null {
+  return (examData.modelAnswers.get(item.itemId) || [])
+    .find((answer) => answer.interactionId === interaction.interactionId) || null;
+}
+
+function getScoreText(submission: FirebaseAttemptSubmission | null, interaction: V2Interaction, item: V2Item) {
+  const maxScore = interaction.marks || item.marks || 1;
+  const score = typeof submission?.finalScore === 'number'
+    ? submission.finalScore
+    : typeof submission?.autoScore === 'number'
+      ? submission.autoScore
+      : 0;
+  return `${score}/${maxScore}`;
 }
 
 export default function ExamResultsPage() {
@@ -38,7 +87,8 @@ export default function ExamResultsPage() {
   const [loading, setLoading] = useState(true);
   const [attempt, setAttempt] = useState<FirebaseExamAttempt | null>(null);
   const [submissions, setSubmissions] = useState<FirebaseAttemptSubmission[]>([]);
-  const [state, setState] = useState<ExamResultState | null>(null);
+  const [examData, setExamData] = useState<LoadedV2ExamData | null>(null);
+  const [openDetails, setOpenDetails] = useState<Record<string, Record<string, boolean>>>({});
 
   useEffect(() => {
     async function load() {
@@ -73,8 +123,6 @@ export default function ExamResultsPage() {
           return;
         }
 
-        const attemptResult = attemptLoad.value;
-        const examResult = examLoad.status === 'fulfilled' ? examLoad.value : null;
         if (examLoad.status === 'rejected') {
           console.warn('[ExamResultsPage] V2 exam content failed to load; showing attempt summary only', {
             examId,
@@ -83,31 +131,9 @@ export default function ExamResultsPage() {
           });
         }
 
-        if (!attemptResult.ok || !attemptResult.attempt || !examResult?.exam) {
-          if (attemptResult.ok && attemptResult.attempt) {
-            setAttempt(attemptResult.attempt);
-            setSubmissions(attemptResult.submissions);
-            setState({
-              examTitle: 'V2 Exam Results',
-              examSubject: '',
-              examLevel: '',
-              items: [],
-              interactions: [],
-            });
-          }
-          setLoading(false);
-          return;
-        }
-
-        setAttempt(attemptResult.attempt);
-        setSubmissions(attemptResult.submissions);
-        setState({
-          examTitle: examResult.exam.title,
-          examSubject: examResult.exam.subject,
-          examLevel: examResult.exam.level,
-          items: Array.from(examResult.items.values()).flat(),
-          interactions: Array.from(examResult.interactions.values()).flat(),
-        });
+        setAttempt(attemptLoad.value.attempt || null);
+        setSubmissions(attemptLoad.value.submissions || []);
+        setExamData(examLoad.status === 'fulfilled' ? examLoad.value : null);
       } finally {
         setLoading(false);
       }
@@ -116,23 +142,68 @@ export default function ExamResultsPage() {
     void load();
   }, [attemptId, examId, user?.id]);
 
-  const interactionsById = useMemo(
-    () => new Map((state?.interactions || []).map((interaction) => [interaction.interactionId, interaction])),
-    [state?.interactions],
-  );
-  const itemsById = useMemo(
-    () => new Map((state?.items || []).map((item) => [item.itemId, item])),
-    [state?.items],
-  );
+  const submissionsMap = useMemo(() => {
+    const byInteractionId = new Map<string, FirebaseAttemptSubmission>();
+    submissions.forEach((submission) => {
+      if (submission.interactionId) byInteractionId.set(submission.interactionId, submission);
+    });
+    return byInteractionId;
+  }, [submissions]);
+  const submissionsBySuffix = useMemo(() => {
+    const bySuffix = new Map<string, FirebaseAttemptSubmission>();
+    submissions.forEach((submission) => {
+      const suffix = submission.submissionId.includes('__') ? submission.submissionId.split('__').slice(1).join('__') : '';
+      if (suffix) bySuffix.set(suffix, submission);
+    });
+    return bySuffix;
+  }, [submissions]);
+
+  useEffect(() => {
+    if (!examData?.exam) return;
+    const allInteractions = Array.from(examData.interactions.values()).flat();
+    const matched = allInteractions.filter((interaction) =>
+      resolveSubmissionForInteraction(submissionsMap, submissionsBySuffix, interaction),
+    );
+    const unmatched = allInteractions
+      .filter((interaction) => !resolveSubmissionForInteraction(submissionsMap, submissionsBySuffix, interaction))
+      .map((interaction) => interaction.interactionId);
+    console.info('[ExamResultsPage] Submission interaction match summary', {
+      attemptId,
+      examId,
+      submissionsCount: submissions.length,
+      renderedInteractionsCount: allInteractions.length,
+      matchedInteractionCount: matched.length,
+      unmatchedInteractionIds: unmatched.slice(0, 20),
+    });
+    if (unmatched.length > 0 && submissions.length > 0) {
+      console.warn('[ExamResultsPage] Some rendered interactions have no matching submission', {
+        attemptId,
+        examId,
+        unmatchedInteractionIds: unmatched.slice(0, 20),
+        submissionInteractionIds: submissions.map((submission) => submission.interactionId).slice(0, 20),
+        submissionIds: submissions.map((submission) => submission.submissionId).slice(0, 20),
+      });
+    }
+  }, [attemptId, examId, examData, submissions, submissionsMap, submissionsBySuffix]);
 
   const reviewRequiredCount = useMemo(
-    () => submissions.filter((submission) => submission.reviewStatus === 'teacherReview').length,
+    () => submissions.filter((submission) => getSubmissionStatus(submission) === 'teacher-review-pending').length,
     [submissions],
   );
   const unansweredCount = useMemo(
-    () => submissions.filter((submission) => submission.reviewStatus === 'unanswered' || submission.isAnswered === false).length,
+    () => submissions.filter((submission) => getSubmissionStatus(submission) === 'unanswered').length,
     [submissions],
   );
+
+  const toggleDetail = (interactionId: string, key: string) => {
+    setOpenDetails((current) => ({
+      ...current,
+      [interactionId]: {
+        ...(current[interactionId] || {}),
+        [key]: !current[interactionId]?.[key],
+      },
+    }));
+  };
 
   if (loading) {
     return (
@@ -144,7 +215,7 @@ export default function ExamResultsPage() {
     );
   }
 
-  if (!attempt || !state) {
+  if (!attempt) {
     return (
       <DashboardLayout>
         <div className="max-w-3xl mx-auto py-16 text-center space-y-4">
@@ -164,38 +235,41 @@ export default function ExamResultsPage() {
       : attempt.status === 'completed'
         ? 'Completed'
         : attempt.status;
+  const examTitle = examData?.exam?.title || 'V2 Exam Results';
+  const examSubject = examData?.exam?.subject || '';
+  const examLevel = examData?.exam?.level || '';
 
   return (
     <DashboardLayout>
-      <div className="max-w-4xl mx-auto space-y-8">
+      <div className="max-w-5xl mx-auto space-y-8">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" onClick={() => navigate('/history')}>
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-semibold text-foreground">{state.examTitle}</h1>
+            <h1 className="text-2xl font-semibold text-foreground">{examTitle}</h1>
             <p className="text-muted-foreground">
-              {state.examSubject} • {state.examLevel}
+              {[examSubject, examLevel].filter(Boolean).join(' | ')}
             </p>
           </div>
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
-          <div className="rounded-2xl border border-border bg-card p-6">
+          <div className="rounded-lg border border-border bg-card p-6">
             <p className="text-sm text-muted-foreground">Current Score</p>
             <p className="mt-2 text-3xl font-semibold text-foreground">
               {attempt.finalScore}/{attempt.maxScore}
             </p>
             <p className="text-sm text-muted-foreground">{percentage}%</p>
           </div>
-          <div className="rounded-2xl border border-border bg-card p-6">
+          <div className="rounded-lg border border-border bg-card p-6">
             <p className="text-sm text-muted-foreground">Attempt Status</p>
             <p className="mt-2 text-2xl font-semibold text-foreground">{statusLabel}</p>
             <p className="text-sm text-muted-foreground">
               {attempt.completedAt || attempt.submittedAt || 'No completion timestamp'}
             </p>
           </div>
-          <div className="rounded-2xl border border-border bg-card p-6">
+          <div className="rounded-lg border border-border bg-card p-6">
             <p className="text-sm text-muted-foreground">Teacher Review</p>
             <p className="mt-2 text-2xl font-semibold text-foreground">{reviewRequiredCount}</p>
             <p className="text-sm text-muted-foreground">
@@ -205,118 +279,188 @@ export default function ExamResultsPage() {
         </div>
 
         {reviewRequiredCount > 0 && (
-          <div className="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-amber-900">
+          <div className="rounded-lg border border-amber-200 bg-amber-50 p-5 text-amber-900">
             <div className="flex items-start gap-3">
               <AlertTriangle className="mt-0.5 h-5 w-5" />
               <div>
-                <p className="font-medium">Manual review is pending.</p>
-                <p className="text-sm">
-                  This answer may be correct but needs teacher review. Linked teachers can score these responses from
-                  their V2 teacher review queue.
-                </p>
+                <p className="font-medium">Some answers are awaiting teacher review.</p>
+                <p className="text-sm">This page will update with teacher scores and comments when review is complete.</p>
               </div>
             </div>
           </div>
         )}
 
-        <div className="space-y-4">
-          {submissions.map((submission) => {
-            const interaction = interactionsById.get(submission.interactionId);
-            const item = itemsById.get(submission.itemId);
-            const isCorrect = submission.autoFeedback?.isCorrect === true;
-            const awaitingTeacher = submission.reviewStatus === 'teacherReview';
-            const scoredByTeacher = submission.reviewStatus === 'reviewed' && Boolean(submission.teacherFeedback);
-            const unanswered = submission.reviewStatus === 'unanswered' || submission.isAnswered === false;
-
-            return (
-              <div key={submission.submissionId} className="rounded-2xl border border-border bg-card p-5 space-y-4">
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div>
-                    <p className="text-sm text-muted-foreground">
-                      {item ? `${item.orderIndex + 1}. ${item.stemText || item.stemMarkdown || 'Untitled item'}` : 'Item'}
-                    </p>
-                    <p className="font-medium text-foreground">
-                      {interaction?.label ? `${interaction.label} ` : ''}
-                      {interaction?.promptText || interaction?.promptMarkdown || 'Interaction'}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm text-muted-foreground">Review status</p>
-                    <p className="font-medium text-foreground">
-                      {unanswered ? 'Unanswered' : scoredByTeacher ? 'Scored by teacher' : awaitingTeacher ? 'Awaiting teacher review' : 'Auto-marked'}
-                    </p>
-                  </div>
+        {!examData?.exam ? (
+          <div className="rounded-lg border border-dashed border-border bg-card p-6 text-sm text-muted-foreground">
+            The full exam content could not be loaded, but your attempt summary is available.
+          </div>
+        ) : (
+          <div className="rounded-lg border border-border bg-card p-5">
+            {examData.sections.map((section) => (
+              <section key={section.sectionId} className="mb-10">
+                <div className="mb-6">
+                  <h2 className="text-xl font-bold text-foreground">{section.title}</h2>
+                  {section.marks > 0 ? <span className="text-sm text-muted-foreground">[{section.marks} marks]</span> : null}
+                  {section.sharedInstructions ? (
+                    <div className="mt-3 rounded-lg border border-border bg-muted/30 p-4 text-sm text-foreground whitespace-pre-wrap">
+                      {section.sharedInstructions}
+                    </div>
+                  ) : null}
                 </div>
 
-                <div className="rounded-xl bg-muted/40 p-4">
-                  <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">Your answer</p>
-                  <p className="mt-2 text-foreground whitespace-pre-wrap">{formatAnswer(submission)}</p>
-                </div>
+                {(examData.instructionGroups.get(section.sectionId) || []).map((group) => (
+                  <div key={group.instructionGroupId} className="mb-8">
+                    <div className="mb-6 rounded-lg bg-muted/40 p-4">
+                      {group.title ? <h3 className="mb-2 font-semibold text-foreground">{group.title}</h3> : null}
+                      {group.questionRangeLabel ? (
+                        <span className="mb-2 inline-block rounded bg-amber-100 px-2 py-1 text-xs font-medium text-amber-800">
+                          {group.questionRangeLabel}
+                        </span>
+                      ) : null}
+                      <div className="prose prose-sm max-w-none text-foreground" dangerouslySetInnerHTML={{ __html: group.instructionsMarkdown }} />
+                    </div>
 
-                <div className="flex flex-wrap items-center gap-4 text-sm">
-                  <span className="inline-flex items-center gap-2 text-muted-foreground">
-                    <Clock className="h-4 w-4" />
-                    {submission.submittedAt || 'No timestamp'}
-                  </span>
-                  {scoredByTeacher ? (
-                    <span className="inline-flex items-center gap-2 font-medium text-emerald-600">
-                      <UserCheck className="h-4 w-4" />
-                      Scored by teacher
-                    </span>
-                  ) : unanswered ? (
-                    <span className="inline-flex items-center gap-2 font-medium text-muted-foreground">
-                      <Clock className="h-4 w-4" />
-                      Unanswered
-                    </span>
-                  ) : awaitingTeacher ? (
-                    <span className="inline-flex items-center gap-2 font-medium text-amber-700">
-                      <AlertTriangle className="h-4 w-4" />
-                      Awaiting teacher review
-                    </span>
-                  ) : submission.autoFeedback && (
-                    <span
-                      className={`inline-flex items-center gap-2 font-medium ${
-                        isCorrect ? 'text-emerald-600' : 'text-rose-600'
-                      }`}
-                    >
-                      <CheckCircle2 className="h-4 w-4" />
-                      {isCorrect ? 'Auto-marked correct' : 'Auto-marked incorrect'}
-                    </span>
-                  )}
-                  {typeof submission.finalScore === 'number' && (
-                    <span className="text-muted-foreground">
-                      Score: {submission.finalScore}
-                      {typeof submission.autoScore === 'number' ? ` / ${submission.autoScore}` : ''}
-                    </span>
-                  )}
-                </div>
+                    {(examData.contextBlocks.get(group.instructionGroupId) || []).map((block) => (
+                      <V2ContextBlockRenderer key={block.contextBlockId} block={block} isSimulation={false} />
+                    ))}
 
-                {submission.autoFeedback?.correctAnswer && (
-                  <div className="rounded-xl border border-border p-4">
-                    <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">Expected answer</p>
-                    <p className="mt-2 text-foreground">{submission.autoFeedback.correctAnswer}</p>
-                    {submission.autoFeedback.explanation && (
-                      <p className="mt-2 text-sm text-muted-foreground">{submission.autoFeedback.explanation}</p>
-                    )}
+                    <div className="space-y-6">
+                      {(examData.items.get(group.instructionGroupId) || []).map((item) => {
+                        const itemInteractions = examData.interactions.get(item.itemId) || [];
+                        const itemSubmissionsMap = new Map<string, FirebaseAttemptSubmission>();
+                        itemInteractions.forEach((interaction) => {
+                          const submission = resolveSubmissionForInteraction(submissionsMap, submissionsBySuffix, interaction);
+                          if (submission) itemSubmissionsMap.set(interaction.interactionId, submission);
+                        });
+                        return (
+                          <article key={item.itemId} className="rounded-lg border border-border bg-background p-4">
+                            <V2ItemRenderer
+                              item={item}
+                              interactions={itemInteractions}
+                              mode="simulation"
+                              isSimulation
+                              submissions={itemSubmissionsMap}
+                              readOnly
+                            />
+
+                            <div className="mt-4 space-y-3 border-t border-border pt-4">
+                              {itemInteractions.map((interaction) => {
+                                const submission = resolveSubmissionForInteraction(submissionsMap, submissionsBySuffix, interaction);
+                                const status = getSubmissionStatus(submission);
+                                const badge = statusBadge(status);
+                                const modelAnswer = findModelAnswer(examData, item, interaction);
+                                const alternatives = modelAnswer?.acceptableAlternatives || [];
+                                const officialAnswer = asText(modelAnswer?.approvedAnswer, asText(submission?.autoFeedback?.correctAnswer));
+                                const explanation = asText(modelAnswer?.explanation, asText(modelAnswer?.teacherNotes, asText(submission?.autoFeedback?.explanation)));
+                                const teacherComment = asText(submission?.teacherFeedback?.comments, asText(submission?.teacherFeedback?.reason));
+                                const teacherCorrected = status === 'teacher-corrected';
+                                const detailState = openDetails[interaction.interactionId] || {};
+
+                                return (
+                                  <div key={interaction.interactionId} className="rounded-md border border-border bg-card p-3">
+                                    <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                                      <div className="space-y-2">
+                                        <div className="flex flex-wrap items-center gap-2">
+                                          <Badge variant="outline" className={badge.className}>
+                                            <span className="mr-1 inline-flex">{statusIcon(status)}</span>
+                                            {badge.label}
+                                          </Badge>
+                                          <Badge variant="secondary">{getScoreText(submission, interaction, item)} marks</Badge>
+                                        </div>
+                                      </div>
+
+                                      <div className="flex flex-wrap gap-2">
+                                        <Button size="sm" variant="outline" onClick={() => toggleDetail(interaction.interactionId, 'answer')}>
+                                          Show official answer
+                                        </Button>
+                                        <Button size="sm" variant="outline" onClick={() => toggleDetail(interaction.interactionId, 'alternatives')}>
+                                          Show alternative answers
+                                        </Button>
+                                        <Button size="sm" variant="outline" onClick={() => toggleDetail(interaction.interactionId, 'explanation')}>
+                                          Show detailed explanation
+                                        </Button>
+                                        {teacherComment ? (
+                                          <Button size="sm" variant="outline" onClick={() => toggleDetail(interaction.interactionId, 'teacher')}>
+                                            Show teacher comment
+                                          </Button>
+                                        ) : null}
+                                      </div>
+                                    </div>
+
+                                    {submission?.autoFeedback ? (
+                                      <div className="mt-3 rounded-md border border-border bg-background p-3 text-sm">
+                                        <p className="font-medium text-foreground">Auto feedback</p>
+                                        <p className="mt-1 text-muted-foreground">
+                                          {submission.autoFeedback.isCorrect === true
+                                            ? 'Auto-marked correct.'
+                                            : submission.autoFeedback.requiresManualReview
+                                              ? 'Auto-marker requested teacher review.'
+                                              : 'Auto-marked incorrect.'}
+                                        </p>
+                                      </div>
+                                    ) : null}
+
+                                    {submission?.teacherFeedback ? (
+                                      <div className="mt-3 rounded-md border border-blue-200 bg-blue-50 p-3 text-sm text-blue-900">
+                                        <p className="font-medium">{teacherCorrected ? 'Teacher corrected auto score' : 'Scored by teacher'}</p>
+                                        <p className="mt-1">
+                                          {submission.teacherFeedback.teacherName || 'Teacher'}
+                                          {typeof submission.teacherFeedback.score === 'number'
+                                            ? ` awarded ${submission.teacherFeedback.score} mark(s).`
+                                            : ' reviewed this answer.'}
+                                        </p>
+                                        {teacherCorrected && submission.autoFeedback ? (
+                                          <p className="mt-1">
+                                            Original auto status: {submission.autoFeedback.isCorrect ? 'correct' : 'incorrect'}.
+                                          </p>
+                                        ) : null}
+                                      </div>
+                                    ) : status === 'teacher-review-pending' ? (
+                                      <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+                                        Awaiting teacher review.
+                                      </div>
+                                    ) : null}
+
+                                    {detailState.answer ? (
+                                      <div className="mt-3 rounded-md bg-muted/30 p-3">
+                                        <p className="text-xs uppercase text-muted-foreground">Official answer</p>
+                                        <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">{officialAnswer || 'No official answer recorded.'}</p>
+                                      </div>
+                                    ) : null}
+                                    {detailState.alternatives ? (
+                                      <div className="mt-3 rounded-md bg-muted/30 p-3">
+                                        <p className="text-xs uppercase text-muted-foreground">Alternative answers</p>
+                                        <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">
+                                          {alternatives.length > 0 ? alternatives.join('\n') : 'No alternative answers recorded.'}
+                                        </p>
+                                      </div>
+                                    ) : null}
+                                    {detailState.explanation ? (
+                                      <div className="mt-3 rounded-md bg-muted/30 p-3">
+                                        <p className="text-xs uppercase text-muted-foreground">Detailed explanation</p>
+                                        <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">{explanation || 'No explanation recorded.'}</p>
+                                      </div>
+                                    ) : null}
+                                    {detailState.teacher && teacherComment ? (
+                                      <div className="mt-3 rounded-md border border-blue-200 bg-blue-50 p-3 text-sm text-blue-900">
+                                        <p className="text-xs uppercase text-blue-700">Teacher comment</p>
+                                        <p className="mt-1 whitespace-pre-wrap">{teacherComment}</p>
+                                      </div>
+                                    ) : null}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </article>
+                        );
+                      })}
+                    </div>
                   </div>
-                )}
-
-                {submission.teacherFeedback && (
-                  <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900">
-                    <p className="text-xs uppercase tracking-[0.16em] text-emerald-700">Scored by teacher</p>
-                    <p className="mt-2 text-sm">
-                      {submission.teacherFeedback.teacherName || 'Teacher'}
-                      {typeof submission.teacherFeedback.score === 'number' ? ` awarded ${submission.teacherFeedback.score} mark(s).` : ' reviewed this answer.'}
-                    </p>
-                    {submission.teacherFeedback.comments ? (
-                      <p className="mt-2 whitespace-pre-wrap text-sm">{submission.teacherFeedback.comments}</p>
-                    ) : null}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+                ))}
+              </section>
+            ))}
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );

@@ -577,6 +577,20 @@ service cloud.firestore {
       allow update: if isAdmin();
       allow delete: if isAdmin();
     }
+
+    // Teacher review actions are written by Cloud Functions and visible to admins.
+    match /teacher_review_actions/{actionId} {
+      allow read: if isAuthenticated() && (
+        resource.data.teacherId == request.auth.uid ||
+        isAdmin()
+      );
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Admin content edit audit events are admin-only.
+    match /audit_events/{eventId} {
+      allow read, create, update, delete: if isAdmin();
+    }
     
     // Feedback templates - readable by teachers, managed by content editors
     match /feedback_templates/{templateId} {

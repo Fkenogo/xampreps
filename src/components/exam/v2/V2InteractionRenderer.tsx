@@ -7,6 +7,7 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { extractV2AnswerDisplay } from '@/lib/v2-response-display';
 import type {
   V2Interaction,
   V2ExamMode,
@@ -25,6 +26,7 @@ export interface V2InteractionRendererProps {
   submission?: any;
   checking?: boolean;
   error?: string | null;
+  readOnly?: boolean;
 }
 
 export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
@@ -39,6 +41,7 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
   submission,
   checking = false,
   error = null,
+  readOnly = false,
 }) => {
   const [localResponse, setLocalResponse] = useState<any>(propResponse);
 
@@ -47,6 +50,7 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
   }, [propResponse]);
 
   const handleSubmit = (value: any) => {
+    if (readOnly) return;
     setLocalResponse(value);
     onSubmit?.(interaction.interactionId, value);
   };
@@ -102,6 +106,15 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
 
   // Render based on response mode
   const renderInput = () => {
+    if (readOnly) {
+      return (
+        <div className="rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-800">
+          <p className="text-xs uppercase tracking-wide text-gray-500">Submitted answer</p>
+          <p className="mt-1 whitespace-pre-wrap">{extractV2AnswerDisplay(localResponse)}</p>
+        </div>
+      );
+    }
+
     switch (interaction.responseMode) {
       case 'textShort':
         return (
@@ -110,6 +123,7 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
             className="w-full max-w-md px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="Enter your answer..."
             value={localResponse?.textAnswer || ''}
+            readOnly={readOnly}
             onChange={(e) => handleSubmit({ textAnswer: e.target.value })}
           />
         );
@@ -122,6 +136,7 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
             rows={4}
             placeholder="Enter your answer..."
             value={localResponse?.textAnswer || ''}
+            readOnly={readOnly}
             onChange={(e) => handleSubmit({ textAnswer: e.target.value })}
           />
         );
@@ -138,6 +153,7 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
                   name={`interaction-${interaction.interactionId}`}
                   value={option.id}
                   checked={localResponse?.selectedOptions?.[0] === option.id}
+                  disabled={readOnly}
                   onChange={() => handleSubmit({ selectedOptions: [option.id] })}
                   className="w-4 h-4 text-blue-600 focus:ring-blue-500"
                 />
@@ -159,6 +175,7 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
                   type="checkbox"
                   value={option.id}
                   checked={(localResponse?.selectedOptions || []).includes(option.id)}
+                  disabled={readOnly}
                   onChange={(e) => {
                     const current = localResponse?.selectedOptions || [];
                     const updated = e.target.checked
@@ -212,6 +229,7 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
                       className="w-full px-2 py-1 border border-gray-300 rounded"
                       placeholder="Cell answer..."
                       value={localResponse?.tableAnswers?.['0-0'] || ''}
+                      readOnly={readOnly}
                       onChange={(e) => handleSubmit({ 
                         tableAnswers: { ...localResponse?.tableAnswers, '0-0': e.target.value } 
                       })}
@@ -243,12 +261,14 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
               type="file"
               accept="image/*"
               onChange={(e) => {
+                if (readOnly) return;
                 const file = e.target.files?.[0];
                 if (file) {
                   handleSubmit({ uploadedFileUrl: URL.createObjectURL(file) });
                 }
               }}
               className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              disabled={readOnly}
             />
           </div>
         );
@@ -261,12 +281,14 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
             <input
               type="file"
               onChange={(e) => {
+                if (readOnly) return;
                 const file = e.target.files?.[0];
                 if (file) {
                   handleSubmit({ uploadedFileUrl: URL.createObjectURL(file) });
                 }
               }}
               className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              disabled={readOnly}
             />
           </div>
         );
@@ -284,6 +306,7 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
                 rows={3}
                 placeholder="Enter address or heading..."
                 value={localResponse?.textAnswer?.address || ''}
+                readOnly={readOnly}
                 onChange={(e) => handleSubmit({ 
                   textAnswer: { ...localResponse?.textAnswer, address: e.target.value } 
                 })}
@@ -298,6 +321,7 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
                 rows={8}
                 placeholder="Write your composition..."
                 value={localResponse?.textAnswer?.body || ''}
+                readOnly={readOnly}
                 onChange={(e) => handleSubmit({ 
                   textAnswer: { ...localResponse?.textAnswer, body: e.target.value } 
                 })}
@@ -312,6 +336,7 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
                 rows={2}
                 placeholder="Enter closing..."
                 value={localResponse?.textAnswer?.closing || ''}
+                readOnly={readOnly}
                 onChange={(e) => handleSubmit({ 
                   textAnswer: { ...localResponse?.textAnswer, closing: e.target.value } 
                 })}
@@ -327,6 +352,7 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
             className="w-full max-w-md px-3 py-2 border border-gray-300 rounded-md"
             placeholder="Enter your answer..."
             value={localResponse?.textAnswer || ''}
+            readOnly={readOnly}
             onChange={(e) => handleSubmit({ textAnswer: e.target.value })}
           />
         );
@@ -337,7 +363,13 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
   const renderFeedback = () => {
     if (!showFeedback || !submission) return null;
 
-    const isReviewedByTeacher = submission.reviewStatus === 'reviewed' && Boolean(submission.teacherFeedback);
+    const isTeacherOverride = submission.reviewStatus === 'teacherOverride' || submission.teacherOverride === true;
+    const isReviewedByTeacher = (
+      submission.reviewStatus === 'reviewed' ||
+      submission.reviewStatus === 'teacherReviewed' ||
+      isTeacherOverride ||
+      submission.scoredByTeacher === true
+    ) && Boolean(submission.teacherFeedback);
     const isManualReview =
       !isReviewedByTeacher &&
       (submission.reviewStatus === 'teacherReview' || Boolean(submission.autoFeedback?.requiresManualReview));
@@ -357,10 +389,17 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
       <div className={`mt-4 p-4 border rounded-lg ${feedbackClass}`}>
         {isReviewedByTeacher ? (
           <div>
-            <p className="font-medium text-green-800">Scored by teacher</p>
+            <p className="font-medium text-green-800">
+              {isTeacherOverride ? 'Teacher corrected auto score' : 'Scored by teacher'}
+            </p>
             <p className="mt-1 text-sm text-green-700">
               {submission.teacherFeedback?.teacherName ? `${submission.teacherFeedback.teacherName} reviewed this answer.` : 'A teacher reviewed this answer.'}
             </p>
+            {isTeacherOverride && submission.autoFeedback ? (
+              <p className="mt-1 text-sm text-green-700">
+                Original auto status: {submission.autoFeedback.isCorrect ? 'correct' : 'incorrect'}.
+              </p>
+            ) : null}
           </div>
         ) : isManualReview ? (
           <div>
@@ -399,9 +438,9 @@ export const V2InteractionRenderer: React.FC<V2InteractionRendererProps> = ({
                 : 'Scored by teacher'}
             </p>
             {typeof submission.teacherFeedback.score === 'number' ? (
-              <p className="text-sm text-green-700 mt-1">Score: {submission.teacherFeedback.score}</p>
+              <p className="text-sm text-green-700 mt-1">Teacher score: {submission.teacherFeedback.score}</p>
             ) : null}
-            <p className="text-sm text-green-700 mt-1">{submission.teacherFeedback.comments}</p>
+            <p className="text-sm text-green-700 mt-1">{submission.teacherFeedback.comments || submission.teacherFeedback.reason}</p>
           </div>
         )}
       </div>

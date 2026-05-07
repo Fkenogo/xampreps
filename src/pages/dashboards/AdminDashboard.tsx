@@ -15,6 +15,7 @@ import CreateSchoolDialog from '@/components/admin/CreateSchoolDialog';
 import AddUserDialog from '@/components/admin/AddUserDialog';
 import IdentityOpsPanel from '@/components/admin/IdentityOpsPanel';
 import V2AnswerSuggestionsPanel from '@/components/admin/V2AnswerSuggestionsPanel';
+import V2TeacherReviewActionsPanel from '@/components/admin/V2TeacherReviewActionsPanel';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -277,8 +278,7 @@ export default function AdminDashboard() {
   };
 
   const handleEditQuestions = (exam: Exam) => {
-    setSelectedExam(exam);
-    setEditDialogOpen(true);
+    navigate(`/dashboard/admin/v2-exams/${exam.id}/edit`);
   };
 
   const filteredUsers = users.filter((u) => {
@@ -418,6 +418,10 @@ export default function AdminDashboard() {
             <TabsTrigger value="content-feedback" className="gap-2">
               <MessageSquare className="w-4 h-4" />
               Content Feedback
+            </TabsTrigger>
+            <TabsTrigger value="teacher-activity" className="gap-2">
+              <Activity className="w-4 h-4" />
+              Teacher Activity
             </TabsTrigger>
             <TabsTrigger value="analytics" className="gap-2">
               <PieChart className="w-4 h-4" />
@@ -618,7 +622,7 @@ export default function AdminDashboard() {
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => handleEditQuestions(exam)}>
                                 <ListOrdered className="w-4 h-4 mr-2" />
-                                Editing Disabled
+                                Edit V2 Exam
                               </DropdownMenuItem>
                               <DropdownMenuItem onClick={() => handlePreviewExam(exam.id, 'practice')}>
                                 <Eye className="w-4 h-4 mr-2" />
@@ -725,6 +729,10 @@ export default function AdminDashboard() {
 
           <TabsContent value="content-feedback">
             <V2AnswerSuggestionsPanel />
+          </TabsContent>
+
+          <TabsContent value="teacher-activity">
+            <V2TeacherReviewActionsPanel />
           </TabsContent>
 
           <TabsContent value="identity-ops">

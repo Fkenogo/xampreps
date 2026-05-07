@@ -20,13 +20,17 @@ const v2Functions = createV2MarkingFunctions(db);
 exports.v2AutoMarkSubmission = v2Functions.autoMarkSubmission;
 exports.v2GetReviewQueue = v2Functions.getReviewQueue;
 exports.v2ListTeacherReviewQueue = v2Functions.listTeacherReviewQueue;
+exports.v2GetTeacherAttemptReview = v2Functions.getTeacherAttemptReview;
 exports.v2SubmitTeacherReview = v2Functions.submitTeacherReview;
+exports.v2OverrideTeacherSubmissionScore = v2Functions.overrideTeacherSubmissionScore;
 exports.v2AggregateAttemptScores = v2Functions.aggregateAttemptScores;
 exports.v2CreateModelAnswerVersion = v2Functions.createModelAnswerVersion;
 exports.v2ApproveModelAnswerVersion = v2Functions.approveModelAnswerVersion;
 exports.v2CreateTeacherAnswerSuggestion = v2Functions.createTeacherAnswerSuggestion;
 exports.v2ListAdminAnswerSuggestions = v2Functions.listAdminAnswerSuggestions;
 exports.v2AdminResolveAnswerSuggestion = v2Functions.adminResolveAnswerSuggestion;
+exports.v2ListTeacherReviewActions = v2Functions.listTeacherReviewActions;
+exports.v2AdminUpdateV2ExamContent = v2Functions.adminUpdateV2ExamContent;
 
 exports.healthCheck = onRequest((req, res) => {
   logger.info("healthCheck called");
