@@ -1,5 +1,6 @@
 import { httpsCallable } from 'firebase/functions';
 import {
+  DocumentSnapshot,
   QueryDocumentSnapshot,
   Timestamp,
   collection,
@@ -544,14 +545,14 @@ export async function getExamAttemptFirebase(attemptId: string, debugContext: Re
   };
 }
 
-function mapSubmissionDoc(docSnap: QueryDocumentSnapshot) {
-  const data = docSnap.data();
+function mapSubmissionDoc(docSnap: DocumentSnapshot | QueryDocumentSnapshot): FirebaseAttemptSubmission {
+  const data = docSnap.data()!;
   const interactionIdFromDocId = docSnap.id.includes('__') ? docSnap.id.split('__').slice(1).join('__') : '';
   const interactionRefId = typeof data.interactionRef === 'string'
     ? data.interactionRef.split('/').pop()
     : '';
   const responsePayload = data.responsePayload || data.response_payload || data.payload || data.answerPayload || {};
-  const mapped = {
+  return {
     submissionId: docSnap.id,
     itemId: firstString(data.itemId, data.item_id, data.itemRef, data.item_ref),
     interactionId: firstString(data.interactionId, data.interaction_id, interactionRefId, interactionIdFromDocId),
@@ -565,20 +566,6 @@ function mapSubmissionDoc(docSnap: QueryDocumentSnapshot) {
     reviewStatus: data.reviewStatus || data.review_status || 'pending',
     submittedAt: toIso(data.submittedAt) || toIso(data.submitted_at),
   } satisfies FirebaseAttemptSubmission;
-
-  console.debug('[V2 results] Submission loaded', {
-    submissionId: mapped.submissionId,
-    interactionId: mapped.interactionId,
-    itemId: mapped.itemId,
-    responsePayloadKeys: responsePayload && typeof responsePayload === 'object' ? Object.keys(responsePayload as Record<string, unknown>) : [],
-    hasResponseContent: hasSubmittedAnswer(responsePayload),
-    isAnswered: mapped.isAnswered,
-    reviewStatus: mapped.reviewStatus,
-    autoScore: mapped.autoScore,
-    finalScore: mapped.finalScore,
-  });
-
-  return mapped;
 }
 
 export async function getExamAttemptDetailsFirebase(attemptId: string, debugContext: ResultLoadDebugContext = {}) {
@@ -669,6 +656,34 @@ export async function getExamAttemptDetailsFirebase(attemptId: string, debugCont
   });
 
   return { ok: true, attempt: attemptResult.attempt, submissions };
+}
+
+/**
+ * Fetch submissions for an attempt using individual document reads.
+ *
+ * Collection queries on `submissions` require a `userId` filter to satisfy Firestore security
+ * rules (students can only read their own documents). Filtering by `attemptId` alone causes a
+ * `permission-denied` error because Firestore cannot statically prove ownership. Individual
+ * `getDoc()` calls bypass this restriction — each read is evaluated against the specific
+ * document, which passes the `resource.data.userId == request.auth.uid` check.
+ *
+ * Submissions are stored with document IDs of the form `{attemptId}__{interactionId}`, so
+ * knowing the interaction IDs is sufficient to construct the exact paths.
+ */
+export async function fetchSubmissionsForAttemptFirebase(
+  attemptId: string,
+  interactionIds: string[],
+): Promise<FirebaseAttemptSubmission[]> {
+  if (!interactionIds.length) return [];
+  const results = await Promise.allSettled(
+    interactionIds.map((interactionId) =>
+      getDoc(doc(db, 'submissions', `${attemptId}__${interactionId}`)),
+    ),
+  );
+  return results.flatMap((result) => {
+    if (result.status !== 'fulfilled' || !result.value.exists()) return [];
+    return [mapSubmissionDoc(result.value)];
+  });
 }
 
 export async function listExamHistoryFirebase(userId?: string | null) {

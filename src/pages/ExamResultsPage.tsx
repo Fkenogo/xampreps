@@ -5,7 +5,10 @@ import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
-import { getExamAttemptDetailsFirebase } from '@/integrations/firebase/exams';
+import {
+  fetchSubmissionsForAttemptFirebase,
+  getExamAttemptFirebase,
+} from '@/integrations/firebase/exams';
 import { loadV2ExamDataFirebase, type LoadedV2ExamData } from '@/integrations/firebase/content';
 import type { FirebaseAttemptSubmission, FirebaseExamAttempt } from '@/integrations/firebase/exams';
 import type { V2Interaction, V2Item, V2ModelAnswerVersion } from '@/types/v2';
@@ -37,15 +40,6 @@ function getSubmissionStatus(submission: FirebaseAttemptSubmission | null) {
   return 'submitted';
 }
 
-function resolveSubmissionForInteraction(
-  submissionsByInteractionId: Map<string, FirebaseAttemptSubmission>,
-  submissionsBySuffix: Map<string, FirebaseAttemptSubmission>,
-  interaction: V2Interaction,
-) {
-  return submissionsByInteractionId.get(interaction.interactionId) ||
-    submissionsBySuffix.get(interaction.interactionId) ||
-    null;
-}
 
 function statusBadge(status: string) {
   if (status === 'correct') return { label: 'Correct', className: 'border-emerald-300 bg-emerald-50 text-emerald-700' };
@@ -93,98 +87,50 @@ export default function ExamResultsPage() {
   useEffect(() => {
     async function load() {
       if (!examId || !attemptId) return;
-
       try {
-        console.info('[ExamResultsPage] Loading V2 result route', {
-          routeExamId: examId,
-          routeAttemptId: attemptId,
-          currentUserId: user?.id || null,
-        });
+        // Load attempt document and exam structure in parallel.
         const [attemptLoad, examLoad] = await Promise.allSettled([
-          getExamAttemptDetailsFirebase(attemptId, {
-            routeExamId: examId,
-            currentUserId: user?.id || null,
-          }),
+          getExamAttemptFirebase(attemptId, { routeExamId: examId, currentUserId: user?.id || null }),
           loadV2ExamDataFirebase(examId),
         ]);
 
-        if (attemptLoad.status === 'rejected') {
-          const error = attemptLoad.reason as { code?: unknown; message?: unknown };
-          console.error('[ExamResultsPage] Failed to load V2 attempt', {
-            routeExamId: examId,
-            routeAttemptId: attemptId,
-            path: `exam_attempts/${attemptId}`,
-            currentUserId: user?.id || null,
-            code: typeof error?.code === 'string' ? error.code : null,
-            message: typeof error?.message === 'string' ? error.message : String(attemptLoad.reason),
-            error: attemptLoad.reason,
-          });
-          setLoading(false);
+        if (attemptLoad.status === 'rejected' || !attemptLoad.value.ok) {
+          console.error('[ExamResultsPage] Failed to load attempt', { attemptId, examId });
           return;
         }
 
-        if (examLoad.status === 'rejected') {
-          console.warn('[ExamResultsPage] V2 exam content failed to load; showing attempt summary only', {
-            examId,
-            attemptId,
-            error: examLoad.reason,
-          });
-        }
-
+        const loadedExamData = examLoad.status === 'fulfilled' ? examLoad.value : null;
         setAttempt(attemptLoad.value.attempt || null);
-        setSubmissions(attemptLoad.value.submissions || []);
-        setExamData(examLoad.status === 'fulfilled' ? examLoad.value : null);
+        setExamData(loadedExamData);
+
+        // Fetch submissions using individual document reads.
+        // Collection queries filter by attemptId which cannot satisfy the Firestore security
+        // rule `resource.data.userId == request.auth.uid`, so they fail with permission-denied.
+        // Individual getDoc calls on known paths `{attemptId}__{interactionId}` are evaluated
+        // per-document and pass the ownership check.
+        if (loadedExamData) {
+          const allInteractionIds = Array.from(loadedExamData.interactions.values())
+            .flat()
+            .map((interaction) => interaction.interactionId);
+          const fetchedSubmissions = await fetchSubmissionsForAttemptFirebase(attemptId, allInteractionIds);
+          setSubmissions(fetchedSubmissions);
+        }
       } finally {
         setLoading(false);
       }
     }
-
     void load();
   }, [attemptId, examId, user?.id]);
 
+  // Keyed by interactionId — fetchSubmissionsForAttemptFirebase always sets interactionId from
+  // the doc ID suffix, so this lookup is exact and never needs a secondary suffix fallback.
   const submissionsMap = useMemo(() => {
-    const byInteractionId = new Map<string, FirebaseAttemptSubmission>();
+    const map = new Map<string, FirebaseAttemptSubmission>();
     submissions.forEach((submission) => {
-      if (submission.interactionId) byInteractionId.set(submission.interactionId, submission);
+      if (submission.interactionId) map.set(submission.interactionId, submission);
     });
-    return byInteractionId;
+    return map;
   }, [submissions]);
-  const submissionsBySuffix = useMemo(() => {
-    const bySuffix = new Map<string, FirebaseAttemptSubmission>();
-    submissions.forEach((submission) => {
-      const suffix = submission.submissionId.includes('__') ? submission.submissionId.split('__').slice(1).join('__') : '';
-      if (suffix) bySuffix.set(suffix, submission);
-    });
-    return bySuffix;
-  }, [submissions]);
-
-  useEffect(() => {
-    if (!examData?.exam) return;
-    const allInteractions = Array.from(examData.interactions.values()).flat();
-    const matched = allInteractions.filter((interaction) =>
-      resolveSubmissionForInteraction(submissionsMap, submissionsBySuffix, interaction),
-    );
-    const unmatched = allInteractions
-      .filter((interaction) => !resolveSubmissionForInteraction(submissionsMap, submissionsBySuffix, interaction))
-      .map((interaction) => interaction.interactionId);
-    console.info('[ExamResultsPage] Submission interaction match summary', {
-      attemptId,
-      examId,
-      submissionsCount: submissions.length,
-      renderedInteractionsCount: allInteractions.length,
-      matchedInteractionCount: matched.length,
-      unmatchedInteractionIds: unmatched.slice(0, 20),
-    });
-    if (unmatched.length > 0 && submissions.length > 0) {
-      console.warn('[ExamResultsPage] Some rendered interactions have no matching submission', {
-        attemptId,
-        examId,
-        unmatchedInteractionIds: unmatched.slice(0, 20),
-        submissionInteractionIds: submissions.map((submission) => submission.interactionId).slice(0, 20),
-        submissionIds: submissions.map((submission) => submission.submissionId).slice(0, 20),
-      });
-    }
-  }, [attemptId, examId, examData, submissions, submissionsMap, submissionsBySuffix]);
 
   const reviewRequiredCount = useMemo(
     () => submissions.filter((submission) => getSubmissionStatus(submission) === 'teacher-review-pending').length,
@@ -327,25 +273,20 @@ export default function ExamResultsPage() {
                     <div className="space-y-6">
                       {(examData.items.get(group.instructionGroupId) || []).map((item) => {
                         const itemInteractions = examData.interactions.get(item.itemId) || [];
-                        const itemSubmissionsMap = new Map<string, FirebaseAttemptSubmission>();
-                        itemInteractions.forEach((interaction) => {
-                          const submission = resolveSubmissionForInteraction(submissionsMap, submissionsBySuffix, interaction);
-                          if (submission) itemSubmissionsMap.set(interaction.interactionId, submission);
-                        });
                         return (
                           <article key={item.itemId} className="rounded-lg border border-border bg-background p-4">
                             <V2ItemRenderer
                               item={item}
                               interactions={itemInteractions}
-                              mode="simulation"
-                              isSimulation
-                              submissions={itemSubmissionsMap}
+                              mode="practice"
+                              isSimulation={false}
+                              submissions={submissionsMap}
                               readOnly
                             />
 
                             <div className="mt-4 space-y-3 border-t border-border pt-4">
                               {itemInteractions.map((interaction) => {
-                                const submission = resolveSubmissionForInteraction(submissionsMap, submissionsBySuffix, interaction);
+                                const submission = submissionsMap.get(interaction.interactionId) || null;
                                 const status = getSubmissionStatus(submission);
                                 const badge = statusBadge(status);
                                 const modelAnswer = findModelAnswer(examData, item, interaction);
