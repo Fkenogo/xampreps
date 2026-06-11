@@ -1,0 +1,372 @@
+[
+  {
+    "questionNumber": 41,
+    "questionText": "(a) Name the class of food that helps in the repair of body cells.\n(b) Apart from contamination of food, mention any two other challenges that people who buy food from markets get.\n(c) State any one way of controlling food contamination in a market.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Proteins",
+        "explanation": "Tutor: When your body gets a wound, what helps it heal?\nStudent: Food?\nTutor: Yes, but which type? Think of foods like beans, meat, eggs.\nStudent: Proteins.\nTutor: Correct. Proteins are called body-building foods because they repair and build body tissues. That’s why growing children need them.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "High prices; Overcrowding",
+        "explanation": "Tutor: Let’s think of a busy market. What problems do people face?\nStudent: Maybe food is expensive?\nTutor: Yes, high prices is one. What else?\nStudent: Too many people?\nTutor: Exactly—overcrowding. It can make movement hard and increase spread of diseases.\nTutor: Other possible answers include stale food or poor hygiene.\nTutor: The key is to think of real-life experiences.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "c",
+        "answer": "Cover food",
+        "explanation": "Tutor: Why do we cover food?\nStudent: To keep flies away.\nTutor: Exactly. Flies carry germs from dirty places.\nTutor: Covering food prevents contamination and keeps it safe for eating.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 42,
+    "questionText": "(a) Name the germ that causes cholera.\n(b) Explain why cholera is common in heavily populated communities.\n(c) Apart from proper use of latrines, mention any one other way of controlling the spread of cholera.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Bacteria",
+        "explanation": "Tutor: Cholera is caused by what type of germ—virus or bacteria?\nStudent: Bacteria.\nTutor: Correct. The specific one is called Vibrio cholerae.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "Poor sanitation and overcrowding increase spread",
+        "explanation": "Tutor: Why would disease spread faster where many people live close together?\nStudent: Because people share things?\nTutor: Exactly—water, toilets, food areas. If sanitation is poor, germs spread quickly.\nTutor: That’s why cholera is common in crowded communities.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "c",
+        "answer": "Boil drinking water",
+        "explanation": "Tutor: If water is unsafe, what should we do before drinking it?\nStudent: Boil it.\nTutor: Correct. Boiling kills germs and makes water safe.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 43,
+    "questionText": "(a) Name the correct garden tool for transplanting seedlings.\n(b) State the reason why evening time is the best for transplanting seedlings.\n(c) Mention any two advantages of mulching after transplanting.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Hand trowel",
+        "explanation": "Tutor: Which tool is gentle enough for small plants?\nStudent: A hand trowel.\nTutor: Correct. It helps lift seedlings without damaging roots.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "Reduces water loss",
+        "explanation": "Tutor: Why avoid transplanting in hot midday sun?\nStudent: Plants may dry.\nTutor: Exactly. Evening is cooler, so plants lose less water and survive better.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "c",
+        "answer": "Conserves moisture; Suppresses weeds",
+        "explanation": "Tutor: What does mulch do when placed on soil?\nStudent: Keeps it moist?\nTutor: Yes. It also stops weeds from growing and protects the soil.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 44,
+    "questionText": "(a) Name the parts labelled X, W and Y.\n(b) State one function of each part: Y, Z and Rectum.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "X: Liver; W: Large intestine; Y: Small intestine",
+        "explanation": "Tutor: From the diagram on page 9, identify by shape.\nStudent: The big lobe is the liver.\nTutor: Correct. The coiled tube is small intestine, outer frame is large intestine.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "Y: Absorbs nutrients; Z: Digestion/absorption; Rectum: Stores faeces",
+        "explanation": "Tutor: What happens in the small intestine?\nStudent: Nutrients are absorbed.\nTutor: Good. The large intestine absorbs water, and the rectum stores waste before removal.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 45,
+    "questionText": "Complete the table by stating the purpose of Sorting, Soaking, Rinsing, and Ironing.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Sorting → Separate clothes; Soaking → Loosen dirt; Rinsing → Remove soap; Ironing → Remove creases",
+        "explanation": "Tutor: Why do we sort clothes first?\nStudent: Different washing needs.\nTutor: Correct. Each step has a purpose in cleaning.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 46,
+    "questionText": "(a) Give the meaning of electromagnet.\n(b) Describe how to make a magnet using an iron nail, copper wire, a dry cell and some pins.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "A magnet made using electric current",
+        "explanation": "Tutor: Let’s compare two magnets. A permanent magnet works all the time. What about an electromagnet?\nStudent: It needs electricity?\nTutor: Exactly. It only becomes magnetic when electric current is flowing.\nTutor: So if we switch off the current, what happens?\nStudent: It stops being a magnet.\nTutor: Correct. That’s why it’s called an electromagnet—its magnetism depends on electricity.\nTutor: This is useful in devices where we want to control magnetism, like electric bells and cranes.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "1. Wind the copper wire tightly around the nail (many turns); 2. Connect the ends of the wire to the dry cell; 3. Allow current to flow; 4. Bring the nail near pins to test attraction",
+        "explanation": "Tutor: We have a nail, wire, and a battery. Which part will become the magnet?\nStudent: The nail.\nTutor: Good. What do we do with the wire?\nStudent: Wrap it around the nail.\nTutor: Yes—make many tight turns. Why many turns?\nStudent: To make it stronger?\nTutor: Exactly. More coils increase the magnetic effect.\nTutor: Now connect the wire ends to the dry cell. What starts flowing?\nStudent: Electric current.\nTutor: Right. Now test it with pins. What should happen?\nStudent: The nail attracts the pins.\nTutor: Perfect. That shows the nail has become an electromagnet.\nTutor: Safety tip—don’t keep it connected too long; the wire can heat up.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 47,
+    "questionText": "(a) Mention any two materials that can be used in a digester to produce biogas.\n(b) Give a reason why a biogas digester should be tightly sealed.\n(c) State any one advantage of using biogas.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Cow dung; Plant waste",
+        "explanation": "Tutor: Biogas comes from rotting organic matter. What materials can rot and produce gas?\nStudent: Animal dung?\nTutor: Yes—cow dung is common. What else?\nStudent: Plant waste.\nTutor: Correct. Kitchen waste and crop residues also work.\nTutor: The key idea is organic material that can decompose.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "To prevent gas from escaping",
+        "explanation": "Tutor: When gas is produced, where do we want it to go?\nStudent: To be collected and used.\nTutor: Exactly. If the digester is not sealed, what happens?\nStudent: The gas escapes.\nTutor: Right—and we lose fuel. Also, biogas forms best without oxygen (anaerobic conditions). A tight seal helps maintain that environment.\nTutor: So sealing is important for keeping the gas in and the process efficient.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "c",
+        "answer": "Provides fuel for cooking",
+        "explanation": "Tutor: Why is biogas useful in a home?\nStudent: It can be used for cooking.\nTutor: Correct. What advantage does it have over firewood?\nStudent: Less smoke?\nTutor: Yes—cleaner and reduces indoor air pollution. It also saves trees and uses waste that would otherwise be thrown away.\nTutor: So one strong answer is provides fuel for cooking.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 48,
+    "questionText": "(a) Name the protective item labelled K.\n(b) Identify any two diseases that can be prevented by using the item K.\n(c) Mention any one good practice of using the protective item K.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Face mask",
+        "explanation": "Tutor: Look at the diagram on page 11. What is covering the person’s nose and mouth?\nStudent: A mask.\nTutor: Correct—a face mask. It is used to reduce the spread of germs through the air.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "COVID-19; Tuberculosis",
+        "explanation": "Tutor: Which diseases spread through droplets in the air when people cough or sneeze?\nStudent: COVID-19?\nTutor: Yes, and tuberculosis (TB) as well. Masks reduce the chance of inhaling infected droplets.\nTutor: So two good answers are COVID-19 and TB.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "c",
+        "answer": "Cover both nose and mouth properly",
+        "explanation": "Tutor: Does a mask work if it only covers the mouth?\nStudent: No.\nTutor: Correct. It must cover both the nose and mouth.\nTutor: What other good practices can you mention?\nStudent: Keep it clean?\nTutor: Yes. Also avoid touching the front and replace or wash it regularly.\nTutor: The key idea is proper use, not just wearing it.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 49,
+    "questionText": "(a) Mention one example of musical instruments in each group: (i) String instruments, (ii) Percussion instruments.\n(b) Name any two methods of storing sound.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Guitar (string); Drum (percussion)",
+        "explanation": "Tutor: What makes a string instrument produce sound?\nStudent: Vibrating strings.\nTutor: Exactly. A guitar or violin uses strings that vibrate.\nTutor: What about percussion instruments?\nStudent: They are beaten.\nTutor: Yes—like drums or xylophones. Sound is produced by striking.\nTutor: So a good pair is guitar and drum.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "CD; Flash disk",
+        "explanation": "Tutor: How can we keep sound to listen later?\nStudent: Record it.\nTutor: Right. Where can we store it?\nStudent: On a CD?\nTutor: Yes. Also on a flash disk, phone, or computer.\nTutor: In the past, people used cassette tapes; now we use digital storage.\nTutor: So two correct answers are CD and flash disk.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 50,
+    "questionText": "(a) State the name given to insects that live and work together.\n(b) Give any one way in which insects are useful to people.\n(c) State any two human activities that are dangerous to insects in the environment.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Social insects",
+        "explanation": "Tutor: Some insects live alone, but others live in groups. Can you think of examples?\nStudent: Ants?\nTutor: Yes, ants. Also bees and termites.\nTutor: These insects cooperate and share duties like collecting food and protecting the group.\nTutor: Such insects are called social insects.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "Pollination",
+        "explanation": "Tutor: Why are insects important to plants?\nStudent: They help plants grow?\nTutor: Yes, especially through pollination. Bees carry pollen from one flower to another.\nTutor: This helps plants produce fruits and seeds.\nTutor: So insects play a key role in food production.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "c",
+        "answer": "Use of pesticides; Bush burning",
+        "explanation": "Tutor: What actions by humans can harm insects?\nStudent: Spraying chemicals?\nTutor: Yes, pesticides can kill insects.\nTutor: What else?\nStudent: Burning bushes?\nTutor: Correct. Bush burning destroys habitats.\nTutor: So human activities can reduce insect populations.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 51,
+    "questionText": "(a) Name the type of weather marked C.\n(b) State one way in which the type of weather in A helps in formation of the type of weather in D.\n(c) Give one way in which people protect themselves from the effects of the type of weather in B.\n(d) State any one way in which too much of the type of weather in A is dangerous to the environment.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Cloudy weather",
+        "explanation": "Tutor: Look at the diagram on page 12. What do you see in section C?\nStudent: Clouds.\nTutor: Yes, many clouds covering the sky. That is called cloudy weather.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "Sun causes evaporation leading to rainfall",
+        "explanation": "Tutor: In A, we see sunshine. What does the sun do to water?\nStudent: It heats it.\nTutor: Yes, and that causes evaporation.\nTutor: The water vapour forms clouds and later falls as rain (weather D).\nTutor: So sunshine leads to rainfall through evaporation.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "c",
+        "answer": "Seek shelter or wear protective clothing",
+        "explanation": "Tutor: Look at weather B. What do you observe?\nStudent: Strong wind.\nTutor: Yes. How can people protect themselves?\nStudent: Stay indoors?\nTutor: Correct. They can also wear protective clothing or avoid open areas.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "d",
+        "answer": "Causes drought",
+        "explanation": "Tutor: What happens if there is too much sunshine?\nStudent: It becomes very dry.\nTutor: Yes. That can lead to drought.\nTutor: Crops dry up and water sources reduce.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 52,
+    "questionText": "(a) State the meaning of the term vaccine.\n(b) Mention the way in which polio vaccine is administered.\n(c) State the reason why vaccines should be stored in a cool place.\n(d) Identify any one way you can support immunisation programmes in your community.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "A substance that protects the body from disease",
+        "explanation": "Tutor: What is the purpose of a vaccine?\nStudent: To prevent disease.\nTutor: Exactly. It helps the body develop protection (immunity) against specific diseases.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "By mouth (oral)",
+        "explanation": "Tutor: Do you remember how children receive polio vaccine?\nStudent: Drops in the mouth.\nTutor: Correct. It is given orally.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "c",
+        "answer": "Heat destroys vaccines",
+        "explanation": "Tutor: What happens if vaccines are exposed to heat?\nStudent: They spoil?\nTutor: Yes. Heat destroys them and makes them ineffective.\nTutor: That is why they must be kept cool.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "d",
+        "answer": "Taking children for vaccination",
+        "explanation": "Tutor: How can you help your community stay healthy?\nStudent: Encourage vaccination?\nTutor: Yes. You can take children for immunisation or educate others.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 53,
+    "questionText": "(a) Name the physical change which leads to formation of: (i) Ice, (ii) Rainfall.\n(b) State any two effects of physical changes caused by soil erosion.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "(i) Freezing; (ii) Condensation",
+        "explanation": "Tutor: What happens when water becomes ice?\nStudent: It freezes.\nTutor: Correct. That is freezing.\nTutor: What about rainfall?\nStudent: Water vapour cools?\nTutor: Yes, it condenses into droplets. That is condensation.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "Loss of topsoil; Silting",
+        "explanation": "Tutor: What happens when soil is eroded?\nStudent: It is removed.\nTutor: Yes, and that removes fertile topsoil.\nTutor: The soil may also collect in rivers causing silting.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 54,
+    "questionText": "(a) Name the two muscles found in the human arm.\n(b) State any one function of muscles in the human body.\n(c) State the importance of maintaining correct posture.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Biceps; Triceps",
+        "explanation": "Tutor: When you bend your arm, which muscle works?\nStudent: Biceps.\nTutor: And when you straighten it?\nStudent: Triceps.\nTutor: Correct. They work as a pair.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "Enable movement",
+        "explanation": "Tutor: What do muscles do in the body?\nStudent: Help movement.\nTutor: Yes, they allow us to walk, lift, and move.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "c",
+        "answer": "Prevents body deformities",
+        "explanation": "Tutor: What happens if you sit or stand wrongly for long?\nStudent: You can get problems?\nTutor: Yes, poor posture can lead to deformities and pain.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  },
+  {
+    "questionNumber": 55,
+    "questionText": "(a) Draw the image of the cup in a plane mirror.\n(b) (i) Name ray A, (ii) State relationship between angles m and y.",
+    "parts": [
+      {
+        "partLabel": "a",
+        "answer": "Image is same size, same distance behind mirror, upright",
+        "explanation": "Tutor: In a plane mirror, where is the image formed?\nStudent: Behind the mirror.\nTutor: At what distance?\nStudent: Same as the object.\nTutor: Correct. The image is upright and same size.",
+        "marks": 2,
+        "answerType": "open-ended"
+      },
+      {
+        "partLabel": "b",
+        "answer": "(i) Incident ray; (ii) Angles are equal",
+        "explanation": "Tutor: Ray A is the incoming ray—what do we call it?\nStudent: Incident ray.\nTutor: Correct. What about the angles?\nStudent: They are equal.\nTutor: Yes, angle of incidence equals angle of reflection.",
+        "marks": 2,
+        "answerType": "open-ended"
+      }
+    ]
+  }
+]

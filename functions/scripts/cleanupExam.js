@@ -12,26 +12,13 @@
 const admin = require('firebase-admin');
 const path = require('path');
 const fs = require('fs');
+const initAdmin = require('./lib/initAdmin');
 
-// Initialize Firebase Admin SDK
+// Initialize Firebase Admin SDK using shared helper
 function initFirebase() {
-  const serviceAccountPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-  
-  if (serviceAccountPath && fs.existsSync(serviceAccountPath)) {
-    const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
-    if (admin.apps.length === 0) {
-      admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-      });
-    }
-  } else {
-    console.log('Using Application Default Credentials.');
-    if (admin.apps.length === 0) {
-      admin.initializeApp();
-    }
-  }
-  
-  return admin.firestore();
+  const { db, projectId } = initAdmin();
+  console.log(`📋 Target Project: ${projectId}`);
+  return db;
 }
 
 async function cleanupExam(examId) {

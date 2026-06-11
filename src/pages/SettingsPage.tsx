@@ -3,8 +3,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { getFirebaseApp } from '@/integrations/firebase/client';
 import { getFirestore, doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import DashboardLayout from '@/components/layout/DashboardLayout';
-import AccountLinkingSection from '@/components/settings/AccountLinkingSection';
-import LinkRequestsCard from '@/components/dashboard/LinkRequestsCard';
+import StudentLinkCodesPanel from '@/components/identity/StudentLinkCodesPanel';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,6 +16,14 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { User, Mail, GraduationCap, School, Save } from 'lucide-react';
+
+const splitDisplayName = (displayName: string) => {
+  const parts = displayName.trim().split(/\s+/).filter(Boolean);
+  return {
+    firstName: parts[0] || '',
+    lastName: parts.slice(1).join(' '),
+  };
+};
 
 export default function SettingsPage() {
   const { profile, refreshProfile, role } = useAuth();
@@ -31,19 +38,41 @@ export default function SettingsPage() {
 
   const handleSave = async () => {
     if (!profile?.id) return;
-    
+    const trimmedName = formData.name.trim();
+    if (!trimmedName) {
+      toast.error('Full name is required');
+      return;
+    }
+
     setLoading(true);
     try {
       const db = getFirestore(getFirebaseApp());
-      await setDoc(doc(db, 'profiles', profile.id), {
-        name: formData.name,
-        level: formData.level as 'PLE' | 'UCE' | 'UACE',
-        school: formData.school || null,
-        phone: formData.phone || null,
-        updated_at: serverTimestamp(),
+      const { firstName, lastName } = splitDisplayName(trimmedName);
+
+      await setDoc(doc(db, 'users', profile.id), {
+        displayName: trimmedName,
+        phone: role === 'student' ? null : formData.phone.trim() || null,
+        updatedAt: serverTimestamp(),
       }, { merge: true });
+
+      if (role === 'student') {
+        await setDoc(doc(db, 'student_profiles', profile.id), {
+          firstName,
+          lastName,
+          educationLevel: formData.level as 'PLE' | 'UCE' | 'UACE',
+          updatedAt: serverTimestamp(),
+        }, { merge: true });
+      } else if (role) {
+        await setDoc(doc(db, 'adult_profiles', profile.id), {
+          firstName,
+          lastName,
+          phone: formData.phone.trim() || null,
+          updatedAt: serverTimestamp(),
+        }, { merge: true });
+      }
+
       toast.success('Profile updated successfully');
-      refreshProfile?.();
+      await refreshProfile?.();
     } catch (error) {
       console.error('Failed to update profile:', error);
       toast.error('Failed to update profile');
@@ -116,14 +145,16 @@ export default function SettingsPage() {
             <div className="space-y-2">
               <Label htmlFor="school" className="flex items-center gap-2">
                 <School className="w-4 h-4" />
-                School (Optional)
+                School
               </Label>
               <Input
                 id="school"
                 value={formData.school}
-                onChange={(e) => setFormData({ ...formData, school: e.target.value })}
-                placeholder="Enter your school name"
+                disabled
+                className="bg-muted"
+                placeholder="Managed by your organization links"
               />
+              <p className="text-xs text-muted-foreground">School membership is managed from canonical linking flows.</p>
             </div>
           </div>
 
@@ -133,11 +164,13 @@ export default function SettingsPage() {
           </Button>
         </div>
 
-        {/* Link Requests - Show pending requests */}
-        <LinkRequestsCard />
-
-        {/* Account Linking Section */}
-        <AccountLinkingSection />
+        {role === 'student' ? (
+          <StudentLinkCodesPanel />
+        ) : (
+          <div className="bg-card rounded-2xl border border-border p-6 text-sm text-muted-foreground">
+            Linking between parents, schools, and students is managed from the relevant dashboards.
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );

@@ -125,7 +125,7 @@ See `docs/imports/ple-maths-2015-image-manifest.md` for details.
 
 ### Step 4: Verify
 
-1. Go to `/exam/ple-maths-2015?mode=practice`
+1. Go to `/exams/ple-maths-2015?mode=practice`
 2. Check that all 32 questions render correctly
 3. Verify images display for questions 5, 9, 15, 16, 21, 24, 26, 29
 4. Test answer checking with a few sample answers

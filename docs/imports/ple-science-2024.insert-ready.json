@@ -1,0 +1,1417 @@
+[
+  {
+    "question_number": 1,
+    "text": "Name any one type of latrine.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Pit latrine",
+        "acceptable_answers": [
+          "VIP latrine",
+          "flush toilet"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Let’s slow this down. What is a latrine?\nStudent: A place where people pass waste.\nTutor: Good. Now why do we even need latrines?\nStudent: To keep clean?\nTutor: Exactly. They help prevent diseases like cholera. Now, there are different types:\n- Pit latrine → simple hole in the ground\n- VIP latrine → improved with ventilation (less smell, fewer flies)\n- Flush toilet → uses water to remove waste\nTutor: In the exam, you only need one answer. But understanding all helps you think better."
+      }
+    ],
+    "title": "Type of Latrine"
+  },
+  {
+    "question_number": 2,
+    "text": "Why are tall trees dangerous during rain?",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Lightning can strike the tree",
+        "acceptable_answers": [
+          "Branches may fall",
+          "tree can collapse"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Why are tall trees dangerous during rain?\nStudent: Because lightning hits them?\nTutor: Exactly. Lightning is attracted to tall objects. When it strikes:\n- Electricity travels down the tree\n- It can jump to nearby people\n- It can cause burns or death\nTutor: So never stand under trees during storms."
+      }
+    ],
+    "title": "Shelter Under Trees"
+  },
+  {
+    "question_number": 3,
+    "text": "What is the function of the diaphragm in the human body?",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Helps air enter and leave lungs",
+        "acceptable_answers": [
+          "Expands chest cavity",
+          "aids breathing"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: The diaphragm is a muscle. What happens when you breathe in?\nStudent: Air goes in.\nTutor: Yes. The diaphragm flattens, increasing space in the chest. This pulls air into the lungs. When it relaxes, air is pushed out.\nTutor: So it works like a pump."
+      }
+    ],
+    "title": "Diaphragm Function"
+  },
+  {
+    "question_number": 4,
+    "text": "Name any one agent of soil erosion.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Running water",
+        "acceptable_answers": [
+          "Wind",
+          "animals",
+          "human activity"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Soil erosion means the removal of topsoil. Why is topsoil important?\nStudent: It helps plants grow.\nTutor: Correct. Now, what removes it?\n- Water washes soil away during rain\n- Wind blows loose soil\n- Animals overgraze and loosen soil\n- Humans cut trees and expose soil\nTutor: In exams, one answer works. But knowing all gives deeper understanding."
+      }
+    ],
+    "title": "Soil Erosion Agents"
+  },
+  {
+    "question_number": 5,
+    "text": "Name the animal shown in the diagram.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Snail",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Let’s really observe the diagram carefully. What do you see?\nStudent: I see a shell and a soft body.\nTutor: Good observation. Anything else?\nStudent: It looks like it moves slowly.\nTutor: Exactly. And those feelers in front are called tentacles.\nTutor: Now, which animal has all these features — soft body, shell, slow movement?\nStudent: A snail.\nTutor: Correct. Always use features from the diagram to guide your answer, not guessing."
+      }
+    ],
+    "title": "Animal Identification"
+  },
+  {
+    "question_number": 6,
+    "text": "State the group of invertebrates to which the animal belongs.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Molluscs",
+        "acceptable_answers": [
+          "Mollusks"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Now let’s classify the snail. What makes animals belong to the same group?\nStudent: They share similar features.\nTutor: Exactly. Molluscs are animals that have soft bodies. Many of them also have shells.\nTutor: Can you name another mollusc?\nStudent: Maybe an octopus?\nTutor: Yes. Also slugs and snails. So the snail belongs to the group called molluscs."
+      }
+    ],
+    "title": "Group of the Animal"
+  },
+  {
+    "question_number": 7,
+    "text": "Mention any one way in which vegetables can be kept fresh for some time.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Keep in a cool place",
+        "acceptable_answers": [
+          "Refrigeration",
+          "wrap in damp cloth",
+          "proper storage"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Why do vegetables go bad after some time?\nStudent: Because they dry or rot.\nTutor: Exactly. Heat speeds up that process. So what happens if we reduce heat?\nStudent: They last longer.\nTutor: Correct. That is why keeping vegetables in a cool place helps them stay fresh.\nTutor: Wrapping them in a damp cloth also helps because it prevents drying.\nTutor: So the main idea is slowing down spoilage."
+      }
+    ],
+    "title": "Keeping Vegetables Fresh"
+  },
+  {
+    "question_number": 8,
+    "text": "State one way in which bacteria are useful in the formation of soil.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Decompose dead matter",
+        "acceptable_answers": [
+          "Form humus",
+          "break down organic material"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Soil is more than just sand. What else is in soil?\nStudent: Dead plants?\nTutor: Yes. When plants and animals die, bacteria break them down.\nStudent: Into what?\nTutor: Into humus — a dark material that makes soil fertile.\nTutor: Without bacteria, this process would not happen properly.\nTutor: So bacteria help soil formation by decomposing dead matter."
+      }
+    ],
+    "title": "Bacteria in Soil Formation"
+  },
+  {
+    "question_number": 9,
+    "text": "Give the reason why a person suffering from bilharzia develops anaemia.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Loss of blood",
+        "acceptable_answers": [
+          "Internal bleeding",
+          "damage to tissues"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: What does anaemia mean?\nStudent: Having little blood.\nTutor: Exactly. Now, what does bilharzia do in the body?\nStudent: It damages organs.\nTutor: Yes, and it causes bleeding inside the body.\nTutor: When blood is lost continuously, the body becomes weak and anaemic.\nTutor: So the key answer is loss of blood."
+      }
+    ],
+    "title": "Bilharzia and Anaemia"
+  },
+  {
+    "question_number": 10,
+    "text": "Mention one way in which air circulation in a rabbit hutch can be improved.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Use wire mesh",
+        "acceptable_answers": [
+          "Provide openings",
+          "ventilation holes"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Why is air important for animals like rabbits?\nStudent: So they can breathe well.\nTutor: Correct. What happens if air does not circulate?\nStudent: They can get sick.\nTutor: Exactly. Stale air can lead to diseases.\nTutor: So how do we allow fresh air in?\nStudent: By making openings?\nTutor: Yes. Wire mesh allows air to pass through while keeping rabbits safe."
+      }
+    ],
+    "title": "Rabbit Hutch Ventilation"
+  },
+  {
+    "question_number": 11,
+    "text": "State the reason why the human skin develops goose pimples during cold weather.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Reduce heat loss",
+        "acceptable_answers": [
+          "Trap warm air",
+          "conserve heat"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Have you ever felt goose pimples when it is cold?\nStudent: Yes.\nTutor: Why do you think that happens?\nStudent: To keep warm?\nTutor: Exactly. The tiny bumps trap a layer of air close to the skin.\nTutor: That air acts like insulation and reduces heat loss.\nTutor: So the body is trying to protect itself from cold."
+      }
+    ],
+    "title": "Goose Pimples"
+  },
+  {
+    "question_number": 12,
+    "text": "Give any one way in which you can utilise empty plastic bottles at home.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Store liquids",
+        "acceptable_answers": [
+          "Make planters",
+          "containers",
+          "bird feeders"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: What usually happens to plastic bottles after use?\nStudent: People throw them away.\nTutor: Yes, but that causes pollution. What can we do instead?\nStudent: Reuse them.\nTutor: Exactly. You can store water, use them as containers, or even plant flowers in them.\nTutor: This helps reduce waste and protect the environment."
+      }
+    ],
+    "title": "Use of Plastic Bottles"
+  },
+  {
+    "question_number": 13,
+    "text": "Mention one function of a bandage found in a first aid kit.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Protect wound",
+        "acceptable_answers": [
+          "Stop bleeding",
+          "support injury"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: When someone gets a cut, what is the first thing we do?\nStudent: Cover it.\nTutor: Yes. A bandage protects the wound from germs.\nTutor: It can also stop bleeding and support the injured part.\nTutor: So its main function is protection."
+      }
+    ],
+    "title": "Function of a Bandage"
+  },
+  {
+    "question_number": 14,
+    "text": "State any one way in which fermentation is important in our daily life.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Making bread",
+        "acceptable_answers": [
+          "Making yoghurt",
+          "alcohol",
+          "preserving food"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Have you ever seen dough rising?\nStudent: Yes.\nTutor: That happens because of fermentation. Yeast produces gas which makes the dough expand.\nTutor: Fermentation is also used to make yoghurt and some drinks.\nTutor: So it is very important in food preparation."
+      }
+    ],
+    "title": "Importance of Fermentation"
+  },
+  {
+    "question_number": 15,
+    "text": "State any one reason why a builder would prefer a pulley to an inclined plane.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Lifts load vertically",
+        "acceptable_answers": [
+          "Faster",
+          "less space needed"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Imagine lifting sand to the top of a building. Which is easier — pushing it up a ramp or pulling it up directly?\nStudent: Pulling it up.\nTutor: Exactly. A pulley lifts the load straight up.\nTutor: An inclined plane requires more distance and effort over time.\nTutor: So a pulley is more convenient for vertical lifting."
+      }
+    ],
+    "title": "Pulley vs Inclined Plane"
+  },
+  {
+    "question_number": 16,
+    "text": "Name the organ shown above.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Kidney",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Look at the diagram on page 4. What shape do you see?\nStudent: It looks like a bean.\nTutor: Good. That bean-shaped organ is the kidney.\nTutor: Its main job is to filter waste from the blood and form urine."
+      }
+    ],
+    "title": "Organ Identification"
+  },
+  {
+    "question_number": 17,
+    "text": "Give the function of the part labelled N.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Carries urine",
+        "acceptable_answers": [
+          "Ureter function"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: The labelled part is the ureter. Where does urine go after being formed in the kidney?\nStudent: To the bladder.\nTutor: Exactly. The ureter carries urine from the kidney to the bladder."
+      }
+    ],
+    "title": "Function of Part N"
+  },
+  {
+    "question_number": 18,
+    "text": "Identify any one effect of pests and diseases on tuber crops.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Reduce yield",
+        "acceptable_answers": [
+          "Damage crops",
+          "reduce quality"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: What happens when pests attack crops?\nStudent: They damage them.\nTutor: Yes. That damage reduces the amount of food harvested.\nTutor: It can also reduce quality.\nTutor: So the effect is reduced yield."
+      }
+    ],
+    "title": "Effects of Pests"
+  },
+  {
+    "question_number": 19,
+    "text": "State any one way in which taking medicine without instruction can affect a family.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Waste money",
+        "acceptable_answers": [
+          "Worsen illness",
+          "cause death"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: What happens if someone takes the wrong medicine?\nStudent: They may not get better.\nTutor: Correct. It can even make the illness worse.\nTutor: It also wastes money because the medicine does not help.\nTutor: So misuse of medicine is dangerous."
+      }
+    ],
+    "title": "Medicine Misuse"
+  },
+  {
+    "question_number": 20,
+    "text": "Mention any one reason why harvesting of honey should be done during daytime.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Better visibility",
+        "acceptable_answers": [
+          "Safer working conditions"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Why is working during the day easier than at night?\nStudent: Because you can see clearly.\nTutor: Exactly. Beekeepers can see the hive and avoid danger.\nTutor: So harvesting honey during daytime is safer and easier."
+      }
+    ],
+    "title": "Honey Harvesting"
+  },
+  {
+    "question_number": 21,
+    "text": "Name the disorder where a bone moves away from its normal position at a joint.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Dislocation",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: What happens when a bone moves out of its normal place?\nStudent: It becomes dislocated.\nTutor: Correct. This is called a dislocation and it affects joints."
+      }
+    ],
+    "title": "Bone Disorder"
+  },
+  {
+    "question_number": 22,
+    "text": "Why does a cubic unit of wool weigh less than a cubic unit of stone?",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Wool is less dense",
+        "acceptable_answers": [
+          "Less mass in same volume"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Both wool and stone have the same size. Why is one heavier?\nStudent: Because of density?\nTutor: Exactly. Density means how much mass is packed into a space.\nTutor: Stone is tightly packed, wool has air spaces.\nTutor: So wool is less dense and lighter."
+      }
+    ],
+    "title": "Density"
+  },
+  {
+    "question_number": 23,
+    "text": "State one way paddocking helps break pest life cycle.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Moves animals away from pests",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Pests often depend on animals. What happens if animals are moved?\nStudent: Pests lose their host.\nTutor: Exactly. That breaks their life cycle."
+      }
+    ],
+    "title": "Paddocking"
+  },
+  {
+    "question_number": 24,
+    "text": "Give one way rusting is important to the environment.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Breaks down iron",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Rusting may look harmful, but it has a role. What happens to iron when it rusts?\nStudent: It breaks down.\nTutor: Yes. This helps return materials to the environment and supports natural recycling."
+      }
+    ],
+    "title": "Rusting"
+  },
+  {
+    "question_number": 25,
+    "text": "Name the element of Primary Health Care which promotes the human body cleanliness.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Personal hygiene",
+        "acceptable_answers": [
+          "Body hygiene",
+          "keeping the body clean"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: This question is asking about an element of Primary Health Care. Do you remember what hygiene means?\nStudent: Keeping clean.\nTutor: Exactly. Personal hygiene means keeping your body clean so that germs do not cause disease. It includes bathing, brushing teeth, washing hands, trimming nails, and wearing clean clothes.\nTutor: So if the question asks which element promotes body cleanliness, the best answer is personal hygiene.\nTutor: And here is the important idea: cleanliness is not just about looking neat. It protects health."
+      }
+    ],
+    "title": "Element of Primary Health Care"
+  },
+  {
+    "question_number": 26,
+    "text": "Mention any one activity a School Health Club can do to improve the health of people in school.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Organise a cleaning campaign",
+        "acceptable_answers": [
+          "Teach handwashing",
+          "give health talks",
+          "clean latrines",
+          "plant trees",
+          "encourage proper waste disposal"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Let’s think practically. What does a School Health Club do?\nStudent: It helps keep learners healthy.\nTutor: Correct. So what kind of activities would improve health in school?\nStudent: Cleaning maybe?\nTutor: Yes. A cleaning campaign is a very strong answer because a clean compound reduces germs, flies, and bad smells.\nTutor: Other good answers can also work, such as:\n- teaching learners to wash hands\n- organising health talks\n- cleaning toilets and classrooms\n- encouraging proper rubbish disposal\nTutor: In the exam, give one clear activity. But understand the reason behind it: healthy habits reduce disease."
+      }
+    ],
+    "title": "School Health Club Activity"
+  },
+  {
+    "question_number": 27,
+    "text": "State the property of air used in filling balloons.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Air occupies space",
+        "acceptable_answers": [
+          "Air takes up space"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: When you blow air into a balloon, what happens?\nStudent: The balloon becomes bigger.\nTutor: Exactly. Why?\nStudent: Because air enters it.\nTutor: Yes. That shows that air is not “nothing.” Air occupies space.\nTutor: If air did not occupy space, the balloon would stay flat.\nTutor: This is one of the basic properties of air. Even though we cannot see air, we know it is there because it fills things like balls, tyres, and balloons."
+      }
+    ],
+    "title": "Property of Air"
+  },
+  {
+    "question_number": 28,
+    "text": "State any one way in which planting of trees alongside other crops improves the quality of soil.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Trees add humus through fallen leaves",
+        "acceptable_answers": [
+          "Prevent soil erosion",
+          "add organic matter",
+          "improve moisture retention",
+          "some trees fix nitrogen"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: This question is about why trees are helpful in farming. Let’s not rush.\nStudent: Trees help the soil?\nTutor: Yes. One major way is that leaves fall down and rot. When they decompose, they form humus.\nStudent: And humus makes soil fertile?\nTutor: Exactly. Humus improves soil structure and fertility.\nTutor: Trees also help in other ways:\n- their roots hold soil and reduce erosion\n- they provide shade that helps soil keep moisture\n- some trees improve soil nutrients\nTutor: So the answer we pick is trees add humus through fallen leaves. That is simple and strong for the exam."
+      }
+    ],
+    "title": "Trees and Soil Quality"
+  },
+  {
+    "question_number": 29,
+    "text": "Give one reason why we should regularly wash our hands with clean water and soap.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "To remove germs",
+        "acceptable_answers": [
+          "To prevent disease",
+          "to remove dirt",
+          "to stop spreading infections"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Why is soap important when washing hands?\nStudent: It removes dirt?\nTutor: Yes, and more than dirt — it removes germs too.\nTutor: Our hands touch many things: doors, money, animals, food, toilets. Germs can stay on the hands and then enter the body when we eat.\nTutor: Washing with clean water and soap helps:\n- remove dirt\n- kill or wash away germs\n- stop diseases from spreading\nTutor: That is why the best direct answer is to remove germs."
+      }
+    ],
+    "title": "Handwashing"
+  },
+  {
+    "question_number": 30,
+    "text": "Mention one way in which the antennae of insects are similar to the human skin in terms of function.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Both help in feeling or sensing",
+        "acceptable_answers": [
+          "Both detect touch",
+          "both help sense surroundings"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: This question compares an insect part with a human body part. What do antennae do?\nStudent: They help insects feel things.\nTutor: Correct. And what does human skin do?\nStudent: It also feels.\nTutor: Exactly. Skin helps us sense touch, temperature, and pressure. Antennae help insects sense what is around them.\nTutor: So the similarity is that both are used for sensing or feeling.\nTutor: The exam wants the function, not the appearance."
+      }
+    ],
+    "title": "Antennae and Human Skin"
+  },
+  {
+    "question_number": 31,
+    "text": "Give one reason why the vacuum in a thermos flask prevents heat loss by conduction and convection.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "A vacuum has no particles",
+        "acceptable_answers": [
+          "There is no matter in a vacuum",
+          "no particles are present to transfer heat"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: This is a science idea, so let’s break it down carefully.\nTutor: Heat moves by conduction and convection only when particles are present.\nStudent: Particles like molecules?\nTutor: Exactly. In solids, liquids, and gases, particles carry heat. But a vacuum has no particles.\nStudent: So heat cannot move that way?\nTutor: Correct. That is why the vacuum in a flask helps keep drinks hot or cold for longer.\nTutor: So the key answer is: a vacuum has no particles."
+      }
+    ],
+    "title": "Vacuum Flask"
+  },
+  {
+    "question_number": 32,
+    "text": "Identify the method of planting crops shown above.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Row planting",
+        "acceptable_answers": [
+          "Line planting"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Look at the diagram on page 6 of the paper. The crops are arranged in neat straight lines. What does that tell you?\nStudent: They are planted in rows.\nTutor: Exactly. That method is called row planting or line planting.\nTutor: In agriculture, planting in rows makes management easier than scattering seeds anyhow.\nTutor: So the correct name is row planting."
+      }
+    ],
+    "title": "Method of Planting"
+  },
+  {
+    "question_number": 33,
+    "text": "State any one advantage of the method of planting crops shown in the diagram above.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "It makes weeding easy",
+        "acceptable_answers": [
+          "Makes harvesting easy",
+          "allows proper spacing",
+          "makes spraying easy",
+          "makes movement in the garden easier"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Since the crops are in rows, what becomes easier for the farmer?\nStudent: Maybe moving between them?\nTutor: Correct. And because there is space and order, weeding becomes easier.\nTutor: Other advantages also include:\n- easier harvesting\n- easier spraying\n- proper spacing of crops\n- easier supervision of the garden\nTutor: For the exam, it makes weeding easy is a very good answer."
+      }
+    ],
+    "title": "Advantage of Row Planting"
+  },
+  {
+    "question_number": 34,
+    "text": "Give any one example of an emotional change in adolescents.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Mood swings",
+        "acceptable_answers": [
+          "Becoming easily annoyed",
+          "shyness",
+          "excitement",
+          "feeling lonely",
+          "being more sensitive"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Adolescence is a stage of many changes. Some are physical, but this question asks about emotional changes.\nStudent: Like feelings changing?\nTutor: Exactly. One common example is mood swings — being happy at one moment and upset the next.\nTutor: Other emotional changes can include:\n- becoming shy\n- feeling confused\n- becoming more sensitive\n- getting annoyed easily\nTutor: So mood swings is a strong answer because it clearly shows emotional change."
+      }
+    ],
+    "title": "Emotional Change in Adolescents"
+  },
+  {
+    "question_number": 35,
+    "text": "Name the immunisable viral disease which is spread due to poor sanitation.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Polio",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Let’s read this carefully. The disease must be:\n- viral\n- preventable by immunisation\n- spread through poor sanitation\nTutor: Which disease fits all of those?\nStudent: Polio?\nTutor: Exactly. Polio is caused by a virus, and children are protected through vaccination.\nTutor: It can spread where hygiene and sanitation are poor.\nTutor: That is why the correct answer is polio."
+      }
+    ],
+    "title": "Immunisable Viral Disease"
+  },
+  {
+    "question_number": 36,
+    "text": "State the reason why a ray of light bends as it passes through a glass block.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Light changes speed when it enters glass",
+        "acceptable_answers": [
+          "Because light moves from one medium to another",
+          "due to refraction"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Have you ever put a stick in water and it looked bent?\nStudent: Yes.\nTutor: That is because of refraction. Light bends when it moves from one material to another, such as from air into glass.\nTutor: Why does it bend?\nStudent: Because its speed changes?\nTutor: Exactly. Light travels at different speeds in different materials. When it enters glass, it slows down and bends.\nTutor: So the key reason is: light changes speed when it enters glass."
+      }
+    ],
+    "title": "Refraction of Light"
+  },
+  {
+    "question_number": 37,
+    "text": "State any one way of conserving water as a resource in the environment.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Harvest rainwater",
+        "acceptable_answers": [
+          "Fix leaking taps",
+          "avoid wasting water",
+          "reuse water where possible",
+          "protect water sources"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Conserving water means using it carefully and avoiding waste. Can you think of one good method?\nStudent: Collecting rainwater?\nTutor: Excellent. That is called rainwater harvesting.\nTutor: Other methods include:\n- repairing leaking pipes and taps\n- using only what is needed\n- protecting wells, springs, and rivers from pollution\nTutor: Since the question needs one answer, harvest rainwater is clear and correct."
+      }
+    ],
+    "title": "Conserving Water"
+  },
+  {
+    "question_number": 38,
+    "text": "Mention one reason why you are encouraged to brush the tongue as well when cleaning the teeth.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "To remove germs",
+        "acceptable_answers": [
+          "To remove food particles",
+          "to prevent bad breath",
+          "to improve mouth hygiene"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Many learners remember brushing teeth, but forget the tongue. Why should the tongue also be cleaned?\nStudent: Because it gets dirty too?\nTutor: Exactly. Food particles and germs collect on the tongue.\nTutor: If they remain there, they can:\n- cause bad breath\n- keep the mouth dirty\n- encourage growth of germs\nTutor: So a strong direct answer is to remove germs."
+      }
+    ],
+    "title": "Cleaning the Tongue"
+  },
+  {
+    "question_number": 39,
+    "text": "Mention any one way in which electric shocks can be prevented in a home.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Do not touch switches with wet hands",
+        "acceptable_answers": [
+          "Repair naked wires",
+          "switch off power before repair",
+          "use insulated wires",
+          "keep children away from sockets"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: Electricity is useful, but it can also be dangerous. How can wet hands increase danger?\nStudent: Water helps electricity pass?\nTutor: Correct. Water conducts electricity, so touching switches with wet hands can lead to shock.\nTutor: Other ways to prevent shocks include:\n- repairing exposed wires\n- using proper insulation\n- switching off electricity before repairs\nTutor: The safest single answer here is do not touch switches with wet hands."
+      }
+    ],
+    "title": "Preventing Electric Shock"
+  },
+  {
+    "question_number": 40,
+    "text": "Give any one way in which crop farmers can keep seeds viable for a long time.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Store them in a dry place",
+        "acceptable_answers": [
+          "Keep them away from moisture",
+          "store properly in airtight containers",
+          "protect them from pests"
+        ],
+        "answer_type": "open-ended",
+        "marks": 1,
+        "explanation": "Tutor: First, what does viable mean?\nStudent: Able to germinate.\nTutor: Exactly. Seeds remain viable when they stay alive and can still grow when planted.\nTutor: What can spoil seeds?\nStudent: Water? Dampness?\nTutor: Yes. Moisture can make seeds rot or lose their power to germinate.\nTutor: That is why farmers should keep seeds in a dry place. They may also use clean containers and protect seeds from insects and rats.\nTutor: So the best short answer is store them in a dry place."
+      }
+    ],
+    "title": "Keeping Seeds Viable"
+  },
+  {
+    "question_number": 41,
+    "text": "(a) Name the class of food that helps in the repair of body cells.\n(b) Apart from contamination of food, mention any two other challenges that people who buy food from markets get.\n(c) State any one way of controlling food contamination in a market.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the class of food that helps in the repair of body cells.",
+        "answer": "Proteins",
+        "acceptable_answers": [
+          "Body-building foods"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: When your body gets a wound, what helps it heal?\nStudent: Food?\nTutor: Yes, but which type? Think of foods like beans, meat, eggs.\nStudent: Proteins.\nTutor: Correct. Proteins are called body-building foods because they repair and build body tissues. That’s why growing children need them.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Apart from contamination of food, mention any two other challenges that people who buy food from markets get.",
+        "answer": "High prices; Overcrowding",
+        "acceptable_answers": [
+          "Stale food",
+          "poor hygiene",
+          "long distances",
+          "poor storage"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Let’s think of a busy market. What problems do people face?\nStudent: Maybe food is expensive?\nTutor: Yes, high prices is one. What else?\nStudent: Too many people?\nTutor: Exactly—overcrowding. It can make movement hard and increase spread of diseases.\nTutor: Other possible answers include stale food or poor hygiene.\nTutor: The key is to think of real-life experiences.",
+        "label": "b"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) State any one way of controlling food contamination in a market.",
+        "answer": "Cover food",
+        "acceptable_answers": [
+          "Proper storage",
+          "clean stalls",
+          "handwashing",
+          "use clean containers"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Why do we cover food?\nStudent: To keep flies away.\nTutor: Exactly. Flies carry germs from dirty places.\nTutor: Covering food prevents contamination and keeps it safe for eating.",
+        "label": "c"
+      }
+    ],
+    "title": "Food & Markets"
+  },
+  {
+    "question_number": 42,
+    "text": "(a) Name the germ that causes cholera.\n(b) Explain why cholera is common in heavily populated communities.\n(c) Apart from proper use of latrines, mention any one other way of controlling the spread of cholera.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the germ that causes cholera.",
+        "answer": "Bacteria",
+        "acceptable_answers": [
+          "Vibrio cholerae"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Cholera is caused by what type of germ—virus or bacteria?\nStudent: Bacteria.\nTutor: Correct. The specific one is called Vibrio cholerae.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Explain why cholera is common in heavily populated communities.",
+        "answer": "Poor sanitation and overcrowding increase spread",
+        "acceptable_answers": [
+          "Shared water sources",
+          "poor hygiene",
+          "rapid transmission"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Why would disease spread faster where many people live close together?\nStudent: Because people share things?\nTutor: Exactly—water, toilets, food areas. If sanitation is poor, germs spread quickly.\nTutor: That’s why cholera is common in crowded communities.",
+        "label": "b"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) Apart from proper use of latrines, mention any one other way of controlling the spread of cholera.",
+        "answer": "Boil drinking water",
+        "acceptable_answers": [
+          "Handwashing",
+          "safe water storage",
+          "proper waste disposal"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: If water is unsafe, what should we do before drinking it?\nStudent: Boil it.\nTutor: Correct. Boiling kills germs and makes water safe.",
+        "label": "c"
+      }
+    ],
+    "title": "Cholera"
+  },
+  {
+    "question_number": 43,
+    "text": "(a) Name the correct garden tool for transplanting seedlings.\n(b) State the reason why evening time is the best for transplanting seedlings.\n(c) Mention any two advantages of mulching after transplanting.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the correct garden tool for transplanting seedlings.",
+        "answer": "Hand trowel",
+        "acceptable_answers": [
+          "Hand fork"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Which tool is gentle enough for small plants?\nStudent: A hand trowel.\nTutor: Correct. It helps lift seedlings without damaging roots.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) State the reason why evening time is the best for transplanting seedlings.",
+        "answer": "Reduces water loss",
+        "acceptable_answers": [
+          "Less heat",
+          "prevents wilting"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Why avoid transplanting in hot midday sun?\nStudent: Plants may dry.\nTutor: Exactly. Evening is cooler, so plants lose less water and survive better.",
+        "label": "b"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) Mention any two advantages of mulching after transplanting.",
+        "answer": "Conserves moisture; Suppresses weeds",
+        "acceptable_answers": [
+          "Improves soil fertility",
+          "regulates temperature"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: What does mulch do when placed on soil?\nStudent: Keeps it moist?\nTutor: Yes. It also stops weeds from growing and protects the soil.",
+        "label": "c"
+      }
+    ],
+    "title": "Transplanting Seedlings"
+  },
+  {
+    "question_number": 44,
+    "text": "(a) Name the parts labelled X, W and Y.\n(b) State one function of each part: Y, Z and Rectum.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the parts labelled X, W and Y.",
+        "answer": "X: Liver; W: Large intestine; Y: Small intestine",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: From the diagram on page 9, identify by shape.\nStudent: The big lobe is the liver.\nTutor: Correct. The coiled tube is small intestine, outer frame is large intestine.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) State one function of each part: Y, Z and Rectum.",
+        "answer": "Y: Absorbs nutrients; Z: Digestion/absorption; Rectum: Stores faeces",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: What happens in the small intestine?\nStudent: Nutrients are absorbed.\nTutor: Good. The large intestine absorbs water, and the rectum stores waste before removal.",
+        "label": "b"
+      }
+    ],
+    "title": "Digestive System"
+  },
+  {
+    "question_number": 45,
+    "text": "Complete the table by stating the purpose of Sorting, Soaking, Rinsing, and Ironing.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "",
+        "answer": "Sorting → Separate clothes; Soaking → Loosen dirt; Rinsing → Remove soap; Ironing → Remove creases",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Why do we sort clothes first?\nStudent: Different washing needs.\nTutor: Correct. Each step has a purpose in cleaning."
+      }
+    ],
+    "title": "Cleaning Clothes"
+  },
+  {
+    "question_number": 46,
+    "text": "(a) Give the meaning of electromagnet.\n(b) Describe how to make a magnet using an iron nail, copper wire, a dry cell and some pins.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Give the meaning of electromagnet.",
+        "answer": "A magnet made using electric current",
+        "acceptable_answers": [
+          "A temporary magnet produced when current flows through a coil"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Let’s compare two magnets. A permanent magnet works all the time. What about an electromagnet?\nStudent: It needs electricity?\nTutor: Exactly. It only becomes magnetic when electric current is flowing.\nTutor: So if we switch off the current, what happens?\nStudent: It stops being a magnet.\nTutor: Correct. That’s why it’s called an electromagnet—its magnetism depends on electricity.\nTutor: This is useful in devices where we want to control magnetism, like electric bells and cranes.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Describe how to make a magnet using an iron nail, copper wire, a dry cell and some pins.",
+        "answer": "1. Wind the copper wire tightly around the nail (many turns); 2. Connect the ends of the wire to the dry cell; 3. Allow current to flow; 4. Bring the nail near pins to test attraction",
+        "acceptable_answers": [
+          "Ensure tight coils",
+          "do not short-circuit",
+          "more turns increase strength"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: We have a nail, wire, and a battery. Which part will become the magnet?\nStudent: The nail.\nTutor: Good. What do we do with the wire?\nStudent: Wrap it around the nail.\nTutor: Yes—make many tight turns. Why many turns?\nStudent: To make it stronger?\nTutor: Exactly. More coils increase the magnetic effect.\nTutor: Now connect the wire ends to the dry cell. What starts flowing?\nStudent: Electric current.\nTutor: Right. Now test it with pins. What should happen?\nStudent: The nail attracts the pins.\nTutor: Perfect. That shows the nail has become an electromagnet.\nTutor: Safety tip—don’t keep it connected too long; the wire can heat up.",
+        "label": "b"
+      }
+    ],
+    "title": "Electromagnet"
+  },
+  {
+    "question_number": 47,
+    "text": "(a) Mention any two materials that can be used in a digester to produce biogas.\n(b) Give a reason why a biogas digester should be tightly sealed.\n(c) State any one advantage of using biogas.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Mention any two materials that can be used in a digester to produce biogas.",
+        "answer": "Cow dung; Plant waste",
+        "acceptable_answers": [
+          "Animal waste",
+          "kitchen waste",
+          "poultry droppings",
+          "crop residues"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Biogas comes from rotting organic matter. What materials can rot and produce gas?\nStudent: Animal dung?\nTutor: Yes—cow dung is common. What else?\nStudent: Plant waste.\nTutor: Correct. Kitchen waste and crop residues also work.\nTutor: The key idea is organic material that can decompose.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Give a reason why a biogas digester should be tightly sealed.",
+        "answer": "To prevent gas from escaping",
+        "acceptable_answers": [
+          "To keep out air (maintain anaerobic conditions)",
+          "to build pressure for collection"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: When gas is produced, where do we want it to go?\nStudent: To be collected and used.\nTutor: Exactly. If the digester is not sealed, what happens?\nStudent: The gas escapes.\nTutor: Right—and we lose fuel. Also, biogas forms best without oxygen (anaerobic conditions). A tight seal helps maintain that environment.\nTutor: So sealing is important for keeping the gas in and the process efficient.",
+        "label": "b"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) State any one advantage of using biogas.",
+        "answer": "Provides fuel for cooking",
+        "acceptable_answers": [
+          "Reduces use of firewood",
+          "reduces smoke pollution",
+          "uses waste materials",
+          "produces manure as by-product"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Why is biogas useful in a home?\nStudent: It can be used for cooking.\nTutor: Correct. What advantage does it have over firewood?\nStudent: Less smoke?\nTutor: Yes—cleaner and reduces indoor air pollution. It also saves trees and uses waste that would otherwise be thrown away.\nTutor: So one strong answer is provides fuel for cooking.",
+        "label": "c"
+      }
+    ],
+    "title": "Biogas"
+  },
+  {
+    "question_number": 48,
+    "text": "(a) Name the protective item labelled K.\n(b) Identify any two diseases that can be prevented by using the item K.\n(c) Mention any one good practice of using the protective item K.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the protective item labelled K.",
+        "answer": "Face mask",
+        "acceptable_answers": [
+          "Cloth mask"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Look at the diagram on page 11. What is covering the person’s nose and mouth?\nStudent: A mask.\nTutor: Correct—a face mask. It is used to reduce the spread of germs through the air.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Identify any two diseases that can be prevented by using the item K.",
+        "answer": "COVID-19; Tuberculosis",
+        "acceptable_answers": [
+          "Influenza (flu)",
+          "common cold (partially)",
+          "other respiratory infections"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Which diseases spread through droplets in the air when people cough or sneeze?\nStudent: COVID-19?\nTutor: Yes, and tuberculosis (TB) as well. Masks reduce the chance of inhaling infected droplets.\nTutor: So two good answers are COVID-19 and TB.",
+        "label": "b"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) Mention any one good practice of using the protective item K.",
+        "answer": "Cover both nose and mouth properly",
+        "acceptable_answers": [
+          "Keep it clean",
+          "replace when dirty",
+          "avoid touching front",
+          "wash reusable masks"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Does a mask work if it only covers the mouth?\nStudent: No.\nTutor: Correct. It must cover both the nose and mouth.\nTutor: What other good practices can you mention?\nStudent: Keep it clean?\nTutor: Yes. Also avoid touching the front and replace or wash it regularly.\nTutor: The key idea is proper use, not just wearing it.",
+        "label": "c"
+      }
+    ],
+    "title": "Protective Item (Mask)"
+  },
+  {
+    "question_number": 49,
+    "text": "(a) Mention one example of musical instruments in each group: (i) String instruments, (ii) Percussion instruments.\n(b) Name any two methods of storing sound.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Mention one example of musical instruments in each group: (i) String instruments, (ii) Percussion instruments.",
+        "answer": "Guitar (string); Drum (percussion)",
+        "acceptable_answers": [
+          "String: Violin, harp",
+          "Percussion: Xylophone, tambourine"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: What makes a string instrument produce sound?\nStudent: Vibrating strings.\nTutor: Exactly. A guitar or violin uses strings that vibrate.\nTutor: What about percussion instruments?\nStudent: They are beaten.\nTutor: Yes—like drums or xylophones. Sound is produced by striking.\nTutor: So a good pair is guitar and drum.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Name any two methods of storing sound.",
+        "answer": "CD; Flash disk",
+        "acceptable_answers": [
+          "Cassette tape",
+          "memory card",
+          "computer/phone storage",
+          "hard drive"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: How can we keep sound to listen later?\nStudent: Record it.\nTutor: Right. Where can we store it?\nStudent: On a CD?\nTutor: Yes. Also on a flash disk, phone, or computer.\nTutor: In the past, people used cassette tapes; now we use digital storage.\nTutor: So two correct answers are CD and flash disk.",
+        "label": "b"
+      }
+    ],
+    "title": "Music & Sound"
+  },
+  {
+    "question_number": 50,
+    "text": "(a) State the name given to insects that live and work together.\n(b) Give any one way in which insects are useful to people.\n(c) State any two human activities that are dangerous to insects in the environment.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) State the name given to insects that live and work together.",
+        "answer": "Social insects",
+        "acceptable_answers": [
+          "Colonial insects"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Some insects live alone, but others live in groups. Can you think of examples?\nStudent: Ants?\nTutor: Yes, ants. Also bees and termites.\nTutor: These insects cooperate and share duties like collecting food and protecting the group.\nTutor: Such insects are called social insects.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Give any one way in which insects are useful to people.",
+        "answer": "Pollination",
+        "acceptable_answers": [
+          "Honey production",
+          "food source",
+          "decomposition"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Why are insects important to plants?\nStudent: They help plants grow?\nTutor: Yes, especially through pollination. Bees carry pollen from one flower to another.\nTutor: This helps plants produce fruits and seeds.\nTutor: So insects play a key role in food production.",
+        "label": "b"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) State any two human activities that are dangerous to insects in the environment.",
+        "answer": "Use of pesticides; Bush burning",
+        "acceptable_answers": [
+          "Deforestation",
+          "pollution",
+          "habitat destruction"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: What actions by humans can harm insects?\nStudent: Spraying chemicals?\nTutor: Yes, pesticides can kill insects.\nTutor: What else?\nStudent: Burning bushes?\nTutor: Correct. Bush burning destroys habitats.\nTutor: So human activities can reduce insect populations.",
+        "label": "c"
+      }
+    ],
+    "title": "Insects"
+  },
+  {
+    "question_number": 51,
+    "text": "(a) Name the type of weather marked C.\n(b) State one way in which the type of weather in A helps in formation of the type of weather in D.\n(c) Give one way in which people protect themselves from the effects of the type of weather in B.\n(d) State any one way in which too much of the type of weather in A is dangerous to the environment.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the type of weather marked C.",
+        "answer": "Cloudy weather",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Look at the diagram on page 12. What do you see in section C?\nStudent: Clouds.\nTutor: Yes, many clouds covering the sky. That is called cloudy weather.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) State one way in which the type of weather in A helps in formation of the type of weather in D.",
+        "answer": "Sun causes evaporation leading to rainfall",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: In A, we see sunshine. What does the sun do to water?\nStudent: It heats it.\nTutor: Yes, and that causes evaporation.\nTutor: The water vapour forms clouds and later falls as rain (weather D).\nTutor: So sunshine leads to rainfall through evaporation.",
+        "label": "b"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) Give one way in which people protect themselves from the effects of the type of weather in B.",
+        "answer": "Seek shelter or wear protective clothing",
+        "acceptable_answers": [
+          "Use umbrellas",
+          "wear warm clothes"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Look at weather B. What do you observe?\nStudent: Strong wind.\nTutor: Yes. How can people protect themselves?\nStudent: Stay indoors?\nTutor: Correct. They can also wear protective clothing or avoid open areas.",
+        "label": "c"
+      },
+      {
+        "order_index": 3,
+        "text": "(d) State any one way in which too much of the type of weather in A is dangerous to the environment.",
+        "answer": "Causes drought",
+        "acceptable_answers": [
+          "Dries crops",
+          "leads to water shortage"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: What happens if there is too much sunshine?\nStudent: It becomes very dry.\nTutor: Yes. That can lead to drought.\nTutor: Crops dry up and water sources reduce.",
+        "label": "d"
+      }
+    ],
+    "title": "Weather"
+  },
+  {
+    "question_number": 52,
+    "text": "(a) State the meaning of the term vaccine.\n(b) Mention the way in which polio vaccine is administered.\n(c) State the reason why vaccines should be stored in a cool place.\n(d) Identify any one way you can support immunisation programmes in your community.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) State the meaning of the term vaccine.",
+        "answer": "A substance that protects the body from disease",
+        "acceptable_answers": [
+          "A preparation that provides immunity"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: What is the purpose of a vaccine?\nStudent: To prevent disease.\nTutor: Exactly. It helps the body develop protection (immunity) against specific diseases.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) Mention the way in which polio vaccine is administered.",
+        "answer": "By mouth (oral)",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Do you remember how children receive polio vaccine?\nStudent: Drops in the mouth.\nTutor: Correct. It is given orally.",
+        "label": "b"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) State the reason why vaccines should be stored in a cool place.",
+        "answer": "Heat destroys vaccines",
+        "acceptable_answers": [
+          "To maintain effectiveness"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: What happens if vaccines are exposed to heat?\nStudent: They spoil?\nTutor: Yes. Heat destroys them and makes them ineffective.\nTutor: That is why they must be kept cool.",
+        "label": "c"
+      },
+      {
+        "order_index": 3,
+        "text": "(d) Identify any one way you can support immunisation programmes in your community.",
+        "answer": "Taking children for vaccination",
+        "acceptable_answers": [
+          "Sensitising others",
+          "encouraging participation"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: How can you help your community stay healthy?\nStudent: Encourage vaccination?\nTutor: Yes. You can take children for immunisation or educate others.",
+        "label": "d"
+      }
+    ],
+    "title": "Vaccines"
+  },
+  {
+    "question_number": 53,
+    "text": "(a) Name the physical change which leads to formation of: (i) Ice, (ii) Rainfall.\n(b) State any two effects of physical changes caused by soil erosion.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the physical change which leads to formation of: (i) Ice, (ii) Rainfall.",
+        "answer": "(i) Freezing; (ii) Condensation",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: What happens when water becomes ice?\nStudent: It freezes.\nTutor: Correct. That is freezing.\nTutor: What about rainfall?\nStudent: Water vapour cools?\nTutor: Yes, it condenses into droplets. That is condensation.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) State any two effects of physical changes caused by soil erosion.",
+        "answer": "Loss of topsoil; Silting",
+        "acceptable_answers": [
+          "Reduced fertility",
+          "flooding"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: What happens when soil is eroded?\nStudent: It is removed.\nTutor: Yes, and that removes fertile topsoil.\nTutor: The soil may also collect in rivers causing silting.",
+        "label": "b"
+      }
+    ],
+    "title": "Physical Changes"
+  },
+  {
+    "question_number": 54,
+    "text": "(a) Name the two muscles found in the human arm.\n(b) State any one function of muscles in the human body.\n(c) State the importance of maintaining correct posture.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Name the two muscles found in the human arm.",
+        "answer": "Biceps; Triceps",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: When you bend your arm, which muscle works?\nStudent: Biceps.\nTutor: And when you straighten it?\nStudent: Triceps.\nTutor: Correct. They work as a pair.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) State any one function of muscles in the human body.",
+        "answer": "Enable movement",
+        "acceptable_answers": [
+          "Maintain posture"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: What do muscles do in the body?\nStudent: Help movement.\nTutor: Yes, they allow us to walk, lift, and move.",
+        "label": "b"
+      },
+      {
+        "order_index": 2,
+        "text": "(c) State the importance of maintaining correct posture.",
+        "answer": "Prevents body deformities",
+        "acceptable_answers": [
+          "Prevents pain",
+          "supports proper growth"
+        ],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: What happens if you sit or stand wrongly for long?\nStudent: You can get problems?\nTutor: Yes, poor posture can lead to deformities and pain.",
+        "label": "c"
+      }
+    ],
+    "title": "Muscles"
+  },
+  {
+    "question_number": 55,
+    "text": "(a) Draw the image of the cup in a plane mirror.\n(b) (i) Name ray A, (ii) State relationship between angles m and y.",
+    "image_url": null,
+    "parts": [
+      {
+        "order_index": 0,
+        "text": "(a) Draw the image of the cup in a plane mirror.",
+        "answer": "Image is same size, same distance behind mirror, upright",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: In a plane mirror, where is the image formed?\nStudent: Behind the mirror.\nTutor: At what distance?\nStudent: Same as the object.\nTutor: Correct. The image is upright and same size.",
+        "label": "a"
+      },
+      {
+        "order_index": 1,
+        "text": "(b) (i) Name ray A, (ii) State relationship between angles m and y.",
+        "answer": "(i) Incident ray; (ii) Angles are equal",
+        "acceptable_answers": [],
+        "answer_type": "open-ended",
+        "marks": 2,
+        "explanation": "Tutor: Ray A is the incoming ray—what do we call it?\nStudent: Incident ray.\nTutor: Correct. What about the angles?\nStudent: They are equal.\nTutor: Yes, angle of incidence equals angle of reflection.",
+        "label": "b"
+      }
+    ],
+    "title": "Reflection"
+  }
+]

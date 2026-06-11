@@ -1,0 +1,3 @@
+❌ Error: Please provide exam ID and question numbers
+Usage: node scripts/debugExtractQuestions.js <exam-id> <q1> [q2] [q3] ...
+Example: node scripts/debugExtractQuestions.js ple-science-2024 40 50

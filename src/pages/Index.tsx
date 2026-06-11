@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import LandingPage from './LandingPage';
+import { getDashboardPathForRole } from '@/lib/auth-routing';
 
 const Index: React.FC = () => {
   const { user, loading, role } = useAuth();
@@ -16,7 +17,7 @@ const Index: React.FC = () => {
 
   // Redirect authenticated users to their dashboard
   if (user && role) {
-    return <Navigate to={`/dashboard/${role}`} replace />;
+    return <Navigate to={getDashboardPathForRole(role)} replace />;
   }
 
   // Show landing page for unauthenticated users

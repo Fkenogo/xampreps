@@ -14,21 +14,144 @@ service cloud.firestore {
     }
     
     // Helper function to check if user has admin or super_admin role
-    // Note: Custom claims are not set, so we check user_roles collection
-    // This requires a read, which is acceptable for admin checks
+    // Prefer token/canonical users, then fall back to legacy user_roles
     function isAdmin() {
-      let userRole = get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role;
-      return isAuthenticated() && (userRole == 'admin' || userRole == 'super_admin');
+      let tokenRole = isAuthenticated() ? request.auth.token.role : null;
+      let canonicalRole = isAuthenticated() ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.primaryRole : null;
+      let userRole = isAuthenticated() ? get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role : null;
+      let resolvedRole = tokenRole != null ? tokenRole : (canonicalRole != null ? canonicalRole : userRole);
+      return isAuthenticated() && (resolvedRole == 'admin' || resolvedRole == 'super_admin');
     }
-    
+
+    function isContentEditorRole(role) {
+      return role == 'content_editor' || role == 'admin' || role == 'super_admin';
+    }
+
+    function isTeacherRole(role) {
+      return role == 'teacher' || role == 'admin' || role == 'super_admin';
+    }
+
+    function resolveUserRole() {
+      let tokenRole = isAuthenticated() ? request.auth.token.role : null;
+      let canonicalRole = isAuthenticated() ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.primaryRole : null;
+      let legacyRole = isAuthenticated() ? get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role : null;
+      return tokenRole != null ? tokenRole : (canonicalRole != null ? canonicalRole : legacyRole);
+    }
+
     // Helper function to get user's role
     function getUserRole() {
-      return get(/databases/$(database)/documents/user_roles/$(request.auth.uid)).data.role;
+      return resolveUserRole();
     }
-    
+
+    function onlyStudentWritableAttemptFields() {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny([
+        'autoScore',
+        'manualScore',
+        'finalScore',
+        'maxScore',
+        'completedAt',
+        'reviewedBy',
+        'reviewedAt'
+      ]);
+    }
+
     // ============================================================
     // USER COLLECTIONS
     // ============================================================
+
+    // Canonical users - users can read their own canonical identity doc
+    // Admin/super_admin can read all, writes stay admin-only
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Adult profiles - users can read their own adult profile; admin can manage
+    match /adult_profiles/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Student profiles - students can read their own; admin can manage
+    match /student_profiles/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Student access credentials - never readable directly by clients
+    match /student_access/{userId} {
+      allow read, create, update, delete: if false;
+    }
+
+    // Access code aliases - never readable directly by clients
+    match /auth_login_aliases/{aliasKey} {
+      allow read, create, update, delete: if false;
+    }
+
+    // Parent/student links - participants or admin can read
+    match /parent_student_links/{linkId} {
+      allow read: if isAuthenticated() && (
+        resource.data.parentUid == request.auth.uid ||
+        resource.data.studentUid == request.auth.uid ||
+        isAdmin()
+      );
+      allow create, update, delete: if isAdmin();
+    }
+
+    // School/student links - linked student or admin can read
+    match /school_student_links/{linkId} {
+      allow read: if isAuthenticated() && (
+        resource.data.studentUid == request.auth.uid ||
+        isAdmin()
+      );
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Teacher/student links - linked participants or admin can read
+    match /teacher_student_links/{linkId} {
+      allow read: if isAuthenticated() && (
+        resource.data.teacherUid == request.auth.uid ||
+        resource.data.studentUid == request.auth.uid ||
+        isAdmin()
+      );
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Teacher/school links - linked teacher or admin can read
+    match /teacher_school_links/{linkId} {
+      allow read: if isAuthenticated() && (
+        resource.data.teacherUid == request.auth.uid ||
+        isAdmin()
+      );
+      allow create, update, delete: if isAdmin();
+    }
+
+    // School admin links - linked admin user or admin can read
+    match /school_admin_links/{linkId} {
+      allow read: if isAuthenticated() && (
+        resource.data.uid == request.auth.uid ||
+        isAdmin()
+      );
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Schools - readable by linked school_admin or admin
+    match /schools/{schoolId} {
+      allow read: if isAuthenticated() && (
+        isAdmin() ||
+        exists(/databases/$(database)/documents/school_admin_links/$(schoolId + "_" + request.auth.uid))
+      );
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Student creation records and admin preview sessions are operator-only
+    match /student_creation_records/{recordId} {
+      allow read, create, update, delete: if isAdmin();
+    }
+
+    match /admin_preview_sessions/{sessionId} {
+      allow read, create, update, delete: if isAdmin();
+    }
     
     // User profiles - users can read/write their own profile
     // Admin can read all profiles
@@ -54,12 +177,21 @@ service cloud.firestore {
     }
     
     // ============================================================
-    // EXAM CONTENT COLLECTIONS (Read-only for authenticated users)
+    // EXAM CONTENT COLLECTIONS
     // ============================================================
-    
-    // Exams - readable by all authenticated users, admin writes
+
+    // Exams - publicly readable for browse (listing cards, filters).
+    // This allows unauthenticated users to browse /past-papers and /practice-papers.
+    // Question content (items, interactions, sections) remains gated.
     match /exams/{examId} {
-      allow read: if isAuthenticated();
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Pricing plans - publicly readable so the pricing page works without auth.
+    // Only admins can create, edit, or delete plans.
+    match /pricing_plans/{planId} {
+      allow read: if true;
       allow create, update, delete: if isAdmin();
     }
     
@@ -83,9 +215,31 @@ service cloud.firestore {
     
     // Exam attempts - users can read their own, create via Cloud Function only
     match /exam_attempts/{attemptId} {
-      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
-      allow update, delete: if isAdmin(); // Only admin can modify attempts
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||
+        resource.data.user_id == request.auth.uid ||
+        resource.data.uid == request.auth.uid ||
+        resource.data.studentId == request.auth.uid ||
+        resource.data.student_id == request.auth.uid
+      );
+      allow create: if isAuthenticated() && (
+        request.resource.data.userId == request.auth.uid ||
+        request.resource.data.user_id == request.auth.uid ||
+        request.resource.data.uid == request.auth.uid ||
+        request.resource.data.studentId == request.auth.uid ||
+        request.resource.data.student_id == request.auth.uid
+      );
+      allow update: if isAuthenticated() && (
+        ((
+          resource.data.userId == request.auth.uid ||
+          resource.data.user_id == request.auth.uid ||
+          resource.data.uid == request.auth.uid ||
+          resource.data.studentId == request.auth.uid ||
+          resource.data.student_id == request.auth.uid
+        ) && onlyStudentWritableAttemptFields()) ||
+        isAdmin()
+      );
+      allow delete: if isAdmin();
     }
     
     // Question history - users can read/write their own for spaced repetition
@@ -196,15 +350,252 @@ service cloud.firestore {
     // Subscriptions - users can read their own, no client writes
     // Subscriptions are managed by payment system (not yet implemented)
     match /subscriptions/{subscriptionId} {
-      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||
+        resource.data.user_id == request.auth.uid
+      );
       allow create, update, delete: if false; // Only via Cloud Function / payment webhook
     }
     
     // Paper purchases - users can read their own, create via Cloud Function
     match /paper_purchases/{purchaseId} {
-      allow read: if isAuthenticated() && resource.data.userId == request.auth.uid;
-      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||
+        resource.data.user_id == request.auth.uid
+      );
+      allow create: if isAuthenticated() && (
+        request.resource.data.userId == request.auth.uid ||
+        request.resource.data.user_id == request.auth.uid
+      );
       allow update, delete: if false; // No modifications allowed
+    }
+    
+    // ============================================================
+    // V2 EXAM ENGINE COLLECTIONS
+    // ============================================================
+    
+    // Helper function to check if user is a teacher
+    function isTeacher() {
+      return isAuthenticated() && isTeacherRole(resolveUserRole());
+    }
+    
+    // Helper function to check if user is a content editor
+    function isContentEditor() {
+      return isAuthenticated() && isContentEditorRole(resolveUserRole());
+    }
+
+    function isDirectTeacherForStudent(studentUid) {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/teacher_student_links/$(request.auth.uid + "_" + studentUid)) &&
+        get(/databases/$(database)/documents/teacher_student_links/$(request.auth.uid + "_" + studentUid)).data.status == 'active';
+    }
+
+    function preservesSubmissionEvaluationFields() {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny([
+        'autoScore',
+        'manualScore',
+        'finalScore',
+        'autoFeedback',
+        'teacherFeedback',
+        'reviewStatus',
+        'reviewedBy',
+        'reviewedAt'
+      ]);
+    }
+
+    function onlyResetsSubmissionEvaluationFields() {
+      return request.resource.data.autoScore == null &&
+        request.resource.data.manualScore == null &&
+        request.resource.data.finalScore == null &&
+        request.resource.data.autoFeedback == null &&
+        request.resource.data.teacherFeedback == null &&
+        request.resource.data.reviewStatus == 'pending' &&
+        request.resource.data.reviewedBy == null &&
+        request.resource.data.reviewedAt == null;
+    }
+
+    function hasPendingSubmissionEvaluationFields() {
+      return request.resource.data.autoScore == null &&
+        request.resource.data.manualScore == null &&
+        request.resource.data.finalScore == null &&
+        request.resource.data.autoFeedback == null &&
+        request.resource.data.teacherFeedback == null &&
+        request.resource.data.reviewStatus == 'pending' &&
+        request.resource.data.reviewedBy == null &&
+        request.resource.data.reviewedAt == null;
+    }
+
+    function hasUnansweredSubmissionEvaluationFields() {
+      return request.resource.data.autoScore == 0 &&
+        request.resource.data.manualScore == null &&
+        request.resource.data.finalScore == 0 &&
+        request.resource.data.teacherFeedback == null &&
+        request.resource.data.reviewStatus == 'unanswered' &&
+        request.resource.data.reviewedBy == null &&
+        request.resource.data.reviewedAt == null;
+    }
+
+    function onlyMarksSubmissionUnanswered() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+        'submissionId',
+        'attemptId',
+        'examId',
+        'itemId',
+        'interactionId',
+        'userId',
+        'responsePayload',
+        'isAnswered',
+        'submittedAt',
+        'createdAt',
+        'updatedAt',
+        'autoScore',
+        'manualScore',
+        'finalScore',
+        'autoFeedback',
+        'teacherFeedback',
+        'reviewStatus',
+        'reviewedBy',
+        'reviewedAt'
+      ]) && hasUnansweredSubmissionEvaluationFields();
+    }
+    
+    // Sections - part of exam content structure
+    match /sections/{sectionId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isContentEditor();
+    }
+    
+    // Instruction groups - part of exam content structure
+    match /instruction_groups/{groupId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isContentEditor();
+    }
+    
+    // Context blocks - shared stimulus content
+    match /context_blocks/{blockId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isContentEditor();
+    }
+    
+    // Items - replaces legacy questions
+    match /items/{itemId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isContentEditor();
+    }
+    
+    // Interactions - replaces legacy question_parts
+    match /interactions/{interactionId} {
+      allow read: if isAuthenticated();
+      allow create, update, delete: if isContentEditor();
+    }
+    
+    // Marking rules - admin/content editor only
+    match /marking_rules/{ruleId} {
+      allow read: if isContentEditor(); // Not visible to students
+      allow create, update, delete: if isContentEditor();
+    }
+    
+    // Rubrics - admin/content editor only
+    match /rubrics/{rubricId} {
+      allow read: if isContentEditor() || isTeacher(); // Teachers can view rubrics
+      allow create, update, delete: if isContentEditor();
+    }
+    
+    // Model answer versions - versioned content
+    match /model_answer_versions/{versionId} {
+      allow read: if isAuthenticated(); // Students can see approved answers
+      allow create: if isContentEditor();
+      allow update: if isContentEditor(); // Only content editors can update
+      allow delete: if isAdmin();
+    }
+    
+    // Submissions - students can create their own, teachers can read assigned
+    match /submissions/{submissionId} {
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||  // Own submission
+        resource.data.user_id == request.auth.uid ||
+        resource.data.uid == request.auth.uid ||
+        resource.data.studentId == request.auth.uid ||
+        resource.data.student_id == request.auth.uid ||
+        isAdmin() ||
+        isDirectTeacherForStudent(resource.data.userId) ||
+        isDirectTeacherForStudent(resource.data.user_id) ||
+        isDirectTeacherForStudent(resource.data.studentId) ||
+        isDirectTeacherForStudent(resource.data.student_id)
+      );
+      allow create: if isAuthenticated() &&
+        (
+          request.resource.data.userId == request.auth.uid ||
+          request.resource.data.user_id == request.auth.uid ||
+          request.resource.data.uid == request.auth.uid ||
+          request.resource.data.studentId == request.auth.uid ||
+          request.resource.data.student_id == request.auth.uid
+        ) &&
+        (hasPendingSubmissionEvaluationFields() || hasUnansweredSubmissionEvaluationFields());
+      allow update: if isAuthenticated() && (
+        ((
+          resource.data.userId == request.auth.uid ||
+          resource.data.user_id == request.auth.uid ||
+          resource.data.uid == request.auth.uid ||
+          resource.data.studentId == request.auth.uid ||
+          resource.data.student_id == request.auth.uid
+        ) && (
+          preservesSubmissionEvaluationFields() ||
+          onlyResetsSubmissionEvaluationFields() ||
+          onlyMarksSubmissionUnanswered()
+        )) ||
+        isAdmin()
+      );
+      allow delete: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid ||
+        resource.data.user_id == request.auth.uid ||
+        resource.data.uid == request.auth.uid ||
+        resource.data.studentId == request.auth.uid ||
+        resource.data.student_id == request.auth.uid
+      );
+    }
+    
+    // Review tasks - teachers can read assigned, update their own
+    match /review_tasks/{taskId} {
+      allow read: if isAuthenticated() && (
+        resource.data.assignedTeacherId == request.auth.uid ||  // Assigned to teacher
+        resource.data.userId == request.auth.uid ||  // Own submission review
+        isAdmin() ||
+        isDirectTeacherForStudent(resource.data.userId)
+      );
+      allow create, update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Teacher answer suggestions - teachers can suggest, admins resolve
+    match /answer_suggestions/{suggestionId} {
+      allow read: if isAuthenticated() && (
+        resource.data.teacherId == request.auth.uid ||
+        isAdmin()
+      );
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Teacher review actions are written by Cloud Functions and visible to admins.
+    match /teacher_review_actions/{actionId} {
+      allow read: if isAuthenticated() && (
+        resource.data.teacherId == request.auth.uid ||
+        isAdmin()
+      );
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Admin content edit audit events are admin-only.
+    match /audit_events/{eventId} {
+      allow read, create, update, delete: if isAdmin();
+    }
+    
+    // Feedback templates - readable by teachers, managed by content editors
+    match /feedback_templates/{templateId} {
+      allow read: if isTeacher();
+      allow create, update, delete: if isContentEditor();
     }
     
     // ============================================================

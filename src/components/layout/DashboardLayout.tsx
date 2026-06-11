@@ -23,6 +23,9 @@ import {
   Shield,
   Eye,
   Crown,
+  School,
+  CreditCard,
+  Star,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -32,7 +35,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-type AppRole = 'student' | 'parent' | 'school' | 'admin' | 'super_admin';
+import type { AppRole } from '@/contexts/AuthContext';
 
 interface NavItem {
   label: string;
@@ -51,31 +54,38 @@ const roleNavItems: Record<AppRole, NavItem[]> = {
     { label: 'Dashboard', href: '/dashboard/student', icon: Home },
     { label: 'Exams', href: '/exams', icon: BookOpen },
     { label: 'Achievements', href: '/achievements', icon: Trophy },
+    { label: 'Upgrade', href: '/pricing', icon: Star },
     { label: 'Settings', href: '/settings', icon: Settings },
   ],
   parent: [
     { label: 'Dashboard', href: '/dashboard/parent', icon: Home },
-    { label: 'Children', href: '/children', icon: Users },
-    { label: 'Reports', href: '/reports', icon: BarChart3 },
+    { label: 'Plans', href: '/pricing', icon: CreditCard },
+    { label: 'Settings', href: '/settings', icon: Settings },
+  ],
+  teacher: [
+    { label: 'Dashboard', href: '/dashboard/teacher', icon: Home },
+    { label: 'Review', href: '/review', icon: FileText },
+    { label: 'Settings', href: '/settings', icon: Settings },
+  ],
+  school_admin: [
+    { label: 'Dashboard', href: '/dashboard/school-admin', icon: Home },
     { label: 'Settings', href: '/settings', icon: Settings },
   ],
   school: [
     { label: 'Dashboard', href: '/dashboard/school', icon: Home },
-    { label: 'Students', href: '/students', icon: Users },
-    { label: 'Analytics', href: '/analytics', icon: BarChart3 },
     { label: 'Settings', href: '/settings', icon: Settings },
   ],
   admin: [
     { label: 'Dashboard', href: '/dashboard/admin', icon: Home },
-    { label: 'Users', href: '/admin/users', icon: Users },
-    { label: 'Exams', href: '/admin/exams', icon: FileText },
-    { label: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
+    { label: 'Exams', href: '/exams', icon: FileText },
+    { label: 'Plans', href: '/pricing', icon: CreditCard },
     { label: 'Settings', href: '/settings', icon: Settings },
   ],
   super_admin: [
     { label: 'Business Console', href: '/dashboard/business-console', icon: Shield },
     { label: 'Admin Panel', href: '/dashboard/admin', icon: Home },
     { label: 'Exams', href: '/exams', icon: BookOpen },
+    { label: 'Plans', href: '/pricing', icon: CreditCard },
     { label: 'Forum', href: '/forum', icon: FileText },
     { label: 'Settings', href: '/settings', icon: Settings },
   ],
@@ -85,6 +95,17 @@ interface SubscriptionInfo {
   plan: string;
   expiresAt: string | null;
   daysRemaining: number | null;
+}
+
+function formatRoleLabel(role: AppRole): string {
+  switch (role) {
+    case 'school_admin':
+      return 'School Admin';
+    case 'super_admin':
+      return 'Super Admin';
+    default:
+      return role.charAt(0).toUpperCase() + role.slice(1);
+  }
 }
 
 export default function DashboardLayout({ children, previewRole, onPreviewRoleChange }: DashboardLayoutProps) {
@@ -103,39 +124,46 @@ export default function DashboardLayout({ children, previewRole, onPreviewRoleCh
     const fetchSubscription = async () => {
       if (!user?.id) return;
 
-      const db = getFirebaseDb();
-      const byUserId = await getDocs(query(
-        collection(db, 'subscriptions'),
-        where('userId', '==', user.id),
-        fireLimit(1)
-      ));
-      const byUserSnake = byUserId.empty ? await getDocs(query(
-        collection(db, 'subscriptions'),
-        where('user_id', '==', user.id),
-        fireLimit(1)
-      )) : byUserId;
+      try {
+        const db = getFirebaseDb();
+        const byUserId = await getDocs(query(
+          collection(db, 'subscriptions'),
+          where('userId', '==', user.id),
+          fireLimit(1)
+        ));
+        const byUserSnake = byUserId.empty ? await getDocs(query(
+          collection(db, 'subscriptions'),
+          where('user_id', '==', user.id),
+          fireLimit(1)
+        )) : byUserId;
 
-      if (!byUserSnake.empty) {
-        const data = byUserSnake.docs[0].data();
-        const expiresAtRaw = data.expiresAt || data.expires_at || null;
-        const expiresAt =
-          typeof expiresAtRaw === 'string'
-            ? expiresAtRaw
-            : expiresAtRaw && typeof expiresAtRaw.toDate === 'function'
-              ? expiresAtRaw.toDate().toISOString()
-              : null;
-        let daysRemaining: number | null = null;
-        if (expiresAt) {
-          const expiryDate = new Date(expiresAt);
-          const today = new Date();
-          daysRemaining = Math.ceil((expiryDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+        if (!byUserSnake.empty) {
+          const data = byUserSnake.docs[0].data();
+          const expiresAtRaw = data.expiresAt || data.expires_at || null;
+          const expiresAt =
+            typeof expiresAtRaw === 'string'
+              ? expiresAtRaw
+              : expiresAtRaw && typeof expiresAtRaw.toDate === 'function'
+                ? expiresAtRaw.toDate().toISOString()
+                : null;
+          let daysRemaining: number | null = null;
+          if (expiresAt) {
+            const expiryDate = new Date(expiresAt);
+            const today = new Date();
+            daysRemaining = Math.ceil((expiryDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+          }
+
+          setSubscription({
+            plan: typeof data.plan === 'string' ? data.plan : 'Free',
+            expiresAt,
+            daysRemaining,
+          });
         }
-
-        setSubscription({
-          plan: typeof data.plan === 'string' ? data.plan : 'Free',
-          expiresAt,
-          daysRemaining,
-        });
+      } catch (error) {
+        // Silently handle permission errors - subscription data is optional
+        // This prevents "Missing or insufficient permissions" errors from blocking the UI
+        console.warn('Failed to fetch subscription data (this is optional):', error);
+        setSubscription(null);
       }
     };
 
@@ -262,9 +290,9 @@ export default function DashboardLayout({ children, previewRole, onPreviewRoleCh
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" className="w-full justify-between">
-                    <div className="flex items-center gap-2">
-                      <Eye className="w-4 h-4" />
-                      {previewRole ? previewRole.charAt(0).toUpperCase() + previewRole.slice(1) : 'Select Role'}
+                      <div className="flex items-center gap-2">
+                        <Eye className="w-4 h-4" />
+                      {previewRole ? formatRoleLabel(previewRole) : 'Select Role'}
                     </div>
                     <ChevronDown className="w-4 h-4" />
                   </Button>
@@ -278,9 +306,17 @@ export default function DashboardLayout({ children, previewRole, onPreviewRoleCh
                     <Users className="w-4 h-4 mr-2" />
                     Parent View
                   </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => onPreviewRoleChange?.('teacher')}>
+                    <FileText className="w-4 h-4 mr-2" />
+                    Teacher View
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => onPreviewRoleChange?.('school_admin')}>
+                    <School className="w-4 h-4 mr-2" />
+                    School Admin View
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => onPreviewRoleChange?.('school')}>
                     <BarChart3 className="w-4 h-4 mr-2" />
-                    School View
+                    Legacy School View
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => onPreviewRoleChange?.('admin')}>
                     <User className="w-4 h-4 mr-2" />

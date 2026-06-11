@@ -1,5 +1,18 @@
-export type EducationLevel = 'PLE' | 'UCE' | 'UACE';
-export type UserRole = 'student' | 'parent' | 'school' | 'admin';
+import type { EducationLevelCode } from '@/lib/education-system';
+
+/**
+ * @deprecated Legacy education level enum. Use V2 system instead.
+ */
+export type EducationLevel = EducationLevelCode;
+
+/**
+ * @deprecated Legacy user role enum. Use V2 system instead.
+ */
+export type UserRole = 'student' | 'parent' | 'teacher' | 'school_admin' | 'school' | 'admin' | 'super_admin';
+
+/**
+ * @deprecated Legacy exam mode. V2 adds 'quiz' mode. Use V2 system instead.
+ */
 export type ExamMode = 'practice' | 'simulation';
 
 export interface StudyReminder {
@@ -9,6 +22,9 @@ export interface StudyReminder {
   active: boolean;
 }
 
+/**
+ * @deprecated Legacy question history tracking. Use V2 submissions system instead.
+ */
 export interface QuestionHistoryItem {
   questionPartId: string;
   examId: string;
@@ -18,6 +34,9 @@ export interface QuestionHistoryItem {
   nextReview: string;
 }
 
+/**
+ * @deprecated Legacy user interface. Use V2 system instead.
+ */
 export interface User {
   id: string;
   name: string;
@@ -42,6 +61,17 @@ export interface User {
   contactPerson?: string;
 }
 
+/**
+ * @deprecated LEGACY EXAM INTERFACE - DO NOT USE FOR NEW DEVELOPMENT
+ * This interface represents the old exam engine structure which lacked:
+ * - Section support
+ * - Instruction groups
+ * - Context blocks
+ * - Teacher review workflows
+ * - Answer versioning
+ * 
+ * Use the V2 exam types from @/types/v2 instead.
+ */
 export interface Exam {
   id: string;
   title: string;
@@ -59,8 +89,19 @@ export interface Exam {
   pdfSummary?: string;
   explanationPdfUrl?: string;
   difficulty: 'Easy' | 'Medium' | 'Hard';
+  /** Country code for regional metadata (e.g., 'UGANDA', 'KENYA') */
+  country?: string;
+  /** Exam authority for Past Papers (e.g., 'UNEB', 'KNEC', 'NECTA') */
+  examAuthority?: string;
+  /** Source attribution for Practice Papers (school, institution, or publisher name) */
+  source?: string;
+  /** Type of source for Practice Papers — e.g. 'school', 'publisher', 'institution' */
+  sourceType?: string;
 }
 
+/**
+ * @deprecated Legacy question part interface. Use V2 Interaction instead.
+ */
 export interface QuestionPart {
   id: string;
   text: string;
@@ -75,6 +116,9 @@ export interface QuestionTable {
   rows: string[][];
 }
 
+/**
+ * @deprecated Legacy question interface. Use V2 Item + Interactions instead.
+ */
 export interface Question {
   id: string;
   questionNumber: number;
@@ -84,6 +128,9 @@ export interface Question {
   parts: QuestionPart[];
 }
 
+/**
+ * @deprecated Legacy exam attempt interface. Use V2 ExamAttempt instead.
+ */
 export interface ExamAttempt {
   subject: string;
   year: number;

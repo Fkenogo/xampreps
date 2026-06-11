@@ -1,4 +1,5 @@
-import { Clock, BookOpen, Star, Lock, FileText, Play } from 'lucide-react';
+import { Clock, BookOpen, Star, FileText, Play, Globe } from 'lucide-react';
+import { COUNTRY_LABELS } from '@/lib/education-system';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -10,15 +11,24 @@ interface ExamListItemProps {
     subject: string;
     year: number;
     level: string;
+    country?: string | null;
     difficulty: string;
     time_limit: number;
     question_count: number;
-    avg_score: number;
+    avg_score?: number;
     is_free: boolean;
     description?: string | null;
+    /** Source attribution for Practice Papers — shown when present */
+    source?: string | null;
+    /** Issuing authority for Past Papers — e.g. 'UNEB', 'KNEC' */
+    examAuthority?: string | null;
   };
   onStart: (examId: string) => void;
   index?: number;
+  /** Override the action button label. Defaults to "Start Exam". */
+  startLabel?: string;
+  /** When provided, clicking the row (not the button) opens a preview. */
+  onPreview?: (examId: string) => void;
 }
 
 const subjectColors: Record<string, string> = {
@@ -40,11 +50,28 @@ const difficultyConfig: Record<string, { color: string; bg: string }> = {
 
 const levelColors: Record<string, string> = {
   PLE: 'bg-primary/10 text-primary',
+  KCPE: 'bg-primary/10 text-primary',
+  KPSEA: 'bg-primary/10 text-primary',
+  PSLE: 'bg-primary/10 text-primary',
+  CEP: 'bg-primary/10 text-primary',
   UCE: 'bg-secondary/10 text-secondary',
+  KJSEA: 'bg-secondary/10 text-secondary',
+  CSEE: 'bg-secondary/10 text-secondary',
+  O_LEVEL: 'bg-secondary/10 text-secondary',
+  CYCLE_FONDAMENTAL: 'bg-secondary/10 text-secondary',
   UACE: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
+  KCSE: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
+  ACSEE: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
+  A_LEVEL: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
+  EXAMEN_ETAT: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
 };
 
-export default function ExamListItem({ exam, onStart, index = 0 }: ExamListItemProps) {
+function formatQuestionCount(count: number) {
+  return `${count} question${count === 1 ? '' : 's'}`;
+}
+
+export default function ExamListItem({ exam, onStart, index = 0, startLabel = 'Start Exam', onPreview }: ExamListItemProps) {
+  const countryLabel = exam.country ? ((COUNTRY_LABELS as Record<string, string>)[exam.country] ?? exam.country) : null;
   const diffConfig = difficultyConfig[exam.difficulty] || difficultyConfig.Medium;
   const subjectColor = subjectColors[exam.subject] || 'bg-muted text-muted-foreground';
   const levelColor = levelColors[exam.level] || 'bg-muted text-muted-foreground';
@@ -54,9 +81,11 @@ export default function ExamListItem({ exam, onStart, index = 0 }: ExamListItemP
       className={cn(
         'bg-card rounded-xl border border-border p-4 sm:p-5',
         'hover:shadow-lg hover:border-primary/30 transition-all duration-300',
-        'group animate-fade-in'
+        'group animate-fade-in',
+        onPreview && 'cursor-pointer'
       )}
       style={{ animationDelay: `${index * 50}ms` }}
+      onClick={onPreview ? () => onPreview(exam.id) : undefined}
     >
       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
         {/* Icon */}
@@ -111,17 +140,45 @@ export default function ExamListItem({ exam, onStart, index = 0 }: ExamListItemP
             <Badge variant="outline" className={cn('text-xs', subjectColor)}>
               {exam.subject}
             </Badge>
-            <span className="text-muted-foreground">{exam.year}</span>
-            <span className="text-muted-foreground">•</span>
-            <span className="flex items-center gap-1 text-muted-foreground">
-              <Clock className="w-3.5 h-3.5" />
-              {exam.time_limit} min
-            </span>
-            <span className="text-muted-foreground">•</span>
-            <span className="flex items-center gap-1 text-muted-foreground">
-              <BookOpen className="w-3.5 h-3.5" />
-              {exam.question_count} Q's
-            </span>
+            {exam.year > 0 && <span className="text-muted-foreground">{exam.year}</span>}
+            {countryLabel && (
+              <>
+                <span className="text-muted-foreground">•</span>
+                <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Globe className="w-3 h-3" />{countryLabel}
+                </span>
+              </>
+            )}
+            {exam.source && (
+              <>
+                <span className="text-muted-foreground">•</span>
+                <span className="text-xs text-muted-foreground italic font-medium">Source: {exam.source}</span>
+              </>
+            )}
+            {exam.examAuthority && (
+              <>
+                <span className="text-muted-foreground">•</span>
+                <span className="text-xs text-muted-foreground font-medium">Authority: {exam.examAuthority}</span>
+              </>
+            )}
+            {exam.time_limit > 0 && (
+              <>
+                <span className="text-muted-foreground">•</span>
+                <span className="flex items-center gap-1 text-muted-foreground">
+                  <Clock className="w-3.5 h-3.5" />
+                  {exam.time_limit} min
+                </span>
+              </>
+            )}
+            {exam.question_count > 0 && (
+              <>
+                <span className="text-muted-foreground">•</span>
+                <span className="flex items-center gap-1 text-muted-foreground">
+                  <BookOpen className="w-3.5 h-3.5" />
+                  {formatQuestionCount(exam.question_count)}
+                </span>
+              </>
+            )}
           </div>
         </div>
 
@@ -129,9 +186,12 @@ export default function ExamListItem({ exam, onStart, index = 0 }: ExamListItemP
         <div className="flex items-center gap-2 shrink-0">
           <Button
             className="gap-2"
-            onClick={() => onStart(exam.id)}
+            onClick={(event) => {
+              event.stopPropagation();
+              onStart(exam.id);
+            }}
           >
-            Start Exam
+            {startLabel}
           </Button>
         </div>
       </div>

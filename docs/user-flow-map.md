@@ -102,7 +102,7 @@ flowchart TD
     C --> D[Filter by Subject/Level/Year]
     D --> E[Select Exam Card]
     E --> F{Check Access}
-    F -->|Free/Trial| G[ExamTakingPage /exam/:examId?mode=practice]
+    F -->|Free/Trial| G[ExamTakingPage /exams/:examId?mode=practice]
     F -->|Premium| H[Payment Flow]
     G --> I[getExamContentFirebase]
     I --> J[Cloud Function: getExamContent]

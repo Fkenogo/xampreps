@@ -65,7 +65,7 @@ export default function ExamModeSelectionModal({
   const [selectedMode, setSelectedMode] = useState<ExamMode>('practice');
 
   const handleStart = () => {
-    navigate(`/exam/${examId}?mode=${selectedMode}`);
+    navigate(`/exams/${examId}?mode=${selectedMode}`);
     onOpenChange(false);
   };
 

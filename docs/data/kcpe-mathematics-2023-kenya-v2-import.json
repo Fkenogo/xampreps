@@ -1,0 +1,3565 @@
+{
+  "_meta": {
+    "title": "KCPE Mathematics 2023 Kenya - V2 import package",
+    "examSource": "KCPE MATHEMATICS 2023-KENYA",
+    "generatedOn": "2026-04-16",
+    "notes": [
+      "Built against the XamPreps V2 import contract.",
+      "This package uses stable local refs for sections, instruction groups, items, interactions, marking rules, and model answers.",
+      "A script should resolve local refs to real Firestore IDs in the required write order.",
+      "No auto-generated IDs or timestamps are included."
+    ]
+  },
+  "exam": {
+    "title": "KCPE Mathematics 2023",
+    "subject": "Mathematics",
+    "level": "KCPE",
+    "year": 2023,
+    "country": "KENYA",
+    "curriculumVersion": "8-4-4",
+    "durationMinutes": 120,
+    "totalMarks": 50,
+    "status": "published",
+    "version": 1,
+    "createdBy": "system-import",
+    "engineVersion": "v2",
+    "overallInstructions": "You have been given this question paper and a separate answer sheet. The question paper contains 50 questions. Answer all questions. For each of the questions 1-50, four choices are given. Choose the correct answer.",
+    "sourceFiles": [
+      {
+        "name": "KCPE MATHEMATICS 2023-KENYA.pdf",
+        "type": "application/pdf"
+      },
+      {
+        "name": "KCPE MATHEMATICS 2023-KENYA.md",
+        "type": "text/markdown"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "ref": "sec_a",
+      "orderIndex": 0,
+      "title": "Section A",
+      "marks": 50,
+      "sharedInstructions": "Questions 1 to 50 carry one mark each."
+    }
+  ],
+  "instructionGroups": [
+    {
+      "ref": "ig_q1_50",
+      "sectionRef": "sec_a",
+      "orderIndex": 0,
+      "instructionsMarkdown": "For each question, choose the correct answer from options A, B, C and D.",
+      "displayMode": "boxed",
+      "questionRangeLabel": "Questions 1-50"
+    }
+  ],
+  "items": [
+    {
+      "ref": "item_q1",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 0,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "What is three million forty eight thousand two hundred and fifty seven written in numerals?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 1, page 2"
+    },
+    {
+      "ref": "item_q2",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 1,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "What is the place value of 7 in the number 9843.071?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 2, page 2"
+    },
+    {
+      "ref": "item_q3",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 2,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "What is the next number in the pattern shown below?\n\n3/4, 1 1/4, 1 3/4, 2 1/4, ...",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 3, page 2"
+    },
+    {
+      "ref": "item_q4",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 3,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "What is 3/8 as a percentage?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 4, page 2"
+    },
+    {
+      "ref": "item_q5",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 4,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "Charity cycled from home to school a distance of 12 kilometres. She started the journey at 7.20 a.m and arrived at 8.00 a.m. What was her speed in metres per second?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 5, page 2"
+    },
+    {
+      "ref": "item_q6",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 5,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "The figure below shows a trapezium UWXY. Line YX is parallel to line UW. The perpendicular distance between the parallel lines is 12 cm and line YX = 18 cm. The area of the trapezium is 252 cm². What is the length of line UW?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 6, page 3"
+    },
+    {
+      "ref": "item_q7",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 6,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A teacher shared pencils among his learners. The girls received 2/3 of the pencils and the boys received 5/6 of the remainder. The teacher remained with 8 pencils. How many pencils did the teacher have before sharing?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 7, page 3"
+    },
+    {
+      "ref": "item_q8",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 7,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A school received five thousand and forty two books. The books were delivered in two lorries. The first lorry had three thousand and sixteen books. How many books were in the second lorry?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 8, page 3"
+    },
+    {
+      "ref": "item_q9",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 8,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "What is the value of 1/2 of (2/3 − 1/6) ÷ 1 1/4 ?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 9, page 4"
+    },
+    {
+      "ref": "item_q10",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 9,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "Cylindrical tins each of diameter 20 cm and a height of 15 cm were packed in a carton. The carton measured 120 cm long, 80 cm wide and 30 cm high. How many tins were packed in the carton?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 10, page 4"
+    },
+    {
+      "ref": "item_q11",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 10,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "What is the value of (16.8 × 0.054) ÷ 0.072 ?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 11, page 4"
+    },
+    {
+      "ref": "item_q12",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 11,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A scale drawing of a rectangular plot of land measures 3 cm by 2 cm. The scale used is 1:2000. What is the actual area of the plot in ares?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 12, page 4"
+    },
+    {
+      "ref": "item_q13",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 12,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "What is the value of x in the equation (2x/3) − (4x/9) = 12?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 13, page 4"
+    },
+    {
+      "ref": "item_q14",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 13,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "What is 567432 rounded off to the nearest ten thousands?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 14, page 5"
+    },
+    {
+      "ref": "item_q15",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 14,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "Three bells ring at intervals of 12 minutes, 24 minutes and 36 minutes. They rang together at 10.00 a.m. When was the last time they rang together before 10.00 a.m?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 15, page 5"
+    },
+    {
+      "ref": "item_q16",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 15,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "The area of a semicircle is 39.25 cm². What is the length of the diameter? (Take π = 3.14)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 16, page 5"
+    },
+    {
+      "ref": "item_q17",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 16,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A pupil reported to a boarding school on 27th January, 2019. He went for a mid-term break on 18th March 2019. How many nights did he spend in school?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 17, page 5"
+    },
+    {
+      "ref": "item_q18",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 17,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "The area of a square plot of land is 0.0576 hectares. The plot was fenced all round using five strands of wire. What was the total length of the wire used?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 18, page 5"
+    },
+    {
+      "ref": "item_q19",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 18,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A pipe has a diameter of 0.7 m and a length of 3 m. The outer surface of the pipe was painted. What was the area that was painted? (Take π = 22/7)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 19, page 6"
+    },
+    {
+      "ref": "item_q20",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 19,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "What is the value of [4n²(r + y) + ny] ÷ (r + y − n), when n = 2, r = 3 and y = 5?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 20, page 6"
+    },
+    {
+      "ref": "item_q21",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 20,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A printing press produced 11,457 books on Monday. It produced 308 more books on Tuesday than on Monday. On Wednesday, it produced 4,796 less books than the total number produced both on Monday and Tuesday. How many books were produced in the three days?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 21, page 6"
+    },
+    {
+      "ref": "item_q22",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 21,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A cylindrical container has a diameter of 56 cm and a height of 30 cm. The container is half filled with water. How many litres of water are in the container? (Take π = 22/7)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 22, page 6"
+    },
+    {
+      "ref": "item_q23",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 22,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "Construct triangle PQR such that line PQ = 10 cm and angle RPQ = angle RQP = 40°. Construct a circle that touches the vertices P, Q and R. What is the measure of the diameter of the circle?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 23, page 7"
+    },
+    {
+      "ref": "item_q24",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 23,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A van is loaded with 120 cartons each containing 40 packets of salt. The mass of each empty carton is 500 g and that of each packet of salt is 750 g. What is the total mass of the load in kilograms?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 24, page 7"
+    },
+    {
+      "ref": "item_q25",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 24,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "Kelvin deposited sh 15,000 in a bank. The bank paid compound interest at the rate of 12% per annum. What was the total interest paid by the bank at the end of two years?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 25, page 7"
+    },
+    {
+      "ref": "item_q26",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 25,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "Ntimama had 40 cows and 55 goats in his farm. He sold 10% of the cows and increased the number of goats by 20%. What was the new number of animals in the farm?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 26, page 7"
+    },
+    {
+      "ref": "item_q27",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 26,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "The area of a right angled triangle is 54 cm². The length of one of the shorter sides is 12 cm. What is the perimeter of the triangle?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 27, page 8"
+    },
+    {
+      "ref": "item_q28",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 27,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A saleslady earns a basic salary of sh 10,500 per month. She also earns a commission on sales above sh 100,000. In one month, she sold items worth sh 150,000 and earned a total of sh 18,000. What was the percentage commission?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 28, page 8"
+    },
+    {
+      "ref": "item_q29",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 28,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A rectangular floor measures 7.5 m long and 2.5 m wide. The floor is covered with square tiles of side 0.5 m. How many tiles were used to cover the floor completely?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 29, page 8"
+    },
+    {
+      "ref": "item_q30",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 29,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "What is the value of 7(3² + 4) − 5 × 8 ÷ 2 + 6?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 30, page 8"
+    },
+    {
+      "ref": "item_q31",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 30,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "The following figure shows a triangle drawn inside a semicircle. What is the area of the shaded part in cm²? Take π = 22/7.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 31, page 9"
+    },
+    {
+      "ref": "item_q32",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 31,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "What is the square of 6 1/4?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 32, page 9"
+    },
+    {
+      "ref": "item_q33",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 32,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A family uses 30 decilitres of milk everyday. How many litres of milk did they use during the months of February and March 2016?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 33, page 9"
+    },
+    {
+      "ref": "item_q34",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 33,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A cuboid measures 6 cm long, 5 cm wide and 4 cm high. What is the total length of the edges?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 34, page 10"
+    },
+    {
+      "ref": "item_q35",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 34,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "The cash price of a sewing machine is sh 24,800. The hire purchase price is 15% more than the cash price. Joseph purchased the machine on hire purchase terms. He paid a deposit of sh 8,520 and ten equal monthly instalments. How much was the monthly instalment?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 35, page 10"
+    },
+    {
+      "ref": "item_q36",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 35,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "The average mass of 36 pupils is 45 kg. The average mass of the pupils together with their teacher is 46 kg. How much more is the mass of the teacher than the average mass of the pupils?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 36, page 10"
+    },
+    {
+      "ref": "item_q37",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 36,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "The marked price of a bag of beans was sh 4,500. A school bought eight bags of beans at a total cost of sh 34,400. What was the total discount allowed?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 37, page 10"
+    },
+    {
+      "ref": "item_q38",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 37,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A trader bought 10 crates of soda at sh 600 per crate. He paid sh 30 per crate for transportation. Each crate of soda contained 24 bottles but ten bottles broke during transportation. He later sold each bottle of soda for sh 30. What percentage profit did the trader make?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 38, page 11"
+    },
+    {
+      "ref": "item_q39",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 38,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "A poultry farmer bought the following items: 2 chick feeders @ sh 85; 5 bags of chick mash @ sh 450; 4 bags of growers mash @ sh 650; 2 packets of chick formula for sh 150. She paid for the items using 6 one thousand shilling notes. How much balance did she get?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 39, page 11"
+    },
+    {
+      "ref": "item_q40",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 39,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "In the figure shown, lines RS and TU are parallel. Line VW is a transversal. Which one of the following statements is correct?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 40, page 12"
+    },
+    {
+      "ref": "item_q41",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 40,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "Juma bought a pair of trousers for sh r. He also bought a pair of shoes for twice the price of a pair of trousers and a shirt for half the price of the pair of trousers. He paid using two sh x notes. Which one of the following expressions represents the balance Juma got?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 41, page 12"
+    },
+    {
+      "ref": "item_q42",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 41,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "The following pie chart shows sales made by a farmer in a certain day. The value of the sales for maize was sh 880. What was the value of the sales for bananas?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 42, page 13"
+    },
+    {
+      "ref": "item_q43",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 42,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "Which one of the following statements is correct about all right angled triangles?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 43, page 13"
+    },
+    {
+      "ref": "item_q44",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 43,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "Eighteen men working at the same rate can complete a job in 30 days. How many more men, working at the same rate can complete the same job in 12 days?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 44, page 13"
+    },
+    {
+      "ref": "item_q45",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 44,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "The following are properties of quadrilaterals: (i) all sides are equal (ii) opposite angles are equal (iii) all angles are equal (iv) diagonals bisect each other. Which one of the properties is true for a rhombus?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 45, page 14"
+    },
+    {
+      "ref": "item_q46",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 45,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "Which one of the following statements is correct?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 46, page 14"
+    },
+    {
+      "ref": "item_q47",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 46,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "Construct triangle PQR such that line PQ = 8 cm, angle RPQ = 45° and angle PRQ = 75°. Construct a perpendicular line from point R to meet line PQ at M. What is the measure of line RM?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 47, page 14"
+    },
+    {
+      "ref": "item_q48",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 47,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "The following table shows a timetable for a certain aeroplane plying from Airport S to Airport V. A passenger arrived at Airport T at 1.30 p.m. How long did the passenger have to wait to depart from the airport?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 48, page 15"
+    },
+    {
+      "ref": "item_q49",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 48,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "Brenda has x books. Amina has thrice as many books as Brenda. Juma has 10 books less than the total number of books both Brenda and Amina have. They have a total of 86 books altogether. Which one of the following equations can be used to find the number of books Brenda has?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 49, page 15"
+    },
+    {
+      "ref": "item_q50",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_50",
+      "orderIndex": 49,
+      "itemType": "mcqSingle",
+      "stemMarkdown": "The bar graph below shows the amount of milk, in litres, a farmer got from his farm in one week. Which two days following each other in the week had the highest total production of milk?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "KCPE Mathematics 2023 Kenya, Question 50, page 16"
+    }
+  ],
+  "interactions": [
+    {
+      "ref": "int_q1",
+      "itemRef": "item_q1",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "3048257"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "3408257"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "3480257"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "3084257"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q1"
+    },
+    {
+      "ref": "int_q2",
+      "itemRef": "item_q2",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "Tens"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "Tenths"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "Hundredths"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "Hundreds"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q2"
+    },
+    {
+      "ref": "int_q3",
+      "itemRef": "item_q3",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "1 1/8"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "1 2/3"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "2 3/4"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "3 1/4"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q3"
+    },
+    {
+      "ref": "int_q4",
+      "itemRef": "item_q4",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "12 1/2"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "18 3/4"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "36 1/2"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "37 1/2"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q4"
+    },
+    {
+      "ref": "int_q5",
+      "itemRef": "item_q5",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "2.5"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "5"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "10"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "18"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q5"
+    },
+    {
+      "ref": "int_q6",
+      "itemRef": "item_q6",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "16 cm"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "18 cm"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "24 cm"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "39 cm"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q6"
+    },
+    {
+      "ref": "int_q7",
+      "itemRef": "item_q7",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "40"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "96"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "136"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "144"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q7"
+    },
+    {
+      "ref": "int_q8",
+      "itemRef": "item_q8",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "2026"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "2036"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "7068"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "8058"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q8"
+    },
+    {
+      "ref": "int_q9",
+      "itemRef": "item_q9",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "1/3"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "1/5"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "2/15"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "5/16"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q9"
+    },
+    {
+      "ref": "int_q10",
+      "itemRef": "item_q10",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "61"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "48"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "24"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "12"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q10"
+    },
+    {
+      "ref": "int_q11",
+      "itemRef": "item_q11",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "0.0126"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "1.26"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "12.6"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "126"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q11"
+    },
+    {
+      "ref": "int_q12",
+      "itemRef": "item_q12",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "24000"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "2400"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "240"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "24"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q12"
+    },
+    {
+      "ref": "int_q13",
+      "itemRef": "item_q13",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "54"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "10 4/5"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "10 1/2"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "9"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q13"
+    },
+    {
+      "ref": "int_q14",
+      "itemRef": "item_q14",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "560000"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "567000"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "570000"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "600000"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q14"
+    },
+    {
+      "ref": "int_q15",
+      "itemRef": "item_q15",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "8.48 a.m"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "8.48 p.m"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "11.12 a.m"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "11.12 p.m"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q15"
+    },
+    {
+      "ref": "int_q16",
+      "itemRef": "item_q16",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "25 cm"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "10 cm"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "6 cm"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "5 cm"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q16"
+    },
+    {
+      "ref": "int_q17",
+      "itemRef": "item_q17",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "49"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "50"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "51"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "52"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q17"
+    },
+    {
+      "ref": "int_q18",
+      "itemRef": "item_q18",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "480 m"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "192 m"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "96 m"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "24 m"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q18"
+    },
+    {
+      "ref": "int_q19",
+      "itemRef": "item_q19",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "13.2 m²"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "6.4 m²"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "6.6 m²"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "2.2 m²"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q19"
+    },
+    {
+      "ref": "int_q20",
+      "itemRef": "item_q20",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "10 1/2"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "12 1/3"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "23"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "138"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q20"
+    },
+    {
+      "ref": "int_q21",
+      "itemRef": "item_q21",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "16561"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "18426"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "23222"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "41648"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q21"
+    },
+    {
+      "ref": "int_q22",
+      "itemRef": "item_q22",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "258.72"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "147.84"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "73.92"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "36.96"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q22"
+    },
+    {
+      "ref": "int_q23",
+      "itemRef": "item_q23",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "10 cm"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "5 cm"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "3.6 cm"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "1.8 cm"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q23"
+    },
+    {
+      "ref": "int_q24",
+      "itemRef": "item_q24",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "36600"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "3660"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "3600"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "3540"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q24"
+    },
+    {
+      "ref": "int_q25",
+      "itemRef": "item_q25",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "sh 18 816"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "sh 3 816"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "sh 3 600"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "sh 2 016"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q25"
+    },
+    {
+      "ref": "int_q26",
+      "itemRef": "item_q26",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "110"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "106"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "102"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "80"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q26"
+    },
+    {
+      "ref": "int_q27",
+      "itemRef": "item_q27",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "15 cm"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "21 cm"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "36 cm"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "42 cm"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q27"
+    },
+    {
+      "ref": "int_q28",
+      "itemRef": "item_q28",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "5"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "7"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "12"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "15"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q28"
+    },
+    {
+      "ref": "int_q29",
+      "itemRef": "item_q29",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "112"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "75"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "38"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "28"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q29"
+    },
+    {
+      "ref": "int_q30",
+      "itemRef": "item_q30",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "77"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "56"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "53"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "35"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q30"
+    },
+    {
+      "ref": "int_q31",
+      "itemRef": "item_q31",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "775.25"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "481.25"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "294.00"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "187.25"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q31"
+    },
+    {
+      "ref": "int_q32",
+      "itemRef": "item_q32",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "156 1/4"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "39 1/16"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "36 1/16"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "2 1/2"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q32"
+    },
+    {
+      "ref": "int_q33",
+      "itemRef": "item_q33",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "186"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "183"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "180"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "177"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q33"
+    },
+    {
+      "ref": "int_q34",
+      "itemRef": "item_q34",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "30"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "60"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "90"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "120"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q34"
+    },
+    {
+      "ref": "int_q35",
+      "itemRef": "item_q35",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "sh 20 000"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "sh 2 852"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "sh 2 480"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "sh 2 000"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q35"
+    },
+    {
+      "ref": "int_q36",
+      "itemRef": "item_q36",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "127 kg"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "82 kg"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "37 kg"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "36 kg"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q36"
+    },
+    {
+      "ref": "int_q37",
+      "itemRef": "item_q37",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "sh 200"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "sh 1 600"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "sh 4 300"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "sh 4 700"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q37"
+    },
+    {
+      "ref": "int_q38",
+      "itemRef": "item_q38",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "20"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "14 2/7"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "10"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "9 11/21"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q38"
+    },
+    {
+      "ref": "int_q39",
+      "itemRef": "item_q39",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "sh 680"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "sh 830"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "sh 4 665"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "sh 5 170"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q39"
+    },
+    {
+      "ref": "int_q40",
+      "itemRef": "item_q40",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "Angle a = Angle f"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "Angle (c + e) = 180°"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "Angle (g + d) = 180°"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "Angle (d + h) = Angle (a + e)"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q40"
+    },
+    {
+      "ref": "int_q41",
+      "itemRef": "item_q41",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "x − 3 1/2 r"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "2x − 3 1/2 r"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "2x + 3 1/2 r"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "x + 2 − 3 1/2 r"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q41"
+    },
+    {
+      "ref": "int_q42",
+      "itemRef": "item_q42",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "sh 1 760"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "sh 2 420"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "sh 2 860"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "sh 7 920"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q42"
+    },
+    {
+      "ref": "int_q43",
+      "itemRef": "item_q43",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "Two sides are equal"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "Two angles are right angles"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "The largest angle is 90°"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "The longest side is opposite the smallest angle"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q43"
+    },
+    {
+      "ref": "int_q44",
+      "itemRef": "item_q44",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "15"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "27"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "33"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "45"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q44"
+    },
+    {
+      "ref": "int_q45",
+      "itemRef": "item_q45",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "(ii) (iii) (iv)"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "(i) (ii) (iii)"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "(i) (iii) (iv)"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "(i) (ii) (iv)"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q45"
+    },
+    {
+      "ref": "int_q46",
+      "itemRef": "item_q46",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "0.45 > 48%"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "1/4 < 0.2"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "3/4 = 0.85"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "0.36 > 7/20"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q46"
+    },
+    {
+      "ref": "int_q47",
+      "itemRef": "item_q47",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "2.9 cm"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "5.0 cm"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "5.9 cm"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "7.2 cm"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q47"
+    },
+    {
+      "ref": "int_q48",
+      "itemRef": "item_q48",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "20 minutes"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "30 minutes"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "1 hour 20 minutes"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "1 hour 40 minutes"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q48"
+    },
+    {
+      "ref": "int_q49",
+      "itemRef": "item_q49",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "8x − 10 = 86"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "8x + 10 = 86"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "4x + 10 = 86"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "4x − 4 = 86"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q49"
+    },
+    {
+      "ref": "int_q50",
+      "itemRef": "item_q50",
+      "orderIndex": 0,
+      "responseMode": "selectSingle",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "promptMarkdown": "Select the correct answer.",
+      "validationRules": [
+        {
+          "type": "custom",
+          "value": [
+            {
+              "id": "A",
+              "label": "A",
+              "text": "Tuesday and Wednesday"
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "text": "Wednesday and Thursday"
+            },
+            {
+              "id": "C",
+              "label": "C",
+              "text": "Wednesday and Sunday"
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "text": "Saturday and Sunday"
+            }
+          ]
+        }
+      ],
+      "markingRuleRef": "mr_q50"
+    }
+  ],
+  "markingRules": [
+    {
+      "ref": "mr_q1",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q2",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q3",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q4",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    },
+    {
+      "ref": "mr_q5",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q6",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q7",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    },
+    {
+      "ref": "mr_q8",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "A"
+    },
+    {
+      "ref": "mr_q9",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q10",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q11",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q12",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    },
+    {
+      "ref": "mr_q13",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "A"
+    },
+    {
+      "ref": "mr_q14",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q15",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "A"
+    },
+    {
+      "ref": "mr_q16",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q17",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q18",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "A"
+    },
+    {
+      "ref": "mr_q19",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q20",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q21",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    },
+    {
+      "ref": "mr_q22",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    },
+    {
+      "ref": "mr_q23",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "A"
+    },
+    {
+      "ref": "mr_q24",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q25",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q26",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q27",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q28",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    },
+    {
+      "ref": "mr_q29",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q30",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "A"
+    },
+    {
+      "ref": "mr_q31",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    },
+    {
+      "ref": "mr_q32",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q33",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q34",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q35",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    },
+    {
+      "ref": "mr_q36",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q37",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q38",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    },
+    {
+      "ref": "mr_q39",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q40",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q41",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q42",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q43",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "C"
+    },
+    {
+      "ref": "mr_q44",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q45",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    },
+    {
+      "ref": "mr_q46",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    },
+    {
+      "ref": "mr_q47",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "B"
+    },
+    {
+      "ref": "mr_q48",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    },
+    {
+      "ref": "mr_q49",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "A"
+    },
+    {
+      "ref": "mr_q50",
+      "markingMode": "mcqOptionMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "D"
+    }
+  ],
+  "modelAnswerVersions": [
+    {
+      "ref": "mav_q1",
+      "itemRef": "item_q1",
+      "interactionRef": "int_q1",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 3408257",
+        "3408257"
+      ],
+      "explanation": "Three million is 3,000,000 and forty eight thousand two hundred and fifty seven is 48,257. Adding gives 3,048,257.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q2",
+      "itemRef": "item_q2",
+      "interactionRef": "int_q2",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. Hundredths",
+        "Hundredths"
+      ],
+      "explanation": "After the decimal point, the first digit is tenths (0), the second is hundredths (7), and the third is thousandths (1). So 7 is in the hundredths place.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q3",
+      "itemRef": "item_q3",
+      "interactionRef": "int_q3",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. 2 3/4",
+        "2 3/4"
+      ],
+      "explanation": "Each term increases by 1/2: 3/4 to 1 1/4, then 1 3/4, then 2 1/4. Adding another 1/2 gives 2 3/4.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q4",
+      "itemRef": "item_q4",
+      "interactionRef": "int_q4",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. 37 1/2",
+        "37 1/2"
+      ],
+      "explanation": "Convert the fraction to a percentage: 3/8 = 0.375. Then 0.375 × 100 = 37.5%, which is 37 1/2%.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q5",
+      "itemRef": "item_q5",
+      "interactionRef": "int_q5",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 5",
+        "5"
+      ],
+      "explanation": "The time taken was 40 minutes = 2,400 seconds. The distance was 12 km = 12,000 m. Speed = 12,000 ÷ 2,400 = 5 m/s.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q6",
+      "itemRef": "item_q6",
+      "interactionRef": "int_q6",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. 24 cm",
+        "24 cm"
+      ],
+      "explanation": "Area of a trapezium = 1/2 × (sum of parallel sides) × height. So 252 = 1/2 × (18 + UW) × 12 = 6(18 + UW). Then 18 + UW = 42, so UW = 24 cm.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q7",
+      "itemRef": "item_q7",
+      "interactionRef": "int_q7",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. 144",
+        "144"
+      ],
+      "explanation": "After giving girls 2/3, the remainder was 1/3. Boys got 5/6 of that remainder, leaving 1/6 of 1/3 = 1/18 of the whole. That 1/18 equals 8 pencils, so the total was 8 × 18 = 144.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q8",
+      "itemRef": "item_q8",
+      "interactionRef": "int_q8",
+      "versionNumber": 1,
+      "approvedAnswer": "A",
+      "acceptableAlternatives": [
+        "A. 2026",
+        "2026"
+      ],
+      "explanation": "Total books = 5,042. First lorry = 3,016. Second lorry = 5,042 − 3,016 = 2,026.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q9",
+      "itemRef": "item_q9",
+      "interactionRef": "int_q9",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 1/5",
+        "1/5"
+      ],
+      "explanation": "First compute inside brackets: 2/3 − 1/6 = 4/6 − 1/6 = 3/6 = 1/2. Then half of 1/2 is 1/4. Now divide by 1 1/4 = 5/4: 1/4 ÷ 5/4 = 1/4 × 4/5 = 1/5.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q10",
+      "itemRef": "item_q10",
+      "interactionRef": "int_q10",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 48",
+        "48"
+      ],
+      "explanation": "Along the length: 120 ÷ 20 = 6 tins. Along the width: 80 ÷ 20 = 4 tins. Along the height: 30 ÷ 15 = 2 layers. Total = 6 × 4 × 2 = 48 tins.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q11",
+      "itemRef": "item_q11",
+      "interactionRef": "int_q11",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. 12.6",
+        "12.6"
+      ],
+      "explanation": "Multiply first: 16.8 × 0.054 = 0.9072. Then divide: 0.9072 ÷ 0.072 = 12.6.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q12",
+      "itemRef": "item_q12",
+      "interactionRef": "int_q12",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. 24",
+        "24"
+      ],
+      "explanation": "A scale of 1:2000 means 1 cm represents 2,000 cm = 20 m. So actual dimensions are 3 × 20 = 60 m and 2 × 20 = 40 m. Area = 60 × 40 = 2,400 m². Since 1 are = 100 m², the area is 2,400 ÷ 100 = 24 ares.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q13",
+      "itemRef": "item_q13",
+      "interactionRef": "int_q13",
+      "versionNumber": 1,
+      "approvedAnswer": "A",
+      "acceptableAlternatives": [
+        "A. 54",
+        "54"
+      ],
+      "explanation": "Use a common denominator of 9: 2x/3 = 6x/9. Then 6x/9 − 4x/9 = 2x/9 = 12. Multiply both sides by 9: 2x = 108, so x = 54.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q14",
+      "itemRef": "item_q14",
+      "interactionRef": "int_q14",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. 570000",
+        "570000"
+      ],
+      "explanation": "To round to the nearest ten thousand, look at the thousands digit. In 567,432 the ten-thousands digit is 6 and the thousands digit is 7, so round up to 570,000.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q15",
+      "itemRef": "item_q15",
+      "interactionRef": "int_q15",
+      "versionNumber": 1,
+      "approvedAnswer": "A",
+      "acceptableAlternatives": [
+        "A. 8.48 a.m",
+        "8.48 a.m"
+      ],
+      "explanation": "Find the LCM of 12, 24 and 36. The LCM is 72 minutes. So the bells ring together every 72 minutes. 10.00 a.m. − 72 minutes = 8.48 a.m.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q16",
+      "itemRef": "item_q16",
+      "interactionRef": "int_q16",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 10 cm",
+        "10 cm"
+      ],
+      "explanation": "Area of a semicircle = 1/2 × πr². So 39.25 = 1/2 × 3.14 × r² = 1.57r². Then r² = 39.25 ÷ 1.57 = 25, so r = 5 cm. Diameter = 2r = 10 cm.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q17",
+      "itemRef": "item_q17",
+      "interactionRef": "int_q17",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 50",
+        "50"
+      ],
+      "explanation": "Count the number of days between 27 January 2019 and 18 March 2019. The difference is 50 days, so the pupil spent 50 nights at school.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q18",
+      "itemRef": "item_q18",
+      "interactionRef": "int_q18",
+      "versionNumber": 1,
+      "approvedAnswer": "A",
+      "acceptableAlternatives": [
+        "A. 480 m",
+        "480 m"
+      ],
+      "explanation": "0.0576 hectares = 0.0576 × 10,000 = 576 m². For a square, side = √576 = 24 m. Perimeter = 4 × 24 = 96 m. Five strands need 5 × 96 = 480 m.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q19",
+      "itemRef": "item_q19",
+      "interactionRef": "int_q19",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. 6.6 m²",
+        "6.6 m²"
+      ],
+      "explanation": "The painted surface is the curved outer surface of the cylinder: area = πdh. So area = (22/7) × 0.7 × 3 = 6.6 m².",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q20",
+      "itemRef": "item_q20",
+      "interactionRef": "int_q20",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. 23",
+        "23"
+      ],
+      "explanation": "Substitute the values: 4(2²)(3+5) + (2×5) = 4×4×8 + 10 = 128 + 10 = 138. Denominator: 3 + 5 − 2 = 6. Then 138 ÷ 6 = 23.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q21",
+      "itemRef": "item_q21",
+      "interactionRef": "int_q21",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. 41648",
+        "41648"
+      ],
+      "explanation": "Tuesday = 11,457 + 308 = 11,765. Monday + Tuesday = 23,222. Wednesday = 23,222 − 4,796 = 18,426. Total = 11,457 + 11,765 + 18,426 = 41,648.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q22",
+      "itemRef": "item_q22",
+      "interactionRef": "int_q22",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. 36.96",
+        "36.96"
+      ],
+      "explanation": "Radius = 28 cm. Full volume = πr²h = (22/7) × 28 × 28 × 30 = 73,920 cm³. Half-full means 36,960 cm³. Since 1 litre = 1,000 cm³, water = 36.96 litres.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q23",
+      "itemRef": "item_q23",
+      "interactionRef": "int_q23",
+      "versionNumber": 1,
+      "approvedAnswer": "A",
+      "acceptableAlternatives": [
+        "A. 10 cm",
+        "10 cm"
+      ],
+      "explanation": "The circle passes through P, Q and R, so it is the circumcircle. In triangle PQR, angle R = 180° − 40° − 40° = 100°. By the sine rule for a circumcircle, diameter = side opposite angle ÷ sin(angle) = 10 ÷ sin(100°), which is about 10.15 cm. The closest option is 10 cm.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q24",
+      "itemRef": "item_q24",
+      "interactionRef": "int_q24",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 3660",
+        "3660"
+      ],
+      "explanation": "Mass of salt = 120 × 40 × 750 g = 3,600,000 g = 3,600 kg. Mass of cartons = 120 × 500 g = 60,000 g = 60 kg. Total = 3,600 + 60 = 3,660 kg.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q25",
+      "itemRef": "item_q25",
+      "interactionRef": "int_q25",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. sh 3 816",
+        "sh 3 816"
+      ],
+      "explanation": "Amount after 2 years = 15,000 × (1.12)² = 15,000 × 1.2544 = 18,816. Interest = 18,816 − 15,000 = sh 3,816.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q26",
+      "itemRef": "item_q26",
+      "interactionRef": "int_q26",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. 102",
+        "102"
+      ],
+      "explanation": "10% of 40 cows is 4, so cows left = 36. Increase goats by 20%: 20% of 55 is 11, so goats become 66. Total animals = 36 + 66 = 102.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q27",
+      "itemRef": "item_q27",
+      "interactionRef": "int_q27",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. 36 cm",
+        "36 cm"
+      ],
+      "explanation": "For a right triangle, area = 1/2 × base × height. So 54 = 1/2 × 12 × h, which gives h = 9 cm. Hypotenuse = √(12² + 9²) = √225 = 15 cm. Perimeter = 12 + 9 + 15 = 36 cm.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q28",
+      "itemRef": "item_q28",
+      "interactionRef": "int_q28",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. 15",
+        "15"
+      ],
+      "explanation": "Commission earned = 18,000 − 10,500 = 7,500. Sales above 100,000 = 50,000. Percentage commission = (7,500 ÷ 50,000) × 100 = 15%.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q29",
+      "itemRef": "item_q29",
+      "interactionRef": "int_q29",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 75",
+        "75"
+      ],
+      "explanation": "Floor area = 7.5 × 2.5 = 18.75 m². Each tile area = 0.5 × 0.5 = 0.25 m². Number of tiles = 18.75 ÷ 0.25 = 75.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q30",
+      "itemRef": "item_q30",
+      "interactionRef": "int_q30",
+      "versionNumber": 1,
+      "approvedAnswer": "A",
+      "acceptableAlternatives": [
+        "A. 77",
+        "77"
+      ],
+      "explanation": "Evaluate brackets first: 3² = 9, so 9 + 4 = 13. Then 7 × 13 = 91. Next 5 × 8 ÷ 2 = 40 ÷ 2 = 20. Finally 91 − 20 + 6 = 77.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q31",
+      "itemRef": "item_q31",
+      "interactionRef": "int_q31",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. 187.25",
+        "187.25"
+      ],
+      "explanation": "The triangle has perpendicular sides 21 cm and 28 cm, so its area = 1/2 × 21 × 28 = 294 cm². Because the right angle is on the semicircle, the third side is the diameter. By Pythagoras, diameter = √(21² + 28²) = 35 cm, so radius = 17.5 cm. Semicircle area = 1/2 × 22/7 × 17.5² = 481.25 cm². Shaded area = 481.25 − 294 = 187.25 cm².",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q32",
+      "itemRef": "item_q32",
+      "interactionRef": "int_q32",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 39 1/16",
+        "39 1/16"
+      ],
+      "explanation": "Convert 6 1/4 to an improper fraction: 25/4. Then square it: (25/4)² = 625/16 = 39 1/16.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q33",
+      "itemRef": "item_q33",
+      "interactionRef": "int_q33",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. 180",
+        "180"
+      ],
+      "explanation": "30 decilitres = 3 litres per day. In 2016, February had 29 days and March had 31 days, so total days = 60. Milk used = 60 × 3 = 180 litres.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q34",
+      "itemRef": "item_q34",
+      "interactionRef": "int_q34",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 60",
+        "60"
+      ],
+      "explanation": "A cuboid has 12 edges, with 4 edges of each dimension. Total edge length = 4(l + w + h) = 4(6 + 5 + 4) = 4 × 15 = 60 cm.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q35",
+      "itemRef": "item_q35",
+      "interactionRef": "int_q35",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. sh 2 000",
+        "sh 2 000"
+      ],
+      "explanation": "Hire purchase price = 24,800 × 1.15 = 28,520. After paying a deposit of 8,520, the balance is 20,000. Divide by 10 instalments: 20,000 ÷ 10 = sh 2,000.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q36",
+      "itemRef": "item_q36",
+      "interactionRef": "int_q36",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. 37 kg",
+        "37 kg"
+      ],
+      "explanation": "Total mass of 36 pupils = 36 × 45 = 1,620 kg. Total mass of 37 people including the teacher = 37 × 46 = 1,702 kg. Teacher's mass = 1,702 − 1,620 = 82 kg. Difference from average pupil mass = 82 − 45 = 37 kg.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q37",
+      "itemRef": "item_q37",
+      "interactionRef": "int_q37",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. sh 1 600",
+        "sh 1 600"
+      ],
+      "explanation": "Marked total = 8 × 4,500 = sh 36,000. Actual total paid = sh 34,400. Discount = 36,000 − 34,400 = sh 1,600.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q38",
+      "itemRef": "item_q38",
+      "interactionRef": "int_q38",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. 9 11/21",
+        "9 11/21"
+      ],
+      "explanation": "Total cost = 10 × (600 + 30) = sh 6,300. Bottles available for sale = 10 × 24 − 10 = 230 bottles. Revenue = 230 × 30 = sh 6,900. Profit = 6,900 − 6,300 = sh 600. Percentage profit = (600 ÷ 6,300) × 100 = 9 11/21%.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q39",
+      "itemRef": "item_q39",
+      "interactionRef": "int_q39",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. sh 830",
+        "sh 830"
+      ],
+      "explanation": "Total cost = (2 × 85) + (5 × 450) + (4 × 650) + 150 = 170 + 2,250 + 2,600 + 150 = sh 5,170. She paid sh 6,000, so balance = 6,000 − 5,170 = sh 830.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q40",
+      "itemRef": "item_q40",
+      "interactionRef": "int_q40",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. Angle (g + d) = 180°",
+        "Angle (g + d) = 180°"
+      ],
+      "explanation": "Since RS and TU are parallel, corresponding angles are equal and adjacent angles on a straight line add to 180°. Angle d equals angle h. Angle h and angle g form a straight line, so h + g = 180°. Therefore d + g = 180°.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q41",
+      "itemRef": "item_q41",
+      "interactionRef": "int_q41",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 2x − 3 1/2 r",
+        "2x − 3 1/2 r"
+      ],
+      "explanation": "Cost of trousers = r. Shoes cost twice that = 2r. Shirt costs half of r = 1/2r. Total cost = r + 2r + 1/2r = 3 1/2r. He paid 2x, so balance = 2x − 3 1/2r.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q42",
+      "itemRef": "item_q42",
+      "interactionRef": "int_q42",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. sh 2 860",
+        "sh 2 860"
+      ],
+      "explanation": "From the chart, Mangoes = 80°, Bananas = 130°, Cabbages = 110°, so Maize = 360° − (80° + 130° + 110°) = 40°. If 40° corresponds to sh 880, then 1° corresponds to sh 22. Bananas = 130° × 22 = sh 2,860.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q43",
+      "itemRef": "item_q43",
+      "interactionRef": "int_q43",
+      "versionNumber": 1,
+      "approvedAnswer": "C",
+      "acceptableAlternatives": [
+        "C. The largest angle is 90°",
+        "The largest angle is 90°"
+      ],
+      "explanation": "Every right angled triangle has one angle equal to 90°. The other two angles must add to 90°, so both are less than 90°. Therefore the largest angle is always 90°.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q44",
+      "itemRef": "item_q44",
+      "interactionRef": "int_q44",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 27",
+        "27"
+      ],
+      "explanation": "Total work = 18 × 30 = 540 man-days. To finish in 12 days, required men = 540 ÷ 12 = 45. Additional men needed = 45 − 18 = 27.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q45",
+      "itemRef": "item_q45",
+      "interactionRef": "int_q45",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. (i) (ii) (iv)",
+        "(i) (ii) (iv)"
+      ],
+      "explanation": "A rhombus has all sides equal, opposite angles equal, and diagonals that bisect each other. Its angles are not all equal unless it is also a square. So the true properties are (i), (ii) and (iv).",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q46",
+      "itemRef": "item_q46",
+      "interactionRef": "int_q46",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. 0.36 > 7/20",
+        "0.36 > 7/20"
+      ],
+      "explanation": "Compare each statement numerically. 48% = 0.48, so 0.45 is not greater. 1/4 = 0.25, so it is not less than 0.2. 3/4 = 0.75, not 0.85. And 7/20 = 0.35, so 0.36 is greater than 0.35.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q47",
+      "itemRef": "item_q47",
+      "interactionRef": "int_q47",
+      "versionNumber": 1,
+      "approvedAnswer": "B",
+      "acceptableAlternatives": [
+        "B. 5.0 cm",
+        "5.0 cm"
+      ],
+      "explanation": "Angle Q = 180° − 45° − 75° = 60°. Using the sine rule, PR = 8 × sin60° / sin75°. The height RM to base PQ is PR × sin45°, which is approximately 5.07 cm. The nearest option is 5.0 cm.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q48",
+      "itemRef": "item_q48",
+      "interactionRef": "int_q48",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. 1 hour 40 minutes",
+        "1 hour 40 minutes"
+      ],
+      "explanation": "From the table, departure time from Airport T is 1510 h, which is 3.10 p.m. Arrival was 1.30 p.m. Waiting time = 1 hour 40 minutes.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q49",
+      "itemRef": "item_q49",
+      "interactionRef": "int_q49",
+      "versionNumber": 1,
+      "approvedAnswer": "A",
+      "acceptableAlternatives": [
+        "A. 8x − 10 = 86",
+        "8x − 10 = 86"
+      ],
+      "explanation": "Brenda has x. Amina has 3x. Together Brenda and Amina have 4x. Juma has 10 less than that, so Juma has 4x − 10. Total books = x + 3x + (4x − 10) = 8x − 10. Therefore the equation is 8x − 10 = 86.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    },
+    {
+      "ref": "mav_q50",
+      "itemRef": "item_q50",
+      "interactionRef": "int_q50",
+      "versionNumber": 1,
+      "approvedAnswer": "D",
+      "acceptableAlternatives": [
+        "D. Saturday and Sunday",
+        "Saturday and Sunday"
+      ],
+      "explanation": "From the bar graph on page 16, the daily amounts are about Monday 15, Tuesday 20, Wednesday 45, Thursday 25, Friday 30, Saturday 35 and Sunday 40 litres. Compare consecutive totals: Tue+Wed = 65, Wed+Thu = 70, Thu+Fri = 55, Fri+Sat = 65, Sat+Sun = 75. The highest is Saturday and Sunday with 75 litres.",
+      "status": "approved",
+      "updatedBy": "system-import"
+    }
+  ]
+}

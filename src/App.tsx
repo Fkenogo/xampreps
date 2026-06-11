@@ -13,7 +13,11 @@ import BusinessConsole from "./pages/dashboards/BusinessConsole";
 import StudentDashboard from "./pages/dashboards/StudentDashboard";
 import ParentDashboard from "./pages/dashboards/ParentDashboard";
 import SchoolDashboard from "./pages/dashboards/SchoolDashboard";
+import TeacherDashboard from "./pages/dashboards/TeacherDashboard";
+import TeacherReviewDetailPage from "./pages/TeacherReviewDetailPage";
+import SchoolAdminDashboard from "./pages/dashboards/SchoolAdminDashboard";
 import AdminDashboard from "./pages/dashboards/AdminDashboard";
+import AdminV2ExamEditorPage from "./pages/AdminV2ExamEditorPage";
 import ExamsPage from "./pages/ExamsPage";
 import ExamTakingPage from "./pages/ExamTakingPage";
 import ExamResultsPage from "./pages/ExamResultsPage";
@@ -25,6 +29,8 @@ import PaymentSuccessPage from "./pages/PaymentSuccessPage";
 import PricingPage from "./pages/PricingPage";
 import ForumPage from "./pages/ForumPage";
 import NotFound from "./pages/NotFound";
+import V2TestPage from "./pages/V2TestPage";
+import PublicBrowsePage from "./pages/PublicBrowsePage";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -39,8 +45,31 @@ const App = () => (
             {/* Public Routes */}
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/past-papers" element={<ExamsPage type="Past Paper" />} />
-            <Route path="/practice-papers" element={<ExamsPage type="Practice Paper" />} />
+            {/* Public exam browse routes — accessible without authentication */}
+            <Route path="/past-papers" element={
+              <PublicBrowsePage
+                paperType="Past Paper"
+                onNavigateToAuth={() => window.location.href = '/auth'}
+                onNavigate={(page) => {
+                  if (page === 'landing') window.location.href = '/';
+                  else if (page === 'past-papers') window.location.href = '/past-papers';
+                  else if (page === 'practice-papers') window.location.href = '/practice-papers';
+                  else if (page === 'pricing') window.location.href = '/pricing';
+                }}
+              />
+            } />
+            <Route path="/practice-papers" element={
+              <PublicBrowsePage
+                paperType="Practice Paper"
+                onNavigateToAuth={() => window.location.href = '/auth'}
+                onNavigate={(page) => {
+                  if (page === 'landing') window.location.href = '/';
+                  else if (page === 'past-papers') window.location.href = '/past-papers';
+                  else if (page === 'practice-papers') window.location.href = '/practice-papers';
+                  else if (page === 'pricing') window.location.href = '/pricing';
+                }}
+              />
+            } />
             <Route path="/pricing" element={
               <PricingPage 
                 onNavigateToAuth={() => window.location.href = '/auth'} 
@@ -78,6 +107,24 @@ const App = () => (
                 <ParentDashboard />
               </ProtectedRoute>
             } />
+
+            <Route path="/dashboard/teacher" element={
+              <ProtectedRoute allowedRoles={['teacher']}>
+                <TeacherDashboard />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/dashboard/teacher/reviews/:attemptId" element={
+              <ProtectedRoute allowedRoles={['teacher']}>
+                <TeacherReviewDetailPage />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/dashboard/school-admin" element={
+              <ProtectedRoute allowedRoles={['school_admin']}>
+                <SchoolAdminDashboard />
+              </ProtectedRoute>
+            } />
             
             <Route path="/dashboard/school" element={
               <ProtectedRoute allowedRoles={['school']}>
@@ -92,6 +139,12 @@ const App = () => (
               </ProtectedRoute>
             } />
 
+            <Route path="/dashboard/admin/v2-exams/:examId/edit" element={
+              <ProtectedRoute allowedRoles={['admin', 'super_admin']}>
+                <AdminV2ExamEditorPage />
+              </ProtectedRoute>
+            } />
+
             {/* Exam Routes */}
             <Route path="/exams" element={
               <ProtectedRoute>
@@ -99,13 +152,13 @@ const App = () => (
               </ProtectedRoute>
             } />
             
-            <Route path="/exam/:examId" element={
+            <Route path="/exams/:examId" element={
               <ProtectedRoute>
                 <ExamTakingPage />
               </ProtectedRoute>
             } />
 
-            <Route path="/exam/:examId/results/:attemptId" element={
+            <Route path="/exams/:examId/results/:attemptId" element={
               <ProtectedRoute>
                 <ExamResultsPage />
               </ProtectedRoute>
@@ -148,6 +201,13 @@ const App = () => (
               </ProtectedRoute>
             } />
             
+            {/* V2 Test Route - Development Only */}
+            <Route path="/v2-test/:examId" element={
+              <ProtectedRoute allowedRoles={['admin', 'super_admin']}>
+                <V2TestPage />
+              </ProtectedRoute>
+            } />
+
             {/* Catch-all */}
             <Route path="*" element={<NotFound />} />
           </Routes>

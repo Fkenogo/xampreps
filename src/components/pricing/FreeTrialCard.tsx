@@ -14,8 +14,8 @@ const FreeTrialCard: React.FC<FreeTrialCardProps> = ({ onSelect }) => {
   return (
     <Card className="border border-border bg-muted/30">
       <CardHeader className="text-center pb-2">
-        <CardTitle className="text-lg">Free trial</CardTitle>
-        <p className="text-sm text-muted-foreground">Try 1 full exam.</p>
+        <CardTitle className="text-lg">Free access</CardTitle>
+        <p className="text-sm text-muted-foreground">2 practice sessions included with every account.</p>
       </CardHeader>
       
       <CardContent className="space-y-4">
@@ -40,12 +40,12 @@ const FreeTrialCard: React.FC<FreeTrialCardProps> = ({ onSelect }) => {
           </ul>
         </div>
 
-        <Button 
-          onClick={onSelect} 
+        <Button
+          onClick={onSelect}
           variant="secondary"
           className="w-full"
         >
-          👉 Start free trial
+          Start for free
         </Button>
       </CardContent>
     </Card>

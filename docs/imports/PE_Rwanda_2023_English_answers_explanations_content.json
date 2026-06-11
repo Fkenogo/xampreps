@@ -1,0 +1,1782 @@
+{
+  "metadata": {
+    "examId": "rwanda-pe-english-2023",
+    "country": "RWANDA",
+    "examAuthority": "NESA",
+    "level": "PE",
+    "stage": "PRIMARY",
+    "subject": "English",
+    "year": 2023,
+    "academicYear": "2022-2023",
+    "durationMinutes": 120,
+    "totalMarks": 100,
+    "sourceFiles": [
+      "PE RWANDA 2023 English Past Paper.pdf",
+      "PE-rwanda-2023-english-past-paper.md"
+    ],
+    "contentStatus": "answers_and_explanations_approved_for_json_import_preparation",
+    "notes": [
+      "This JSON is a content handoff file, not necessarily the final Firestore import contract.",
+      "Open-ended comprehension and composition items require flexible marking/rubric handling.",
+      "Q12(f) is best handled as a conditional sentence: I would see gorillas if I went to Volcano National Park."
+    ]
+  },
+  "passages": [
+    {
+      "id": "passage-1",
+      "title": "Speech by the New Head Prefect",
+      "text": "Our dear headmaster, teachers and fellow pupils, good afternoon. My name is Alice Mutoni, the new head prefect of this school. First, I would like to thank you for trusting me with this position. Thank you for electing me. I promise to do my best to serve you.\n\nSecondly, I want to welcome you all to the new year and new term. I want to encourage you, my fellow pupils, to work hard. Hard work pays. Most importantly, P6 candidates, remember you’re the light of this school. Your good performance in the national examinations will be our pride.\n\nThirdly, I would like to encourage all pupils to be disciplined. We must present a good image of our school. I think everyone is proud of this school. Therefore, as the head prefect, I encourage you to become responsible citizens of our country, Rwanda.\n\nOur school has various computer rooms, science labs and a library. I remind you to take care and full responsibility for these facilities.\n\nI would like to end my speech here. Thank you for listening. May God protect us. Good day."
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1a",
+      "section": "A-Comprehension",
+      "questionNumber": "1(a)",
+      "text": "Suggest a suitable title for the speech.",
+      "marks": 1,
+      "itemType": "shortText",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "The New Head Prefect’s Speech",
+      "alternativeAnswers": [
+        "Speech by the New Head Prefect",
+        "Head Prefect’s Address",
+        "Alice Mutoni’s Speech",
+        "The Head Prefect’s Speech"
+      ],
+      "detailedExplanation": "The best title should capture the main idea of the whole passage. The passage is not mainly about the school buildings, the national examination, or Rwanda. It is a speech made by Alice Mutoni after being elected as the new head prefect. A good title should therefore mention the speech and the new head prefect. Learners should avoid titles that are too narrow, such as “Hard Work Pays,” because that is only one message in the speech, not the whole passage.",
+      "tutorDialogue": [
+        "Tutor: Before choosing a title, ask yourself: what is the whole passage about?",
+        "Student: It is about a girl speaking to pupils and teachers.",
+        "Tutor: Good. Who is she?",
+        "Student: She is Alice Mutoni, the new head prefect.",
+        "Tutor: Exactly. So a strong title should include the speaker and the type of text. That gives us: The New Head Prefect’s Speech.",
+        "Student: So the title should not focus on only one small point?",
+        "Tutor: Correct. A title should cover the main idea of the whole passage."
+      ],
+      "markingNotes": [
+        "Accept any sensible title that clearly refers to the new head prefect's speech."
+      ]
+    },
+    {
+      "id": "q1b",
+      "section": "A-Comprehension",
+      "questionNumber": "1(b)",
+      "text": "What does the speaker say in paragraph one? Start: “In paragraph one…”",
+      "marks": 2,
+      "itemType": "shortText",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "In paragraph one, the speaker introduces herself and thanks the audience for electing her as head prefect.",
+      "alternativeAnswers": [
+        "In paragraph one, she introduces herself and appreciates being chosen as head prefect.",
+        "In paragraph one, Alice Mutoni thanks the pupils for trusting her with the position of head prefect.",
+        "In paragraph one, the speaker says her name, thanks the school for electing her, and promises to serve them."
+      ],
+      "detailedExplanation": "Paragraph one gives the opening of the speech. The speaker greets the audience, says her name, tells them she is the new head prefect, thanks them for trusting and electing her, and promises to serve them. Since the question asks what she says in paragraph one, the answer should mention introduction and thanks. A stronger answer also includes her promise to serve.",
+      "tutorDialogue": [
+        "Tutor: Let’s look at paragraph one only. What does Alice Mutoni do first?",
+        "Student: She greets people and says her name.",
+        "Tutor: Correct. What position does she mention?",
+        "Student: She says she is the new head prefect.",
+        "Tutor: Good. Why does she thank the audience?",
+        "Student: Because they trusted and elected her.",
+        "Tutor: Excellent. So the answer should say that she introduces herself and thanks them for electing her."
+      ],
+      "markingNotes": [
+        "Student should start with 'In paragraph one...' as instructed."
+      ]
+    },
+    {
+      "id": "q1c",
+      "section": "A-Comprehension",
+      "questionNumber": "1(c)",
+      "text": "What does the speaker say in paragraph two?",
+      "marks": 2,
+      "itemType": "shortText",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "She welcomes pupils to the new year and new term and encourages them to work hard, especially the P6 candidates.",
+      "alternativeAnswers": [
+        "She welcomes everyone and tells pupils that hard work pays.",
+        "She encourages P6 candidates to work hard because their good performance will be the school’s pride.",
+        "She asks pupils to work hard and reminds P6 candidates that they are the light of the school."
+      ],
+      "detailedExplanation": "Paragraph two has three main ideas. First, Mutoni welcomes pupils to the new year and new term. Second, she encourages pupils to work hard. Third, she gives special attention to P6 candidates because they will sit national examinations and their performance will make the school proud. A complete answer should include welcome and encouragement.",
+      "tutorDialogue": [
+        "Tutor: What is the first message in paragraph two?",
+        "Student: She welcomes them to the new year and new term.",
+        "Tutor: Good. What advice does she give?",
+        "Student: She tells them to work hard.",
+        "Tutor: Who does she especially mention?",
+        "Student: P6 candidates.",
+        "Tutor: Why are they important?",
+        "Student: Their good performance in national exams will be the pride of the school."
+      ],
+      "markingNotes": [
+        "Accept answers that capture welcome + hard work + P6 performance."
+      ]
+    },
+    {
+      "id": "q1d",
+      "section": "A-Comprehension",
+      "questionNumber": "1(d)",
+      "text": "Why does the speaker thank the audience? Start: ‘The reason why…’",
+      "marks": 1,
+      "itemType": "shortText",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "The reason why the speaker thanks the audience is that they trusted and elected her as head prefect.",
+      "alternativeAnswers": [
+        "The reason why she thanks them is that they chose her to be head prefect.",
+        "The reason why she thanks the audience is because they trusted her with the position."
+      ],
+      "detailedExplanation": "The answer is found directly in paragraph one. Alice Mutoni says, “Thank you for trusting me with this position. Thank you for electing me.” Therefore, the reason is trust and election. The answer should not say she thanks them for listening, because that happens at the end of the speech, not in this question’s context.",
+      "tutorDialogue": [
+        "Tutor: What words in paragraph one show why she is thankful?",
+        "Student: She says thank you for trusting me and thank you for electing me.",
+        "Tutor: Correct. So what is the reason?",
+        "Student: They trusted her and elected her as head prefect.",
+        "Tutor: Good. The question also tells us to start with 'The reason why...', so we should follow that instruction."
+      ],
+      "markingNotes": [
+        "Must be complete sentence and ideally begin with requested phrase."
+      ]
+    },
+    {
+      "id": "q1e",
+      "section": "A-Comprehension",
+      "questionNumber": "1(e)",
+      "text": "Why do you think P6 candidates need to work harder?",
+      "marks": 2,
+      "itemType": "shortText",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "P6 candidates need to work harder because they are preparing for national examinations and their good performance will make the school proud.",
+      "alternativeAnswers": [
+        "Because they are candidates who will sit final national examinations.",
+        "Because their results represent the school.",
+        "Because they need to pass well and bring pride to the school."
+      ],
+      "detailedExplanation": "This is an application question. The passage says P6 candidates are “the light of this school” and their good performance will be the school’s pride. This means they carry a special responsibility. They should work harder because national examinations are important and require serious preparation. Good results help the pupils, their parents, and the school.",
+      "tutorDialogue": [
+        "Tutor: Is this answer copied directly or do we need to think?",
+        "Student: We need to think using the passage.",
+        "Tutor: Correct. What exam are P6 candidates preparing for?",
+        "Student: National examinations.",
+        "Tutor: Why does that mean they should work harder?",
+        "Student: Because the exams are important and their results will make the school proud.",
+        "Tutor: Exactly. This is why the answer should mention both exam preparation and school pride."
+      ],
+      "markingNotes": [
+        "Flexible marking: accept sensible application answers linked to exams and school pride."
+      ]
+    },
+    {
+      "id": "q1f",
+      "section": "A-Comprehension",
+      "questionNumber": "1(f)",
+      "text": "Is Mutoni’s speech educative? Why?",
+      "marks": 2,
+      "itemType": "shortText",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "Yes, Mutoni’s speech is educative because it teaches pupils to work hard, be disciplined, become responsible citizens, and take care of school facilities.",
+      "alternativeAnswers": [
+        "Yes, because it gives useful advice to pupils.",
+        "Yes, because it teaches discipline, hard work, and responsibility.",
+        "Yes, because it encourages pupils to behave well and protect school property."
+      ],
+      "detailedExplanation": "An educative speech is one that teaches useful lessons. Mutoni’s speech is educative because it gives pupils guidance on school life and good behaviour. She teaches them to work hard, be disciplined, represent the school well, become responsible citizens, and care for facilities such as computer rooms, science labs, and the library. A good answer should not stop at “yes”; it must give a reason.",
+      "tutorDialogue": [
+        "Tutor: What does 'educative' mean?",
+        "Student: It means it teaches something useful.",
+        "Tutor: Does Mutoni’s speech teach useful lessons?",
+        "Student: Yes.",
+        "Tutor: Name some lessons.",
+        "Student: Work hard, be disciplined, be responsible, and take care of school facilities.",
+        "Tutor: Very good. That is why the speech is educative."
+      ],
+      "markingNotes": [
+        "Accept yes with relevant reason. Do not accept yes without explanation for full marks."
+      ]
+    },
+    {
+      "id": "q1g",
+      "section": "A-Comprehension",
+      "questionNumber": "1(g)",
+      "text": "What do you understand by the sentence “Hard work pays”?",
+      "marks": 2,
+      "itemType": "shortText",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "It means that when people work hard, they usually get good results or success.",
+      "alternativeAnswers": [
+        "Hard work brings rewards.",
+        "People who work hard are likely to succeed.",
+        "If pupils study seriously, they can perform well."
+      ],
+      "detailedExplanation": "The phrase “Hard work pays” is not mainly about receiving money. Here, “pays” means “brings good results.” In the school context, it means pupils who study seriously, revise, and remain disciplined are more likely to pass exams and succeed. Students should explain the meaning, not repeat the same words.",
+      "tutorDialogue": [
+        "Tutor: In this sentence, does 'pays' mean someone gives you money?",
+        "Student: No.",
+        "Tutor: Good. What does it mean here?",
+        "Student: It means hard work brings good results.",
+        "Tutor: Exactly. In an exam-preparation passage, the reward of hard work is good performance and success."
+      ],
+      "markingNotes": [
+        "Accept explanations of reward/success/good results."
+      ]
+    },
+    {
+      "id": "q2",
+      "section": "A-Comprehension",
+      "questionNumber": "2",
+      "text": "In no more than 3 sentences, summarize the above passage.",
+      "marks": 3,
+      "itemType": "openText",
+      "markingMode": "rubric",
+      "pickedAnswer": "Alice Mutoni, the new head prefect, thanks the school for electing her and welcomes pupils to the new term. She encourages pupils, especially P6 candidates, to work hard and be disciplined. She also reminds pupils to become responsible citizens and take care of school facilities.",
+      "alternativeAnswers": [
+        "Alice Mutoni gives a speech after being elected head prefect. She thanks the pupils, welcomes them, encourages hard work and discipline, and asks them to care for school facilities."
+      ],
+      "detailedExplanation": "A summary should give only the main ideas, not every small detail. The passage is about Mutoni’s speech as the new head prefect. The key points are: thanking the school for electing her, welcoming pupils, encouraging hard work and discipline, reminding P6 candidates to perform well, and asking pupils to care for school facilities. Since the instruction says no more than three sentences, the answer must be short and clear.",
+      "tutorDialogue": [
+        "Tutor: What should a summary include?",
+        "Student: The main ideas only.",
+        "Tutor: Correct. Should we copy the whole speech?",
+        "Student: No.",
+        "Tutor: Good. What are the main ideas?",
+        "Student: She thanks them, welcomes them, encourages hard work and discipline, and reminds them to care for facilities.",
+        "Tutor: Excellent. Now we write that in not more than three sentences."
+      ],
+      "markingNotes": [
+        "Rubric: main ideas, concision, no more than 3 sentences."
+      ]
+    },
+    {
+      "id": "q3a",
+      "section": "A-Vocabulary",
+      "questionNumber": "3(a)",
+      "text": "Make a correct sentence using the word: proud.",
+      "marks": 1,
+      "itemType": "sentenceWriting",
+      "markingMode": "rubric",
+      "pickedAnswer": "I am proud of my school.",
+      "alternativeAnswers": [
+        "My parents are proud of me.",
+        "We are proud of our country."
+      ],
+      "detailedExplanation": "Proud is an adjective. It describes a feeling of happiness or satisfaction about someone or something. It is commonly followed by 'of'.",
+      "tutorDialogue": [
+        "Tutor: What does 'proud' mean in the passage?",
+        "Student: It is used to express an idea connected to the speech.",
+        "Tutor: Good. In this item, the sentence must use the word correctly, not just place it anywhere.",
+        "Student: So grammar and meaning both matter.",
+        "Tutor: Exactly. A correct sentence should make sense and use the word naturally."
+      ],
+      "markingNotes": [
+        "Accept any grammatically correct sentence that uses the target word meaningfully."
+      ]
+    },
+    {
+      "id": "q3b",
+      "section": "A-Vocabulary",
+      "questionNumber": "3(b)",
+      "text": "Make a correct sentence using the word: pride.",
+      "marks": 1,
+      "itemType": "sentenceWriting",
+      "markingMode": "rubric",
+      "pickedAnswer": "Winning the competition brought pride to our school.",
+      "alternativeAnswers": [
+        "Her success filled her parents with pride.",
+        "The team’s victory gave us pride."
+      ],
+      "detailedExplanation": "Pride is a noun. It names the feeling of honour or satisfaction that comes from success or something good.",
+      "tutorDialogue": [
+        "Tutor: What does 'pride' mean in the passage?",
+        "Student: It is used to express an idea connected to the speech.",
+        "Tutor: Good. In this item, the sentence must use the word correctly, not just place it anywhere.",
+        "Student: So grammar and meaning both matter.",
+        "Tutor: Exactly. A correct sentence should make sense and use the word naturally."
+      ],
+      "markingNotes": [
+        "Accept any grammatically correct sentence that uses the target word meaningfully."
+      ]
+    },
+    {
+      "id": "q3c",
+      "section": "A-Vocabulary",
+      "questionNumber": "3(c)",
+      "text": "Make a correct sentence using the word: trusting.",
+      "marks": 1,
+      "itemType": "sentenceWriting",
+      "markingMode": "rubric",
+      "pickedAnswer": "Thank you for trusting me with this responsibility.",
+      "alternativeAnswers": [
+        "My parents are trusting me to behave well.",
+        "Trusting others is important."
+      ],
+      "detailedExplanation": "Trusting means believing that someone is honest, able, or responsible. In the passage, pupils trusted Alice Mutoni with leadership.",
+      "tutorDialogue": [
+        "Tutor: What does 'trusting' mean in the passage?",
+        "Student: It is used to express an idea connected to the speech.",
+        "Tutor: Good. In this item, the sentence must use the word correctly, not just place it anywhere.",
+        "Student: So grammar and meaning both matter.",
+        "Tutor: Exactly. A correct sentence should make sense and use the word naturally."
+      ],
+      "markingNotes": [
+        "Accept any grammatically correct sentence that uses the target word meaningfully."
+      ]
+    },
+    {
+      "id": "q3d",
+      "section": "A-Vocabulary",
+      "questionNumber": "3(d)",
+      "text": "Make a correct sentence using the word: various.",
+      "marks": 1,
+      "itemType": "sentenceWriting",
+      "markingMode": "rubric",
+      "pickedAnswer": "The library has various books for pupils.",
+      "alternativeAnswers": [
+        "We saw various animals at the zoo.",
+        "The shop sells various fruits."
+      ],
+      "detailedExplanation": "Various means several different kinds. A good sentence should show variety or difference.",
+      "tutorDialogue": [
+        "Tutor: What does 'various' mean in the passage?",
+        "Student: It is used to express an idea connected to the speech.",
+        "Tutor: Good. In this item, the sentence must use the word correctly, not just place it anywhere.",
+        "Student: So grammar and meaning both matter.",
+        "Tutor: Exactly. A correct sentence should make sense and use the word naturally."
+      ],
+      "markingNotes": [
+        "Accept any grammatically correct sentence that uses the target word meaningfully."
+      ]
+    },
+    {
+      "id": "q3e",
+      "section": "A-Vocabulary",
+      "questionNumber": "3(e)",
+      "text": "Make a correct sentence using the word: encourage.",
+      "marks": 1,
+      "itemType": "sentenceWriting",
+      "markingMode": "rubric",
+      "pickedAnswer": "Teachers encourage pupils to work hard.",
+      "alternativeAnswers": [
+        "My parents encourage me to study.",
+        "We encourage one another in class."
+      ],
+      "detailedExplanation": "Encourage means to give someone support, confidence, or motivation to do something good.",
+      "tutorDialogue": [
+        "Tutor: What does 'encourage' mean in the passage?",
+        "Student: It is used to express an idea connected to the speech.",
+        "Tutor: Good. In this item, the sentence must use the word correctly, not just place it anywhere.",
+        "Student: So grammar and meaning both matter.",
+        "Tutor: Exactly. A correct sentence should make sense and use the word naturally."
+      ],
+      "markingNotes": [
+        "Accept any grammatically correct sentence that uses the target word meaningfully."
+      ]
+    },
+    {
+      "id": "q4a",
+      "section": "A-Vocabulary",
+      "questionNumber": "4(a)",
+      "text": "Good evening ___________. Welcome to the weather forecast.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "viewers",
+      "alternativeAnswers": [],
+      "detailedExplanation": "The presenter is speaking on television. People watching television are called viewers.",
+      "tutorDialogue": [
+        "Tutor: This is a cloze passage. We must use context before and after the blank.",
+        "Student: The sentence says: Good evening ___________. Welcome to the weather forecast.",
+        "Tutor: Good. Which word from the box fits both grammar and meaning?",
+        "Student: The picked answer fits the sentence naturally.",
+        "Tutor: Correct. In fill-in questions, grammar and meaning must both work."
+      ],
+      "markingNotes": [
+        "Use word bank: fall, sunny, viewers, presenter, forecast, cold."
+      ]
+    },
+    {
+      "id": "q4b",
+      "section": "A-Vocabulary",
+      "questionNumber": "4(b)",
+      "text": "I am your __________ Jane Mutoni.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "presenter",
+      "alternativeAnswers": [],
+      "detailedExplanation": "The person who speaks on TV or radio and introduces a programme is the presenter.",
+      "tutorDialogue": [
+        "Tutor: This is a cloze passage. We must use context before and after the blank.",
+        "Student: The sentence says: I am your __________ Jane Mutoni.",
+        "Tutor: Good. Which word from the box fits both grammar and meaning?",
+        "Student: The picked answer fits the sentence naturally.",
+        "Tutor: Correct. In fill-in questions, grammar and meaning must both work."
+      ],
+      "markingNotes": [
+        "Use word bank: fall, sunny, viewers, presenter, forecast, cold."
+      ]
+    },
+    {
+      "id": "q4c",
+      "section": "A-Vocabulary",
+      "questionNumber": "4(c)",
+      "text": "The __________ for tomorrow is as follows.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "forecast",
+      "alternativeAnswers": [],
+      "detailedExplanation": "A forecast is a prediction of future weather.",
+      "tutorDialogue": [
+        "Tutor: This is a cloze passage. We must use context before and after the blank.",
+        "Student: The sentence says: The __________ for tomorrow is as follows.",
+        "Tutor: Good. Which word from the box fits both grammar and meaning?",
+        "Student: The picked answer fits the sentence naturally.",
+        "Tutor: Correct. In fill-in questions, grammar and meaning must both work."
+      ],
+      "markingNotes": [
+        "Use word bank: fall, sunny, viewers, presenter, forecast, cold."
+      ]
+    },
+    {
+      "id": "q4d",
+      "section": "A-Vocabulary",
+      "questionNumber": "4(d)",
+      "text": "Temperatures there are expected to __________ to 16°C.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "fall",
+      "alternativeAnswers": [
+        "drop"
+      ],
+      "detailedExplanation": "When temperature goes down, we say it falls or drops. From the given box, the correct word is fall.",
+      "tutorDialogue": [
+        "Tutor: This is a cloze passage. We must use context before and after the blank.",
+        "Student: The sentence says: Temperatures there are expected to __________ to 16°C.",
+        "Tutor: Good. Which word from the box fits both grammar and meaning?",
+        "Student: The picked answer fits the sentence naturally.",
+        "Tutor: Correct. In fill-in questions, grammar and meaning must both work."
+      ],
+      "markingNotes": [
+        "Use word bank: fall, sunny, viewers, presenter, forecast, cold."
+      ]
+    },
+    {
+      "id": "q4e",
+      "section": "A-Vocabulary",
+      "questionNumber": "4(e)",
+      "text": "Anyone planning to visit Huye should be prepared for a __________ welcome.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "cold",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Thunderstorms and lower temperatures suggest cold weather. 'Cold welcome' also fits the sentence naturally.",
+      "tutorDialogue": [
+        "Tutor: This is a cloze passage. We must use context before and after the blank.",
+        "Student: The sentence says: Anyone planning to visit Huye should be prepared for a __________ welcome.",
+        "Tutor: Good. Which word from the box fits both grammar and meaning?",
+        "Student: The picked answer fits the sentence naturally.",
+        "Tutor: Correct. In fill-in questions, grammar and meaning must both work."
+      ],
+      "markingNotes": [
+        "Use word bank: fall, sunny, viewers, presenter, forecast, cold."
+      ]
+    },
+    {
+      "id": "q4f",
+      "section": "A-Vocabulary",
+      "questionNumber": "4(f)",
+      "text": "The rest of the country will be __________ throughout the day.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "sunny",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Sunny means there will be sunshine and bright weather.",
+      "tutorDialogue": [
+        "Tutor: This is a cloze passage. We must use context before and after the blank.",
+        "Student: The sentence says: The rest of the country will be __________ throughout the day.",
+        "Tutor: Good. Which word from the box fits both grammar and meaning?",
+        "Student: The picked answer fits the sentence naturally.",
+        "Tutor: Correct. In fill-in questions, grammar and meaning must both work."
+      ],
+      "markingNotes": [
+        "Use word bank: fall, sunny, viewers, presenter, forecast, cold."
+      ]
+    },
+    {
+      "id": "q5a",
+      "section": "A-Vocabulary",
+      "questionNumber": "5(a)",
+      "text": "Rewrite giving one word for the group of words in bold: The man who collects bus fare is rude today.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "The conductor is rude today.",
+      "alternativeAnswers": [
+        "The bus conductor is rude today."
+      ],
+      "detailedExplanation": "A conductor is a person who collects fares from passengers, especially on a bus.",
+      "tutorDialogue": [
+        "Tutor: This item asks for one word to replace a group of words.",
+        "Student: So I should not explain the whole phrase again.",
+        "Tutor: Correct. Find the exact vocabulary word, then rewrite the sentence naturally.",
+        "Student: The sentence must still make sense after replacing the phrase.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q5b",
+      "section": "A-Vocabulary",
+      "questionNumber": "5(b)",
+      "text": "Rewrite giving one word for the group of words in bold: We shall visit the place where aeroplanes land and take off.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "We shall visit the airport.",
+      "alternativeAnswers": [
+        "We shall visit the airfield."
+      ],
+      "detailedExplanation": "An airport is a place where aeroplanes land and take off. Airfield may work in some contexts, but airport is the expected primary answer.",
+      "tutorDialogue": [
+        "Tutor: This item asks for one word to replace a group of words.",
+        "Student: So I should not explain the whole phrase again.",
+        "Tutor: Correct. Find the exact vocabulary word, then rewrite the sentence naturally.",
+        "Student: The sentence must still make sense after replacing the phrase.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q5c",
+      "section": "A-Vocabulary",
+      "questionNumber": "5(c)",
+      "text": "Rewrite giving one word for the group of words in bold: The person who flies an aeroplane should always be careful.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "The pilot should always be careful.",
+      "alternativeAnswers": [
+        "The aviator should always be careful."
+      ],
+      "detailedExplanation": "A pilot is a person trained to fly an aeroplane.",
+      "tutorDialogue": [
+        "Tutor: This item asks for one word to replace a group of words.",
+        "Student: So I should not explain the whole phrase again.",
+        "Tutor: Correct. Find the exact vocabulary word, then rewrite the sentence naturally.",
+        "Student: The sentence must still make sense after replacing the phrase.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q5d",
+      "section": "A-Vocabulary",
+      "questionNumber": "5(d)",
+      "text": "Rewrite giving one word for the group of words in bold: People who are travelling in a bus should always take care of their luggage.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "Passengers should always take care of their luggage.",
+      "alternativeAnswers": [
+        "Travellers should always take care of their luggage."
+      ],
+      "detailedExplanation": "Passengers are people travelling in a vehicle such as a bus, car, train, or plane.",
+      "tutorDialogue": [
+        "Tutor: This item asks for one word to replace a group of words.",
+        "Student: So I should not explain the whole phrase again.",
+        "Tutor: Correct. Find the exact vocabulary word, then rewrite the sentence naturally.",
+        "Student: The sentence must still make sense after replacing the phrase.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q5e",
+      "section": "A-Vocabulary",
+      "questionNumber": "5(e)",
+      "text": "Rewrite giving one word for the group of words in bold: People who walk along the road must be careful.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "Pedestrians must be careful.",
+      "alternativeAnswers": [
+        "Walkers must be careful."
+      ],
+      "detailedExplanation": "Pedestrians are people walking along or near a road. This is the best road-safety word.",
+      "tutorDialogue": [
+        "Tutor: This item asks for one word to replace a group of words.",
+        "Student: So I should not explain the whole phrase again.",
+        "Tutor: Correct. Find the exact vocabulary word, then rewrite the sentence naturally.",
+        "Student: The sentence must still make sense after replacing the phrase.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q5f",
+      "section": "A-Vocabulary",
+      "questionNumber": "5(f)",
+      "text": "Rewrite giving one word for the group of words in bold: The place where two roads meet is always busy.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "The junction is always busy.",
+      "alternativeAnswers": [
+        "The crossroads is always busy.",
+        "The intersection is always busy."
+      ],
+      "detailedExplanation": "A junction is a place where roads meet. Crossroads and intersection can also work depending on the road layout.",
+      "tutorDialogue": [
+        "Tutor: This item asks for one word to replace a group of words.",
+        "Student: So I should not explain the whole phrase again.",
+        "Tutor: Correct. Find the exact vocabulary word, then rewrite the sentence naturally.",
+        "Student: The sentence must still make sense after replacing the phrase.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q5g",
+      "section": "A-Vocabulary",
+      "questionNumber": "5(g)",
+      "text": "Rewrite giving one word for the group of words in bold: The government will help the people who can’t read and write.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "The government will help the illiterate.",
+      "alternativeAnswers": [
+        "The government will help illiterate people."
+      ],
+      "detailedExplanation": "Illiterate means unable to read and write. 'The illiterate' can refer to people who cannot read and write.",
+      "tutorDialogue": [
+        "Tutor: This item asks for one word to replace a group of words.",
+        "Student: So I should not explain the whole phrase again.",
+        "Tutor: Correct. Find the exact vocabulary word, then rewrite the sentence naturally.",
+        "Student: The sentence must still make sense after replacing the phrase.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q6a",
+      "section": "A-Vocabulary",
+      "questionNumber": "6(a)",
+      "text": "A __________ works at the front desk of a building and welcomes visitors and answers the phone.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "receptionist",
+      "alternativeAnswers": [],
+      "detailedExplanation": "A receptionist works at the reception/front desk and welcomes visitors or answers calls.",
+      "tutorDialogue": [
+        "Tutor: This is a professions vocabulary question.",
+        "Student: I should match the job description to the correct job name.",
+        "Tutor: Correct. Also check the article 'a' or 'an' because it may guide the answer.",
+        "Student: The word must fit the meaning and the grammar.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": [
+        "Use word bank: janitor, architect, librarian, cobbler, receptionist, hairdresser, lawyer."
+      ]
+    },
+    {
+      "id": "q6b",
+      "section": "A-Vocabulary",
+      "questionNumber": "6(b)",
+      "text": "A __________ keeps an office, school or hotel clean and tidy.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "janitor",
+      "alternativeAnswers": [
+        "cleaner"
+      ],
+      "detailedExplanation": "A janitor is responsible for cleaning and maintaining a building such as a school, office, or hotel.",
+      "tutorDialogue": [
+        "Tutor: This is a professions vocabulary question.",
+        "Student: I should match the job description to the correct job name.",
+        "Tutor: Correct. Also check the article 'a' or 'an' because it may guide the answer.",
+        "Student: The word must fit the meaning and the grammar.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": [
+        "Use word bank: janitor, architect, librarian, cobbler, receptionist, hairdresser, lawyer."
+      ]
+    },
+    {
+      "id": "q6c",
+      "section": "A-Vocabulary",
+      "questionNumber": "6(c)",
+      "text": "An __________ designs and builds large buildings or bridges.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "architect",
+      "alternativeAnswers": [],
+      "detailedExplanation": "An architect designs buildings. The article 'An' also helps because architect begins with a vowel sound.",
+      "tutorDialogue": [
+        "Tutor: This is a professions vocabulary question.",
+        "Student: I should match the job description to the correct job name.",
+        "Tutor: Correct. Also check the article 'a' or 'an' because it may guide the answer.",
+        "Student: The word must fit the meaning and the grammar.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": [
+        "Use word bank: janitor, architect, librarian, cobbler, receptionist, hairdresser, lawyer."
+      ]
+    },
+    {
+      "id": "q6d",
+      "section": "A-Vocabulary",
+      "questionNumber": "6(d)",
+      "text": "Someone who cuts and styles your hair to make it look good is called a __________.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "hairdresser",
+      "alternativeAnswers": [
+        "barber"
+      ],
+      "detailedExplanation": "A hairdresser cuts and styles hair. Barber can work for men’s haircuts, but hairdresser is the word in the box and is broader.",
+      "tutorDialogue": [
+        "Tutor: This is a professions vocabulary question.",
+        "Student: I should match the job description to the correct job name.",
+        "Tutor: Correct. Also check the article 'a' or 'an' because it may guide the answer.",
+        "Student: The word must fit the meaning and the grammar.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": [
+        "Use word bank: janitor, architect, librarian, cobbler, receptionist, hairdresser, lawyer."
+      ]
+    },
+    {
+      "id": "q6e",
+      "section": "A-Vocabulary",
+      "questionNumber": "6(e)",
+      "text": "A __________ repairs shoes.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "cobbler",
+      "alternativeAnswers": [
+        "shoemaker"
+      ],
+      "detailedExplanation": "A cobbler repairs shoes. A shoemaker may make shoes, but cobbler is the expected answer from the word bank.",
+      "tutorDialogue": [
+        "Tutor: This is a professions vocabulary question.",
+        "Student: I should match the job description to the correct job name.",
+        "Tutor: Correct. Also check the article 'a' or 'an' because it may guide the answer.",
+        "Student: The word must fit the meaning and the grammar.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": [
+        "Use word bank: janitor, architect, librarian, cobbler, receptionist, hairdresser, lawyer."
+      ]
+    },
+    {
+      "id": "q6f",
+      "section": "A-Vocabulary",
+      "questionNumber": "6(f)",
+      "text": "A __________ is always found in a house where people go for reading and borrowing books.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "librarian",
+      "alternativeAnswers": [],
+      "detailedExplanation": "A librarian is the person who works in a library and helps people read or borrow books. The wording says 'house' but the meaning points to a library.",
+      "tutorDialogue": [
+        "Tutor: This is a professions vocabulary question.",
+        "Student: I should match the job description to the correct job name.",
+        "Tutor: Correct. Also check the article 'a' or 'an' because it may guide the answer.",
+        "Student: The word must fit the meaning and the grammar.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": [
+        "Use word bank: janitor, architect, librarian, cobbler, receptionist, hairdresser, lawyer."
+      ]
+    },
+    {
+      "id": "q6g",
+      "section": "A-Vocabulary",
+      "questionNumber": "6(g)",
+      "text": "A person who works in a court and can help people on trial is called a __________.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "lawyer",
+      "alternativeAnswers": [
+        "advocate"
+      ],
+      "detailedExplanation": "A lawyer is trained in law and can represent or help people in court.",
+      "tutorDialogue": [
+        "Tutor: This is a professions vocabulary question.",
+        "Student: I should match the job description to the correct job name.",
+        "Tutor: Correct. Also check the article 'a' or 'an' because it may guide the answer.",
+        "Student: The word must fit the meaning and the grammar.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": [
+        "Use word bank: janitor, architect, librarian, cobbler, receptionist, hairdresser, lawyer."
+      ]
+    },
+    {
+      "id": "q7",
+      "section": "B-Language Use",
+      "questionNumber": "7",
+      "text": "Rearrange the jumbled sentences to make a good story.",
+      "marks": 5,
+      "itemType": "ordering",
+      "markingMode": "sequence",
+      "pickedAnswer": "Last holiday, we travelled to Dubai. When we reached there, we looked for a hotel where we could spend four nights. We were taken to a five-star hotel which is one of the best hotels in Dubai. Apart from being the best, it is very expensive. Each night was five hundred dirhams. Our company leader paid the money for the four days, and we enjoyed ourselves until the day we returned.",
+      "alternativeAnswers": [
+        "Last holiday, we travelled to Dubai. When we reached there, we looked for a hotel where we could spend four nights. We were taken to a five-star hotel, which is one of the best hotels in Dubai. Apart from being the best, it is very expensive. Each night was five hundred dirhams. Our company leader paid the money for the four days and we enjoyed ourselves until the day we returned."
+      ],
+      "detailedExplanation": "This question tests logical sequence. A story normally starts with the time and main action: “Last holiday, we travelled to Dubai.” After reaching Dubai, they looked for a hotel. The phrase “where we could spend four nights” completes the idea of looking for a hotel. Then they were taken to a five-star hotel, and the phrase “which is one of the best hotels in Dubai” describes that hotel. The cost and payment come after the hotel is introduced. The final sentence should show the result: they enjoyed themselves until they returned.",
+      "tutorDialogue": [
+        "Tutor: What sentence introduces the whole story?",
+        "Student: Last holiday, we travelled to Dubai.",
+        "Tutor: Good. After arriving, what would logically happen next?",
+        "Student: They looked for a hotel.",
+        "Tutor: Correct. Which phrase completes that idea?",
+        "Student: Where we could spend four nights.",
+        "Tutor: Excellent. Then the story explains the hotel, its cost, payment, and finally how they enjoyed themselves.",
+        "Student: So I should arrange ideas by time order and meaning.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": [
+        "Expected order by labels: c, e, j, g, a, h, b, d, f, i."
+      ]
+    },
+    {
+      "id": "q8a",
+      "section": "B-Language Use",
+      "questionNumber": "8(a)",
+      "text": "She __________ walks to school.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "sometimes",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Sometimes is an adverb of frequency. It tells how often an action happens. The verb 'walks' describes a repeated habit, so 'sometimes' fits naturally before the main verb.",
+      "tutorDialogue": [
+        "Tutor: First check the tense of the sentence.",
+        "Student: The time word must match the tense.",
+        "Tutor: Correct. Future words go with future tense, past words go with past tense, and present words go with present action.",
+        "Student: So I should not just guess from the list.",
+        "Tutor: Exactly. Use grammar clues."
+      ],
+      "markingNotes": [
+        "Use word bank: sometimes, last week, now, next month."
+      ]
+    },
+    {
+      "id": "q8b",
+      "section": "B-Language Use",
+      "questionNumber": "8(b)",
+      "text": "They will sit for exams __________.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "next month",
+      "alternativeAnswers": [],
+      "detailedExplanation": "The phrase 'will sit' shows future tense. 'Next month' is a future time expression, so it matches the tense.",
+      "tutorDialogue": [
+        "Tutor: First check the tense of the sentence.",
+        "Student: The time word must match the tense.",
+        "Tutor: Correct. Future words go with future tense, past words go with past tense, and present words go with present action.",
+        "Student: So I should not just guess from the list.",
+        "Tutor: Exactly. Use grammar clues."
+      ],
+      "markingNotes": [
+        "Use word bank: sometimes, last week, now, next month."
+      ]
+    },
+    {
+      "id": "q8c",
+      "section": "B-Language Use",
+      "questionNumber": "8(c)",
+      "text": "Can’t we be revising our notes __________?",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "now",
+      "alternativeAnswers": [
+        "right now"
+      ],
+      "detailedExplanation": "The phrase 'be revising' shows an action happening at the present moment. 'Now' fits because it means at this time.",
+      "tutorDialogue": [
+        "Tutor: First check the tense of the sentence.",
+        "Student: The time word must match the tense.",
+        "Tutor: Correct. Future words go with future tense, past words go with past tense, and present words go with present action.",
+        "Student: So I should not just guess from the list.",
+        "Tutor: Exactly. Use grammar clues."
+      ],
+      "markingNotes": [
+        "Use word bank: sometimes, last week, now, next month."
+      ]
+    },
+    {
+      "id": "q8d",
+      "section": "B-Language Use",
+      "questionNumber": "8(d)",
+      "text": "We ended the unit __________.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "last week",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Ended is past tense. 'Last week' is a past time expression, so it fits the sentence.",
+      "tutorDialogue": [
+        "Tutor: First check the tense of the sentence.",
+        "Student: The time word must match the tense.",
+        "Tutor: Correct. Future words go with future tense, past words go with past tense, and present words go with present action.",
+        "Student: So I should not just guess from the list.",
+        "Tutor: Exactly. Use grammar clues."
+      ],
+      "markingNotes": [
+        "Use word bank: sometimes, last week, now, next month."
+      ]
+    },
+    {
+      "id": "q9a",
+      "section": "B-Language Use",
+      "questionNumber": "9(a)",
+      "text": "The parents of my parents are my __________.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "grandparents",
+      "alternativeAnswers": [
+        "grandmother and grandfather"
+      ],
+      "detailedExplanation": "Your parents’ parents are one generation above your parents. The collective family term is grandparents. Because the question says 'parents' in plural, grandparents is better than grandmother or grandfather alone.",
+      "tutorDialogue": [
+        "Tutor: Family vocabulary becomes easier if we draw a small family tree in our mind.",
+        "Student: I should identify whose relative is being described first.",
+        "Tutor: Correct. Then ask: is the person above me, below me, beside me, or related by marriage?",
+        "Student: That helps me choose the exact family word.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q9b",
+      "section": "B-Language Use",
+      "questionNumber": "9(b)",
+      "text": "My mother’s legal husband is my __________.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "father",
+      "alternativeAnswers": [
+        "dad"
+      ],
+      "detailedExplanation": "Your mother’s legal husband is your father. 'Dad' is informal and can be understood, but 'father' is the expected exam answer.",
+      "tutorDialogue": [
+        "Tutor: Family vocabulary becomes easier if we draw a small family tree in our mind.",
+        "Student: I should identify whose relative is being described first.",
+        "Tutor: Correct. Then ask: is the person above me, below me, beside me, or related by marriage?",
+        "Student: That helps me choose the exact family word.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q9c",
+      "section": "B-Language Use",
+      "questionNumber": "9(c)",
+      "text": "The sister of my father is my __________.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "aunt",
+      "alternativeAnswers": [
+        "auntie"
+      ],
+      "detailedExplanation": "Your father’s sister is your aunt. This also applies to your mother’s sister.",
+      "tutorDialogue": [
+        "Tutor: Family vocabulary becomes easier if we draw a small family tree in our mind.",
+        "Student: I should identify whose relative is being described first.",
+        "Tutor: Correct. Then ask: is the person above me, below me, beside me, or related by marriage?",
+        "Student: That helps me choose the exact family word.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q9d",
+      "section": "B-Language Use",
+      "questionNumber": "9(d)",
+      "text": "The brother of my mother is my __________.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "uncle",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Your mother’s brother is your uncle. Uncle is the male equivalent of aunt.",
+      "tutorDialogue": [
+        "Tutor: Family vocabulary becomes easier if we draw a small family tree in our mind.",
+        "Student: I should identify whose relative is being described first.",
+        "Tutor: Correct. Then ask: is the person above me, below me, beside me, or related by marriage?",
+        "Student: That helps me choose the exact family word.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q9e",
+      "section": "B-Language Use",
+      "questionNumber": "9(e)",
+      "text": "The daughter of my aunt is my __________.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "cousin",
+      "alternativeAnswers": [
+        "female cousin"
+      ],
+      "detailedExplanation": "Your aunt’s child is your cousin. English uses cousin for both boys and girls unless gender must be specified.",
+      "tutorDialogue": [
+        "Tutor: Family vocabulary becomes easier if we draw a small family tree in our mind.",
+        "Student: I should identify whose relative is being described first.",
+        "Tutor: Correct. Then ask: is the person above me, below me, beside me, or related by marriage?",
+        "Student: That helps me choose the exact family word.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q9f",
+      "section": "B-Language Use",
+      "questionNumber": "9(f)",
+      "text": "The son of my brother is my __________.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "nephew",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Your brother’s son is your nephew. Your brother’s daughter would be your niece.",
+      "tutorDialogue": [
+        "Tutor: Family vocabulary becomes easier if we draw a small family tree in our mind.",
+        "Student: I should identify whose relative is being described first.",
+        "Tutor: Correct. Then ask: is the person above me, below me, beside me, or related by marriage?",
+        "Student: That helps me choose the exact family word.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q9g",
+      "section": "B-Language Use",
+      "questionNumber": "9(g)",
+      "text": "The daughter of my son is my __________.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "granddaughter",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Your child’s child is your grandchild. Since the child is female, she is your granddaughter.",
+      "tutorDialogue": [
+        "Tutor: Family vocabulary becomes easier if we draw a small family tree in our mind.",
+        "Student: I should identify whose relative is being described first.",
+        "Tutor: Correct. Then ask: is the person above me, below me, beside me, or related by marriage?",
+        "Student: That helps me choose the exact family word.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q9h",
+      "section": "B-Language Use",
+      "questionNumber": "9(h)",
+      "text": "The father of my husband is my __________.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "father-in-law",
+      "alternativeAnswers": [
+        "father in law"
+      ],
+      "detailedExplanation": "A relationship through marriage often uses 'in-law'. Your husband’s father is therefore your father-in-law.",
+      "tutorDialogue": [
+        "Tutor: Family vocabulary becomes easier if we draw a small family tree in our mind.",
+        "Student: I should identify whose relative is being described first.",
+        "Tutor: Correct. Then ask: is the person above me, below me, beside me, or related by marriage?",
+        "Student: That helps me choose the exact family word.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q10a",
+      "section": "B-Language Use",
+      "questionNumber": "10(a)",
+      "text": "They were in Kigali __________ ten o’clock.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "at",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Use 'at' for exact clock times: at ten o’clock, at noon, at midnight.",
+      "tutorDialogue": [
+        "Tutor: Prepositions are small words, but they often follow fixed rules.",
+        "Student: So I should check whether the sentence is about time, duration, cause, interest, or comparison.",
+        "Tutor: Correct. That context tells us the correct preposition.",
+        "Student: And some phrases, like 'interested in' and 'prefer to', must be memorized.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q10b",
+      "section": "B-Language Use",
+      "questionNumber": "10(b)",
+      "text": "It has been raining __________ three hours.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "for",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Use 'for' to show duration, meaning how long something has continued. Three hours is a length of time.",
+      "tutorDialogue": [
+        "Tutor: Prepositions are small words, but they often follow fixed rules.",
+        "Student: So I should check whether the sentence is about time, duration, cause, interest, or comparison.",
+        "Tutor: Correct. That context tells us the correct preposition.",
+        "Student: And some phrases, like 'interested in' and 'prefer to', must be memorized.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q10c",
+      "section": "B-Language Use",
+      "questionNumber": "10(c)",
+      "text": "The other doctor died __________ cancer.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "of",
+      "alternativeAnswers": [
+        "from"
+      ],
+      "detailedExplanation": "The standard expression for illness as cause of death is 'died of'. 'Died from' can be heard, but 'died of cancer' is the expected exam answer.",
+      "tutorDialogue": [
+        "Tutor: Prepositions are small words, but they often follow fixed rules.",
+        "Student: So I should check whether the sentence is about time, duration, cause, interest, or comparison.",
+        "Tutor: Correct. That context tells us the correct preposition.",
+        "Student: And some phrases, like 'interested in' and 'prefer to', must be memorized.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q10d",
+      "section": "B-Language Use",
+      "questionNumber": "10(d)",
+      "text": "This school opened __________ 1980.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "in",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Use 'in' with years, months, and long time periods: in 1980, in July, in the morning.",
+      "tutorDialogue": [
+        "Tutor: Prepositions are small words, but they often follow fixed rules.",
+        "Student: So I should check whether the sentence is about time, duration, cause, interest, or comparison.",
+        "Tutor: Correct. That context tells us the correct preposition.",
+        "Student: And some phrases, like 'interested in' and 'prefer to', must be memorized.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q10e",
+      "section": "B-Language Use",
+      "questionNumber": "10(e)",
+      "text": "He is interested __________ reading novels.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "in",
+      "alternativeAnswers": [],
+      "detailedExplanation": "The correct collocation is 'interested in'. Some adjective-preposition pairs must be memorized.",
+      "tutorDialogue": [
+        "Tutor: Prepositions are small words, but they often follow fixed rules.",
+        "Student: So I should check whether the sentence is about time, duration, cause, interest, or comparison.",
+        "Tutor: Correct. That context tells us the correct preposition.",
+        "Student: And some phrases, like 'interested in' and 'prefer to', must be memorized.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q10f",
+      "section": "B-Language Use",
+      "questionNumber": "10(f)",
+      "text": "I prefer peas __________ beans.",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "to",
+      "alternativeAnswers": [
+        "rather than"
+      ],
+      "detailedExplanation": "The correct structure is prefer X to Y. Do not say 'prefer X than Y'.",
+      "tutorDialogue": [
+        "Tutor: Prepositions are small words, but they often follow fixed rules.",
+        "Student: So I should check whether the sentence is about time, duration, cause, interest, or comparison.",
+        "Tutor: Correct. That context tells us the correct preposition.",
+        "Student: And some phrases, like 'interested in' and 'prefer to', must be memorized.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q11a",
+      "section": "B-Language Use",
+      "questionNumber": "11(a)",
+      "text": "Rewrite giving one word for the group of words in bold: Kanyana held a glass without any care and broke it.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "Kanyana held a glass carelessly and broke it.",
+      "alternativeAnswers": [],
+      "detailedExplanation": "'Without any care' means in a careless way. Since it describes how Kanyana held the glass, we use the adverb 'carelessly'.",
+      "tutorDialogue": [
+        "Tutor: This is another 'one word for many words' question.",
+        "Student: I need to replace the phrase without changing the meaning.",
+        "Tutor: Correct. If the phrase describes how an action is done, the answer may be an adverb ending in -ly.",
+        "Student: If it names a place or vehicle, I use the exact noun.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q11b",
+      "section": "B-Language Use",
+      "questionNumber": "11(b)",
+      "text": "Rewrite giving one word for the group of words in bold: He killed the wild cat without any mercy.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "He killed the wild cat mercilessly.",
+      "alternativeAnswers": [
+        "He killed the wild cat brutally."
+      ],
+      "detailedExplanation": "'Without any mercy' means mercilessly. The adverb ends in -ly because it describes how the action was done.",
+      "tutorDialogue": [
+        "Tutor: This is another 'one word for many words' question.",
+        "Student: I need to replace the phrase without changing the meaning.",
+        "Tutor: Correct. If the phrase describes how an action is done, the answer may be an adverb ending in -ly.",
+        "Student: If it names a place or vehicle, I use the exact noun.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q11c",
+      "section": "B-Language Use",
+      "questionNumber": "11(c)",
+      "text": "Rewrite giving one word for the group of words in bold: My uncle owns a place where vehicles are repaired.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "My uncle owns a garage.",
+      "alternativeAnswers": [
+        "My uncle owns a workshop."
+      ],
+      "detailedExplanation": "A garage is a place where vehicles are repaired. Workshop can sometimes work, but garage is the more direct answer.",
+      "tutorDialogue": [
+        "Tutor: This is another 'one word for many words' question.",
+        "Student: I need to replace the phrase without changing the meaning.",
+        "Tutor: Correct. If the phrase describes how an action is done, the answer may be an adverb ending in -ly.",
+        "Student: If it names a place or vehicle, I use the exact noun.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q11d",
+      "section": "B-Language Use",
+      "questionNumber": "11(d)",
+      "text": "Rewrite giving one word for the group of words in bold: That hospital has a vehicle which takes sick people for emergency.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "That hospital has an ambulance.",
+      "alternativeAnswers": [
+        "That hospital has an emergency vehicle."
+      ],
+      "detailedExplanation": "An ambulance is a special vehicle used to carry sick or injured people, especially in emergencies.",
+      "tutorDialogue": [
+        "Tutor: This is another 'one word for many words' question.",
+        "Student: I need to replace the phrase without changing the meaning.",
+        "Tutor: Correct. If the phrase describes how an action is done, the answer may be an adverb ending in -ly.",
+        "Student: If it names a place or vehicle, I use the exact noun.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q12a",
+      "section": "B-Language Use",
+      "questionNumber": "12(a)",
+      "text": "My stick is long. Her stick is longer. Join using than.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "Her stick is longer than my stick.",
+      "alternativeAnswers": [
+        "My stick is shorter than her stick."
+      ],
+      "detailedExplanation": "This is a comparative sentence. 'Longer' is the comparative form of 'long', and comparative adjectives are commonly followed by 'than' when comparing two things.",
+      "tutorDialogue": [
+        "Tutor: First identify what grammar structure the question asks for.",
+        "Student: Then I should keep the meaning of the original sentence.",
+        "Tutor: Correct. Transformation questions test both meaning and structure.",
+        "Student: So I must not only join words; I must produce a correct sentence.",
+        "Tutor: Exactly. The new sentence should sound natural and follow the instruction."
+      ],
+      "markingNotes": [
+        "Allow punctuation/capitalization variation."
+      ]
+    },
+    {
+      "id": "q12b",
+      "section": "B-Language Use",
+      "questionNumber": "12(b)",
+      "text": "River Nyabarongo is wide. River Akagera is also wide. Join using as...as.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "River Nyabarongo is as wide as River Akagera.",
+      "alternativeAnswers": [
+        "River Akagera is as wide as River Nyabarongo."
+      ],
+      "detailedExplanation": "'As...as' shows equal comparison. The sentence means both rivers have the same width.",
+      "tutorDialogue": [
+        "Tutor: First identify what grammar structure the question asks for.",
+        "Student: Then I should keep the meaning of the original sentence.",
+        "Tutor: Correct. Transformation questions test both meaning and structure.",
+        "Student: So I must not only join words; I must produce a correct sentence.",
+        "Tutor: Exactly. The new sentence should sound natural and follow the instruction."
+      ],
+      "markingNotes": [
+        "Allow punctuation/capitalization variation."
+      ]
+    },
+    {
+      "id": "q12c",
+      "section": "B-Language Use",
+      "questionNumber": "12(c)",
+      "text": "How long is this river? Rewrite beginning with What.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "What is the length of this river?",
+      "alternativeAnswers": [
+        "What length is this river?"
+      ],
+      "detailedExplanation": "'How long' asks about length. When beginning with 'What', we change the adjective 'long' to the noun 'length'.",
+      "tutorDialogue": [
+        "Tutor: First identify what grammar structure the question asks for.",
+        "Student: Then I should keep the meaning of the original sentence.",
+        "Tutor: Correct. Transformation questions test both meaning and structure.",
+        "Student: So I must not only join words; I must produce a correct sentence.",
+        "Tutor: Exactly. The new sentence should sound natural and follow the instruction."
+      ],
+      "markingNotes": [
+        "Allow punctuation/capitalization variation."
+      ]
+    },
+    {
+      "id": "q12d",
+      "section": "B-Language Use",
+      "questionNumber": "12(d)",
+      "text": "The mountain is very steep. We can’t climb it. Join using so...that.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "The mountain is so steep that we cannot climb it.",
+      "alternativeAnswers": [
+        "The mountain is so steep that we can't climb it."
+      ],
+      "detailedExplanation": "'So...that' links a cause with a result. The cause is that the mountain is very steep. The result is that we cannot climb it.",
+      "tutorDialogue": [
+        "Tutor: First identify what grammar structure the question asks for.",
+        "Student: Then I should keep the meaning of the original sentence.",
+        "Tutor: Correct. Transformation questions test both meaning and structure.",
+        "Student: So I must not only join words; I must produce a correct sentence.",
+        "Tutor: Exactly. The new sentence should sound natural and follow the instruction."
+      ],
+      "markingNotes": [
+        "Allow punctuation/capitalization variation."
+      ]
+    },
+    {
+      "id": "q12e",
+      "section": "B-Language Use",
+      "questionNumber": "12(e)",
+      "text": "Most tourists like visiting Rwanda. It is beautiful and clean. Join using because.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "Most tourists like visiting Rwanda because it is beautiful and clean.",
+      "alternativeAnswers": [
+        "Because Rwanda is beautiful and clean, most tourists like visiting it."
+      ],
+      "detailedExplanation": "Because introduces the reason. The reason tourists like visiting Rwanda is that it is beautiful and clean.",
+      "tutorDialogue": [
+        "Tutor: First identify what grammar structure the question asks for.",
+        "Student: Then I should keep the meaning of the original sentence.",
+        "Tutor: Correct. Transformation questions test both meaning and structure.",
+        "Student: So I must not only join words; I must produce a correct sentence.",
+        "Tutor: Exactly. The new sentence should sound natural and follow the instruction."
+      ],
+      "markingNotes": [
+        "Allow punctuation/capitalization variation."
+      ]
+    },
+    {
+      "id": "q12f",
+      "section": "B-Language Use",
+      "questionNumber": "12(f)",
+      "text": "I would see gorillas. I went to Volcano National Park. Join using if.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "I would see gorillas if I went to Volcano National Park.",
+      "alternativeAnswers": [
+        "If I went to Volcano National Park, I would see gorillas."
+      ],
+      "detailedExplanation": "This is a conditional sentence. 'Would' usually pairs with an if-clause in the past simple form: I would see gorillas if I went... The meaning is that going to Volcano National Park is the condition for seeing gorillas.",
+      "tutorDialogue": [
+        "Tutor: First identify what grammar structure the question asks for.",
+        "Student: Then I should keep the meaning of the original sentence.",
+        "Tutor: Correct. Transformation questions test both meaning and structure.",
+        "Student: So I must not only join words; I must produce a correct sentence.",
+        "Tutor: Exactly. The new sentence should sound natural and follow the instruction."
+      ],
+      "markingNotes": [
+        "Allow punctuation/capitalization variation."
+      ]
+    },
+    {
+      "id": "q12g",
+      "section": "B-Language Use",
+      "questionNumber": "12(g)",
+      "text": "I like chicken more than beef. Rewrite using prefer.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "I prefer chicken to beef.",
+      "alternativeAnswers": [],
+      "detailedExplanation": "'Prefer' is used to show that we like one thing more than another. The correct structure is prefer X to Y, not prefer X than Y.",
+      "tutorDialogue": [
+        "Tutor: First identify what grammar structure the question asks for.",
+        "Student: Then I should keep the meaning of the original sentence.",
+        "Tutor: Correct. Transformation questions test both meaning and structure.",
+        "Student: So I must not only join words; I must produce a correct sentence.",
+        "Tutor: Exactly. The new sentence should sound natural and follow the instruction."
+      ],
+      "markingNotes": [
+        "Allow punctuation/capitalization variation."
+      ]
+    },
+    {
+      "id": "q12h",
+      "section": "B-Language Use",
+      "questionNumber": "12(h)",
+      "text": "Keza will not sell her mats. Beza will not sell her mats. Begin with Neither...nor.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "Neither Keza nor Beza will sell her mats.",
+      "alternativeAnswers": [
+        "Neither Keza nor Beza will sell their mats."
+      ],
+      "detailedExplanation": "Neither...nor combines two negative ideas. After using neither...nor, do not add another 'not'. The sentence already means both will not sell.",
+      "tutorDialogue": [
+        "Tutor: First identify what grammar structure the question asks for.",
+        "Student: Then I should keep the meaning of the original sentence.",
+        "Tutor: Correct. Transformation questions test both meaning and structure.",
+        "Student: So I must not only join words; I must produce a correct sentence.",
+        "Tutor: Exactly. The new sentence should sound natural and follow the instruction."
+      ],
+      "markingNotes": [
+        "Allow punctuation/capitalization variation."
+      ]
+    },
+    {
+      "id": "q12i",
+      "section": "B-Language Use",
+      "questionNumber": "12(i)",
+      "text": "Allen is very old. She can go to the market alone. Join using enough to.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "Allen is old enough to go to the market alone.",
+      "alternativeAnswers": [
+        "Allen is mature enough to go to the market alone."
+      ],
+      "detailedExplanation": "'Enough to' shows that someone has the required quality or ability. The structure is adjective + enough + to + verb.",
+      "tutorDialogue": [
+        "Tutor: First identify what grammar structure the question asks for.",
+        "Student: Then I should keep the meaning of the original sentence.",
+        "Tutor: Correct. Transformation questions test both meaning and structure.",
+        "Student: So I must not only join words; I must produce a correct sentence.",
+        "Tutor: Exactly. The new sentence should sound natural and follow the instruction."
+      ],
+      "markingNotes": [
+        "Allow punctuation/capitalization variation."
+      ]
+    },
+    {
+      "id": "q12j",
+      "section": "B-Language Use",
+      "questionNumber": "12(j)",
+      "text": "Potters are making nice pots. Begin with Nice pots.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "Nice pots are being made by potters.",
+      "alternativeAnswers": [
+        "Nice pots are made by potters."
+      ],
+      "detailedExplanation": "The original sentence is active voice in the present continuous tense: are making. In passive voice, the object 'nice pots' becomes the subject, and 'are making' changes to 'are being made'.",
+      "tutorDialogue": [
+        "Tutor: First identify what grammar structure the question asks for.",
+        "Student: Then I should keep the meaning of the original sentence.",
+        "Tutor: Correct. Transformation questions test both meaning and structure.",
+        "Student: So I must not only join words; I must produce a correct sentence.",
+        "Tutor: Exactly. The new sentence should sound natural and follow the instruction."
+      ],
+      "markingNotes": [
+        "Allow punctuation/capitalization variation."
+      ]
+    },
+    {
+      "id": "q13a",
+      "section": "B-Language Use",
+      "questionNumber": "13(a)",
+      "text": "Rewrite giving the opposite form of the bold word: Dinosaurs had sharp teeth.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "Dinosaurs had blunt teeth.",
+      "alternativeAnswers": [
+        "Dinosaurs had dull teeth."
+      ],
+      "detailedExplanation": "The opposite of sharp is blunt. Sharp teeth can cut easily; blunt teeth are not sharp.",
+      "tutorDialogue": [
+        "Tutor: Opposite-word questions test antonyms.",
+        "Student: I need to replace only the bold word or phrase with its opposite.",
+        "Tutor: Correct. The rest of the sentence should stay sensible.",
+        "Student: So I should not rewrite the whole idea into something unrelated.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q13b",
+      "section": "B-Language Use",
+      "questionNumber": "13(b)",
+      "text": "Rewrite giving the opposite form of the bold word: Some dinosaurs looked similar to modern birds.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "Some dinosaurs looked similar to ancient birds.",
+      "alternativeAnswers": [
+        "Some dinosaurs looked similar to old birds."
+      ],
+      "detailedExplanation": "Modern means belonging to the present or recent times. Ancient is the stronger opposite in a historical context.",
+      "tutorDialogue": [
+        "Tutor: Opposite-word questions test antonyms.",
+        "Student: I need to replace only the bold word or phrase with its opposite.",
+        "Tutor: Correct. The rest of the sentence should stay sensible.",
+        "Student: So I should not rewrite the whole idea into something unrelated.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q13c",
+      "section": "B-Language Use",
+      "questionNumber": "13(c)",
+      "text": "Rewrite giving the opposite form of the bold word: Our cat is very old.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "Our cat is very young.",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Old and young are common opposite adjectives for age.",
+      "tutorDialogue": [
+        "Tutor: Opposite-word questions test antonyms.",
+        "Student: I need to replace only the bold word or phrase with its opposite.",
+        "Tutor: Correct. The rest of the sentence should stay sensible.",
+        "Student: So I should not rewrite the whole idea into something unrelated.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q13d",
+      "section": "B-Language Use",
+      "questionNumber": "13(d)",
+      "text": "Rewrite giving the opposite form of the bold word: A lion hunts during the night.",
+      "marks": 1,
+      "itemType": "rewrite",
+      "markingMode": "flexibleText",
+      "pickedAnswer": "A lion hunts during the day.",
+      "alternativeAnswers": [
+        "A lion hunts during daytime."
+      ],
+      "detailedExplanation": "The opposite of night is day.",
+      "tutorDialogue": [
+        "Tutor: Opposite-word questions test antonyms.",
+        "Student: I need to replace only the bold word or phrase with its opposite.",
+        "Tutor: Correct. The rest of the sentence should stay sensible.",
+        "Student: So I should not rewrite the whole idea into something unrelated.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q14a",
+      "section": "B-Language Use",
+      "questionNumber": "14(a)",
+      "text": "The pupils told __________ teacher to mark them. (their, there)",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "their",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Their shows possession. The teacher belongs to or is connected to the pupils. 'There' refers to a place, so it is wrong here.",
+      "tutorDialogue": [
+        "Tutor: These are commonly confused words. They sound similar but have different meanings.",
+        "Student: So I must choose the word that fits the sentence meaning.",
+        "Tutor: Correct. Spelling matters here because each word has a different meaning.",
+        "Student: I should read the whole sentence before choosing.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q14b",
+      "section": "B-Language Use",
+      "questionNumber": "14(b)",
+      "text": "We went to __________ on Sunday. (pray, prey)",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "pray",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Pray means to speak to God or worship. Prey means an animal hunted by another animal.",
+      "tutorDialogue": [
+        "Tutor: These are commonly confused words. They sound similar but have different meanings.",
+        "Student: So I must choose the word that fits the sentence meaning.",
+        "Tutor: Correct. Spelling matters here because each word has a different meaning.",
+        "Student: I should read the whole sentence before choosing.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q14c",
+      "section": "B-Language Use",
+      "questionNumber": "14(c)",
+      "text": "We spent an __________ outside the class. (our, hour)",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "hour",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Hour is a unit of time. The article 'an' also fits because hour begins with a silent h and starts with a vowel sound.",
+      "tutorDialogue": [
+        "Tutor: These are commonly confused words. They sound similar but have different meanings.",
+        "Student: So I must choose the word that fits the sentence meaning.",
+        "Tutor: Correct. Spelling matters here because each word has a different meaning.",
+        "Student: I should read the whole sentence before choosing.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q14d",
+      "section": "B-Language Use",
+      "questionNumber": "14(d)",
+      "text": "Give me a __________ of chalk. (peace, piece)",
+      "marks": 1,
+      "itemType": "singleBlank",
+      "markingMode": "exactMatch",
+      "pickedAnswer": "piece",
+      "alternativeAnswers": [],
+      "detailedExplanation": "Piece means a part or portion of something. Peace means absence of war or conflict.",
+      "tutorDialogue": [
+        "Tutor: These are commonly confused words. They sound similar but have different meanings.",
+        "Student: So I must choose the word that fits the sentence meaning.",
+        "Tutor: Correct. Spelling matters here because each word has a different meaning.",
+        "Student: I should read the whole sentence before choosing.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": []
+    },
+    {
+      "id": "q15a",
+      "section": "C-Composition",
+      "questionNumber": "15(a)",
+      "text": "Write a letter to your friend inviting him/her to share your favourite food and explain why you like that type of food. Do not use your real name.",
+      "marks": 15,
+      "itemType": "composition",
+      "markingMode": "rubric",
+      "pickedAnswer": "Open-ended composition. No single fixed answer.",
+      "alternativeAnswers": [
+        "Any well-written friendly letter that invites a friend to share a favourite food and explains why the writer likes it."
+      ],
+      "detailedExplanation": "This is a composition question and should be marked with a rubric, not exact matching. A strong answer should use friendly-letter format, include an invitation, name the favourite food, and explain why the writer likes it. Good reasons may include taste, nutrition, family tradition, ease of preparation, or when the food is eaten. The learner should avoid using a real name because the instruction forbids it. Grammar, punctuation, paragraphing, and relevance should be assessed.",
+      "tutorDialogue": [
+        "Tutor: What type of writing is this?",
+        "Student: A letter to a friend.",
+        "Tutor: Good. What must the letter do?",
+        "Student: Invite the friend to share my favourite food and explain why I like it.",
+        "Tutor: Correct. What should we avoid?",
+        "Student: Using my real name.",
+        "Tutor: Exactly. The answer should be friendly, clear, and relevant to the topic."
+      ],
+      "markingNotes": [
+        "Suggested rubric: format 3, content 5, organization 3, language 3, instruction compliance 1."
+      ]
+    },
+    {
+      "id": "q15b",
+      "section": "C-Composition",
+      "questionNumber": "15(b)",
+      "text": "Write a composition explaining how we should protect our environment.",
+      "marks": 15,
+      "itemType": "composition",
+      "markingMode": "rubric",
+      "pickedAnswer": "Open-ended composition. No single fixed answer.",
+      "alternativeAnswers": [
+        "Any well-organized composition explaining practical ways to protect the environment."
+      ],
+      "detailedExplanation": "This is an open composition. A strong answer should explain practical ways of protecting the environment, such as planting trees, avoiding littering, proper waste disposal, reducing plastic use, protecting water sources, preventing soil erosion, and keeping the school and home compound clean. The learner should organize ideas into clear paragraphs: introduction, body, and conclusion. The answer should remain focused on environmental protection, not general school life.",
+      "tutorDialogue": [
+        "Tutor: What is the topic asking you to explain?",
+        "Student: How we should protect our environment.",
+        "Tutor: Good. Should you only list points?",
+        "Student: No, I should explain them in sentences and paragraphs.",
+        "Tutor: Correct. Give examples like planting trees, not littering, and protecting water sources.",
+        "Student: And I should write clearly with good grammar.",
+        "Tutor: Exactly."
+      ],
+      "markingNotes": [
+        "Suggested rubric: relevance/content 6, organization 3, language 4, mechanics 2."
+      ]
+    }
+  ]
+}

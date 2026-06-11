@@ -1,3 +1,12 @@
+/**
+ * Preview-only student dashboard content used by the admin dashboard role preview.
+ *
+ * Live student route:
+ *   src/pages/dashboards/StudentDashboard.tsx
+ *
+ * Keep this file separate from the live route so preview experiments do not
+ * accidentally drift back into the real student dashboard.
+ */
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -12,10 +21,7 @@ import QuickActionCard from '@/components/dashboard/QuickActionCard';
 import SubjectCard from '@/components/dashboard/SubjectCard';
 import SpacedRepetitionCard from '@/components/dashboard/SpacedRepetitionCard';
 import StudyRemindersCard from '@/components/dashboard/StudyRemindersCard';
-import LinkedAccountsCard from '@/components/dashboard/LinkedAccountsCard';
-import LinkRequestsCard from '@/components/dashboard/LinkRequestsCard';
-import RedeemLinkCodeDialog from '@/components/modals/RedeemLinkCodeDialog';
-import { Button } from '@/components/ui/button';
+import StudentLinkCodesPanel from '@/components/identity/StudentLinkCodesPanel';
 import {
   Zap,
   Trophy,
@@ -24,16 +30,14 @@ import {
   TrendingUp,
   Clock,
   Flame,
-  Key,
 } from 'lucide-react';
 
 type Achievement = FirebaseAchievement;
 
-export default function StudentDashboardContent() {
+export default function StudentDashboardPreviewContent() {
   const { profile, progress } = useAuth();
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [userAchievementIds, setUserAchievementIds] = useState<string[]>([]);
-  const [showRedeemDialog, setShowRedeemDialog] = useState(false);
   const [examStats, setExamStats] = useState({
     totalAttempts: 0,
     averageScore: 0,
@@ -92,14 +96,6 @@ export default function StudentDashboardContent() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button
-            variant="outline"
-            className="gap-2"
-            onClick={() => setShowRedeemDialog(true)}
-          >
-            <Key className="w-4 h-4" />
-            Enter Link Code
-          </Button>
           <div className="bg-card rounded-2xl border border-border p-4 flex items-center gap-4">
             <ProgressRing progress={dailyProgress} size={80} strokeWidth={6}>
               <div className="text-center">
@@ -113,12 +109,6 @@ export default function StudentDashboardContent() {
           </div>
         </div>
       </div>
-
-      <RedeemLinkCodeDialog
-        open={showRedeemDialog}
-        onOpenChange={setShowRedeemDialog}
-        onSuccess={() => window.location.reload()}
-      />
 
       {/* Stats Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -208,11 +198,7 @@ export default function StudentDashboardContent() {
             lastExamDate={progress?.last_exam_date || undefined}
           />
 
-          {/* Link Requests Card */}
-          <LinkRequestsCard />
-
-          {/* Linked Accounts Card */}
-          <LinkedAccountsCard />
+          <StudentLinkCodesPanel />
 
           {/* Study Reminders Card */}
           <StudyRemindersCard />

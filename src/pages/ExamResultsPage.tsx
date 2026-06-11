@@ -1,348 +1,407 @@
-import { useState, useEffect, useMemo } from 'react';
-import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import { getExamAttemptFirebase } from '@/integrations/firebase/exams';
-import { getExamContentFirebase } from '@/integrations/firebase/content';
-import { useAuth } from '@/contexts/AuthContext';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ArrowLeft, CheckCircle2, Clock, Loader2, AlertTriangle, UserCheck, XCircle } from 'lucide-react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import QuestionReviewCard from '@/components/exam/QuestionReviewCard';
-import { 
-  Trophy, 
-  Clock, 
-  Target, 
-  ArrowLeft,
-  CheckCircle,
-  XCircle,
-  RotateCcw,
-  BookOpen,
-  BarChart3,
-  FileText,
-  ExternalLink,
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
-interface Exam {
-  id: string;
-  title: string;
-  subject: string | null;
-  level: string | null;
+import { Badge } from '@/components/ui/badge';
+import { useAuth } from '@/contexts/AuthContext';
+import {
+  fetchSubmissionsForAttemptFirebase,
+  getExamAttemptFirebase,
+} from '@/integrations/firebase/exams';
+import { loadV2ExamDataFirebase, type LoadedV2ExamData } from '@/integrations/firebase/content';
+import type { FirebaseAttemptSubmission, FirebaseExamAttempt } from '@/integrations/firebase/exams';
+import type { V2Interaction, V2Item, V2ModelAnswerVersion } from '@/types/v2';
+import { V2ContextBlockRenderer } from '@/components/exam/v2/V2ContextBlockRenderer';
+import { V2ItemRenderer } from '@/components/exam/v2/V2ItemRenderer';
+import { hasSubmittedAnswer } from '@/lib/v2-response-display';
+
+function asText(value: unknown, fallback = '') {
+  return typeof value === 'string' && value.trim() ? value : fallback;
 }
 
-interface ExamAttemptRecord {
-  id: string;
-  exam_id: string;
-  mode: 'practice' | 'simulation' | 'quiz';
-  score: number;
-  total_questions: number;
-  time_taken: number;
-  completed_at: string;
+function getSubmissionStatus(submission: FirebaseAttemptSubmission | null) {
+  const hasAnswer = hasSubmittedAnswer(submission?.responsePayload);
+  if (!submission || (!hasAnswer && (submission.reviewStatus === 'unanswered' || submission.isAnswered === false))) return 'unanswered';
+  if (submission.reviewStatus === 'teacherReview' || submission.autoFeedback?.requiresManualReview) return 'teacher-review-pending';
+  if (submission.reviewStatus === 'teacherOverride' || (submission as unknown as Record<string, unknown>).teacherOverride === true) {
+    return 'teacher-corrected';
+  }
+  if (
+    submission.reviewStatus === 'teacherReviewed' ||
+    submission.reviewStatus === 'reviewed' ||
+    Boolean((submission as unknown as Record<string, unknown>).scoredByTeacher)
+  ) {
+    return 'teacher-reviewed';
+  }
+  if (submission.autoFeedback?.isCorrect === true) return 'correct';
+  if (submission.autoFeedback?.isCorrect === false) return 'incorrect';
+  if (!hasAnswer) return 'unanswered';
+  return 'submitted';
 }
 
-interface QuestionPart {
-  id: string;
-  text: string;
-  answer: string;
-  marks: number;
-  explanation: string | null;
-  order_index: number;
+
+function statusBadge(status: string) {
+  if (status === 'correct') return { label: 'Correct', className: 'border-emerald-300 bg-emerald-50 text-emerald-700' };
+  if (status === 'incorrect') return { label: 'Incorrect', className: 'border-rose-300 bg-rose-50 text-rose-700' };
+  if (status === 'unanswered') return { label: 'Unanswered', className: 'border-muted bg-muted text-muted-foreground' };
+  if (status === 'teacher-review-pending') return { label: 'Awaiting teacher review', className: 'border-amber-300 bg-amber-50 text-amber-700' };
+  if (status === 'teacher-corrected') return { label: 'Teacher corrected auto score', className: 'border-blue-300 bg-blue-50 text-blue-700' };
+  if (status === 'teacher-reviewed') return { label: 'Scored by teacher', className: 'border-blue-300 bg-blue-50 text-blue-700' };
+  return { label: 'Submitted', className: 'border-border bg-background text-foreground' };
 }
 
-interface Question {
-  id: string;
-  question_number: number;
-  text: string;
-  image_url: string | null;
-  question_parts: QuestionPart[];
+function statusIcon(status: string) {
+  if (status === 'correct') return <CheckCircle2 className="h-4 w-4" />;
+  if (status === 'incorrect') return <XCircle className="h-4 w-4" />;
+  if (status === 'teacher-reviewed' || status === 'teacher-corrected') return <UserCheck className="h-4 w-4" />;
+  if (status === 'teacher-review-pending') return <AlertTriangle className="h-4 w-4" />;
+  return <Clock className="h-4 w-4" />;
 }
 
-interface UserAnswer {
-  partId: string;
-  answer: string;
-  isCorrect: boolean;
+function findModelAnswer(examData: LoadedV2ExamData, item: V2Item, interaction: V2Interaction): V2ModelAnswerVersion | null {
+  return (examData.modelAnswers.get(item.itemId) || [])
+    .find((answer) => answer.interactionId === interaction.interactionId) || null;
+}
+
+function getScoreText(submission: FirebaseAttemptSubmission | null, interaction: V2Interaction, item: V2Item) {
+  const maxScore = interaction.marks || item.marks || 1;
+  const score = typeof submission?.finalScore === 'number'
+    ? submission.finalScore
+    : typeof submission?.autoScore === 'number'
+      ? submission.autoScore
+      : 0;
+  return `${score}/${maxScore}`;
 }
 
 export default function ExamResultsPage() {
   const { examId, attemptId } = useParams();
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { role } = useAuth();
-  const [attempt, setAttempt] = useState<ExamAttemptRecord | null>(null);
-  const [exam, setExam] = useState<Exam | null>(null);
-  const [questions, setQuestions] = useState<Question[]>([]);
-  const [userAnswers, setUserAnswers] = useState<Record<string, UserAnswer[]>>({});
+  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [attempt, setAttempt] = useState<FirebaseExamAttempt | null>(null);
+  const [submissions, setSubmissions] = useState<FirebaseAttemptSubmission[]>([]);
+  const [examData, setExamData] = useState<LoadedV2ExamData | null>(null);
+  const [openDetails, setOpenDetails] = useState<Record<string, Record<string, boolean>>>({});
 
-  // Get user answers from URL params (passed from ExamTakingPage)
   useEffect(() => {
-    const answersParam = searchParams.get('answers');
-    if (answersParam) {
+    async function load() {
+      if (!examId || !attemptId) return;
       try {
-        const parsedAnswers = JSON.parse(decodeURIComponent(answersParam));
-        setUserAnswers(parsedAnswers);
-      } catch (e) {
-        console.error('Failed to parse answers:', e);
+        // Load attempt document and exam structure in parallel.
+        const [attemptLoad, examLoad] = await Promise.allSettled([
+          getExamAttemptFirebase(attemptId, { routeExamId: examId, currentUserId: user?.id || null }),
+          loadV2ExamDataFirebase(examId),
+        ]);
+
+        if (attemptLoad.status === 'rejected' || !attemptLoad.value.ok) {
+          console.error('[ExamResultsPage] Failed to load attempt', { attemptId, examId });
+          return;
+        }
+
+        const loadedExamData = examLoad.status === 'fulfilled' ? examLoad.value : null;
+        setAttempt(attemptLoad.value.attempt || null);
+        setExamData(loadedExamData);
+
+        // Fetch submissions using individual document reads.
+        // Collection queries filter by attemptId which cannot satisfy the Firestore security
+        // rule `resource.data.userId == request.auth.uid`, so they fail with permission-denied.
+        // Individual getDoc calls on known paths `{attemptId}__{interactionId}` are evaluated
+        // per-document and pass the ownership check.
+        if (loadedExamData) {
+          const allInteractionIds = Array.from(loadedExamData.interactions.values())
+            .flat()
+            .map((interaction) => interaction.interactionId);
+          const fetchedSubmissions = await fetchSubmissionsForAttemptFirebase(attemptId, allInteractionIds);
+          setSubmissions(fetchedSubmissions);
+        }
+      } finally {
+        setLoading(false);
       }
     }
-  }, [searchParams]);
+    void load();
+  }, [attemptId, examId, user?.id]);
 
-  useEffect(() => {
-    const fetchResults = async () => {
-      if (!attemptId || !examId) return;
-      try {
-        const contentRes = await getExamContentFirebase(examId);
-        if (contentRes.ok) {
-          setExam(contentRes.exam as Exam);
-          const sortedQuestions = (contentRes.questions || []).map((q) => ({
-            ...q,
-            question_parts: (q.question_parts || q.parts || []).sort((a, b) => a.order_index - b.order_index),
-          }));
-          setQuestions(sortedQuestions as Question[]);
-        }
-      } catch (error) {
-        console.error('Failed to load Firebase exam content:', error);
-      }
-
-      try {
-        const attemptRes = await getExamAttemptFirebase(attemptId);
-        if (attemptRes.ok) {
-          setAttempt({
-            id: attemptRes.attempt.id,
-            exam_id: attemptRes.attempt.examId,
-            mode: attemptRes.attempt.mode,
-            score: attemptRes.attempt.score,
-            total_questions: attemptRes.attempt.totalQuestions,
-            time_taken: attemptRes.attempt.timeTaken,
-            completed_at: attemptRes.attempt.completedAt,
-          });
-        }
-      } catch (error) {
-        console.error('Failed to load Firebase exam attempt:', error);
-      }
-
-      setLoading(false);
-    };
-
-    fetchResults();
-  }, [attemptId, examId]);
-
-  // Performance breakdown by topic
-  const performanceBreakdown = useMemo(() => {
-    if (!questions.length || !Object.keys(userAnswers).length) return null;
-
-    let totalCorrect = 0;
-    let totalParts = 0;
-
-    questions.forEach(q => {
-      const qAnswers = userAnswers[q.id] || [];
-      q.question_parts.forEach(part => {
-        totalParts++;
-        const userAnswer = qAnswers.find(a => a.partId === part.id);
-        if (userAnswer?.isCorrect) totalCorrect++;
-      });
+  // Keyed by interactionId — fetchSubmissionsForAttemptFirebase always sets interactionId from
+  // the doc ID suffix, so this lookup is exact and never needs a secondary suffix fallback.
+  const submissionsMap = useMemo(() => {
+    const map = new Map<string, FirebaseAttemptSubmission>();
+    submissions.forEach((submission) => {
+      if (submission.interactionId) map.set(submission.interactionId, submission);
     });
+    return map;
+  }, [submissions]);
 
-    return {
-      totalCorrect,
-      totalParts,
-      percentage: totalParts > 0 ? Math.round((totalCorrect / totalParts) * 100) : 0,
-    };
-  }, [questions, userAnswers]);
+  const reviewRequiredCount = useMemo(
+    () => submissions.filter((submission) => getSubmissionStatus(submission) === 'teacher-review-pending').length,
+    [submissions],
+  );
+  const unansweredCount = useMemo(
+    () => submissions.filter((submission) => getSubmissionStatus(submission) === 'unanswered').length,
+    [submissions],
+  );
 
-  const handleStudyTopic = (subject: string) => {
-    navigate(`/exams?subject=${encodeURIComponent(subject)}`);
+  const toggleDetail = (interactionId: string, key: string) => {
+    setOpenDetails((current) => ({
+      ...current,
+      [interactionId]: {
+        ...(current[interactionId] || {}),
+        [key]: !current[interactionId]?.[key],
+      },
+    }));
   };
 
   if (loading) {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
         </div>
       </DashboardLayout>
     );
   }
 
-  if (!attempt || !exam) {
+  if (!attempt) {
     return (
       <DashboardLayout>
-        <div className="text-center py-12">
-          <h2 className="text-xl font-bold mb-2">Results not found</h2>
-          <Button onClick={() => navigate(-1)}>Go Back</Button>
+        <div className="max-w-3xl mx-auto py-16 text-center space-y-4">
+          <h1 className="text-2xl font-semibold text-foreground">Results unavailable</h1>
+          <p className="text-muted-foreground">This V2 exam attempt could not be loaded.</p>
+          <Button onClick={() => navigate('/history')}>Go to exam history</Button>
         </div>
       </DashboardLayout>
     );
   }
 
-  const percentage = Math.round((attempt.score / attempt.total_questions) * 100);
-  const isPassing = percentage >= 50;
-  const isExcellent = percentage >= 80;
+  const percentage = attempt.maxScore > 0 ? Math.round((attempt.finalScore / attempt.maxScore) * 100) : 0;
+  const statusLabel = attempt.status === 'pending_review'
+    ? 'Submitted / pending teacher review'
+    : attempt.status === 'submitted'
+      ? 'Submitted'
+      : attempt.status === 'completed'
+        ? 'Completed'
+        : attempt.status;
+  const examTitle = examData?.exam?.title || 'V2 Exam Results';
+  const examSubject = examData?.exam?.subject || '';
+  const examLevel = examData?.exam?.level || '';
 
   return (
     <DashboardLayout>
-      <div className="max-w-4xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
-            <ArrowLeft className="w-5 h-5" />
+      <div className="max-w-5xl mx-auto space-y-8">
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" size="icon" onClick={() => navigate('/history')}>
+            <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-foreground">{exam.title}</h1>
-            <p className="text-muted-foreground">{exam.subject} • {exam.level}</p>
+            <h1 className="text-2xl font-semibold text-foreground">{examTitle}</h1>
+            <p className="text-muted-foreground">
+              {[examSubject, examLevel].filter(Boolean).join(' | ')}
+            </p>
           </div>
         </div>
 
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="overview" className="gap-2">
-              <BarChart3 className="w-4 h-4" />
-              Overview
-            </TabsTrigger>
-            <TabsTrigger value="review" className="gap-2">
-              <BookOpen className="w-4 h-4" />
-              Question Review
-            </TabsTrigger>
-          </TabsList>
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="rounded-lg border border-border bg-card p-6">
+            <p className="text-sm text-muted-foreground">Current Score</p>
+            <p className="mt-2 text-3xl font-semibold text-foreground">
+              {attempt.finalScore}/{attempt.maxScore}
+            </p>
+            <p className="text-sm text-muted-foreground">{percentage}%</p>
+          </div>
+          <div className="rounded-lg border border-border bg-card p-6">
+            <p className="text-sm text-muted-foreground">Attempt Status</p>
+            <p className="mt-2 text-2xl font-semibold text-foreground">{statusLabel}</p>
+            <p className="text-sm text-muted-foreground">
+              {attempt.completedAt || attempt.submittedAt || 'No completion timestamp'}
+            </p>
+          </div>
+          <div className="rounded-lg border border-border bg-card p-6">
+            <p className="text-sm text-muted-foreground">Teacher Review</p>
+            <p className="mt-2 text-2xl font-semibold text-foreground">{reviewRequiredCount}</p>
+            <p className="text-sm text-muted-foreground">
+              {unansweredCount > 0 ? `${unansweredCount} unanswered, ` : ''}responses awaiting manual review
+            </p>
+          </div>
+        </div>
 
-          <TabsContent value="overview" className="space-y-6 mt-6">
-            {/* Score Card */}
-            <div className={cn(
-              'rounded-2xl border p-8 text-center',
-              isExcellent ? 'bg-emerald-500/10 border-emerald-500/30' :
-              isPassing ? 'bg-amber-500/10 border-amber-500/30' :
-              'bg-red-500/10 border-red-500/30'
-            )}>
-              <div className={cn(
-                'w-32 h-32 mx-auto rounded-full flex items-center justify-center mb-6',
-                isExcellent ? 'bg-emerald-500/20' :
-                isPassing ? 'bg-amber-500/20' :
-                'bg-red-500/20'
-              )}>
-                <span className={cn(
-                  'text-5xl font-bold',
-                  isExcellent ? 'text-emerald-500' :
-                  isPassing ? 'text-amber-500' :
-                  'text-red-500'
-                )}>
-                  {percentage}%
-                </span>
-              </div>
-              
-              <h2 className="text-2xl font-bold text-foreground mb-2">
-                {isExcellent ? 'Excellent!' : isPassing ? 'Good Job!' : 'Keep Practicing!'}
-              </h2>
-              <p className="text-muted-foreground">
-                You scored {attempt.score} out of {attempt.total_questions} questions correctly
-              </p>
-            </div>
-
-            {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="bg-card rounded-xl border border-border p-4 text-center">
-                <CheckCircle className="w-6 h-6 text-emerald-500 mx-auto mb-2" />
-                <p className="text-2xl font-bold text-foreground">{attempt.score}</p>
-                <p className="text-sm text-muted-foreground">Correct</p>
-              </div>
-              <div className="bg-card rounded-xl border border-border p-4 text-center">
-                <XCircle className="w-6 h-6 text-red-500 mx-auto mb-2" />
-                <p className="text-2xl font-bold text-foreground">{attempt.total_questions - attempt.score}</p>
-                <p className="text-sm text-muted-foreground">Incorrect</p>
-              </div>
-              <div className="bg-card rounded-xl border border-border p-4 text-center">
-                <Clock className="w-6 h-6 text-primary mx-auto mb-2" />
-                <p className="text-2xl font-bold text-foreground">
-                  {attempt.time_taken ? `${Math.floor(attempt.time_taken / 60)}m` : '--'}
-                </p>
-                <p className="text-sm text-muted-foreground">Time Taken</p>
+        {reviewRequiredCount > 0 && (
+          <div className="rounded-lg border border-amber-200 bg-amber-50 p-5 text-amber-900">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="mt-0.5 h-5 w-5" />
+              <div>
+                <p className="font-medium">Some answers are awaiting teacher review.</p>
+                <p className="text-sm">This page will update with teacher scores and comments when review is complete.</p>
               </div>
             </div>
+          </div>
+        )}
 
-            {/* Performance Breakdown */}
-            {performanceBreakdown && (
-              <div className="bg-card rounded-xl border border-border p-6">
-                <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-                  <Target className="w-5 h-5 text-primary" />
-                  Performance Breakdown
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-muted-foreground">Parts Correct</span>
-                    <span className="font-medium text-foreground">
-                      {performanceBreakdown.totalCorrect} / {performanceBreakdown.totalParts}
-                    </span>
+        {!examData?.exam ? (
+          <div className="rounded-lg border border-dashed border-border bg-card p-6 text-sm text-muted-foreground">
+            The full exam content could not be loaded, but your attempt summary is available.
+          </div>
+        ) : (
+          <div className="rounded-lg border border-border bg-card p-5">
+            {examData.sections.map((section) => (
+              <section key={section.sectionId} className="mb-10">
+                <div className="mb-6">
+                  <h2 className="text-xl font-bold text-foreground">{section.title}</h2>
+                  {section.marks > 0 ? <span className="text-sm text-muted-foreground">[{section.marks} marks]</span> : null}
+                  {section.sharedInstructions ? (
+                    <div className="mt-3 rounded-lg border border-border bg-muted/30 p-4 text-sm text-foreground whitespace-pre-wrap">
+                      {section.sharedInstructions}
+                    </div>
+                  ) : null}
+                </div>
+
+                {(examData.instructionGroups.get(section.sectionId) || []).map((group) => (
+                  <div key={group.instructionGroupId} className="mb-8">
+                    <div className="mb-6 rounded-lg bg-muted/40 p-4">
+                      {group.title ? <h3 className="mb-2 font-semibold text-foreground">{group.title}</h3> : null}
+                      {group.questionRangeLabel ? (
+                        <span className="mb-2 inline-block rounded bg-amber-100 px-2 py-1 text-xs font-medium text-amber-800">
+                          {group.questionRangeLabel}
+                        </span>
+                      ) : null}
+                      <div className="prose prose-sm max-w-none text-foreground" dangerouslySetInnerHTML={{ __html: group.instructionsMarkdown }} />
+                    </div>
+
+                    {(examData.contextBlocks.get(group.instructionGroupId) || []).map((block) => (
+                      <V2ContextBlockRenderer key={block.contextBlockId} block={block} isSimulation={false} />
+                    ))}
+
+                    <div className="space-y-6">
+                      {(examData.items.get(group.instructionGroupId) || []).map((item) => {
+                        const itemInteractions = examData.interactions.get(item.itemId) || [];
+                        return (
+                          <article key={item.itemId} className="rounded-lg border border-border bg-background p-4">
+                            <V2ItemRenderer
+                              item={item}
+                              interactions={itemInteractions}
+                              mode="practice"
+                              isSimulation={false}
+                              submissions={submissionsMap}
+                              readOnly
+                            />
+
+                            <div className="mt-4 space-y-3 border-t border-border pt-4">
+                              {itemInteractions.map((interaction) => {
+                                const submission = submissionsMap.get(interaction.interactionId) || null;
+                                const status = getSubmissionStatus(submission);
+                                const badge = statusBadge(status);
+                                const modelAnswer = findModelAnswer(examData, item, interaction);
+                                const alternatives = modelAnswer?.acceptableAlternatives || [];
+                                const officialAnswer = asText(modelAnswer?.approvedAnswer, asText(submission?.autoFeedback?.correctAnswer));
+                                const explanation = asText(modelAnswer?.explanation, asText(modelAnswer?.teacherNotes, asText(submission?.autoFeedback?.explanation)));
+                                const teacherComment = asText(submission?.teacherFeedback?.comments, asText(submission?.teacherFeedback?.reason));
+                                const teacherCorrected = status === 'teacher-corrected';
+                                const detailState = openDetails[interaction.interactionId] || {};
+
+                                return (
+                                  <div key={interaction.interactionId} className="rounded-md border border-border bg-card p-3">
+                                    <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                                      <div className="space-y-2">
+                                        <div className="flex flex-wrap items-center gap-2">
+                                          <Badge variant="outline" className={badge.className}>
+                                            <span className="mr-1 inline-flex">{statusIcon(status)}</span>
+                                            {badge.label}
+                                          </Badge>
+                                          <Badge variant="secondary">{getScoreText(submission, interaction, item)} marks</Badge>
+                                        </div>
+                                      </div>
+
+                                      <div className="flex flex-wrap gap-2">
+                                        <Button size="sm" variant="outline" onClick={() => toggleDetail(interaction.interactionId, 'answer')}>
+                                          Show official answer
+                                        </Button>
+                                        <Button size="sm" variant="outline" onClick={() => toggleDetail(interaction.interactionId, 'alternatives')}>
+                                          Show alternative answers
+                                        </Button>
+                                        <Button size="sm" variant="outline" onClick={() => toggleDetail(interaction.interactionId, 'explanation')}>
+                                          Show detailed explanation
+                                        </Button>
+                                        {teacherComment ? (
+                                          <Button size="sm" variant="outline" onClick={() => toggleDetail(interaction.interactionId, 'teacher')}>
+                                            Show teacher comment
+                                          </Button>
+                                        ) : null}
+                                      </div>
+                                    </div>
+
+                                    {submission?.autoFeedback ? (
+                                      <div className="mt-3 rounded-md border border-border bg-background p-3 text-sm">
+                                        <p className="font-medium text-foreground">Auto feedback</p>
+                                        <p className="mt-1 text-muted-foreground">
+                                          {submission.autoFeedback.isCorrect === true
+                                            ? 'Auto-marked correct.'
+                                            : submission.autoFeedback.requiresManualReview
+                                              ? 'Auto-marker requested teacher review.'
+                                              : 'Auto-marked incorrect.'}
+                                        </p>
+                                      </div>
+                                    ) : null}
+
+                                    {submission?.teacherFeedback ? (
+                                      <div className="mt-3 rounded-md border border-blue-200 bg-blue-50 p-3 text-sm text-blue-900">
+                                        <p className="font-medium">{teacherCorrected ? 'Teacher corrected auto score' : 'Scored by teacher'}</p>
+                                        <p className="mt-1">
+                                          {submission.teacherFeedback.teacherName || 'Teacher'}
+                                          {typeof submission.teacherFeedback.score === 'number'
+                                            ? ` awarded ${submission.teacherFeedback.score} mark(s).`
+                                            : ' reviewed this answer.'}
+                                        </p>
+                                        {teacherCorrected && submission.autoFeedback ? (
+                                          <p className="mt-1">
+                                            Original auto status: {submission.autoFeedback.isCorrect ? 'correct' : 'incorrect'}.
+                                          </p>
+                                        ) : null}
+                                      </div>
+                                    ) : status === 'teacher-review-pending' ? (
+                                      <div className="mt-3 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+                                        Awaiting teacher review.
+                                      </div>
+                                    ) : null}
+
+                                    {detailState.answer ? (
+                                      <div className="mt-3 rounded-md bg-muted/30 p-3">
+                                        <p className="text-xs uppercase text-muted-foreground">Official answer</p>
+                                        <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">{officialAnswer || 'No official answer recorded.'}</p>
+                                      </div>
+                                    ) : null}
+                                    {detailState.alternatives ? (
+                                      <div className="mt-3 rounded-md bg-muted/30 p-3">
+                                        <p className="text-xs uppercase text-muted-foreground">Alternative answers</p>
+                                        <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">
+                                          {alternatives.length > 0 ? alternatives.join('\n') : 'No alternative answers recorded.'}
+                                        </p>
+                                      </div>
+                                    ) : null}
+                                    {detailState.explanation ? (
+                                      <div className="mt-3 rounded-md bg-muted/30 p-3">
+                                        <p className="text-xs uppercase text-muted-foreground">Detailed explanation</p>
+                                        <p className="mt-1 whitespace-pre-wrap text-sm text-foreground">{explanation || 'No explanation recorded.'}</p>
+                                      </div>
+                                    ) : null}
+                                    {detailState.teacher && teacherComment ? (
+                                      <div className="mt-3 rounded-md border border-blue-200 bg-blue-50 p-3 text-sm text-blue-900">
+                                        <p className="text-xs uppercase text-blue-700">Teacher comment</p>
+                                        <p className="mt-1 whitespace-pre-wrap">{teacherComment}</p>
+                                      </div>
+                                    ) : null}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </article>
+                        );
+                      })}
+                    </div>
                   </div>
-                  <div className="w-full bg-muted rounded-full h-3">
-                    <div 
-                      className={cn(
-                        'h-3 rounded-full transition-all',
-                        performanceBreakdown.percentage >= 80 ? 'bg-emerald-500' :
-                        performanceBreakdown.percentage >= 50 ? 'bg-amber-500' :
-                        'bg-red-500'
-                      )}
-                      style={{ width: `${performanceBreakdown.percentage}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Explanation PDF Link */}
-            {exam.explanation_pdf_url && (
-              <div className="bg-primary/5 border border-primary/20 rounded-xl p-4 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <FileText className="w-6 h-6 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-medium text-foreground">Detailed Explanations Available</h4>
-                  <p className="text-sm text-muted-foreground">Download the full PDF with step-by-step solutions</p>
-                </div>
-                <Button variant="outline" size="sm" className="gap-2" asChild>
-                  <a href={exam.explanation_pdf_url} target="_blank" rel="noopener noreferrer">
-                    View PDF <ExternalLink className="w-4 h-4" />
-                  </a>
-                </Button>
-              </div>
-            )}
-
-            {/* Actions */}
-            <div className="flex gap-4">
-              <Button onClick={() => navigate(`/exam/${examId}?mode=${attempt.mode}`)} className="flex-1 gap-2">
-                <RotateCcw className="w-4 h-4" />
-                Retry Exam
-              </Button>
-              <Button variant="outline" onClick={() => navigate('/exams')} className="flex-1">
-                Browse More Exams
-              </Button>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="review" className="space-y-4 mt-6">
-            {questions.length > 0 ? (
-              <>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Click on each question to expand and see detailed explanations. Use "Get AI Help" for additional guidance.
-                </p>
-                {questions.map((question, index) => (
-                  <QuestionReviewCard
-                    key={question.id}
-                    question={question}
-                    userAnswers={userAnswers[question.id] || []}
-                    questionIndex={index}
-                    subject={exam.subject}
-                    level={exam.level}
-                    onStudyTopic={handleStudyTopic}
-                  />
                 ))}
-              </>
-            ) : (
-              <div className="text-center py-12 text-muted-foreground">
-                <BookOpen className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>Question review is not available for this exam.</p>
-              </div>
-            )}
-          </TabsContent>
-        </Tabs>
+              </section>
+            ))}
+          </div>
+        )}
       </div>
     </DashboardLayout>
   );

@@ -1,0 +1,4437 @@
+{
+  "_meta": {
+    "generatedAt": "2026-04-21T15:34:07.684Z",
+    "generatedBy": "scripts/build-ple-english-2024-v2-package.mjs",
+    "sourcePackage": "docs/imports/ple-english-2024.insert-ready.json",
+    "sourceAnswers": "docs/Ple-English-2024-Answers+Explanations.md",
+    "recoveryDecision": "B. Recover content from old files and create a clean V2 package.",
+    "notes": [
+      "Legacy insert-ready JSON is the best content source and was salvaged.",
+      "Shared Section B passage, poem, table, picture story, and composition prompt are represented as context blocks.",
+      "Comprehension, picture story, sentence-writing, rewrite-heavy, and composition interactions default to manual review."
+    ]
+  },
+  "exam": {
+    "title": "PLE English 2024",
+    "subject": "English",
+    "level": "PLE",
+    "year": 2024,
+    "country": "UGANDA",
+    "curriculumVersion": "PLE",
+    "durationMinutes": 135,
+    "totalMarks": 100,
+    "questionCount": 55,
+    "itemCount": 55,
+    "interactionCount": 91,
+    "status": "published",
+    "version": 1,
+    "createdBy": "system-import",
+    "engineVersion": "v2",
+    "overallInstructions": "This paper has two sections: Section A and Section B. Answer all questions in the spaces provided.",
+    "sourceFiles": [
+      {
+        "name": "PLE-English-2024.pdf",
+        "type": "pdf"
+      },
+      {
+        "name": "Ple-English-2024-Answers+Explanations.md",
+        "type": "doc"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "ref": "sec_a",
+      "orderIndex": 0,
+      "title": "Section A",
+      "marks": 50,
+      "sharedInstructions": "Questions 1 to 50 carry one mark each."
+    },
+    {
+      "ref": "sec_b",
+      "orderIndex": 1,
+      "title": "Section B",
+      "marks": 50,
+      "sharedInstructions": "Answer in full sentences where instructed."
+    }
+  ],
+  "instructionGroups": [
+    {
+      "ref": "ig_q1_5",
+      "sectionRef": "sec_a",
+      "orderIndex": 0,
+      "title": "Sub-Section I",
+      "questionRangeLabel": "Questions 1-5",
+      "instructionsMarkdown": "In each of the questions 1 to 5, fill in the blank space with a suitable word.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q6_15",
+      "sectionRef": "sec_a",
+      "orderIndex": 1,
+      "title": "Sub-Section I",
+      "questionRangeLabel": "Questions 6-15",
+      "instructionsMarkdown": "In each of the questions 6 to 15, use the correct form of the word given in brackets.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q16_17",
+      "sectionRef": "sec_a",
+      "orderIndex": 2,
+      "title": "Sub-Section I",
+      "questionRangeLabel": "Questions 16-17",
+      "instructionsMarkdown": "In each of the questions 16 to 17, write the given short forms in full.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q18_19",
+      "sectionRef": "sec_a",
+      "orderIndex": 3,
+      "title": "Sub-Section I",
+      "questionRangeLabel": "Questions 18-19",
+      "instructionsMarkdown": "In each of the questions 18 to 19, arrange the following words in alphabetical order.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q20_21",
+      "sectionRef": "sec_a",
+      "orderIndex": 4,
+      "title": "Sub-Section I",
+      "questionRangeLabel": "Questions 20-21",
+      "instructionsMarkdown": "In each of the questions 20 to 21, rewrite the sentence giving the opposite of the underlined word.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q22_23",
+      "sectionRef": "sec_a",
+      "orderIndex": 5,
+      "title": "Sub-Section I",
+      "questionRangeLabel": "Questions 22-23",
+      "instructionsMarkdown": "In each of the questions 22 to 23, rearrange the words to form a correct sentence.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q24_25",
+      "sectionRef": "sec_a",
+      "orderIndex": 6,
+      "title": "Sub-Section I",
+      "questionRangeLabel": "Questions 24-25",
+      "instructionsMarkdown": "In each of the questions 24 to 25, give the plural of the given word.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q26_27",
+      "sectionRef": "sec_a",
+      "orderIndex": 7,
+      "title": "Sub-Section I",
+      "questionRangeLabel": "Questions 26-27",
+      "instructionsMarkdown": "In each of the questions 26 to 27, rewrite the sentence giving one word for the underlined group of words.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q28_30",
+      "sectionRef": "sec_a",
+      "orderIndex": 8,
+      "title": "Sub-Section I",
+      "questionRangeLabel": "Questions 28-30",
+      "instructionsMarkdown": "In each of the questions 28 to 30, use the word in a sentence to show that you know the difference in its meaning.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q31_50",
+      "sectionRef": "sec_a",
+      "orderIndex": 9,
+      "title": "Sub-Section II",
+      "questionRangeLabel": "Questions 31-50",
+      "instructionsMarkdown": "Rewrite each sentence as instructed.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q51",
+      "sectionRef": "sec_b",
+      "orderIndex": 10,
+      "title": "Passage Comprehension",
+      "questionRangeLabel": "Question 51",
+      "instructionsMarkdown": "Read the passage below and then answer, in full sentences, the questions that follow.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q52",
+      "sectionRef": "sec_b",
+      "orderIndex": 11,
+      "title": "Poem Comprehension",
+      "questionRangeLabel": "Question 52",
+      "instructionsMarkdown": "Read the poem below and then answer, in full sentences, the questions that follow.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q53",
+      "sectionRef": "sec_b",
+      "orderIndex": 12,
+      "title": "Table Comprehension",
+      "questionRangeLabel": "Question 53",
+      "instructionsMarkdown": "Study the record carefully and then answer, in full sentences, the questions that follow.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q54",
+      "sectionRef": "sec_b",
+      "orderIndex": 13,
+      "title": "Picture Story",
+      "questionRangeLabel": "Question 54",
+      "instructionsMarkdown": "Study each picture carefully and then answer the questions that follow. Use the guide words where helpful.",
+      "displayMode": "boxed"
+    },
+    {
+      "ref": "ig_q55",
+      "sectionRef": "sec_b",
+      "orderIndex": 14,
+      "title": "Composition",
+      "questionRangeLabel": "Question 55",
+      "instructionsMarkdown": "Write a letter as instructed.",
+      "displayMode": "boxed"
+    }
+  ],
+  "contextBlocks": [
+    {
+      "ref": "cb_q51_passage",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q51",
+      "type": "passage",
+      "title": "Passage",
+      "contentText": "Lolo and Jemba were two great friends. They went to Mushanga Primary School. In this school, lunch was only for those whose parents had contributed towards their feeding.\n\nOne Friday afternoon, Jemba got so hungry that his stomach began making continuous long deep sounds. He hadn’t carried anything to eat while at school that day. Lolo heard the sounds that came from his friend’s stomach and sympathized with him.\n\n“Let’s go to the trading centre and buy something to eat,” he said with a smile. “I have got some money.”\n\n“Wow!” Jemba said. “I’ll give you a lift on my bicycle.”\n\nUnlike Jemba’s parents, the parents of Lolo, once in a while, at least gave their son some money. With this money, he could buy pancakes, buns and some juice to have as lunch. He often shared this so-called lunch with his best friend.\n\nWith Lolo sitting on the carrier, Jemba got on his bicycle and rode off. The speed at which he rode was very high. He was very excited. Besides, he wanted to get back to school in time for the afternoon lessons. It was a busy road and, as Jemba sped up, he kept ringing the bicycle bell. Unfortunately, he lost his balance and they both fell off the bicycle. Lolo suffered a leg injury while Jemba had a fractured hand.\n\nThey were lucky that some passers-by rushed them to a nearby clinic. They then rang their head teacher who immediately arrived at the clinic. She thanked the nurses for treating the boys. She then informed the boys’ parents about the accident.\n\nThree weeks later, after Lolo and Jemba had got better, they returned to school. The whole school was so pleased to see them. The head teacher, however, warned all pupils against leaving school without permission. She also held a meeting with all parents to discuss the issue of school meals. Today, all pupils have lunch at school. It is not surprising that their academic performance has greatly improved.",
+      "layoutHint": "shared-passage",
+      "sourceReference": "PLE English 2024 Uganda, Question 51"
+    },
+    {
+      "ref": "cb_q52_poem",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q52",
+      "type": "poem",
+      "title": "Poem",
+      "contentText": "But a terrible animal as well\nSleepless nights I spend\nAs I try to prepare for you.\nBefore I meet you,\nI’m briefed like a bride and a bridegroom\nSo as not to fear you\nBut to defeat you and get a good grade.\nOn your special day that I face you,\nI’m surrounded by strange men and women\nThey call them invigilators\nGiving out and collecting papers, their duty.\nWhen your results are out\nAnd success is on my side,\nI rejoice\nForgotten are the sleepless nights.",
+      "layoutHint": "shared-poem",
+      "sourceReference": "PLE English 2024 Uganda, Question 52"
+    },
+    {
+      "ref": "cb_q53_intro",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q53",
+      "type": "plainText",
+      "title": "Record Context",
+      "contentText": "Below is a record kept by a P.7 class monitor at Divine Junior School, Nalusaga. It shows the pupils in charge of cleaning the P.7 classroom each morning for one week, their supervisors, and the comments made each day. Study it carefully and then answer, in full sentences, the questions that follow.\n\nWEEK FIVE, TERM TWO (2024)",
+      "layoutHint": "shared-table-intro",
+      "sourceReference": "PLE English 2024 Uganda, Question 53"
+    },
+    {
+      "ref": "cb_q53_table",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q53",
+      "type": "table",
+      "title": "Week Five, Term Two (2024)",
+      "tableData": {
+        "caption": "WEEK FIVE, TERM TWO (2024)",
+        "headers": [
+          {
+            "key": "col_1",
+            "label": "Day"
+          },
+          {
+            "key": "col_2",
+            "label": "Pupils Responsible"
+          },
+          {
+            "key": "col_3",
+            "label": "Supervisor"
+          },
+          {
+            "key": "col_4",
+            "label": "Comment"
+          }
+        ],
+        "rows": [
+          {
+            "col_1": "Monday",
+            "col_2": "Mulumba Felix, Asio Mariam, Maiso Toni",
+            "col_3": "Acen Lisa",
+            "col_4": "Work well done!"
+          },
+          {
+            "col_1": "Tuesday",
+            "col_2": "Oketcho James, Mangara Richard, Auma Dora",
+            "col_3": "Tamale Fred",
+            "col_4": "Work incomplete. Part of the classroom not cleaned."
+          },
+          {
+            "col_1": "Wednesday",
+            "col_2": "Mafabi Leo, Apio Liz, Oyo Joseph",
+            "col_3": "Nassanga Esther",
+            "col_4": "Excellent work done!"
+          },
+          {
+            "col_1": "Thursday",
+            "col_2": "Sidia Sania, Akiasiina Noet, Bwambale Tito",
+            "col_3": "Musoke Edwin",
+            "col_4": "Classroom cleaned at break time."
+          },
+          {
+            "col_1": "Friday",
+            "col_2": "Candiru Joan, Chelimo Aziz, Abalo Phiona",
+            "col_3": "Edema Philip",
+            "col_4": "Cleaning not done. Zonal ball games."
+          }
+        ]
+      },
+      "layoutHint": "shared-table",
+      "sourceReference": "PLE English 2024 Uganda, Question 53"
+    },
+    {
+      "ref": "cb_q54_guide",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q54",
+      "type": "plainText",
+      "title": "Guide Words",
+      "contentText": "Pictures A – F tell a story. Study each picture carefully and then write one sentence to describe what is happening.\n\nGuide words: abducting, stopped, arrested, roadblock, leaving, kidnapping, driver, hugging, reporting, lift, forcing, police officers",
+      "layoutHint": "picture-story-guide",
+      "sourceReference": "PLE English 2024 Uganda, Question 54"
+    },
+    {
+      "ref": "cb_q54_story_image",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q54",
+      "type": "image",
+      "title": "Pictures A-F",
+      "mediaRefs": [
+        {
+          "mediaId": "ple-english-2024-q54-story",
+          "url": "/exam-assets/ple-english-2024/q54-story.png",
+          "altText": "PLE English 2024 Question 54 picture story panels A to F",
+          "caption": "Pictures A-F for Question 54"
+        }
+      ],
+      "layoutHint": "picture-story",
+      "sourceReference": "PLE English 2024 Uganda, Question 54"
+    },
+    {
+      "ref": "cb_q55_composition_prompt",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q55",
+      "type": "compositionPrompt",
+      "title": "Composition / Informal Letter",
+      "contentText": "Your school organised an educational tour to one of the national game parks in Uganda. Each pupil was asked to pay for it. Your uncle, who lives in Nairobi, Kenya, paid the money that was required. Write a letter to thank him. In your letter, give him more Information about the game park you visited and tell him what you leant while there.\nUse MUNA PRIMARY SCHOOL, PO BOX 44, MOLO as your address",
+      "layoutHint": "composition",
+      "sourceReference": "PLE English 2024 Uganda, Question 55"
+    }
+  ],
+  "items": [
+    {
+      "ref": "item_q1",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_5",
+      "orderIndex": 0,
+      "itemType": "singleBlank",
+      "stemMarkdown": "Rose crossed the road as __________ as it was clear.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 1"
+    },
+    {
+      "ref": "item_q2",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_5",
+      "orderIndex": 1,
+      "itemType": "singleBlank",
+      "stemMarkdown": "Adam is two years __________ than his little sister.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 2"
+    },
+    {
+      "ref": "item_q3",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_5",
+      "orderIndex": 2,
+      "itemType": "singleBlank",
+      "stemMarkdown": "The last bus leaves __________ Kampala at 12 noon.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 3"
+    },
+    {
+      "ref": "item_q4",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_5",
+      "orderIndex": 3,
+      "itemType": "singleBlank",
+      "stemMarkdown": "Kibisi looked smart after combing his __________.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 4"
+    },
+    {
+      "ref": "item_q5",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q1_5",
+      "orderIndex": 4,
+      "itemType": "singleBlank",
+      "stemMarkdown": "I __________ my prayers whenever I wake up in the morning.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 5"
+    },
+    {
+      "ref": "item_q6",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q6_15",
+      "orderIndex": 5,
+      "itemType": "singleBlank",
+      "stemMarkdown": "Anne is the __________ of the two girls. (fast)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 6"
+    },
+    {
+      "ref": "item_q7",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q6_15",
+      "orderIndex": 6,
+      "itemType": "singleBlank",
+      "stemMarkdown": "The big mangoes Aisha bought were sweet and __________. (juice)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 7"
+    },
+    {
+      "ref": "item_q8",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q6_15",
+      "orderIndex": 7,
+      "itemType": "singleBlank",
+      "stemMarkdown": "I was glad to hear that the visitors arrived home __________. (safe)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 8"
+    },
+    {
+      "ref": "item_q9",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q6_15",
+      "orderIndex": 8,
+      "itemType": "singleBlank",
+      "stemMarkdown": "Obe could not hide his __________ when he was elected head boy. (happy)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 9"
+    },
+    {
+      "ref": "item_q10",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q6_15",
+      "orderIndex": 9,
+      "itemType": "singleBlank",
+      "stemMarkdown": "Does Jojo enjoy going out on __________ days? (rain)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 10"
+    },
+    {
+      "ref": "item_q11",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q6_15",
+      "orderIndex": 10,
+      "itemType": "singleBlank",
+      "stemMarkdown": "We have been __________ English since Primary One. (learn)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 11"
+    },
+    {
+      "ref": "item_q12",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q6_15",
+      "orderIndex": 11,
+      "itemType": "singleBlank",
+      "stemMarkdown": "A friend of __________ won a prize during the spelling bee. (my)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 12"
+    },
+    {
+      "ref": "item_q13",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q6_15",
+      "orderIndex": 12,
+      "itemType": "singleBlank",
+      "stemMarkdown": "Dr. Aleper encouraged us to start our __________ early enough so as to perform well. (revise)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 13"
+    },
+    {
+      "ref": "item_q14",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q6_15",
+      "orderIndex": 13,
+      "itemType": "singleBlank",
+      "stemMarkdown": "Gimbo was __________ by mosquitoes because she did not sleep under a treated mosquito net. (bite)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 14"
+    },
+    {
+      "ref": "item_q15",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q6_15",
+      "orderIndex": 14,
+      "itemType": "singleBlank",
+      "stemMarkdown": "One of the __________ has been sold to the farmer. (puppy)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 15"
+    },
+    {
+      "ref": "item_q16",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q16_17",
+      "orderIndex": 15,
+      "itemType": "singleBlank",
+      "stemMarkdown": "Write the short form kg in full.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 16"
+    },
+    {
+      "ref": "item_q17",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q16_17",
+      "orderIndex": 16,
+      "itemType": "singleBlank",
+      "stemMarkdown": "Write the short form they’ve in full.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 17"
+    },
+    {
+      "ref": "item_q18",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q18_19",
+      "orderIndex": 17,
+      "itemType": "ordering",
+      "stemMarkdown": "Arrange the following words in alphabetical order: plank, nail, saw, hammer.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 18"
+    },
+    {
+      "ref": "item_q19",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q18_19",
+      "orderIndex": 18,
+      "itemType": "ordering",
+      "stemMarkdown": "Arrange the following words in alphabetical order: eye, nose, ear, neck.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 19"
+    },
+    {
+      "ref": "item_q20",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q20_21",
+      "orderIndex": 19,
+      "itemType": "rewrite",
+      "stemMarkdown": "Rewrite the sentence giving the opposite of the underlined word: Mary forgot to turn off the TV last night.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 20"
+    },
+    {
+      "ref": "item_q21",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q20_21",
+      "orderIndex": 20,
+      "itemType": "rewrite",
+      "stemMarkdown": "Rewrite the sentence giving the opposite of the underlined word: Some foreign tourists like carrying light bags.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 21"
+    },
+    {
+      "ref": "item_q22",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q22_23",
+      "orderIndex": 21,
+      "itemType": "rewrite",
+      "stemMarkdown": "Rearrange the words to form a correct sentence: strangers gifts never from accept.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 22"
+    },
+    {
+      "ref": "item_q23",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q22_23",
+      "orderIndex": 22,
+      "itemType": "rewrite",
+      "stemMarkdown": "Rearrange the words to form a correct sentence: which is class in cousin your?",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 23"
+    },
+    {
+      "ref": "item_q24",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q24_25",
+      "orderIndex": 23,
+      "itemType": "rewrite",
+      "stemMarkdown": "Give the plural of the given word: ox",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 24"
+    },
+    {
+      "ref": "item_q25",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q24_25",
+      "orderIndex": 24,
+      "itemType": "rewrite",
+      "stemMarkdown": "Give the plural of the given word: secretary",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 25"
+    },
+    {
+      "ref": "item_q26",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q26_27",
+      "orderIndex": 25,
+      "itemType": "rewrite",
+      "stemMarkdown": "Rewrite the sentence giving one word for the underlined group of words: Eating too much sugar can lead to health problems.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 26"
+    },
+    {
+      "ref": "item_q27",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q26_27",
+      "orderIndex": 26,
+      "itemType": "rewrite",
+      "stemMarkdown": "Rewrite the sentence giving one word for the underlined group of words: My mother visits the dentist two times a year.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 27"
+    },
+    {
+      "ref": "item_q28",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q28_30",
+      "orderIndex": 27,
+      "itemType": "rewrite",
+      "stemMarkdown": "Rewrite the sentence giving one word for the underlined group of words: When Mr. Byaruhanga entered the restaurant, the waitress gave him a list of food available.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 28"
+    },
+    {
+      "ref": "item_q29",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q28_30",
+      "orderIndex": 28,
+      "itemType": "shortText",
+      "stemMarkdown": "Use the word air in a sentence to show that you know the difference in its meaning.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 29"
+    },
+    {
+      "ref": "item_q30",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q28_30",
+      "orderIndex": 29,
+      "itemType": "shortText",
+      "stemMarkdown": "Use the word heir in a sentence to show that you know the difference in its meaning.",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 30"
+    },
+    {
+      "ref": "item_q31",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 30,
+      "itemType": "rewrite",
+      "stemMarkdown": "Turkeys are bigger than cocks. (Rewrite the sentence using: ... as ... as ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 31"
+    },
+    {
+      "ref": "item_q32",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 31,
+      "itemType": "rewrite",
+      "stemMarkdown": "The bride sent us a cake. Her wedding took place last weekend. (Rewrite as one sentence using: whose)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 32"
+    },
+    {
+      "ref": "item_q33",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 32,
+      "itemType": "rewrite",
+      "stemMarkdown": "No sooner had the rain begun than the lesson stopped. (Rewrite the sentence using: immediately)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 33"
+    },
+    {
+      "ref": "item_q34",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 33,
+      "itemType": "rewrite",
+      "stemMarkdown": "Aunt Sandra made a shopping list before we went to the market. (Rewrite the sentence using: ... after ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 34"
+    },
+    {
+      "ref": "item_q35",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 34,
+      "itemType": "rewrite",
+      "stemMarkdown": "The children preferred swimming to jogging. (Rewrite the sentence using: ... than ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 35"
+    },
+    {
+      "ref": "item_q36",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 35,
+      "itemType": "rewrite",
+      "stemMarkdown": "It is our responsibility to keep our classrooms tidy. (Rewrite the sentence using: ... responsible ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 36"
+    },
+    {
+      "ref": "item_q37",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 36,
+      "itemType": "rewrite",
+      "stemMarkdown": "Nicholas was washing the car. His sister was preparing breakfast. (Rewrite as one sentence beginning: While ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 37"
+    },
+    {
+      "ref": "item_q38",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 37,
+      "itemType": "rewrite",
+      "stemMarkdown": "Mbowa will not travel by bus. Mbowa will not travel by taxi. (Rewrite as one sentence using: ... neither ... nor ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 38"
+    },
+    {
+      "ref": "item_q39",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 38,
+      "itemType": "rewrite",
+      "stemMarkdown": "The teacher asked Nambuya why she had missed lessons the previous day. (Rewrite the sentence ending: ... ?\" the teacher asked Nambuya.)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 39"
+    },
+    {
+      "ref": "item_q40",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 39,
+      "itemType": "rewrite",
+      "stemMarkdown": "The tailor used a pair of scissors to cut the cloth. (Rewrite the sentence beginning: The tailor cut ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 40"
+    },
+    {
+      "ref": "item_q41",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 40,
+      "itemType": "rewrite",
+      "stemMarkdown": "Shakirah did not post the letters. (Rewrite the sentence ending: ... by Shakirah.)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 41"
+    },
+    {
+      "ref": "item_q42",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 41,
+      "itemType": "rewrite",
+      "stemMarkdown": "I have not been to the market for two months. (Rewrite the sentence ending: ... ago.)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 42"
+    },
+    {
+      "ref": "item_q43",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 42,
+      "itemType": "rewrite",
+      "stemMarkdown": "Our players were very tired. They could not walk back to school. (Rewrite as one sentence using: ... too ... to ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 43"
+    },
+    {
+      "ref": "item_q44",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 43,
+      "itemType": "rewrite",
+      "stemMarkdown": "Kapere is a very rich man. Kapere does not have a car. (Rewrite as one sentence beginning: Although ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 44"
+    },
+    {
+      "ref": "item_q45",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 44,
+      "itemType": "rewrite",
+      "stemMarkdown": "Mrs. Odeke paid fifteen thousand shillings for a kilo of meat. (Rewrite the sentence using: ... spent ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 45"
+    },
+    {
+      "ref": "item_q46",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 45,
+      "itemType": "rewrite",
+      "stemMarkdown": "She hooted at the cyclist so as to save his life. (Rewrite the sentence beginning: In order to ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 46"
+    },
+    {
+      "ref": "item_q47",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 46,
+      "itemType": "rewrite",
+      "stemMarkdown": "You must tuck in your shirt or else you won’t look smart. (Rewrite the sentence beginning: If ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 47"
+    },
+    {
+      "ref": "item_q48",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 47,
+      "itemType": "rewrite",
+      "stemMarkdown": "Aida did not receive any money from her guardian, did she? (Rewrite the sentence ending: ... didn't she?)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 48"
+    },
+    {
+      "ref": "item_q49",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 48,
+      "itemType": "rewrite",
+      "stemMarkdown": "A radio is a useful source of information and so is a television. (Rewrite the sentence beginning: Both ...)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 49"
+    },
+    {
+      "ref": "item_q50",
+      "sectionRef": "sec_a",
+      "instructionGroupRef": "ig_q31_50",
+      "orderIndex": 49,
+      "itemType": "rewrite",
+      "stemMarkdown": "The boy who won the race is our relative. (Rewrite the sentence ending: ... to us.)",
+      "marksTotal": 1,
+      "layoutMode": "single",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 50"
+    },
+    {
+      "ref": "item_q51",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q51",
+      "orderIndex": 50,
+      "itemType": "passageComprehension",
+      "stemMarkdown": "Read the passage below and then answer, in full sentences, the questions that follow.",
+      "marksTotal": 10,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 51",
+      "contextBlockRefs": [
+        "cb_q51_passage"
+      ]
+    },
+    {
+      "ref": "item_q52",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q52",
+      "orderIndex": 51,
+      "itemType": "poemComprehension",
+      "stemMarkdown": "Read the poem below and then answer, in full sentences, the questions that follow.",
+      "marksTotal": 10,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 52",
+      "contextBlockRefs": [
+        "cb_q52_poem"
+      ]
+    },
+    {
+      "ref": "item_q53",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q53",
+      "orderIndex": 52,
+      "itemType": "tableCompletion",
+      "stemMarkdown": "Study the record carefully and then answer, in full sentences, the questions that follow.",
+      "marksTotal": 10,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 53",
+      "contextBlockRefs": [
+        "cb_q53_intro",
+        "cb_q53_table"
+      ]
+    },
+    {
+      "ref": "item_q54",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q54",
+      "orderIndex": 53,
+      "itemType": "pictureStory",
+      "stemMarkdown": "Pictures A–F tell a story. Study each picture carefully and then write one sentence to describe what is happening.",
+      "marksTotal": 10,
+      "layoutMode": "multiPart",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 54",
+      "contextBlockRefs": [
+        "cb_q54_guide",
+        "cb_q54_story_image"
+      ]
+    },
+    {
+      "ref": "item_q55",
+      "sectionRef": "sec_b",
+      "instructionGroupRef": "ig_q55",
+      "orderIndex": 54,
+      "itemType": "composition",
+      "stemMarkdown": "Write your letter in the answer space provided.",
+      "marksTotal": 10,
+      "layoutMode": "composition",
+      "status": "draft",
+      "sourceReference": "PLE English 2024 Uganda, Question 55",
+      "contextBlockRefs": [
+        "cb_q55_composition_prompt"
+      ]
+    }
+  ],
+  "interactions": [
+    {
+      "ref": "int_q1",
+      "itemRef": "item_q1",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q1"
+    },
+    {
+      "ref": "int_q2",
+      "itemRef": "item_q2",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q2"
+    },
+    {
+      "ref": "int_q3",
+      "itemRef": "item_q3",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q3"
+    },
+    {
+      "ref": "int_q4",
+      "itemRef": "item_q4",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q4"
+    },
+    {
+      "ref": "int_q5",
+      "itemRef": "item_q5",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q5"
+    },
+    {
+      "ref": "int_q6",
+      "itemRef": "item_q6",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q6"
+    },
+    {
+      "ref": "int_q7",
+      "itemRef": "item_q7",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q7"
+    },
+    {
+      "ref": "int_q8",
+      "itemRef": "item_q8",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q8"
+    },
+    {
+      "ref": "int_q9",
+      "itemRef": "item_q9",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q9"
+    },
+    {
+      "ref": "int_q10",
+      "itemRef": "item_q10",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q10"
+    },
+    {
+      "ref": "int_q11",
+      "itemRef": "item_q11",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q11"
+    },
+    {
+      "ref": "int_q12",
+      "itemRef": "item_q12",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q12"
+    },
+    {
+      "ref": "int_q13",
+      "itemRef": "item_q13",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q13"
+    },
+    {
+      "ref": "int_q14",
+      "itemRef": "item_q14",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q14"
+    },
+    {
+      "ref": "int_q15",
+      "itemRef": "item_q15",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q15"
+    },
+    {
+      "ref": "int_q16",
+      "itemRef": "item_q16",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q16"
+    },
+    {
+      "ref": "int_q17",
+      "itemRef": "item_q17",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q17"
+    },
+    {
+      "ref": "int_q18",
+      "itemRef": "item_q18",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q18"
+    },
+    {
+      "ref": "int_q19",
+      "itemRef": "item_q19",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q19"
+    },
+    {
+      "ref": "int_q20",
+      "itemRef": "item_q20",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q20"
+    },
+    {
+      "ref": "int_q21",
+      "itemRef": "item_q21",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q21"
+    },
+    {
+      "ref": "int_q22",
+      "itemRef": "item_q22",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q22"
+    },
+    {
+      "ref": "int_q23",
+      "itemRef": "item_q23",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q23"
+    },
+    {
+      "ref": "int_q24",
+      "itemRef": "item_q24",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q24"
+    },
+    {
+      "ref": "int_q25",
+      "itemRef": "item_q25",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q25"
+    },
+    {
+      "ref": "int_q26",
+      "itemRef": "item_q26",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q26"
+    },
+    {
+      "ref": "int_q27",
+      "itemRef": "item_q27",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q27"
+    },
+    {
+      "ref": "int_q28",
+      "itemRef": "item_q28",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textShort",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": false,
+      "markingRuleRef": "mr_int_q28"
+    },
+    {
+      "ref": "int_q29",
+      "itemRef": "item_q29",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q29"
+    },
+    {
+      "ref": "int_q30",
+      "itemRef": "item_q30",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q30"
+    },
+    {
+      "ref": "int_q31",
+      "itemRef": "item_q31",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q31"
+    },
+    {
+      "ref": "int_q32",
+      "itemRef": "item_q32",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q32"
+    },
+    {
+      "ref": "int_q33",
+      "itemRef": "item_q33",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q33"
+    },
+    {
+      "ref": "int_q34",
+      "itemRef": "item_q34",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q34"
+    },
+    {
+      "ref": "int_q35",
+      "itemRef": "item_q35",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q35"
+    },
+    {
+      "ref": "int_q36",
+      "itemRef": "item_q36",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q36"
+    },
+    {
+      "ref": "int_q37",
+      "itemRef": "item_q37",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q37"
+    },
+    {
+      "ref": "int_q38",
+      "itemRef": "item_q38",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q38"
+    },
+    {
+      "ref": "int_q39",
+      "itemRef": "item_q39",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q39"
+    },
+    {
+      "ref": "int_q40",
+      "itemRef": "item_q40",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q40"
+    },
+    {
+      "ref": "int_q41",
+      "itemRef": "item_q41",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q41"
+    },
+    {
+      "ref": "int_q42",
+      "itemRef": "item_q42",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q42"
+    },
+    {
+      "ref": "int_q43",
+      "itemRef": "item_q43",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q43"
+    },
+    {
+      "ref": "int_q44",
+      "itemRef": "item_q44",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q44"
+    },
+    {
+      "ref": "int_q45",
+      "itemRef": "item_q45",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q45"
+    },
+    {
+      "ref": "int_q46",
+      "itemRef": "item_q46",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q46"
+    },
+    {
+      "ref": "int_q47",
+      "itemRef": "item_q47",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q47"
+    },
+    {
+      "ref": "int_q48",
+      "itemRef": "item_q48",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q48"
+    },
+    {
+      "ref": "int_q49",
+      "itemRef": "item_q49",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q49"
+    },
+    {
+      "ref": "int_q50",
+      "itemRef": "item_q50",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q50"
+    },
+    {
+      "ref": "int_q51_a",
+      "itemRef": "item_q51",
+      "orderIndex": 0,
+      "label": "(a)",
+      "promptMarkdown": "To which school did the two great friends go?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q51_a"
+    },
+    {
+      "ref": "int_q51_b",
+      "itemRef": "item_q51",
+      "orderIndex": 1,
+      "label": "(b)",
+      "promptMarkdown": "Why wasn’t there lunch for Lolo and Jemba in this school?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q51_b"
+    },
+    {
+      "ref": "int_q51_c",
+      "itemRef": "item_q51",
+      "orderIndex": 2,
+      "label": "(c)",
+      "promptMarkdown": "What could Lolo do with the money that his parents sometimes gave him?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q51_c"
+    },
+    {
+      "ref": "int_q51_d",
+      "itemRef": "item_q51",
+      "orderIndex": 3,
+      "label": "(d)",
+      "promptMarkdown": "Why did Jemba ride at a very high speed?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q51_d"
+    },
+    {
+      "ref": "int_q51_e",
+      "itemRef": "item_q51",
+      "orderIndex": 4,
+      "label": "(e)",
+      "promptMarkdown": "Why did Jemba ring the bicycle bell as he sped up?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q51_e"
+    },
+    {
+      "ref": "int_q51_f",
+      "itemRef": "item_q51",
+      "orderIndex": 5,
+      "label": "(f)",
+      "promptMarkdown": "What led to the accident, according to the passage?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q51_f"
+    },
+    {
+      "ref": "int_q51_g",
+      "itemRef": "item_q51",
+      "orderIndex": 6,
+      "label": "(g)",
+      "promptMarkdown": "What did the head teacher do immediately she arrived at the clinic?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q51_g"
+    },
+    {
+      "ref": "int_q51_h",
+      "itemRef": "item_q51",
+      "orderIndex": 7,
+      "label": "(h)",
+      "promptMarkdown": "For how long did the two friends stay away from school?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q51_h"
+    },
+    {
+      "ref": "int_q51_i",
+      "itemRef": "item_q51",
+      "orderIndex": 8,
+      "label": "(i)",
+      "promptMarkdown": "Why did the academic performance of the pupils in this school greatly improve?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q51_i"
+    },
+    {
+      "ref": "int_q51_j",
+      "itemRef": "item_q51",
+      "orderIndex": 9,
+      "label": "(j)",
+      "promptMarkdown": "Suggest a suitable title to the passage.",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q51_j"
+    },
+    {
+      "ref": "int_q52_a",
+      "itemRef": "item_q52",
+      "orderIndex": 0,
+      "label": "(a)",
+      "promptMarkdown": "What is the poem about?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q52_a"
+    },
+    {
+      "ref": "int_q52_b",
+      "itemRef": "item_q52",
+      "orderIndex": 1,
+      "label": "(b)",
+      "promptMarkdown": "Why does the speaker spend sleepless nights?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q52_b"
+    },
+    {
+      "ref": "int_q52_c",
+      "itemRef": "item_q52",
+      "orderIndex": 2,
+      "label": "(c)",
+      "promptMarkdown": "What happens before the speaker meets examination?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q52_c"
+    },
+    {
+      "ref": "int_q52_d",
+      "itemRef": "item_q52",
+      "orderIndex": 3,
+      "label": "(d)",
+      "promptMarkdown": "Why should the speaker defeat examination?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q52_d"
+    },
+    {
+      "ref": "int_q52_e",
+      "itemRef": "item_q52",
+      "orderIndex": 4,
+      "label": "(e)",
+      "promptMarkdown": "Why does the speaker refer to invigilators as strange men and women?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q52_e"
+    },
+    {
+      "ref": "int_q52_f",
+      "itemRef": "item_q52",
+      "orderIndex": 5,
+      "label": "(f)",
+      "promptMarkdown": "What is the duty of the strange men and women?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q52_f"
+    },
+    {
+      "ref": "int_q52_g",
+      "itemRef": "item_q52",
+      "orderIndex": 6,
+      "label": "(g)",
+      "promptMarkdown": "When does the speaker rejoice?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q52_g"
+    },
+    {
+      "ref": "int_q52_h",
+      "itemRef": "item_q52",
+      "orderIndex": 7,
+      "label": "(h)",
+      "promptMarkdown": "What does the speaker forget?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q52_h"
+    },
+    {
+      "ref": "int_q52_i_i_",
+      "itemRef": "item_q52",
+      "orderIndex": 8,
+      "label": "(i(i))",
+      "promptMarkdown": "Give another word or group of words with the same meaning as terrible.",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q52_i_i_"
+    },
+    {
+      "ref": "int_q52_i_ii_",
+      "itemRef": "item_q52",
+      "orderIndex": 9,
+      "label": "(i(ii))",
+      "promptMarkdown": "Give another word or group of words with the same meaning as duty.",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q52_i_ii_"
+    },
+    {
+      "ref": "int_q53_a",
+      "itemRef": "item_q53",
+      "orderIndex": 0,
+      "label": "(a)",
+      "promptMarkdown": "Who kept the above record?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q53_a"
+    },
+    {
+      "ref": "int_q53_b",
+      "itemRef": "item_q53",
+      "orderIndex": 1,
+      "label": "(b)",
+      "promptMarkdown": "When was the above record taken?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q53_b"
+    },
+    {
+      "ref": "int_q53_c",
+      "itemRef": "item_q53",
+      "orderIndex": 2,
+      "label": "(c)",
+      "promptMarkdown": "How many pupils were in charge of cleaning the classroom each day?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q53_c"
+    },
+    {
+      "ref": "int_q53_d",
+      "itemRef": "item_q53",
+      "orderIndex": 3,
+      "label": "(d)",
+      "promptMarkdown": "Why was work considered incomplete on Tuesday?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q53_d"
+    },
+    {
+      "ref": "int_q53_e",
+      "itemRef": "item_q53",
+      "orderIndex": 4,
+      "label": "(e)",
+      "promptMarkdown": "How many people supervised the cleaning of the classroom that week?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q53_e"
+    },
+    {
+      "ref": "int_q53_f",
+      "itemRef": "item_q53",
+      "orderIndex": 5,
+      "label": "(f)",
+      "promptMarkdown": "On which day was excellent work done?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q53_f"
+    },
+    {
+      "ref": "int_q53_g",
+      "itemRef": "item_q53",
+      "orderIndex": 6,
+      "label": "(g)",
+      "promptMarkdown": "Which pupils cleaned the classroom at break time?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q53_g"
+    },
+    {
+      "ref": "int_q53_h",
+      "itemRef": "item_q53",
+      "orderIndex": 7,
+      "label": "(h)",
+      "promptMarkdown": "Why wasn’t the classroom cleaned on Friday?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q53_h"
+    },
+    {
+      "ref": "int_q53_i",
+      "itemRef": "item_q53",
+      "orderIndex": 8,
+      "label": "(i)",
+      "promptMarkdown": "What was the role of Acen Lisa, according to the record above?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q53_i"
+    },
+    {
+      "ref": "int_q53_j",
+      "itemRef": "item_q53",
+      "orderIndex": 9,
+      "label": "(j)",
+      "promptMarkdown": "Why would you encourage your class monitor to keep such a record?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q53_j"
+    },
+    {
+      "ref": "int_q54_a",
+      "itemRef": "item_q54",
+      "orderIndex": 0,
+      "label": "(a)",
+      "promptMarkdown": "Write one sentence to describe what is happening.",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q54_a"
+    },
+    {
+      "ref": "int_q54_b",
+      "itemRef": "item_q54",
+      "orderIndex": 1,
+      "label": "(b)",
+      "promptMarkdown": "Write one sentence to describe what is happening.",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q54_b"
+    },
+    {
+      "ref": "int_q54_c",
+      "itemRef": "item_q54",
+      "orderIndex": 2,
+      "label": "(c)",
+      "promptMarkdown": "Write one sentence to describe what is happening.",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q54_c"
+    },
+    {
+      "ref": "int_q54_d",
+      "itemRef": "item_q54",
+      "orderIndex": 3,
+      "label": "(d)",
+      "promptMarkdown": "Write one sentence to describe what is happening.",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q54_d"
+    },
+    {
+      "ref": "int_q54_e",
+      "itemRef": "item_q54",
+      "orderIndex": 4,
+      "label": "(e)",
+      "promptMarkdown": "Write one sentence to describe what is happening.",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q54_e"
+    },
+    {
+      "ref": "int_q54_f",
+      "itemRef": "item_q54",
+      "orderIndex": 5,
+      "label": "(f)",
+      "promptMarkdown": "Write one sentence to describe what is happening.",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q54_f"
+    },
+    {
+      "ref": "int_q54_g",
+      "itemRef": "item_q54",
+      "orderIndex": 6,
+      "label": "(g)",
+      "promptMarkdown": "What shows that the girls are happy in Picture F?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q54_g"
+    },
+    {
+      "ref": "int_q54_h",
+      "itemRef": "item_q54",
+      "orderIndex": 7,
+      "label": "(h)",
+      "promptMarkdown": "What is likely to happen to the two men after Picture F?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q54_h"
+    },
+    {
+      "ref": "int_q54_i",
+      "itemRef": "item_q54",
+      "orderIndex": 8,
+      "label": "(i)",
+      "promptMarkdown": "What lesson does this story teach you?",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q54_i"
+    },
+    {
+      "ref": "int_q54_j",
+      "itemRef": "item_q54",
+      "orderIndex": 9,
+      "label": "(j)",
+      "promptMarkdown": "Suggest a suitable title for the story.",
+      "responseMode": "textLong",
+      "marks": 1,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q54_j"
+    },
+    {
+      "ref": "int_q55",
+      "itemRef": "item_q55",
+      "orderIndex": 0,
+      "promptMarkdown": "",
+      "responseMode": "textarea",
+      "marks": 10,
+      "required": true,
+      "manualReviewDefault": true,
+      "markingRuleRef": "mr_int_q55"
+    }
+  ],
+  "markingRules": [
+    {
+      "ref": "mr_int_q1",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "soon",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q2",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "older",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q3",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "for",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q4",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "hair",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q5",
+      "markingMode": "alternativeAnswers",
+      "manualReviewRequired": false,
+      "exactAnswer": "say",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check exact answer plus safe accepted aliases from the recovered answer source.",
+      "acceptedAnswers": [
+        "say",
+        "recite"
+      ],
+      "alternativeAnswers": [
+        "recite"
+      ]
+    },
+    {
+      "ref": "mr_int_q6",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "faster",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q7",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "juicy",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q8",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "safely",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q9",
+      "markingMode": "alternativeAnswers",
+      "manualReviewRequired": false,
+      "exactAnswer": "happiness",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check exact answer plus safe accepted aliases from the recovered answer source.",
+      "acceptedAnswers": [
+        "happiness",
+        "joy (contextual)",
+        "excitement"
+      ],
+      "alternativeAnswers": [
+        "joy (contextual)",
+        "excitement"
+      ]
+    },
+    {
+      "ref": "mr_int_q10",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "rainy",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q11",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "learning",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q12",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "mine",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q13",
+      "markingMode": "alternativeAnswers",
+      "manualReviewRequired": false,
+      "exactAnswer": "revision",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check exact answer plus safe accepted aliases from the recovered answer source.",
+      "acceptedAnswers": [
+        "revision",
+        "studies (not from given word)"
+      ],
+      "alternativeAnswers": [
+        "studies (not from given word)"
+      ]
+    },
+    {
+      "ref": "mr_int_q14",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "bitten",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q15",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "puppies",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q16",
+      "markingMode": "alternativeAnswers",
+      "manualReviewRequired": false,
+      "exactAnswer": "kilogram",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check exact answer plus safe accepted aliases from the recovered answer source.",
+      "acceptedAnswers": [
+        "kilogram",
+        "kilogramme (older spelling)"
+      ],
+      "alternativeAnswers": [
+        "kilogramme (older spelling)"
+      ]
+    },
+    {
+      "ref": "mr_int_q17",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "they have",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q18",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "hammer, nail, plank, saw",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q19",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "ear, eye, neck, nose",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q20",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "Mary remembered to turn off the TV last night.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q21",
+      "markingMode": "alternativeAnswers",
+      "manualReviewRequired": false,
+      "exactAnswer": "Some foreign tourists like carrying heavy bags.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check exact answer plus safe accepted aliases from the recovered answer source.",
+      "acceptedAnswers": [
+        "Some foreign tourists like carrying heavy bags.",
+        "weighty bags (less natural)"
+      ],
+      "alternativeAnswers": [
+        "weighty bags (less natural)"
+      ]
+    },
+    {
+      "ref": "mr_int_q22",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "Never accept gifts from strangers.",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q23",
+      "markingMode": "alternativeAnswers",
+      "manualReviewRequired": false,
+      "exactAnswer": "Which class is your cousin in?",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check exact answer plus safe accepted aliases from the recovered answer source.",
+      "acceptedAnswers": [
+        "Which class is your cousin in?",
+        "Your cousin is in which class? (less natural in school grammar context)"
+      ],
+      "alternativeAnswers": [
+        "Your cousin is in which class? (less natural in school grammar context)"
+      ]
+    },
+    {
+      "ref": "mr_int_q24",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "oxen",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q25",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "secretaries",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q26",
+      "markingMode": "alternativeAnswers",
+      "manualReviewRequired": false,
+      "exactAnswer": "cause",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check exact answer plus safe accepted aliases from the recovered answer source.",
+      "acceptedAnswers": [
+        "cause",
+        "bring about",
+        "result in (but only one word is required)"
+      ],
+      "alternativeAnswers": [
+        "bring about",
+        "result in (but only one word is required)"
+      ]
+    },
+    {
+      "ref": "mr_int_q27",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "twice",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q28",
+      "markingMode": "exactMatch",
+      "manualReviewRequired": false,
+      "exactAnswer": "menu",
+      "normalizedMatchConfig": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true
+      },
+      "normalizationProfile": {
+        "caseSensitive": false,
+        "trimWhitespace": true,
+        "ignorePunctuation": true,
+        "normalizeSpaces": true,
+        "normalizeNumeric": true,
+        "allowUnitOmission": false
+      },
+      "notes": "Auto-check normalized exact answer from the recovered answer source."
+    },
+    {
+      "ref": "mr_int_q29",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q30",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q31",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q32",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q33",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q34",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q35",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q36",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q37",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q38",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q39",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q40",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q41",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q42",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q43",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q44",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q45",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q46",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q47",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q48",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q49",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q50",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q51_a",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q51_b",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q51_c",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q51_d",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q51_e",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q51_f",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q51_g",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q51_h",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q51_i",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q51_j",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q52_a",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q52_b",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q52_c",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q52_d",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q52_e",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q52_f",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q52_g",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q52_h",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q52_i_i_",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q52_i_ii_",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q53_a",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q53_b",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q53_c",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q53_d",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q53_e",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q53_f",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q53_g",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q53_h",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q53_i",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q53_j",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q54_a",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q54_b",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q54_c",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q54_d",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q54_e",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q54_f",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q54_g",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q54_h",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q54_i",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q54_j",
+      "markingMode": "manualReviewRequired",
+      "manualReviewRequired": true,
+      "notes": "Manual review required because English phrasing may vary and safe automation would be too strict."
+    },
+    {
+      "ref": "mr_int_q55",
+      "markingMode": "rubricBasedManualReview",
+      "manualReviewRequired": true,
+      "notes": "Manual review required for composition content, format, grammar, organization, and relevance."
+    }
+  ],
+  "modelAnswerVersions": [
+    {
+      "ref": "mav_int_q1",
+      "itemRef": "item_q1",
+      "interactionRef": "int_q1",
+      "versionNumber": 1,
+      "approvedAnswer": "soon",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: Let’s read this carefully. “Rose crossed the road as ___ as it was clear.” What structure do you see? Student: “as … as” Tutor: Good. Now this structure is often used with time expressions. What is the full idea here? Student: She crossed when it became clear. Tutor: Exactly. So we need a word that means “immediately after.” What fits? Student: soon. Tutor: Yes. “as soon as it was clear” means she did not delay at all. Tutor: Why not “quickly”? Student: Because it doesn’t fit the structure. Tutor: Correct. The correct expression is as soon as.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q2",
+      "itemRef": "item_q2",
+      "interactionRef": "int_q2",
+      "versionNumber": 1,
+      "approvedAnswer": "older",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: This sentence is comparing Adam and his sister. What word tells you that? Student: “than” Tutor: Exactly. “Than” signals comparison. So what form do we need? Student: A comparative form. Tutor: Correct. Now we have two choices many students confuse: “older” and “elder.” Which one works with “than”? Student: older. Tutor: Right. “Older than” is correct. “Elder” is usually used without “than,” for example: “my elder brother.” Tutor: So the correct answer is older.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q3",
+      "itemRef": "item_q3",
+      "interactionRef": "int_q3",
+      "versionNumber": 1,
+      "approvedAnswer": "for",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: Let’s think about direction. Is the bus going to Kampala or leaving Kampala? Student: It is going to Kampala. Tutor: Good. When something is going towards a place, which preposition do we use with “leave”? Student: for? Tutor: Exactly. We say “leaves for Kampala.” Tutor: What would “leaves Kampala” mean? Student: That it is leaving from Kampala. Tutor: Correct. So to show destination, we use for.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q4",
+      "itemRef": "item_q4",
+      "interactionRef": "int_q4",
+      "versionNumber": 1,
+      "approvedAnswer": "hair",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: Let’s picture the situation. What makes someone look neat or smart? Student: Being well dressed? Tutor: Yes, and also grooming. What do we comb? Student: Hair. Tutor: Correct. Now think—can we say “combing his hairs”? Student: No. Tutor: Right. “Hair” is uncountable in this context. So the correct answer is hair.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q5",
+      "itemRef": "item_q5",
+      "interactionRef": "int_q5",
+      "versionNumber": 1,
+      "approvedAnswer": "say",
+      "acceptableAlternatives": [
+        "recite"
+      ],
+      "explanation": "Tutor: What is the natural expression we use with prayers? Student: We pray? Tutor: Yes, but look at the sentence: “I ___ my prayers.” What verb fits that structure? Student: say? Tutor: Correct. We say “say my prayers.” Tutor: Could “recite” also work? Student: Yes. Tutor: Good. But the most common and expected answer is say.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q6",
+      "itemRef": "item_q6",
+      "interactionRef": "int_q6",
+      "versionNumber": 1,
+      "approvedAnswer": "faster",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: We are comparing two girls. When we compare two things, what form do we use? Student: Comparative. Tutor: Exactly. Now the word given is “fast.” What is the comparative form? Student: faster. Tutor: Correct. Now here is the tricky part—some students may think “fastest.” Why is that wrong? Student: Because that is for more than two. Tutor: Well done. Since there are only two girls, the correct answer is faster.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q7",
+      "itemRef": "item_q7",
+      "interactionRef": "int_q7",
+      "versionNumber": 1,
+      "approvedAnswer": "juicy",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: The sentence describes mangoes. What type of word do we need after “sweet and”? Student: An adjective. Tutor: Correct. Now “juice” is a noun. What is its adjective form? Student: juicy. Tutor: Exactly. “Sweet and juicy” describes the mangoes. Tutor: Always check the form of the word needed in the sentence.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q8",
+      "itemRef": "item_q8",
+      "interactionRef": "int_q8",
+      "versionNumber": 1,
+      "approvedAnswer": "safely",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: This sentence tells us how the visitors arrived. What type of word describes “how” something happens? Student: An adverb. Tutor: Correct. Now “safe” is an adjective. What is the adverb form? Student: safely. Tutor: Exactly. So we say “arrived home safely.” Tutor: A common mistake is writing “safe,” but that is not correct here.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q9",
+      "itemRef": "item_q9",
+      "interactionRef": "int_q9",
+      "versionNumber": 1,
+      "approvedAnswer": "happiness",
+      "acceptableAlternatives": [
+        "joy (contextual)",
+        "excitement"
+      ],
+      "explanation": "Tutor: Look at the structure: “could not hide his ___.” What type of word is needed? Student: A noun. Tutor: Correct. Now the given word is “happy,” which is an adjective. What is the noun form? Student: happiness. Tutor: Exactly. That fits perfectly in the sentence. Tutor: Other words like “joy” could make sense, but the question wants a form of “happy.”",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q10",
+      "itemRef": "item_q10",
+      "interactionRef": "int_q10",
+      "versionNumber": 1,
+      "approvedAnswer": "rainy",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: We are describing “days.” What type of word do we need? Student: An adjective. Tutor: Correct. Now the word given is “rain.” What is the adjective form? Student: rainy. Tutor: Exactly. “Rainy days.” Tutor: Be careful—not “raining days.” That is not correct here.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q11",
+      "itemRef": "item_q11",
+      "interactionRef": "int_q11",
+      "versionNumber": 1,
+      "approvedAnswer": "learning",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: Let’s read the sentence carefully: “We have been ___ English since Primary One.” Which part tells you the action started in the past and is still continuing? Student: “have been” Tutor: Good. And the word “since” also helps us. What tense usually goes with “have been” plus a continuing action? Student: The continuous form? Tutor: Exactly. We need the present perfect continuous form. Tutor: So from the word “learn,” what do we write? Student: learning. Tutor: Correct. The full sentence becomes: “We have been learning English since Primary One.” Tutor: A common mistake is to write “learnt” or “learned,” but that would not fit after “have been” in this sentence.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q12",
+      "itemRef": "item_q12",
+      "interactionRef": "int_q12",
+      "versionNumber": 1,
+      "approvedAnswer": "mine",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: This one tests pronouns. Look at the sentence: “A friend of ___ won a prize.” Can we say “a friend of my”? Student: No. Tutor: Correct. Why not? Student: Because “my” must come before a noun. Tutor: Exactly. “My” is a possessive adjective, like in “my book.” But here, the noun “friend” is already there, so we need the possessive pronoun. Tutor: What is the possessive pronoun form of “my”? Student: mine. Tutor: Correct. So the answer is mine.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q13",
+      "itemRef": "item_q13",
+      "interactionRef": "int_q13",
+      "versionNumber": 1,
+      "approvedAnswer": "revision",
+      "acceptableAlternatives": [
+        "studies (not from given word)"
+      ],
+      "explanation": "Tutor: Let’s look at what the sentence needs. “Start our ___ early enough.” What type of word fits after “our” here? Student: A noun? Tutor: Exactly. The word given is “revise,” which is a verb. We need its noun form. Student: revision. Tutor: Correct. “Start our revision early enough” is the correct expression. Tutor: Why not “revise”? Student: Because that is a verb. Tutor: Right. We need a thing or activity name, not an action word.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q14",
+      "itemRef": "item_q14",
+      "interactionRef": "int_q14",
+      "versionNumber": 1,
+      "approvedAnswer": "bitten",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: Let’s examine the sentence carefully. “Gimbo was ___ by mosquitoes.” Which part tells you this is in the passive voice? Student: “was” Tutor: Correct. In passive voice, after “was,” we usually use which form of the verb? Student: Past participle. Tutor: Exactly. Now the verb given is “bite.” What is the past participle? Student: bitten. Tutor: Correct. So the sentence becomes: “Gimbo was bitten by mosquitoes.” Tutor: A common mistake is writing “bited,” but that is wrong because “bite” is an irregular verb.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q15",
+      "itemRef": "item_q15",
+      "interactionRef": "int_q15",
+      "versionNumber": 1,
+      "approvedAnswer": "puppies",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: This one tests plural forms. Let’s look at the expression “one of the ___.” Does that take a singular or plural noun? Student: Plural. Tutor: Correct. Even though we say “one,” the noun after “of the” is plural. Tutor: Now what is the plural of “puppy”? Student: puppies. Tutor: Exactly. Why do we change “y” to “ies”? Student: Because there is a consonant before the y. Tutor: Very good. So the correct answer is puppies.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q16",
+      "itemRef": "item_q16",
+      "interactionRef": "int_q16",
+      "versionNumber": 1,
+      "approvedAnswer": "kilogram",
+      "acceptableAlternatives": [
+        "kilogramme (older spelling)"
+      ],
+      "explanation": "Tutor: What does “kg” stand for in measurement? Student: Kilogram. Tutor: Correct. It is used for measuring mass or weight. Tutor: Sometimes you may see the older spelling “kilogramme,” but today kilogram is the more common form.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q17",
+      "itemRef": "item_q17",
+      "interactionRef": "int_q17",
+      "versionNumber": 1,
+      "approvedAnswer": "they have",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: This is a contraction. What does the apostrophe show? Student: That some letters are missing. Tutor: Correct. In “they’ve,” what has been shortened? Student: have. Tutor: Exactly. So “they’ve” becomes they have. Tutor: Be careful not to write “they are.” That would be the short form “they’re,” not “they’ve.”",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q18",
+      "itemRef": "item_q18",
+      "interactionRef": "int_q18",
+      "versionNumber": 1,
+      "approvedAnswer": "hammer, nail, plank, saw",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: To arrange words alphabetically, what do we compare first? Student: The first letters. Tutor: Good. Let’s list them: - plank → p - nail → n - saw → s - hammer → h Tutor: Which comes first in the alphabet? Student: h Tutor: Good. Then? Student: n, then p, then s. Tutor: Exactly. So the correct order is hammer, nail, plank, saw. Tutor: Always move step by step. Don’t rush.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q19",
+      "itemRef": "item_q19",
+      "interactionRef": "int_q19",
+      "versionNumber": 1,
+      "approvedAnswer": "ear, eye, neck, nose",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: Again, let’s compare the first letters. - eye → e - nose → n - ear → e - neck → n Tutor: Which letter comes first? Student: e. Tutor: Good. Now between “ear” and “eye,” both begin with e. So what do we compare next? Student: The next letters. Tutor: Correct. “ear” has a, while “eye” has y. Since a comes before y, which comes first? Student: ear. Tutor: Exactly. Now for “neck” and “nose,” both begin with n. Compare the second letters: e and o. Which comes first? Student: e. Tutor: So the final order is ear, eye, neck, nose.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q20",
+      "itemRef": "item_q20",
+      "interactionRef": "int_q20",
+      "versionNumber": 1,
+      "approvedAnswer": "Mary remembered to turn off the TV last night.",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: We are told to give the opposite of the underlined word. Which word is underlined? Student: forgot. Tutor: Good. What is the opposite of “forgot”? Student: remembered. Tutor: Correct. So we replace only that word and keep the rest of the sentence the same. Tutor: What is the new sentence? Student: Mary remembered to turn off the TV last night. Tutor: Excellent. Always change only the word asked, unless the whole sentence structure must change.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q21",
+      "itemRef": "item_q21",
+      "interactionRef": "int_q21",
+      "versionNumber": 1,
+      "approvedAnswer": "Some foreign tourists like carrying heavy bags.",
+      "acceptableAlternatives": [
+        "weighty bags (less natural)"
+      ],
+      "explanation": "Tutor: Which word is underlined here? Student: light. Tutor: Good. Now, in this sentence, does “light” mean brightness or not heavy? Student: Not heavy. Tutor: Exactly. So what is the opposite of “light” in that meaning? Student: heavy. Tutor: Correct. So the new sentence becomes: “Some foreign tourists like carrying heavy bags.” Tutor: This is very important. In English, one word can have different meanings, so you must first understand the meaning used in the sentence.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q22",
+      "itemRef": "item_q22",
+      "interactionRef": "int_q22",
+      "versionNumber": 1,
+      "approvedAnswer": "Never accept gifts from strangers.",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: Let’s arrange the words into a proper sentence. Which word would sound right at the beginning as a warning? Student: Never. Tutor: Good. Warnings often begin with “Never.” What should come next? Student: accept. Tutor: Correct. Then what is being accepted? Student: gifts. Tutor: Yes. And from whom? Student: from strangers. Tutor: Excellent. So the full sentence is Never accept gifts from strangers. Tutor: This also makes good sense as advice.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q23",
+      "itemRef": "item_q23",
+      "interactionRef": "int_q23",
+      "versionNumber": 1,
+      "approvedAnswer": "Which class is your cousin in?",
+      "acceptableAlternatives": [
+        "Your cousin is in which class? (less natural in school grammar context)"
+      ],
+      "explanation": "Tutor: Is this a statement or a question? Student: A question. Tutor: Correct. So the sentence should end with a question mark. Now, which word usually starts this kind of question? Student: Which. Tutor: Good. Then what comes after it? Student: class. Tutor: Yes. Then we need the verb “is.” After that? Student: your cousin. Tutor: Exactly. And since we are asking about the class he or she is in, we end with “in.” Tutor: So the correct sentence is Which class is your cousin in? Tutor: Always check that the order sounds natural in spoken English.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q24",
+      "itemRef": "item_q24",
+      "interactionRef": "int_q24",
+      "versionNumber": 1,
+      "approvedAnswer": "oxen",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: Most plurals in English take “s” or “es,” but some are irregular. Is “ox” a regular plural? Student: No. Tutor: Correct. Its plural is oxen. Tutor: This is one of those special words you must remember, just like “child” becomes “children.”",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q25",
+      "itemRef": "item_q25",
+      "interactionRef": "int_q25",
+      "versionNumber": 1,
+      "approvedAnswer": "secretaries",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: To make “secretary” plural, do we just add “s”? Student: No, because it ends in y. Tutor: Good. What letter comes before the y? Student: r. Tutor: Right, and that is a consonant. So what happens to the y? Student: It changes to i and we add es. Tutor: Exactly. So “secretary” becomes secretaries.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q26",
+      "itemRef": "item_q26",
+      "interactionRef": "int_q26",
+      "versionNumber": 1,
+      "approvedAnswer": "cause",
+      "acceptableAlternatives": [
+        "bring about",
+        "result in (but only one word is required)"
+      ],
+      "explanation": "Tutor: The underlined words are “lead to.” We need one word with the same meaning. What happens when too much sugar leads to health problems? Student: It causes them. Tutor: Correct. “Cause” means bring about or make something happen. Tutor: So the sentence can be rewritten as: “Eating too much sugar can cause health problems.” Tutor: Because the instruction says one word, “cause” is the best choice.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q27",
+      "itemRef": "item_q27",
+      "interactionRef": "int_q27",
+      "versionNumber": 1,
+      "approvedAnswer": "twice",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: We need one word to replace “two times.” What one word means that? Student: Twice. Tutor: Correct. So the sentence becomes: “My mother visits the dentist twice a year.” Tutor: This is a common exam word, so always remember: - one time = once - two times = twice",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q28",
+      "itemRef": "item_q28",
+      "interactionRef": "int_q28",
+      "versionNumber": 1,
+      "approvedAnswer": "menu",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: What do you call the list showing food available in a restaurant? Student: Menu. Tutor: Correct. A menu tells customers what food and drinks are available. Tutor: So the sentence becomes: “When Mr. Byaruhanga entered the restaurant, the waitress gave him a menu.” Tutor: Be careful not to confuse “menu” with “bill.” A bill is what you pay after eating.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q29",
+      "itemRef": "item_q29",
+      "interactionRef": "int_q29",
+      "versionNumber": 1,
+      "approvedAnswer": "We need fresh air to breathe.",
+      "acceptableAlternatives": [
+        "The room was full of hot air.",
+        "Birds fly in the air."
+      ],
+      "explanation": "Tutor: This question is testing your ability to use the word correctly in a meaningful sentence. What does “air” mean here? Student: The gas we breathe. Tutor: Good. Can you make a clear sentence with that meaning? Student: We need fresh air to breathe. Tutor: Excellent. That is short, correct, and meaningful. Tutor: In this kind of question, avoid very short fragments. Write a full sentence.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q30",
+      "itemRef": "item_q30",
+      "interactionRef": "int_q30",
+      "versionNumber": 1,
+      "approvedAnswer": "The king’s son is the heir to the throne.",
+      "acceptableAlternatives": [
+        "She is the heir to her father’s property.",
+        "The heir received the land."
+      ],
+      "explanation": "Tutor: The word “heir” sounds like “air,” but it has a different meaning. What does “heir” mean? Student: A person who inherits something. Tutor: Correct. Often it means someone who receives property, wealth, or a position after another person. Tutor: Can you make a sentence? Student: The king’s son is the heir to the throne. Tutor: Very good. That clearly shows you understand the meaning. Tutor: This kind of question is about homophones—words that sound alike but have different meanings.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q31",
+      "itemRef": "item_q31",
+      "interactionRef": "int_q31",
+      "versionNumber": 1,
+      "approvedAnswer": "Cocks are not as big as turkeys.",
+      "acceptableAlternatives": [
+        "A cock is not as big as a turkey."
+      ],
+      "explanation": "Tutor: Let’s first understand the original sentence. Who is bigger? Student: Turkeys are bigger than cocks. Tutor: Correct. Now we must use the pattern as…as. When two things are not equal, what do we usually add? Student: “Not as…as” Tutor: Exactly. So instead of saying “Turkeys are bigger than cocks,” we turn it around and say the smaller one is not as big as the larger one. Tutor: Which is the smaller one here? Student: Cocks. Tutor: Good. So the answer becomes? Student: Cocks are not as big as turkeys. Tutor: Perfect. Notice that after as, we use the adjective in its basic form: big, not bigger.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q32",
+      "itemRef": "item_q32",
+      "interactionRef": "int_q32",
+      "versionNumber": 1,
+      "approvedAnswer": "The bride whose wedding took place last weekend sent us a cake.",
+      "acceptableAlternatives": [
+        "The bride",
+        "whose wedding took place last weekend",
+        "sent us a cake."
+      ],
+      "explanation": "Tutor: We have two sentences about the same person. Who is that person? Student: The bride. Tutor: Correct. One sentence tells us what she did. The other gives extra information about her wedding. Tutor: Which joining word in the instruction helps us show possession or relationship? Student: Whose. Tutor: Exactly. “Whose” connects the bride to the wedding. Tutor: So how do we begin? Student: The bride whose wedding took place last weekend… Tutor: Good. Then finish with the main action. Student: …sent us a cake. Tutor: Excellent. That gives one clear sentence.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q33",
+      "itemRef": "item_q33",
+      "interactionRef": "int_q33",
+      "versionNumber": 1,
+      "approvedAnswer": "Immediately the rain began, the lesson stopped.",
+      "acceptableAlternatives": [
+        "The lesson stopped immediately the rain began."
+      ],
+      "explanation": "Tutor: The expression no sooner…than… shows what kind of relationship? Student: That one thing happened at once after the other. Tutor: Exactly. We are asked to use immediately, which also shows quick sequence. Tutor: Which event happened first? Student: The rain began. Tutor: And what happened right after? Student: The lesson stopped. Tutor: Good. So we can rewrite it as: Immediately the rain began, the lesson stopped. Tutor: The key meaning is “at once” or “without delay.”",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q34",
+      "itemRef": "item_q34",
+      "interactionRef": "int_q34",
+      "versionNumber": 1,
+      "approvedAnswer": "After Aunt Sandra had made a shopping list, we went to the market.",
+      "acceptableAlternatives": [
+        "We went to the market after Aunt Sandra had made a shopping list."
+      ],
+      "explanation": "Tutor: The original sentence uses before. Which event happened first? Student: Aunt Sandra made the shopping list. Tutor: Correct. Which event happened second? Student: We went to the market. Tutor: Good. To use after, we must start with the later event or show clearly that one action was completed first. Tutor: So what sentence works well? Student: After Aunt Sandra had made a shopping list, we went to the market. Tutor: Exactly. Using had made helps show that the list was completed before the trip.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q35",
+      "itemRef": "item_q35",
+      "interactionRef": "int_q35",
+      "versionNumber": 1,
+      "approvedAnswer": "The children liked swimming more than jogging.",
+      "acceptableAlternatives": [
+        "The children preferred swimming rather than jogging. (does not fit the exact cue as well)"
+      ],
+      "explanation": "Tutor: What does preferred swimming to jogging mean? Student: They liked swimming more. Tutor: Exactly. Since the instruction gives than, we need a comparative structure. Tutor: Which word helps us compare the two activities? Student: More. Tutor: Correct. So we say: The children liked swimming more than jogging. Tutor: The meaning stays the same: swimming was their first choice.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q36",
+      "itemRef": "item_q36",
+      "interactionRef": "int_q36",
+      "versionNumber": 1,
+      "approvedAnswer": "We are responsible for keeping our classrooms tidy.",
+      "acceptableAlternatives": [
+        "It is we who are responsible for keeping our classrooms tidy. (less direct)"
+      ],
+      "explanation": "Tutor: The word given is responsible. The original sentence says: “It is our responsibility…” What noun do you see there? Student: Responsibility. Tutor: Good. We need to change that noun into the adjective responsible. Tutor: Who is responsible? Student: We are. Tutor: Exactly. Responsible for doing what? Student: Keeping our classrooms tidy. Tutor: Correct. So the best answer is: We are responsible for keeping our classrooms tidy.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q37",
+      "itemRef": "item_q37",
+      "interactionRef": "int_q37",
+      "versionNumber": 1,
+      "approvedAnswer": "While Nicholas was washing the car, his sister was preparing breakfast.",
+      "acceptableAlternatives": [
+        "While his sister was preparing breakfast",
+        "Nicholas was washing the car."
+      ],
+      "explanation": "Tutor: These two actions happened at the same time. Which joining word shows that? Student: While. Tutor: Correct. The instruction says begin with While, so which action will come right after it? Student: Nicholas was washing the car. Tutor: Good. Then we add the second action. Student: …his sister was preparing breakfast. Tutor: Exactly. This shows both actions were happening at the same time.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q38",
+      "itemRef": "item_q38",
+      "interactionRef": "int_q38",
+      "versionNumber": 1,
+      "approvedAnswer": "Mbowa will travel by neither bus nor taxi.",
+      "acceptableAlternatives": [
+        "Mbowa will neither travel by bus nor by taxi."
+      ],
+      "explanation": "Tutor: We have two negative ideas. What special pair joins two negatives neatly? Student: Neither…nor. Tutor: Correct. The meaning is that both choices are rejected. Tutor: So instead of repeating “will not” twice, we bring the two travel options together. Tutor: What sentence do we get? Student: Mbowa will travel by neither bus nor taxi. Tutor: Good. Another correct form is: Mbowa will neither travel by bus nor by taxi. Tutor: Both carry the same meaning.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q39",
+      "itemRef": "item_q39",
+      "interactionRef": "int_q39",
+      "versionNumber": 1,
+      "approvedAnswer": "“Why did you miss lessons yesterday?” the teacher asked Nambuya.",
+      "acceptableAlternatives": [
+        "“Why did you miss class yesterday?” the teacher asked Nambuya. (if “lessons” is changed carefully",
+        "but keep original wording where possible)"
+      ],
+      "explanation": "Tutor: The original sentence is in reported speech. We need to change it back into direct speech. Tutor: In reported speech, “the previous day” changes to what in direct speech? Student: Yesterday. Tutor: Correct. Also, “she had missed” becomes what when the teacher is speaking directly to Nambuya? Student: You missed. Tutor: Exactly. Since this is a question, we write it with quotation marks and a question mark. Tutor: So the final answer is: “Why did you miss lessons yesterday?” the teacher asked Nambuya.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q40",
+      "itemRef": "item_q40",
+      "interactionRef": "int_q40",
+      "versionNumber": 1,
+      "approvedAnswer": "The tailor cut the cloth with a pair of scissors.",
+      "acceptableAlternatives": [
+        "The tailor cut the cloth using a pair of scissors."
+      ],
+      "explanation": "Tutor: The instruction says begin with The tailor cut… So which part must come first now? Student: The tailor cut the cloth… Tutor: Correct. Then how do we show the tool that was used? Student: With a pair of scissors. Tutor: Exactly. So the sentence becomes: The tailor cut the cloth with a pair of scissors. Tutor: The meaning stays the same. Only the structure changes.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q41",
+      "itemRef": "item_q41",
+      "interactionRef": "int_q41",
+      "versionNumber": 1,
+      "approvedAnswer": "The letters were not posted by Shakirah.",
+      "acceptableAlternatives": [
+        "The letters were never posted by Shakirah. (adds meaning not in original)"
+      ],
+      "explanation": "Tutor: This question wants a change of voice. The original sentence is in the active voice. Who is doing the action? Student: Shakirah. Tutor: Correct. What is receiving the action? Student: The letters. Tutor: Good. In the passive voice, what moves to the beginning? Student: The letters. Tutor: Exactly. Since the original is negative, we must keep the negative form. Tutor: So the answer is: The letters were not posted by Shakirah.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q42",
+      "itemRef": "item_q42",
+      "interactionRef": "int_q42",
+      "versionNumber": 1,
+      "approvedAnswer": "I last went to the market two months ago.",
+      "acceptableAlternatives": [
+        "The last time I went to the market was two months ago."
+      ],
+      "explanation": "Tutor: The phrase for two months tells us the length of time. But the new sentence must end with ago, which points to a past time. Tutor: So instead of saying how long you have not gone, what do we say? Student: The last time I went. Tutor: Exactly. What is the correct sentence? Student: I last went to the market two months ago. Tutor: Perfect. That keeps the meaning and fits the instruction.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q43",
+      "itemRef": "item_q43",
+      "interactionRef": "int_q43",
+      "versionNumber": 1,
+      "approvedAnswer": "Our players were too tired to walk back to school.",
+      "acceptableAlternatives": [],
+      "explanation": "Tutor: This is the too…to structure again. What does it show? Student: That something is excessive and prevents another action. Tutor: Correct. Here, what was excessive? Student: They were very tired. Tutor: And what could they not do? Student: Walk back to school. Tutor: So we join both ideas into one sentence: Our players were too tired to walk back to school.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q44",
+      "itemRef": "item_q44",
+      "interactionRef": "int_q44",
+      "versionNumber": 1,
+      "approvedAnswer": "Although Kapere is a very rich man, he does not have a car.",
+      "acceptableAlternatives": [
+        "Although Kapere is very rich",
+        "he does not have a car."
+      ],
+      "explanation": "Tutor: The word although shows contrast. What two ideas are being contrasted? Student: He is rich, but he has no car. Tutor: Exactly. So we begin with the first idea after although. Tutor: Then we add the surprising second idea. Student: Although Kapere is a very rich man, he does not have a car. Tutor: Correct. That is a clear contrast sentence.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q45",
+      "itemRef": "item_q45",
+      "interactionRef": "int_q45",
+      "versionNumber": 1,
+      "approvedAnswer": "Mrs. Odeke spent fifteen thousand shillings on a kilo of meat.",
+      "acceptableAlternatives": [
+        "Mrs. Odeke spent fifteen thousand shillings buying a kilo of meat. (less direct)"
+      ],
+      "explanation": "Tutor: The instruction gives the word spent. In the original sentence, what did Mrs. Odeke do? Student: She paid fifteen thousand shillings. Tutor: Correct. We can express the same idea using spent … on … Tutor: So what did she spend? Student: Fifteen thousand shillings. Tutor: On what? Student: A kilo of meat. Tutor: Good. So the answer is: Mrs. Odeke spent fifteen thousand shillings on a kilo of meat.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q46",
+      "itemRef": "item_q46",
+      "interactionRef": "int_q46",
+      "versionNumber": 1,
+      "approvedAnswer": "In order to save his life, she hooted at the cyclist.",
+      "acceptableAlternatives": [
+        "In order to save the cyclist’s life",
+        "she hooted at him."
+      ],
+      "explanation": "Tutor: The phrase so as to and in order to usually mean the same thing. What was the purpose of hooting? Student: To save his life. Tutor: Correct. Since the instruction says begin with In order to, that purpose comes first. Tutor: Then what action follows? Student: She hooted at the cyclist. Tutor: Exactly. So the sentence becomes: In order to save his life, she hooted at the cyclist.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q47",
+      "itemRef": "item_q47",
+      "interactionRef": "int_q47",
+      "versionNumber": 1,
+      "approvedAnswer": "If you do not tuck in your shirt, you will not look smart.",
+      "acceptableAlternatives": [
+        "If you fail to tuck in your shirt",
+        "you will not look smart."
+      ],
+      "explanation": "Tutor: The phrase or else can often be changed into an if sentence. What condition is being given? Student: Tuck in your shirt. Tutor: And what happens if you do not? Student: You won’t look smart. Tutor: Exactly. So we rewrite it as: If you do not tuck in your shirt, you will not look smart. Tutor: We keep the warning, but change the structure.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q48",
+      "itemRef": "item_q48",
+      "interactionRef": "int_q48",
+      "versionNumber": 1,
+      "approvedAnswer": "Aida received no money from her guardian, didn’t she?",
+      "acceptableAlternatives": [
+        "Aida received no money from her guardian"
+      ],
+      "explanation": "Tutor: This is a question tag change. The original statement is negative: did not receive. The tag is positive: did she? Tutor: But now the ending given is didn’t she? That means the main statement must become what? Student: Positive. Tutor: Correct. How can we keep the same meaning but make the verb positive? Student: Use “received no money.” Tutor: Exactly. That makes the statement positive in grammar form but still negative in meaning. Tutor: So the correct sentence is: Aida received no money from her guardian, didn’t she?",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q49",
+      "itemRef": "item_q49",
+      "interactionRef": "int_q49",
+      "versionNumber": 1,
+      "approvedAnswer": "Both a radio and a television are useful sources of information.",
+      "acceptableAlternatives": [
+        "Both radio and television are useful sources of information."
+      ],
+      "explanation": "Tutor: The word both helps us talk about two things together. What are the two things here? Student: A radio and a television. Tutor: Correct. And what is true about both of them? Student: They are useful sources of information. Tutor: Exactly. So we combine them into one sentence: Both a radio and a television are useful sources of information. Tutor: Notice that the verb becomes are because the subject is plural.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q50",
+      "itemRef": "item_q50",
+      "interactionRef": "int_q50",
+      "versionNumber": 1,
+      "approvedAnswer": "The boy who won the race is related to us.",
+      "acceptableAlternatives": [
+        "The boy that won the race is related to us."
+      ],
+      "explanation": "Tutor: We are told to end with to us. Which word from the original sentence can change into a related form? Student: Relative? Tutor: Correct. “Relative” is a noun, but here we need the adjective form related. Tutor: So instead of saying “is our relative,” what do we say? Student: Is related to us. Tutor: Exactly. So the final sentence is: The boy who won the race is related to us.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q51_a",
+      "itemRef": "item_q51",
+      "interactionRef": "int_q51_a",
+      "versionNumber": 1,
+      "approvedAnswer": "The two friends went to Mushanga Primary School.",
+      "acceptableAlternatives": [
+        "They studied at Mushanga Primary School."
+      ],
+      "explanation": "Tutor: For this question, do we need to guess? Student: No. Tutor: Correct. The answer is directly in the first lines of the passage. What is the name of the school? Student: Mushanga Primary School. Tutor: Good. Now remember: the instruction says answer in full sentences. So do not write only the school name. Student: I should say, “The two friends went to Mushanga Primary School.” Tutor: Exactly.",
+      "teacherNotes": "Review against the passage. Prior audit flagged Q51(e) and Q51(f); this package keeps them manual-review only.",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q51_b",
+      "itemRef": "item_q51",
+      "interactionRef": "int_q51_b",
+      "versionNumber": 1,
+      "approvedAnswer": "There was no lunch because parents had to contribute towards their children’s feeding.",
+      "acceptableAlternatives": [
+        "Lunch was not provided by the school",
+        "only pupils whose parents contributed food could get lunch."
+      ],
+      "explanation": "Tutor: This is a “why” question. That means we must give the reason. What does the passage tell us about lunch? Student: Parents had to contribute towards feeding. Tutor: Correct. So the school did not provide lunch for everybody freely. Tutor: How do we turn that into a full answer? Student: There was no lunch because parents had to contribute towards their children’s feeding. Tutor: Very good. Always answer the reason clearly.",
+      "teacherNotes": "Review against the passage. Prior audit flagged Q51(e) and Q51(f); this package keeps them manual-review only.",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q51_c",
+      "itemRef": "item_q51",
+      "interactionRef": "int_q51_c",
+      "versionNumber": 1,
+      "approvedAnswer": "Lolo could buy pancakes and buns and some juice for lunch.",
+      "acceptableAlternatives": [
+        "He could buy lunch with it",
+        "he could buy something to eat."
+      ],
+      "explanation": "Tutor: Here we must be careful. The passage gives specific examples. What did Lolo buy with the money? Student: Pancakes, buns and some juice. Tutor: Correct. Since the question asks “what could he do,” we can answer by saying he could buy lunch. Tutor: A stronger answer uses the examples from the passage. Student: Lolo could buy pancakes, buns and some juice for lunch. Tutor: Excellent.",
+      "teacherNotes": "Review against the passage. Prior audit flagged Q51(e) and Q51(f); this package keeps them manual-review only.",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q51_d",
+      "itemRef": "item_q51",
+      "interactionRef": "int_q51_d",
+      "versionNumber": 1,
+      "approvedAnswer": "Jemba rode at a very high speed because he was excited and wanted to enjoy the ride and still get back to school in time for the afternoon lessons.",
+      "acceptableAlternatives": [
+        "He was excited",
+        "he wanted to enjoy the ride",
+        "he also wanted to return to school in time."
+      ],
+      "explanation": "Tutor: This answer has more than one reason. What are they? Student: He was excited. Tutor: Good. What else? Student: He wanted to enjoy the ride. Tutor: Correct. And one more? Student: He wanted to get back to school in time. Tutor: Excellent. Since all three ideas are in the passage, a full answer can combine them. Tutor: This is stronger than giving only one reason.",
+      "teacherNotes": "Review against the passage. Prior audit flagged Q51(e) and Q51(f); this package keeps them manual-review only.",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q51_e",
+      "itemRef": "item_q51",
+      "interactionRef": "int_q51_e",
+      "versionNumber": 1,
+      "approvedAnswer": "Jemba rang the bicycle bell to warn the old man who was in front of him.",
+      "acceptableAlternatives": [
+        "He wanted the old man to move out of the way",
+        "he rang it because there was an old man ahead of him."
+      ],
+      "explanation": "Tutor: Let’s follow the events closely. Who was in front of him? Student: An old man. Tutor: Yes. So why ring the bell? Student: To warn him. Tutor: Correct. Good comprehension answers often follow normal real-life logic and the events in the passage.",
+      "teacherNotes": "Review against the passage. Prior audit flagged Q51(e) and Q51(f); this package keeps them manual-review only.",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q51_f",
+      "itemRef": "item_q51",
+      "interactionRef": "int_q51_f",
+      "versionNumber": 1,
+      "approvedAnswer": "The accident happened because Jemba lost his balance and both he and the old man fell off the bicycle.",
+      "acceptableAlternatives": [
+        "Jemba rode too fast and lost balance",
+        "he knocked the old man after losing balance."
+      ],
+      "explanation": "Tutor: This question asks what directly led to the accident. Was it only speed? Student: He also lost balance. Tutor: Exactly. Speed explains the danger, but the immediate cause in the passage is that he lost his balance. Tutor: That is the detail the learner should pick.",
+      "teacherNotes": "Review against the passage. Prior audit flagged Q51(e) and Q51(f); this package keeps them manual-review only.",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q51_g",
+      "itemRef": "item_q51",
+      "interactionRef": "int_q51_g",
+      "versionNumber": 1,
+      "approvedAnswer": "Immediately she arrived at the clinic, the head teacher thanked the nurses for treating the boys.",
+      "acceptableAlternatives": [
+        "She thanked the nurses first."
+      ],
+      "explanation": "Tutor: The word “immediately” is important. We are looking for the first thing she did. What came first in the passage? Student: She thanked the nurses. Tutor: Correct. What came after that? Student: She informed the parents. Tutor: Good. So the correct answer is the first action only.",
+      "teacherNotes": "Review against the passage. Prior audit flagged Q51(e) and Q51(f); this package keeps them manual-review only.",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q51_h",
+      "itemRef": "item_q51",
+      "interactionRef": "int_q51_h",
+      "versionNumber": 1,
+      "approvedAnswer": "The two friends stayed away from school for three weeks.",
+      "acceptableAlternatives": [
+        "They were away from school for three weeks."
+      ],
+      "explanation": "Tutor: This is a direct fact question. We only need the time period. What was it? Student: Three weeks. Tutor: Good. Put it into a full sentence.",
+      "teacherNotes": "Review against the passage. Prior audit flagged Q51(e) and Q51(f); this package keeps them manual-review only.",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q51_i",
+      "itemRef": "item_q51",
+      "interactionRef": "int_q51_i",
+      "versionNumber": 1,
+      "approvedAnswer": "The academic performance greatly improved because all pupils started having lunch at school.",
+      "acceptableAlternatives": [
+        "It improved after the school started providing lunch",
+        "pupils could study better because they had lunch."
+      ],
+      "explanation": "Tutor: We must connect the last part of the passage. What change happened in the school? Student: All pupils started having lunch. Tutor: Yes. And the result? Student: Their academic performance improved. Tutor: Good. That shows cause and effect.",
+      "teacherNotes": "Review against the passage. Prior audit flagged Q51(e) and Q51(f); this package keeps them manual-review only.",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q51_j",
+      "itemRef": "item_q51",
+      "interactionRef": "int_q51_j",
+      "versionNumber": 1,
+      "approvedAnswer": "Lunch at School",
+      "acceptableAlternatives": [
+        "The Importance of School Lunch",
+        "Lolo and Jemba",
+        "A Bicycle Accident",
+        "How Lunch Improved Performance"
+      ],
+      "explanation": "Tutor: A title must be short and capture the main idea. What is the passage mostly about? Student: Lunch and what happened because they didn’t have it. Tutor: Good. A bicycle accident is part of the story, but what is the bigger message at the end? Student: That lunch at school matters. Tutor: Exactly. So “Lunch at School” is a strong title. Tutor: In title questions, more than one answer may be accepted if it fits the central idea.",
+      "teacherNotes": "Review against the passage. Prior audit flagged Q51(e) and Q51(f); this package keeps them manual-review only.",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q52_a",
+      "itemRef": "item_q52",
+      "interactionRef": "int_q52_a",
+      "versionNumber": 1,
+      "approvedAnswer": "The poem is about examination.",
+      "acceptableAlternatives": [
+        "It is about exams",
+        "it is about preparing for examinations."
+      ],
+      "explanation": "Tutor: The poem begins with the line “Examination, a friend…” What is the main thing being addressed throughout the poem? Student: Examination. Tutor: Correct. So the simplest and strongest answer is direct.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q52_b",
+      "itemRef": "item_q52",
+      "interactionRef": "int_q52_b",
+      "versionNumber": 1,
+      "approvedAnswer": "The speaker spends sleepless nights because he or she is preparing for examination.",
+      "acceptableAlternatives": [
+        "Because the speaker wants to prepare well",
+        "because the speaker wants to defeat examination and get a good grade."
+      ],
+      "explanation": "Tutor: Does the poem say the speaker is sleepless for no reason? Student: No. Tutor: What reason is given? Student: To prepare for examination. Tutor: Exactly. Always answer from the poem’s own words when possible.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q52_c",
+      "itemRef": "item_q52",
+      "interactionRef": "int_q52_c",
+      "versionNumber": 1,
+      "approvedAnswer": "Before meeting examination, the speaker is briefed like a bride and a bridegroom.",
+      "acceptableAlternatives": [
+        "The speaker is briefed before meeting examination."
+      ],
+      "explanation": "Tutor: We need the event that comes before meeting examination. Which line tells us that? Student: “Before I meet you, I’m briefed like a bride and a bridegroom.” Tutor: Correct. That is the evidence line.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q52_d",
+      "itemRef": "item_q52",
+      "interactionRef": "int_q52_d",
+      "versionNumber": 1,
+      "approvedAnswer": "The speaker should defeat examination in order to get a good grade.",
+      "acceptableAlternatives": [
+        "To pass well",
+        "to succeed."
+      ],
+      "explanation": "Tutor: The poem gives the reason directly. What does the speaker want after defeating examination? Student: A good grade. Tutor: Exactly.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q52_e",
+      "itemRef": "item_q52",
+      "interactionRef": "int_q52_e",
+      "versionNumber": 1,
+      "approvedAnswer": "The speaker calls them strange men and women because they are unfamiliar people who surround learners during examination.",
+      "acceptableAlternatives": [
+        "Because the speaker does not know them",
+        "because they appear as outsiders during the examination."
+      ],
+      "explanation": "Tutor: Are invigilators usually the learner’s close friends? Student: No. Tutor: So why describe them as “strange”? Student: Because they are unfamiliar. Tutor: Correct. The poem is expressing the tense feeling of the exam room.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q52_f",
+      "itemRef": "item_q52",
+      "interactionRef": "int_q52_f",
+      "versionNumber": 1,
+      "approvedAnswer": "Their duty is giving out and collecting papers.",
+      "acceptableAlternatives": [
+        "They supervise the examination and give out and collect papers."
+      ],
+      "explanation": "Tutor: The poem answers this directly. What do the invigilators do? Student: They give out and collect papers. Tutor: Exactly. That is the expected answer.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q52_g",
+      "itemRef": "item_q52",
+      "interactionRef": "int_q52_g",
+      "versionNumber": 1,
+      "approvedAnswer": "The speaker rejoices when the results are out and success is on his or her side.",
+      "acceptableAlternatives": [
+        "When the results come out",
+        "when the speaker succeeds."
+      ],
+      "explanation": "Tutor: We need the exact condition for rejoicing. Does the speaker rejoice during preparation? Student: No. Tutor: When then? Student: When the results are out and success is on the speaker’s side. Tutor: Correct.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q52_h",
+      "itemRef": "item_q52",
+      "interactionRef": "int_q52_h",
+      "versionNumber": 1,
+      "approvedAnswer": "The speaker forgets the sleepless nights.",
+      "acceptableAlternatives": [
+        "The hard preparation",
+        "the nights spent preparing."
+      ],
+      "explanation": "Tutor: At the end of the poem, what is forgotten? Student: The sleepless nights. Tutor: Yes. Success makes the earlier suffering feel worth it.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q52_i_i_",
+      "itemRef": "item_q52",
+      "interactionRef": "int_q52_i_i_",
+      "versionNumber": 1,
+      "approvedAnswer": "awful",
+      "acceptableAlternatives": [
+        "bad",
+        "dreadful",
+        "frightening"
+      ],
+      "explanation": "Tutor: We are not being asked to copy from the poem. We need a synonym. What word is close in meaning to “terrible”? Student: Awful. Tutor: Correct. Other answers may also work if they truly carry the same meaning.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q52_i_ii_",
+      "itemRef": "item_q52",
+      "interactionRef": "int_q52_i_ii_",
+      "versionNumber": 1,
+      "approvedAnswer": "responsibility",
+      "acceptableAlternatives": [
+        "job",
+        "task",
+        "work"
+      ],
+      "explanation": "Tutor: What is a duty? Student: Something a person is supposed to do. Tutor: Exactly. A strong synonym is responsibility.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q53_a",
+      "itemRef": "item_q53",
+      "interactionRef": "int_q53_a",
+      "versionNumber": 1,
+      "approvedAnswer": "The record was kept by a P.7 class monitor.",
+      "acceptableAlternatives": [
+        "A Primary Seven class monitor kept the record."
+      ],
+      "explanation": "Tutor: This answer is not in the table body only. Where do we find it? Student: In the introduction above the table. Tutor: Exactly. That is why learners must read everything, not just the table lines.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q53_b",
+      "itemRef": "item_q53",
+      "interactionRef": "int_q53_b",
+      "versionNumber": 1,
+      "approvedAnswer": "The record was taken in Week Five, Term Two, 2024.",
+      "acceptableAlternatives": [
+        "It was taken during Week Five of Term Two",
+        "2024."
+      ],
+      "explanation": "Tutor: The table heading gives the time. What does it say? Student: Week Five, Term Two, 2024. Tutor: Correct. That heading is the answer source.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q53_c",
+      "itemRef": "item_q53",
+      "interactionRef": "int_q53_c",
+      "versionNumber": 1,
+      "approvedAnswer": "Three pupils were in charge of cleaning the classroom each day.",
+      "acceptableAlternatives": [
+        "Each day had three pupils responsible."
+      ],
+      "explanation": "Tutor: Look at each day. How many names appear under “Pupils Responsible”? Student: Three names. Tutor: Good. Always count carefully and check that the pattern is the same for all days.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q53_d",
+      "itemRef": "item_q53",
+      "interactionRef": "int_q53_d",
+      "versionNumber": 1,
+      "approvedAnswer": "Work was considered incomplete on Tuesday because part of the classroom was not cleaned.",
+      "acceptableAlternatives": [
+        "Because some part of the classroom remained dirty."
+      ],
+      "explanation": "Tutor: Which column gives the reason? Student: The comment column. Tutor: Correct. What exactly does it say for Tuesday? Student: Part of the classroom not cleaned. Tutor: Good. Turn that into a full sentence.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q53_e",
+      "itemRef": "item_q53",
+      "interactionRef": "int_q53_e",
+      "versionNumber": 1,
+      "approvedAnswer": "Five people supervised the cleaning that week.",
+      "acceptableAlternatives": [
+        "There were five supervisors."
+      ],
+      "explanation": "Tutor: Now be careful. We are not counting days. We are counting supervisors. Does any supervisor appear more than once? Student: No, each day has a different name. Tutor: Right. Since there are five days, there are five supervisors.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q53_f",
+      "itemRef": "item_q53",
+      "interactionRef": "int_q53_f",
+      "versionNumber": 1,
+      "approvedAnswer": "Excellent work was done on Wednesday.",
+      "acceptableAlternatives": [
+        "On Wednesday",
+        "excellent work was done."
+      ],
+      "explanation": "Tutor: Look through the comment column. Which day has the words “Excellent work done!”? Student: Wednesday. Tutor: Correct.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q53_g",
+      "itemRef": "item_q53",
+      "interactionRef": "int_q53_g",
+      "versionNumber": 1,
+      "approvedAnswer": "Sidia Sania, Akiasiina Noet and Bwambale Tito cleaned the classroom at break time.",
+      "acceptableAlternatives": [
+        "The pupils on Thursday cleaned at break time."
+      ],
+      "explanation": "Tutor: The clue is in the Thursday comment: “Classroom cleaned at break time.” Which pupils were on duty that day? Student: Akiasiina Noet and Bwambale Tito… and also Sidia Sania. Tutor: Good catch. Since three pupils were listed for Thursday, all those pupils were responsible. The learner should answer with all the names given for that day.",
+      "teacherNotes": "Ensure all three Thursday pupils are present: Sidia Sania, Akiasiina Noet, and Bwambale Tito.",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q53_h",
+      "itemRef": "item_q53",
+      "interactionRef": "int_q53_h",
+      "versionNumber": 1,
+      "approvedAnswer": "The classroom was not cleaned on Friday because there were zonal ball games.",
+      "acceptableAlternatives": [
+        "Because the pupils had zonal ball games."
+      ],
+      "explanation": "Tutor: Which column helps us here again? Student: The comment column. Tutor: Correct. What comment appears for Friday? Student: Cleaning not done. Zonal ball games. Tutor: Good. So the games explain why cleaning was not done.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q53_i",
+      "itemRef": "item_q53",
+      "interactionRef": "int_q53_i",
+      "versionNumber": 1,
+      "approvedAnswer": "Acen Lisa was the supervisor on Monday.",
+      "acceptableAlternatives": [
+        "She supervised the classroom cleaning on Monday."
+      ],
+      "explanation": "Tutor: Find Acen Lisa in the table. Which column is her name under? Student: Supervisor. Tutor: Exactly. That tells us her role.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q53_j",
+      "itemRef": "item_q53",
+      "interactionRef": "int_q53_j",
+      "versionNumber": 1,
+      "approvedAnswer": "I would encourage my class monitor to keep such a record because it helps to monitor work, identify mistakes, and improve cleanliness.",
+      "acceptableAlternatives": [
+        "It promotes responsibility",
+        "it helps teachers supervise",
+        "it keeps evidence of work done."
+      ],
+      "explanation": "Tutor: This is one of the few questions where the learner must think beyond the table. So we need a reasonable answer, not a copied one. Tutor: Why is record-keeping useful? Student: It helps people know what was done. Tutor: Correct. It also helps follow up mistakes and improve responsibility. Tutor: Since this is open-ended, more than one good answer may be accepted if it is sensible and connected to the record.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q54_a",
+      "itemRef": "item_q54",
+      "interactionRef": "int_q54_a",
+      "versionNumber": 1,
+      "approvedAnswer": "Two girls are walking along the road.",
+      "acceptableAlternatives": [
+        "Two girls are moving together on the roadside",
+        "two girls are going somewhere on foot."
+      ],
+      "explanation": "Tutor: At Picture A, do we already see danger happening? Student: Not yet. Tutor: Correct. We only describe what is clearly happening. Never jump too far ahead in the first picture.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q54_b",
+      "itemRef": "item_q54",
+      "interactionRef": "int_q54_b",
+      "versionNumber": 1,
+      "approvedAnswer": "Two men are forcing the girls into a car.",
+      "acceptableAlternatives": [
+        "The girls are being abducted into a vehicle",
+        "the men are kidnapping the girls."
+      ],
+      "explanation": "Tutor: What makes this picture serious? Student: The girls are being forced into the car. Tutor: Exactly. Words like forcing, abducting, or kidnapping fit well.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q54_c",
+      "itemRef": "item_q54",
+      "interactionRef": "int_q54_c",
+      "versionNumber": 1,
+      "approvedAnswer": "The girls are jumping out of the car as it stops.",
+      "acceptableAlternatives": [
+        "The girls are escaping from the vehicle",
+        "the girls are leaving the stopped car."
+      ],
+      "explanation": "Tutor: At this stage, we must follow the picture carefully. What do we actually see? Student: Someone is getting out quickly. Tutor: Good. So the idea is escape or getting out as the car has stopped.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q54_d",
+      "itemRef": "item_q54",
+      "interactionRef": "int_q54_d",
+      "versionNumber": 1,
+      "approvedAnswer": "The girls are reporting the matter to police officers at the station.",
+      "acceptableAlternatives": [
+        "The girls have reached the police station",
+        "the police are listening to the girls’ report."
+      ],
+      "explanation": "Tutor: Which clue in the drawing makes this answer clear? Student: The words “Police Station.” Tutor: Exactly. Always use visible clues in picture questions.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q54_e",
+      "itemRef": "item_q54",
+      "interactionRef": "int_q54_e",
+      "versionNumber": 1,
+      "approvedAnswer": "The police have stopped the vehicle at a roadblock.",
+      "acceptableAlternatives": [
+        "Police officers are checking the car at a police check point",
+        "the car has been stopped by police."
+      ],
+      "explanation": "Tutor: The sign in the picture says “Police Check.” What does that suggest? Student: A roadblock or checkpoint. Tutor: Correct. So the sentence should mention the car being stopped.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q54_f",
+      "itemRef": "item_q54",
+      "interactionRef": "int_q54_f",
+      "versionNumber": 1,
+      "approvedAnswer": "The police officers are arresting the two men as the girls hug happily.",
+      "acceptableAlternatives": [
+        "The kidnappers are being arrested",
+        "the girls are happy because the men have been arrested."
+      ],
+      "explanation": "Tutor: This picture shows the outcome. What two things happen at once? Student: The men are arrested and the girls are happy. Tutor: Exactly. A strong sentence can combine both if it remains clear.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q54_g",
+      "itemRef": "item_q54",
+      "interactionRef": "int_q54_g",
+      "versionNumber": 1,
+      "approvedAnswer": "The girls are hugging each other, which shows they are happy.",
+      "acceptableAlternatives": [
+        "Their body language shows happiness",
+        "they look excited and relieved."
+      ],
+      "explanation": "Tutor: We must answer using evidence from the picture. What can we actually see? Student: They are hugging. Tutor: Good. That visible action is your evidence.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q54_h",
+      "itemRef": "item_q54",
+      "interactionRef": "int_q54_h",
+      "versionNumber": 1,
+      "approvedAnswer": "The two men are likely to be taken to court and punished.",
+      "acceptableAlternatives": [
+        "They may be imprisoned",
+        "they may be charged by police."
+      ],
+      "explanation": "Tutor: This is not directly shown, so we infer. Since they were arrested, what usually follows? Student: They go to court or prison. Tutor: Correct. This is an inference question, so a sensible answer is accepted.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q54_i",
+      "itemRef": "item_q54",
+      "interactionRef": "int_q54_i",
+      "versionNumber": 1,
+      "approvedAnswer": "The story teaches us to report crimes quickly to the police.",
+      "acceptableAlternatives": [
+        "Crime does not pay",
+        "children should be careful with strangers",
+        "police help protect people."
+      ],
+      "explanation": "Tutor: Lesson questions are open-ended, but the answer must come from the story. What main lesson do you see? Student: That crimes should be reported. Tutor: Good. Other lessons may also work if they fit the events.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q54_j",
+      "itemRef": "item_q54",
+      "interactionRef": "int_q54_j",
+      "versionNumber": 1,
+      "approvedAnswer": "The Abduction of Two Girls",
+      "acceptableAlternatives": [
+        "The Kidnappers Were Arrested",
+        "Saved by the Police",
+        "The Police Checkpoint"
+      ],
+      "explanation": "Tutor: A good title must be short and capture the main action. What is the central event here? Student: The girls were abducted. Tutor: Correct. That makes The Abduction of Two Girls a strong title.",
+      "teacherNotes": "",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    },
+    {
+      "ref": "mav_int_q55",
+      "itemRef": "item_q55",
+      "interactionRef": "int_q55",
+      "versionNumber": 1,
+      "approvedAnswer": "Manual review required.",
+      "acceptableAlternatives": [],
+      "explanation": "",
+      "teacherNotes": "Award marks manually for correct informal letter format, thanks to uncle, details of the game park visited, lessons learnt, language control, and relevance to the prompt.",
+      "status": "approved",
+      "updatedBy": "system-import",
+      "approvedBy": "content-audit"
+    }
+  ]
+}

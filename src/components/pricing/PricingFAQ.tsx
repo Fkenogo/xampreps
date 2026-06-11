@@ -10,11 +10,11 @@ const PricingFAQ: React.FC = () => {
   const faqs = [
     {
       question: 'Can I upgrade anytime?',
-      answer: 'Yes. Upgrade or cancel whenever you want.',
+      answer: 'Yes. You can upgrade at any time. Contact us if you need help managing your subscription.',
     },
     {
-      question: 'Do I need a credit card?',
-      answer: 'No. Pay using Mobile Money.',
+      question: 'How do I pay?',
+      answer: 'Payment options are shared when you select a plan. Contact us if you have questions about billing.',
     },
     {
       question: 'Can one account be used by multiple students?',
